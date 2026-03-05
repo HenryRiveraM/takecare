@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\backend"
+    "\\backend",
+    "\\db",
+    "\\docs"
   ],
-  "SelectedNode": "\\docs",
+  "SelectedNode": "\\docs\\usuario.pdf",
   "PreviewInSolutionExplorer": false
 }

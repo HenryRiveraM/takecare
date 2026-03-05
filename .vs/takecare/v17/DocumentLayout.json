@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\ISABELLA\\takecare\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ISABELLA\\takecare\\docs\\usuario.pdf||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:docs\\usuario.pdf||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ISABELLA\\takecare\\db\\usuario.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:db\\usuario.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ISABELLA\\takecare\\backend\\usuario.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:backend\\usuario.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +35,45 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "usuario.pdf",
+              "DocumentMoniker": "C:\\Users\\ISABELLA\\takecare\\docs\\usuario.pdf",
+              "RelativeDocumentMoniker": "docs\\usuario.pdf",
+              "ToolTip": "C:\\Users\\ISABELLA\\takecare\\docs\\usuario.pdf",
+              "RelativeToolTip": "docs\\usuario.pdf",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJGSURBVDhPrZNNSBRhHIefeWdZV9DFct0izTTrUIGZlXiokAjEoKQvQ41UKsqLlofskFFgYh0S2pMdhE4hmRchOkjZoZAoCLEPMQ9dojbBxS013Hn/HWR1dtyPQz3wHub3m9/De5hBRNBaE\u002BkNuP946V7wMrfgRac4D61QyK21xn4QEcUK1ZK7sdEaeJoW\u002BfaLhGf8K1JTX7dYXPBMPozl2fZoEcMu9Oumi37ZU27YstWszcbquG3qw9X7IyeqAvrF8HZ7bRdCjh/c7pgoLtk\u002B9PVOUx84WGlduXRDjwwXRqtYYRyMVy9x1R1F1R\u002BDmZmVImsNurXdJf715UxOlEXj1MKRYaxAH0Z4FvV2NKaTTQUuffx0PuCLZimFZOfAzyDMz4HHE9spBenpsVHMUxxkZylGTzfMzyPbdjjrVaQW\u002Bnyoyc\u002BQmYn4/M56FcmF4TCq7wG69izk5WM2N2DWHsFsOYfqDTjfhoTC6SDm3VuYTTWooScYjx9hvHsDaR50\u002B03I8KJ6upwrSCR0tTVDKAT7KpBDVUjjBSJDz5HCIlRnB8boa6Si0jkDwOUMAMQ0MRYXkalJdMN5pLQMlEK3XoVT9RD8DgVFzhkkuqHV0YVVcwbrcjtSvGvp84iyIRdKdkNWln2yTFwhm7cge8uhaCu405xtUuIL/4FY4dxvsKyYKCmWtbSxYRdOqMH\u002BKePTuNiypBgfx0UN9n8BJpYzEUFEkOAPT\u002BRay0kZe39PMrzLP3syjPDstFFc0ua6c3/A8K9bICr8n/wF3XTw6KjpppMAAAAASUVORK5CYII=",
+              "WhenOpened": "2026-03-05T22:28:26.623Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "usuario.css",
+              "DocumentMoniker": "C:\\Users\\ISABELLA\\takecare\\backend\\usuario.css",
+              "RelativeDocumentMoniker": "backend\\usuario.css",
+              "ToolTip": "C:\\Users\\ISABELLA\\takecare\\backend\\usuario.css",
+              "RelativeToolTip": "backend\\usuario.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-03-05T22:28:05.942Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "usuario.txt",
+              "DocumentMoniker": "C:\\Users\\ISABELLA\\takecare\\db\\usuario.txt",
+              "RelativeDocumentMoniker": "db\\usuario.txt",
+              "ToolTip": "C:\\Users\\ISABELLA\\takecare\\db\\usuario.txt",
+              "RelativeToolTip": "db\\usuario.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2026-03-05T22:27:39.581Z",
+              "EditorCaption": ""
             }
           ]
         },
