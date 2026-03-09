@@ -2,6 +2,28 @@
 ## Descripción
 Take Care es una solución integral para la salud mental que conecta a pacientes con especialistas verificados. El sistema permite el registro seguro, la validación de credenciales profesionales, la gestión de citas y el seguimiento terapéutico bajo un entorno de alta seguridad y diseño empático.
 
+## Tecnologías Utilizadas
+### Backend
+* Spring Boot
+* Spring Data JPA
+* Hibernate
+* Apache Maven
+* MySQL
+
+### Frontend
+* Angular 18+
+* TypeScript
+* SCSS
+* Angular Material
+
+## Equipo
+* Gutierrez Davila Valeria Emilse 
+* Iporre Cervantes Alexandra Gabriel
+* Montes Iñiguez Isabella Catherine
+* Rivera Mendez Henry Alejandro
+* Salinas Vega Alejandra
+
+
 README BACKEND
 
 ------------------------------------------------------------------------------------------------------
@@ -155,3 +177,6 @@ model
 * MySQL
 
 -------------------------------------------------------------------------------------------------------
+README FRONTEND
+
+------------------------------------------------------------------------------------------------------
