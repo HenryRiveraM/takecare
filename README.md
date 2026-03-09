@@ -23,6 +23,11 @@ Take Care es una solución integral para la salud mental que conecta a pacientes
 * Rivera Mendez Henry Alejandro
 * Salinas Vega Alejandra
 
+## Flujo de Trabajo (Git)
+Para mantener el orden, el equipo utiliza el nombre de las Historias de Usuario para las ramas:
+* main: Rama estable.
+* HUXX-Nombre-Historia: Ramas de desarrollo.
+
 
 README BACKEND
 
@@ -177,6 +182,4 @@ model
 * MySQL
 
 -------------------------------------------------------------------------------------------------------
-README FRONTEND
 
-------------------------------------------------------------------------------------------------------
