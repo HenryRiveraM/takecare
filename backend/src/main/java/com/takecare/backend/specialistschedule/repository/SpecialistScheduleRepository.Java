@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface SpecialistScheduleRepository 
-        extends JpaRepository<SpecialistSchedule, Long> {
+        extends JpaRepository<SpecialistSchedule, Integer> {
 
 }
