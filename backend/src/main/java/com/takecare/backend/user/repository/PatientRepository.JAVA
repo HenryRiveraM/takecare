@@ -1,9 +1,7 @@
-package com.takecare.user.repository;
+package com.takecare.backend.user.repository;
 
-import com.takecare.user.model.Patient;
+import com.takecare.backend.user.model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PatientRepository 
-        extends JpaRepository<Patient, Long> {
-
+public interface PatientRepository extends JpaRepository<Patient, Integer> {
 }

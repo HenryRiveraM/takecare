@@ -1,7 +1,16 @@
+package com.takecare.backend.user.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.NumericBooleanConverter;
+import org.hibernate.type.SqlTypes;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -9,7 +18,7 @@ public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String names;
 
@@ -33,11 +42,15 @@ public abstract class User {
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
+    @Column(columnDefinition = "tinyint")
     private Integer role;
+
+    @Column(columnDefinition = "tinyint")
     private Integer strikes;
 
+    @Column(columnDefinition = "tinyint")
     private Boolean status;
 
-    @Column(name = "account_verified")
-    private Integer accountVerified;
+    @Column(name = "account_verified", columnDefinition = "tinyint")
+    private Boolean accountVerified;
 }

@@ -1,4 +1,7 @@
+package com.takecare.backend.specialistschedule.model;
+
 import jakarta.persistence.*;
+import com.takecare.backend.user.model.Specialist;
 import java.time.LocalTime;
 
 @Entity
@@ -7,13 +10,13 @@ public class SpecialistSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "specialist_id", nullable = false)
     private Specialist specialist;
 
-    @Column(name = "day_of_week")
+    @Column(name = "day_of_week", columnDefinition = "tinyint")
     private Integer dayOfWeek;
 
     @Column(name = "start_time")
@@ -22,5 +25,6 @@ public class SpecialistSchedule {
     @Column(name = "end_time")
     private LocalTime endTime;
 
+    @Column(columnDefinition = "tinyint")
     private Integer status;
 }

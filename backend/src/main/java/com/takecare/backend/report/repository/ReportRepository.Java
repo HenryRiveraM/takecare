@@ -1,10 +1,11 @@
-package com.takecare.report.repository;
+package com.takecare.backend.report.repository;
 
-import com.takecare.report.model.Report;
+import com.takecare.backend.report.model.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReportRepositoy 
-        extends JpaRepository<Report, Long> {
+public interface ReportRepository 
+        extends JpaRepository<Report, Integer> {
 
 }
