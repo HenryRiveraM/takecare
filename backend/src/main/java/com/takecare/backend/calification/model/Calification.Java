@@ -4,7 +4,7 @@ public class Calification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
@@ -18,6 +18,7 @@ public class Calification {
     @JoinColumn(name = "session_id")
     private Session session;
 
+    @Column(columnDefinition = "tinyint")
     private Integer rating;
 
     private String comment;
