@@ -1,22 +1,27 @@
-package com.takecare.service;
+package com.takecare.controller;
 
 import com.takecare.model.Especialista;
-import org.springframework.stereotype.Service;
+import com.takecare.service.EspecialistaService;
 
-import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-@Service
-public class EspecialistaService {
+@RestController
+@RequestMapping("/api/especialistas")
+public class EspecialistaController {
 
-    private List<Especialista> especialistas = new ArrayList<>();
+    @Autowired
+    private EspecialistaService especialistaService;
 
-    public Especialista registrarEspecialista(Especialista especialista) {
-        especialistas.add(especialista);
-        return especialista;
+    @PostMapping("/registro")
+    public Especialista registrar(@RequestBody Especialista especialista){
+        return especialistaService.registrarEspecialista(especialista);
     }
 
-    public List<Especialista> obtenerEspecialistas(){
-        return especialistas;
+    @GetMapping
+    public List<Especialista> listar(){
+        return especialistaService.obtenerEspecialistas();
     }
 }
