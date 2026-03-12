@@ -1,15 +1,12 @@
 package com.takecare.controller;
-
 import com.takecare.model.Especialista;
 import com.takecare.service.EspecialistaService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/especialistas")
+@RequestMapping("/api/v1/specialities")
 public class EspecialistaController {
 
     @Autowired
