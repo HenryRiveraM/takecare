@@ -1,6 +1,15 @@
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+package com.takecare.backend.user.model;
 
+import com.takecare.backend.specialities.Specialty;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.util.Set;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "specialists")
 @PrimaryKeyJoinColumn(name = "id")
