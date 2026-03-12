@@ -1,6 +1,6 @@
 package com.takecare.backend.user.model;
 
-import com.takecare.backend.specialities.Specialty;
+import com.takecare.backend.specialities.model.Speciality;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,5 +35,5 @@ public class Specialist extends User {
             joinColumns = @JoinColumn(name = "specialist_id"),
             inverseJoinColumns = @JoinColumn(name = "specialty_id")
     )
-    private Set<Specialty> specialties;
+    private Set<Speciality> specialties;
 }
