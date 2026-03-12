@@ -4,7 +4,7 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "reporter_user_id")
@@ -20,7 +20,8 @@ public class Report {
 
     private String reason;
 
-    private Integer status;
+    @Column(columnDefinition = "tinyint")
+    private Boolean status;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;

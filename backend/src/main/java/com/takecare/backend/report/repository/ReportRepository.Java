@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface ReportRepositoy 
-        extends JpaRepository<Report, Long> {
+        extends JpaRepository<Report, Integer> {
 
 }
