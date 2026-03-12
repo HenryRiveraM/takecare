@@ -1,6 +1,6 @@
-package com.takecare.user.repository;
+package com.takecare.backend.user.repository;
 
-import com.takecare.user.model.User;
+import com.takecare.backend.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

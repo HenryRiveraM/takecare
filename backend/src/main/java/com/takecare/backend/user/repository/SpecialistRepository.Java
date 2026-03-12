@@ -1,8 +1,10 @@
-package com.takecare.user.repository;
+package com.takecare.backend.user.repository;
 
-import com.takecare.user.model.Specialist;
+import com.takecare.backend.user.model.Specialist;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface SpecialistRepository 
         extends JpaRepository<Specialist, Integer> {
 

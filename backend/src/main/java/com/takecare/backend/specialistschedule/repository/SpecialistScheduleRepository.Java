@@ -1,7 +1,8 @@
-package com.takecare.specialistschedule.repository;
+package com.takecare.backend.specialistschedule.repository;
 
-import com.takecare.schedulespecialist.model.SpecialistSchedule;
+import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpecialistScheduleRepository 
