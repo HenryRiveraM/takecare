@@ -1,8 +1,11 @@
+package com.takecare.backend.specialities.model;
+
 import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "specialties")
-public class Specialty {
+public class Speciality {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,5 +14,5 @@ public class Specialty {
     private String name;
 
     @ManyToMany(mappedBy = "specialties")
-    private Set<Specialist> specialists;
+    private Set<com.takecare.backend.user.model.Specialist> specialists;
 }

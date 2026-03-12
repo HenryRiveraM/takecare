@@ -1,4 +1,7 @@
+package com.takecare.backend.specialistschedule.model;
+
 import jakarta.persistence.*;
+import com.takecare.backend.user.model.Specialist;
 import java.time.LocalTime;
 
 @Entity

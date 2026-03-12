@@ -1,3 +1,11 @@
+package com.takecare.backend.calification.model;
+
+import jakarta.persistence.*;
+import com.takecare.backend.user.model.Patient;
+import com.takecare.backend.user.model.Specialist;
+import com.takecare.backend.session.model.Session;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "califications")
 public class Calification {

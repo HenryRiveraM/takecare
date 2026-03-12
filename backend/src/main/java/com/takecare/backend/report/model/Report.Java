@@ -1,3 +1,10 @@
+package com.takecare.backend.report.model;
+
+import jakarta.persistence.*;
+import com.takecare.backend.user.model.User;
+import com.takecare.backend.session.model.Session;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "reports")
 public class Report {
