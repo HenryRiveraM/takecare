@@ -1,22 +1,24 @@
 package com.takecare.backend.specialities.Service;
 
-import com.takecare.backend.specialities.model.Specialist;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.takecare.backend.specialities.model.Specialist;
+import com.takecare.backend.specialities.repository.SpecialistRepository;
 
 @Service
 public class SpecialistService {
 
-    private List<Specialist> specialists = new ArrayList<>();
+    @Autowired
+    private SpecialistRepository specialistRepository;
 
     public Specialist registerSpecialist(Specialist specialist) {
-        specialists.add(specialist);
-        return specialist;
+        return specialistRepository.save(specialist);
     }
 
     public List<Specialist> obtainSpecialists(){
-        return specialists;
+        return specialistRepository.findAll();
     }
 }
