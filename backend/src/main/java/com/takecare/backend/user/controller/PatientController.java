@@ -1,5 +1,6 @@
 package com.takecare.backend.user.controller;
 
+import com.takecare.backend.user.dto.PatientRegisterDTO;
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.service.PatientService;
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,8 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<Patient> registerPatient(@RequestBody Patient patient) {
-        Patient createdPatient = patientService.registerPatient(patient);
+    public ResponseEntity<Patient> registerPatient(@RequestBody PatientRegisterDTO patientDTO) {
+        Patient createdPatient = patientService.registerPatientFromDTO(patientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
     }
 
