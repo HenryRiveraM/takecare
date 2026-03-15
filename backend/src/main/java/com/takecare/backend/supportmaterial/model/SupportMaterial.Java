@@ -1,4 +1,7 @@
+package com.takecare.backend.supportmaterial.model;
+
 import jakarta.persistence.*;
+import com.takecare.backend.user.model.Specialist;
 import java.time.LocalDateTime;
 
 @Entity
@@ -7,7 +10,7 @@ public class SupportMaterial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "specialist_id", nullable = false)
