@@ -42,7 +42,8 @@ public class SpecialistService {
             specialist.setFirstLastname(specialistDetails.getFirstLastname());
             specialist.setSecondLastname(specialistDetails.getSecondLastname());
             specialist.setEmail(specialistDetails.getEmail());
-
+            specialist.setBirthDate(specialistDetails.getBirthDate());
+            specialist.setCiNumber(specialistDetails.getCiNumber());
             specialist.setBiography(specialistDetails.getBiography());
             specialist.setCertificationImg(specialistDetails.getCertificationImg());
             specialist.setOfficeUbi(specialistDetails.getOfficeUbi());
