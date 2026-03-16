@@ -2,9 +2,7 @@ package com.takecare.backend.user.repository;
 
 import com.takecare.backend.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface UserRepository 
         extends JpaRepository<User, Integer> {
 
