@@ -1,0 +1,50 @@
+<div class="role-page">
+
+  <div class="container">
+
+    <h1>
+      ¿Cómo te gustaría usar
+      <span class="primary">Take Care</span>?
+    </h1>
+
+    <p>
+      Selecciona la opción que mejor se adapte a tu situación.
+    </p>
+
+    <div class="role-cards">
+
+      <!-- PACIENTE -->
+      <div class="card"
+           (click)="selectRole('patient')">
+
+        <h3>Necesito apoyo</h3>
+
+        <p>
+          Estoy buscando un terapeuta que me ayude a mejorar mi salud mental.
+        </p>
+
+      </div>
+
+
+      <!-- ESPECIALISTA -->
+      <div class="card"
+           (click)="selectRole('specialist')">
+
+        <h3>Soy especialista</h3>
+
+        <p>
+          Soy un profesional certificado que desea ayudar a pacientes.
+        </p>
+
+      </div>
+
+    </div>
+
+    <button class="continue"
+            (click)="continue()">
+      Continuar
+    </button>
+
+  </div>
+
+</div>
