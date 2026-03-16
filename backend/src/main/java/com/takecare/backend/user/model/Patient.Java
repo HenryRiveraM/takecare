@@ -11,9 +11,6 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name = "id")
 public class Patient extends User {
 
-    @Column(name = "ci_number")
-    private String ciNumber;
-
     @Column(name = "selfie_verification")
     private String selfieVerification;
 
