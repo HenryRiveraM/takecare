@@ -1,65 +1,407 @@
-.home { 
-    max-width: 1200px; 
-    margin: auto; 
-    padding: 40px 20px; 
-}
-.hero { 
-    display: flex; 
-    align-items: center; 
-    margin-bottom: 40px; 
-}
-.hero-text h1 {
-     font-size: 48px; 
-     font-weight: 800; 
-     margin: 10px 0; 
-     color: #111827;
-}
-.tag { 
-    color: #258cf4; 
-    font-weight: 700; 
-    font-size: 14px; 
-    text-transform: uppercase; 
-}
-.card { padding: 40px; 
-    background: white; 
-    border-radius: 15px; 
-    border: 1px solid #e5e7eb; 
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); 
-}
-.btn-primary { 
-    background: #258cf4; 
-    color: white; 
-    padding: 12px 20px; 
-    border: none; 
-    border-radius: 10px; 
-    cursor: pointer; 
-    font-weight: 600; 
-}
-.btn-secondary { 
-    background: white; 
-    border: 2px solid #e5e7eb; 
-    padding: 12px 20px; 
-    border-radius: 10px; 
-    color: #374151; 
-}
-.big { 
-    font-size: 18px; 
-    padding: 16px 30px; 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.form-container { 
-    max-width: 600px; 
-    margin: 0 auto; 
+.register-container {
+    background-color: #94A8A8; /* Color verde azulado de fondo */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.input-group { 
-    margin-bottom: 20px; 
-    display: flex; 
-    flex-direction: column; gap: 8px; 
+
+.register-card {
+    background: #E8F0F2; /* Fondo grisáceo muy claro de la tarjeta */
+    padding: 50px;
+    border-radius: 30px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
-.field { 
+
+
+.header { 
+    text-align: center; 
+    margin-bottom: 30px; 
+}
+
+.header h1 { 
+    color: #334155; 
+    font-size: 32px; 
+    margin-bottom: 10px; 
+}
+
+.header p { 
+    color: #64748B; 
+    font-size: 14px; 
+}
+
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Una sola columna por defecto (Móvil) */
+    gap: 20px;
+    align-items: start;
+    width: 100%;
+}
+
+/* Clases auxiliares para el grid (se activan en escritorio) */
+.field, .field-name, .field-email, .field-pass, .field-doc, .field-comp, .full-width {
+    grid-column: span 1; 
+    width: 100%;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748B;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"] {
     width: 100%; 
-    box-sizing: border-box; 
+    padding: 12px;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    outline: none;
 }
-.full-width { 
-    width: 100%; 
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus {
+    border-color: #258cf4;
+    box-shadow: 0 0 0 2px rgba(37, 140, 244, 0.2);
+}
+
+/* Estilos de error para validación */
+input.ng-invalid.ng-touched {
+    border-color: #F87171;
+}
+
+.error-msg {
+    color: #F87171;
+    font-size: 11px;
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+
+.checkbox-grid {
+    display: grid;
+    /* Columnas automáticas: 1 en móvil, varias en escritorio */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.check-item {
+    font-size: 13px;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: none;
+    font-weight: 400;
+}
+
+
+.upload-zone {
+    background: #F1F5F9;
+    border: 2px dashed #CBD5E1;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+/* Estado cuando se arrastra un archivo encima */
+.upload-zone.dragging {
+    background-color: #E0F2FE; /* Azul clarito */
+    border-color: #258cf4;
+    transform: scale(1.02); /* Zoom sutil */
+}
+
+.upload-button {
+    background-color: #f1f5f9;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 20px;
+    display: inline-block;
+    cursor: pointer;
+    color: #64748b;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.upload-button:hover {
+    background-color: #e2e8f0;
+    border-color: #258cf4;
+}
+
+.upload-hint {
+    font-size: 12px;
+    color: #94A3B8;
+    margin-top: 10px;
+}
+
+.upload-zone.success {
+    background-color: #f0fdf4; /* Verde muy clarito */
+    border: 2px solid #bbf7d0;
+    text-align: left;
+    padding: 20px;
+}
+
+.carnet-preview-container {
+    margin-top: 10px;
+}
+
+.carnet-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.carnet-card img {
+    width: 80px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+}
+
+.carnet-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.carnet-info span {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.carnet-info button {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+}
+
+
+.files-container {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.file-item {
+    background-color: #f0fdf4;
+    border: 1.5px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 12px 15px;
+}
+
+.file-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-details-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.check-icon {
+    background: #22c55e;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.file-name { font-weight: 600; color: #1e293b; margin: 0; }
+.file-status { font-size: 12px; color: #64748b; margin: 0; }
+
+.remove-btn {
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.btn-complete {
+    background-color: #F87171; /* Color coral */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.btn-complete:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: #94A3B8;
+}
+
+.preview-mini {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+}
+
+.preview-mini img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover; /* Importante para que la selfie no se deforme */
+    border-radius: 50%; /* La selfie suele verse bien en círculo */
+    border: 2px solid #CBD5E1;
+}
+
+/* Si quieres que la del carnet siga siendo rectangular */
+.carnet-card img {
+    width: 80px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.consent-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.consent-box {
+    align-items: flex-start !important; /* Alinea el checkbox arriba del texto largo */
+    cursor: pointer;
+}
+
+.consent-label {
+    text-transform: none !important; /* Quita las mayúsculas de los labels globales */
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #475569 !important;
+    line-height: 1.5;
+    margin-bottom: 0 !important;
+    cursor: pointer;
+}
+
+.consent-box input[type="checkbox"] {
+    margin-top: 3px; /* Alinea el check con la primera línea de texto */
+    cursor: pointer;
+}
+
+/* --- CONFIGURACIÓN PARA ESCRITORIO (768px o más) --- */
+@media (min-width: 768px) {
+    .form-grid {
+        grid-template-columns: repeat(6, 1fr); 
+    }
+
+    /* Nombres (3 campos: cada uno ocupa 2 de 6 columnas) */
+    .field-name, .col-3 {
+        grid-column: span 2;
+    }
+
+    /* Email, Pass, CI, Comp, Fotos (2 campos: cada uno ocupa 3 de 6 columnas) */
+    .field-email, .field-pass, .field-doc, .field-comp, .col-2 {
+        grid-column: span 3;
+    }
+
+    /* Secciones de ancho total */
+    .full-width {
+        grid-column: span 6;
+    }
+
+    /* ARREGLO PARA EL BOTÓN: Para que no se estire horizontalmente */
+    .btn-complete {
+        grid-column: span 6;
+        justify-self: center; /* Lo centra en el grid */
+        width: auto;         /* Deja de ocupar el 100% */
+        min-width: 300px;    /* Pero mantiene un tamaño elegante */
+        margin: 20px auto;   /* Centrado extra */
+    }
+
+    .footer-note {
+        grid-column: span 6;
+    }
+}
+
+/* --- AJUSTES FINALES PARA MÓVIL (Menos de 768px) --- */
+@media (max-width: 767px) {
+    .register-card {
+        padding: 25px; 
+        border-radius: 20px;
+    }
+    
+    .register-container {
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 24px; 
+    }
+    
+    .upload-zone {
+        padding: 20px; 
+    }
 }
