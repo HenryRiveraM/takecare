@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.takecare.backend.user.dto.SpecialistRegisterDTO;
 import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.repository.SpecialistRepository;
 
@@ -34,6 +35,23 @@ public class SpecialistService {
         specialist.setAccountVerified(false);
 
         return specialistRepository.save(specialist);
+    }
+
+    public Specialist registerSpecialistFromDTO(SpecialistRegisterDTO dto) {
+        Specialist specialist = new Specialist();
+        specialist.setNames(dto.getNames());
+        specialist.setFirstLastname(dto.getFirstLastname());
+        specialist.setSecondLastname(dto.getSecondLastname());
+        specialist.setBirthDate(dto.getBirthDate());
+        specialist.setCiNumber(dto.getCiNumber());
+        specialist.setEmail(dto.getEmail());
+        specialist.setPasswordHash(dto.getPassword()); // TODO: encrypt password when security is added
+        specialist.setBiography(dto.getBiography());
+        specialist.setCertificationImg(dto.getCertificationImg());
+        specialist.setSessionCost(dto.getSessionCost());
+        specialist.setRole(2); // 2 for Specialist
+
+        return registerSpecialist(specialist);
     }
 
     public Optional<Specialist> updateSpecialist(Integer id, Specialist specialistDetails) {

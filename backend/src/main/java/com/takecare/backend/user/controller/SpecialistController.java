@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.takecare.backend.user.dto.SpecialistRegisterDTO;
 import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.service.SpecialistService;
 
@@ -40,8 +41,8 @@ public class SpecialistController {
     }
 
     @PostMapping
-    public ResponseEntity<Specialist> registerSpecialist(@RequestBody Specialist specialist) {
-        Specialist createdSpecialist = specialistService.registerSpecialist(specialist);
+    public ResponseEntity<Specialist> registerSpecialist(@RequestBody SpecialistRegisterDTO specialistDTO) {
+        Specialist createdSpecialist = specialistService.registerSpecialistFromDTO(specialistDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSpecialist);
     }
 

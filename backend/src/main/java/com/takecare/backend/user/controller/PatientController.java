@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.takecare.backend.user.dto.PatientRegisterDTO;
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.service.PatientService;
 

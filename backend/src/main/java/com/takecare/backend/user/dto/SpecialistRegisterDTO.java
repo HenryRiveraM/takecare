@@ -20,6 +20,9 @@ public class SpecialistRegisterDTO extends UserRegisterDTO {
     @NotBlank
     private String certificationImg;
 
+    @NotBlank
+    private String officeUbi;
+
     @NotNull
     @Positive
     private BigDecimal sessionCost;
