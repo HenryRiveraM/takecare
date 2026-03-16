@@ -4,13 +4,13 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { RouterModule } from '@angular/router'; // Para el routerLink
 
 @Component({
-  selector: 'app-forgot-password',
+  selector: 'app-recover-password',
   standalone: true, // Esto indica que es versión nueva
   imports: [CommonModule, ReactiveFormsModule, RouterModule], // ¡Importante!
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+  templateUrl: './recover-password.component.html',
+  styleUrls: ['./recover-password.component.css']
 })
-export class ForgotPasswordComponent {
+export class RecoverPasswordComponent {
   recoveryForm: FormGroup;
   submitted = false;
   isLoading = false;

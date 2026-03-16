@@ -1,10 +1,16 @@
 import { Routes } from '@angular/router';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterRoleComponent } from './pages/register-role/register-role.component';
+import { RegisterPatientComponent } from './pages/register-patient/register-patient.component';
+import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 
 export const routes: Routes = [
-  {
-    path: 'forgot-password',
-    component: ForgotPasswordComponent,
-    title: 'Recuperar Contraseña - Take Care' 
-  },
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register-role', component: RegisterRoleComponent },
+  { path: 'register/patient', component: RegisterPatientComponent },
+  { path: 'forgot-password', component: RecoverPasswordComponent},
 ];
+
