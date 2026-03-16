@@ -14,6 +14,7 @@ export class ForgotPasswordComponent {
   recoveryForm: FormGroup;
   submitted = false;
   isLoading = false;
+  isSent = false; //
 
   constructor(private fb: FormBuilder) {
     this.recoveryForm = this.fb.group({
@@ -31,12 +32,13 @@ export class ForgotPasswordComponent {
 
     this.isLoading = true;
     
-    // Aquí irá la HU04-BE (Llamada al servicio)
+
     console.log('Enviando correo a:', this.recoveryForm.value.email);
     
     // Simulamos respuesta del servidor
     setTimeout(() => {
       this.isLoading = false;
+      this.isSent = true; // Indicamos que el correo ha sido "enviado"
       alert('Si el correo existe, recibirás un enlace pronto.');
     }, 2000);
   }
