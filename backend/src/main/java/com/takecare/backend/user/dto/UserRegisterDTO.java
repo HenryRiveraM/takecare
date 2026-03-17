@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
+import jakarta.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class UserRegisterDTO {
     @Pattern(regexp = "^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$", message = "Second lastname must contain only letters")
     private String secondLastname;
 
-    @NotBlank(message = "Birth date cannot be blank")
+    @NotNull
     private LocalDate birthDate;
 
     @NotBlank(message = "CI number cannot be blank")

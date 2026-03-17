@@ -45,7 +45,7 @@ public class SpecialistService {
         specialist.setBirthDate(dto.getBirthDate());
         specialist.setCiNumber(dto.getCiNumber());
         specialist.setEmail(dto.getEmail());
-        specialist.setPasswordHash(dto.getPassword()); // TODO: encrypt password when security is added
+        specialist.setPasswordHash(dto.getPassword());
         specialist.setBiography(dto.getBiography());
         specialist.setCertificationImg(dto.getCertificationImg());
         specialist.setSessionCost(dto.getSessionCost());
