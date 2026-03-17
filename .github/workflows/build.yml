@@ -1,0 +1,43 @@
+name: Build Sanity Check
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/build.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/build.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Compile Backend
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build backend with Maven
+      working-directory: ./backend
+      run: ./mvnw clean compile --no-transfer-progress -q
+
+    - name: ✅ Build successful
+      if: success()
+      run: echo "Backend compiled successfully!"
+
+    - name: ❌ Build failed
+      if: failure()
+      run: |
+        echo "Build compilation failed! Please fix the errors before pushing."
+        exit 1    
