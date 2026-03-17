@@ -1,11 +1,14 @@
 package com.takecare.backend.user.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
+
+import io.micrometer.common.lang.Nullable;
 import jakarta.validation.constraints.NotNull;
 
 @Getter
@@ -20,6 +23,7 @@ public class UserRegisterDTO {
     @Pattern(regexp = "^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$", message = "First lastname must contain only letters")
     private String firstLastname;
 
+    @Nullable
     @Pattern(regexp = "^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$", message = "Second lastname must contain only letters")
     private String secondLastname;
 
@@ -31,10 +35,10 @@ public class UserRegisterDTO {
     private String ciNumber;
 
     @NotBlank(message = "Email cannot be blank")
-    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
+    @Email(message = "Email should be valid")
     private String email;
 
     @NotBlank(message = "Password cannot be blank")
-    @Size(min = 8, message = "Password must be at least 8 characters long")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Password must contain letters and numbers")
     private String password;
 }

@@ -17,6 +17,8 @@ import com.takecare.backend.user.dto.SpecialistRegisterDTO;
 import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.service.SpecialistService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/specialists")
 public class SpecialistController {
@@ -41,7 +43,7 @@ public class SpecialistController {
     }
 
     @PostMapping
-    public ResponseEntity<Specialist> registerSpecialist(@RequestBody SpecialistRegisterDTO specialistDTO) {
+    public ResponseEntity<Specialist> registerSpecialist(@Valid @RequestBody SpecialistRegisterDTO specialistDTO) {
         Specialist createdSpecialist = specialistService.registerSpecialistFromDTO(specialistDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSpecialist);
     }

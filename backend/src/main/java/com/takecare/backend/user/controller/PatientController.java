@@ -17,6 +17,8 @@ import com.takecare.backend.user.dto.PatientRegisterDTO;
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.service.PatientService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/patients")
 public class PatientController {
@@ -41,7 +43,7 @@ public class PatientController {
     }
 
     @PostMapping
-    public ResponseEntity<Patient> registerPatient(@RequestBody PatientRegisterDTO patientDTO) {
+    public ResponseEntity<Patient> registerPatient(@Valid @RequestBody PatientRegisterDTO patientDTO) {
         Patient createdPatient = patientService.registerPatientFromDTO(patientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
     }
