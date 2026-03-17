@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.takecare.backend.user.dto.SpecialistRegisterDTO;
 import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.repository.SpecialistRepository;
 
@@ -36,13 +37,31 @@ public class SpecialistService {
         return specialistRepository.save(specialist);
     }
 
+    public Specialist registerSpecialistFromDTO(SpecialistRegisterDTO dto) {
+        Specialist specialist = new Specialist();
+        specialist.setNames(dto.getNames());
+        specialist.setFirstLastname(dto.getFirstLastname());
+        specialist.setSecondLastname(dto.getSecondLastname());
+        specialist.setBirthDate(dto.getBirthDate());
+        specialist.setCiNumber(dto.getCiNumber());
+        specialist.setEmail(dto.getEmail());
+        specialist.setPasswordHash(dto.getPassword()); // TODO: encrypt password when security is added
+        specialist.setBiography(dto.getBiography());
+        specialist.setCertificationImg(dto.getCertificationImg());
+        specialist.setSessionCost(dto.getSessionCost());
+        specialist.setRole(2); // 2 for Specialist
+
+        return registerSpecialist(specialist);
+    }
+
     public Optional<Specialist> updateSpecialist(Integer id, Specialist specialistDetails) {
         return specialistRepository.findById(id).map(specialist -> {
             specialist.setNames(specialistDetails.getNames());
             specialist.setFirstLastname(specialistDetails.getFirstLastname());
             specialist.setSecondLastname(specialistDetails.getSecondLastname());
             specialist.setEmail(specialistDetails.getEmail());
-
+            specialist.setBirthDate(specialistDetails.getBirthDate());
+            specialist.setCiNumber(specialistDetails.getCiNumber());
             specialist.setBiography(specialistDetails.getBiography());
             specialist.setCertificationImg(specialistDetails.getCertificationImg());
             specialist.setOfficeUbi(specialistDetails.getOfficeUbi());

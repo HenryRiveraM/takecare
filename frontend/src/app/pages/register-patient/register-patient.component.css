@@ -1,0 +1,121 @@
+.patient-page{
+  min-height:100vh;
+  background:#f5f7f8;
+  font-family:Manrope;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  padding:20px 40px;
+  background:white;
+  border-bottom:1px solid #eee;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.icon{
+  color:#258cf4;
+}
+
+.signin{
+  background:#258cf4;
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:8px;
+}
+
+.form-container{
+  display:flex;
+  justify-content:center;
+  padding:40px;
+}
+
+.card{
+  background:white;
+  width:700px;
+  padding:40px;
+  border-radius:15px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.05);
+}
+
+.step{
+  margin-bottom:20px;
+}
+
+.progress{
+  height:4px;
+  background:#eee;
+  margin-top:5px;
+}
+
+.bar{
+  width:33%;
+  height:100%;
+  background:#258cf4;
+}
+
+.subtitle{
+  color:#6b7280;
+  margin-bottom:30px;
+}
+
+.section-title{
+  margin-top:30px;
+  margin-bottom:15px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.grid input{
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+.password input{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+.upload{
+  border:2px dashed #ccc;
+  border-radius:10px;
+  padding:30px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.actions{
+  margin-top:30px;
+  display:flex;
+  gap:10px;
+}
+
+.primary{
+  flex:1;
+  background:#258cf4;
+  color:white;
+  border:none;
+  padding:14px;
+  border-radius:10px;
+}
+
+.cancel{
+  background:#eee;
+  border:none;
+  padding:14px;
+  border-radius:10px;
+}

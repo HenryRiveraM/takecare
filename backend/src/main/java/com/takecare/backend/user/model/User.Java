@@ -1,5 +1,6 @@
 package com.takecare.backend.user.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -31,6 +32,12 @@ public abstract class User {
 
     @Column(name = "second_lastname")
     private String secondLastname;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    @Column(name = "ci_number")
+    private String ciNumber;
 
     @Column(name = "ci_document_img")
     private String ciDocumentImg;
