@@ -1,12 +1,19 @@
 package com.takecare.backend.user.model;
 
-import com.takecare.backend.specialities.model.Speciality;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.util.Set;
+
+import com.takecare.backend.specialities.model.Speciality;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -35,5 +42,5 @@ public class Specialist extends User {
             joinColumns = @JoinColumn(name = "specialist_id"),
             inverseJoinColumns = @JoinColumn(name = "specialty_id")
     )
-    private Set<Speciality> specialties;
+    private Set<Speciality> specialities;
 }
