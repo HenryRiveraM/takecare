@@ -1,27 +1,31 @@
 package com.takecare.backend.user.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.takecare.backend.user.model.User;
-import com.takecare.backend.user.repository.UserRepository;
 
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public UserService(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User createUser(User user){
+    protected <T extends User> T prepareUser(T user, int role) {
+        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
 
-        String encryptedPassword = passwordEncoder.encode(user.getPasswordHash());
-        user.setPasswordHash(encryptedPassword);
+        user.setCreatedDate(LocalDateTime.now());
+        user.setLastUpdate(LocalDateTime.now());
+        user.setStatus(true);
+        user.setStrikes(0);
+        user.setAccountVerified(false);
+        user.setRole(role);
 
-        return userRepository.save(user);
+        return user;
     }
 }
