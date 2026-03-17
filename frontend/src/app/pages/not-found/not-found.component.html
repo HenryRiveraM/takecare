@@ -1,0 +1,45 @@
+<main class="w-full max-w-2xl mx-auto min-h-screen flex items-center justify-center p-4 bg-softBlue">
+
+<section class="bg-white rounded-custom soft-shadow p-8 md:p-12 text-center">
+
+    <!-- Imagen -->
+    <div class="mb-8 flex justify-center">
+        <div class="relative w-64 h-64 floating-illustration">
+            <img src="assets/images/error404.png"
+                alt="Error 404"
+                class="w-full h-full object-contain rounded-full"/>
+        </div>
+    </div>
+
+    <!-- Texto -->
+    <div class="space-y-4">
+        <h1 class="text-7xl font-extrabold text-primary opacity-20">404</h1>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
+            Parece que te has desviado del camino
+        </h2>
+
+        <p class="text-gray-500 max-w-md mx-auto">
+            No te preocupes, estamos aquí para ayudarte.
+            La página que buscas no existe o fue movida.
+        </p>
+    </div>
+
+    <!-- Botones -->
+    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+
+        <a routerLink="/"
+            class="px-8 py-3 bg-primary text-white rounded-custom">
+            Volver al Inicio
+        </a>
+
+        <a routerLink="/support"
+            class="px-8 py-3 bg-mint text-gray-700 rounded-custom">
+            Contactar soporte
+        </a>
+
+    </div>
+
+</section>
+
+</main>

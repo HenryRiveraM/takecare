@@ -1,0 +1,33 @@
+.bg-softBlue {
+  background: #f0f7ff;
+}
+
+.rounded-custom {
+  border-radius: 8px;
+}
+
+.soft-shadow {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.text-primary {
+  color: #2b8cee;
+}
+
+.bg-primary {
+  background: #2b8cee;
+}
+
+.bg-mint {
+  background: #e6f7f5;
+}
+
+.floating-illustration {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
