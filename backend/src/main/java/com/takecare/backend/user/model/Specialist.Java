@@ -1,6 +1,15 @@
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+package com.takecare.backend.user.model;
 
+import com.takecare.backend.specialities.model.Speciality;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.util.Set;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "specialists")
 @PrimaryKeyJoinColumn(name = "id")
@@ -26,5 +35,5 @@ public class Specialist extends User {
             joinColumns = @JoinColumn(name = "specialist_id"),
             inverseJoinColumns = @JoinColumn(name = "specialty_id")
     )
-    private Set<Specialty> specialties;
+    private Set<Speciality> specialties;
 }

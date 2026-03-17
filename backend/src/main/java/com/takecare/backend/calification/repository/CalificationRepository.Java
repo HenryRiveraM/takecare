@@ -1,10 +1,11 @@
-package com.takecare.calification.repository;
+package com.takecare.backend.calification.repository;
 
-import com.takecare.calification.model.Report;
+import com.takecare.backend.calification.model.Calification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CalificationRepository
-        extends JpaRepository<Report,Long>{
+        extends JpaRepository<Calification, Integer>{
 
 }

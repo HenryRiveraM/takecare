@@ -1,0 +1,43 @@
+.role-page{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.container{
+  max-width:900px;
+  text-align:center;
+}
+
+.primary{
+  color:#258cf4;
+}
+
+.role-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-top:40px;
+}
+
+.card{
+  border:2px solid #e5e7eb;
+  padding:30px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.card:hover{
+  border-color:#258cf4;
+}
+
+.continue{
+  margin-top:30px;
+  background:#258cf4;
+  color:white;
+  padding:12px 30px;
+  border:none;
+  border-radius:8px;
+}
