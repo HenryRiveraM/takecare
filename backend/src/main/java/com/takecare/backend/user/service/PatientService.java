@@ -21,7 +21,6 @@ public class PatientService extends UserService {
         this.patientRepository = patientRepository;
     }
 
-    // Registro desde DTO
     public Patient registerPatientFromDTO(PatientRegisterDTO dto) {
         Patient patient = new Patient();
         patient.setNames(dto.getNames());
@@ -34,22 +33,19 @@ public class PatientService extends UserService {
         patient.setSelfieVerification(dto.getSelfieVerification());
         patient.setClinicalHistory(dto.getClinicalHistory());
 
-        prepareUser(patient, 1); // ✅ ahora funciona
+        prepareUser(patient, 1);
 
         return patientRepository.save(patient);
     }
 
-    // Listado de todos los pacientes
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
     }
 
-    // Obtener paciente por ID
     public Optional<Patient> getPatientById(Integer id) {
         return patientRepository.findById(id);
     }
 
-    // Actualizar paciente
     public Optional<Patient> updatePatient(Integer id, Patient patientDetails) {
         return patientRepository.findById(id)
             .map(patient -> {
@@ -65,7 +61,6 @@ public class PatientService extends UserService {
             });
     }
 
-    // Eliminar paciente
     public boolean deletePatient(Integer id) {
         return patientRepository.findById(id)
             .map(patient -> {
