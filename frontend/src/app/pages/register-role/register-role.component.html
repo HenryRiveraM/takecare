@@ -15,12 +15,17 @@
 
       <!-- PACIENTE -->
       <div class="card"
-           (click)="selectRole('patient')">
+            [class.selected]="selectedRole === 'patient'"
+            (click)="selectRole('patient')">
+
+        <div class="image">
+          <img src="assets/images/paciente.png" alt="Paciente">
+        </div>
 
         <h3>Necesito apoyo</h3>
 
         <p>
-          Estoy buscando un terapeuta que me ayude a mejorar mi salud mental.
+          Busco un terapeuta cualificado que me ayude a mejorar mi bienestar.
         </p>
 
       </div>
@@ -28,9 +33,14 @@
 
       <!-- ESPECIALISTA -->
       <div class="card"
-           (click)="selectRole('specialist')">
+            [class.selected]="selectedRole === 'specialist'"
+            (click)="selectRole('specialist')">
 
-        <h3>Soy especialista</h3>
+        <div class="image">
+          <img src="assets/images/especialista.png" alt="Especialista">
+        </div>
+
+        <h3>Soy un especialista</h3>
 
         <p>
           Soy un profesional certificado que desea ayudar a pacientes.
@@ -41,6 +51,7 @@
     </div>
 
     <button class="continue"
+            [disabled]="!selectedRole"
             (click)="continue()">
       Continuar
     </button>
