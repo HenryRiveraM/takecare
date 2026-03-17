@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.takecare.backend.auth.DTO.ApiResponseDTO;
 import com.takecare.backend.user.dto.PatientRegisterDTO;
 import com.takecare.backend.user.dto.SpecialistRegisterDTO;
+import com.takecare.backend.user.model.Patient;
+import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.service.PatientService;
 import com.takecare.backend.user.service.SpecialistService;
 
@@ -26,14 +29,14 @@ public class UserController {
 
     @PostMapping("/register/patient")
     public ResponseEntity<?> registerPatient(@Valid @RequestBody PatientRegisterDTO dto) {
-        patientService.registerPatientFromDTO(dto);
-        return ResponseEntity.ok("Patient registered");
+        Patient patient = patientService.registerPatientFromDTO(dto);
+        return ResponseEntity.ok(new ApiResponseDTO<>(true, patient, null));
     }
 
     @PostMapping("/register/specialist")
     public ResponseEntity<?> registerSpecialist(@Valid @RequestBody SpecialistRegisterDTO dto) {
-        specialistService.registerSpecialistFromDTO(dto);
-        return ResponseEntity.ok("Specialist registered");
+        Specialist specialist = specialistService.registerSpecialistFromDTO(dto);
+        return ResponseEntity.ok(new ApiResponseDTO<>(true, specialist, null));
     }
 
 }
