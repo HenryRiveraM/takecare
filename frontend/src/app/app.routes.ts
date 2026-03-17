@@ -5,13 +5,18 @@ import { RegisterRoleComponent } from './pages/register-role/register-role.compo
 import { RegisterPatientComponent } from './pages/register-patient/register-patient.component';
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 import { RegisterSpecialistComponent } from './pages/register-specialist/register-specialist.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register-role', component: RegisterRoleComponent },
-  { path: 'register/specialist', component: RegisterSpecialistComponent },
-  { path: 'register/patient', component: RegisterPatientComponent },
-  { path: 'forgot-password', component: RecoverPasswordComponent},
-];
+  { path: '', component: HomeComponent, data: { showNavbar: true } },
 
+  { path: 'login', component: LoginComponent, data: { showNavbar: false } },
+  { path: 'forgot-password', component: RecoverPasswordComponent, data: { showNavbar: false } },
+
+  { path: 'register-role', component: RegisterRoleComponent, data: { showNavbar: true } },
+  { path: 'register/specialist', component: RegisterSpecialistComponent, data: { showNavbar: true } },
+  { path: 'register/patient', component: RegisterPatientComponent, data: { showNavbar: true } },
+
+  {path: '**', component: NotFoundComponent, data: { showNavbar: false } }
+];
