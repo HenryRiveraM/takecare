@@ -27,7 +27,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-
+        
+    - name: Make mvnw executable
+      working-directory: ./backend
+      run: chmod +x mvnw
+  
     - name: Build backend with Maven
       working-directory: ./backend
       run: ./mvnw clean compile --no-transfer-progress -q
