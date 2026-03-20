@@ -3,64 +3,62 @@
   <div class="login-card">
 
     <div class="login-header">
-
       <div class="icon">
         <span class="material-symbols-outlined">lock</span>
       </div>
 
       <h1>Tu espacio seguro comienza aquí</h1>
-
       <p>Take Care: Tu bienestar mental es nuestra prioridad.</p>
-
     </div>
 
-    <form>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
       <div class="form-group">
-
-        <label>Email Address</label>
-
+        <label>Email</label>
         <div class="input-icon">
           <span class="material-symbols-outlined">mail</span>
-          <input type="email" placeholder="example@email.com">
+          <input type="email" formControlName="email">
         </div>
-
       </div>
 
       <div class="form-group">
-
-        <label>Password</label>
-
+        <label>Contraseña</label>
         <div class="input-icon">
           <span class="material-symbols-outlined">lock</span>
-          <input type="password" placeholder="••••••••">
+          <input type="password" formControlName="password">
         </div>
-
       </div>
 
       <div class="login-options">
-
         <label>
           <input type="checkbox">
-          Remember me
+          Recordarme
         </label>
 
-        <a href="#">Forgot password?</a>
-
+        <a routerLink="/forgot-password">¿Olvidaste tu contraseña?</a>
       </div>
 
-      <button class="login-btn">
-        Iniciar Sesión
+      <button class="login-btn" type="submit" [disabled]="loading">
+
+        <span *ngIf="!loading">Iniciar Sesión</span>
+
+        <span *ngIf="loading" class="loader"></span>
+
       </button>
+
+      <p *ngIf="errorMsg" class="error">
+        {{ errorMsg }}
+      </p>
+
+      <p *ngIf="loginSuccess" class="success">
+        ✔ Inicio de sesión exitoso
+      </p>
 
     </form>
 
     <div class="secure">
-
       <span class="material-symbols-outlined">verified_user</span>
-
-      <p>Secure HTTPS Connection</p>
-
+      <p>Conexión segura</p>
     </div>
 
   </div>

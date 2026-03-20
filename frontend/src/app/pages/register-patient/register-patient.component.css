@@ -1,8 +1,9 @@
 .patient-page{
   min-height:100vh;
-  background:linear-gradient(180deg,#f8fafc,#eef2f7);
+  background:linear-gradient(180deg,#fff6f6,#ffffff);
   font-family:Manrope, sans-serif;
 }
+
 
 .form-container{
   display:flex;
@@ -11,23 +12,26 @@
   padding:80px 20px;
 }
 
+
 .card{
   background:white;
   width:740px;
   padding:50px;
-  border-radius:20px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.06);
+  border-radius:25px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.08);
   transition:all 0.3s ease;
 }
 
 .card:hover{
-  transform:translateY(-3px);
+  transform:translateY(-4px);
 }
 
+
 h1{
-  font-size:28px;
-  font-weight:700;
+  font-size:30px;
+  font-weight:800;
   margin-bottom:10px;
+  color:#1f2937;
 }
 
 .subtitle{
@@ -38,8 +42,8 @@ h1{
 }
 
 .section-title{
-  margin-top:35px;
-  margin-bottom:15px;
+  margin-top:40px;
+  margin-bottom:18px;
   font-size:13px;
   font-weight:600;
   color:#4b5563;
@@ -55,10 +59,34 @@ h1{
   margin-bottom:20px;
 }
 
-.section-title{
-  margin-top:40px; /* antes 35 */
-  margin-bottom:18px; /* antes 15 */
+
+.grid input,
+.password input{
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid #f3d1d1;
+  outline:none;
+  font-size:14px;
+  background:#fffafa;
+  transition:all 0.25s ease;
 }
+
+
+
+.grid input:hover,
+.password input:hover{
+  border-color:#F5A3A3;
+}
+
+
+
+.grid input:focus,
+.password input:focus{
+  background:white;
+  border-color:#F5A3A3;
+  box-shadow:0 0 0 4px rgba(245,163,163,0.2);
+}
+
 
 .password{
   margin-top:20px;
@@ -74,46 +102,15 @@ h1{
 }
 
 
-.grid input,
-.password input{
-  padding:14px 16px;
-  border-radius:12px;
-  border:1px solid #e5e7eb;
-  outline:none;
-  font-size:14px;
-  background:#fafafa;
-  transition:all 0.25s ease;
-}
-
-
-.grid input:hover,
-.password input:hover{
-  border-color:#cbd5e1;
-}
-
-
-.grid input:focus,
-.password input:focus{
-  background:white;
-  border-color:#258cf4;
-  box-shadow:0 0 0 4px rgba(37,140,244,0.12);
-}
-
-
-.password input{
-  width:100%;
-  margin-top:15px;
-}
-
 
 .upload{
-  border:2px dashed #d1d5db;
+  border:2px dashed #f3d1d1;
   border-radius:18px;
   padding:25px;
   text-align:center;
   cursor:pointer;
   transition:all 0.25s ease;
-  background:#fafafa;
+  background:#fffafa;
 
   display:flex;
   flex-direction:column;
@@ -122,16 +119,13 @@ h1{
   gap:12px;
 
   height:150px;
-  position:relative;
 }
-
 
 .upload img{
   width:42px;
-  opacity:0.5;
+  opacity:0.6;
   transition:0.3s;
 }
-
 
 .upload p{
   font-size:14px;
@@ -140,15 +134,17 @@ h1{
 }
 
 
+
 .upload:hover{
-  border-color:#258cf4;
-  background:#eef5ff;
-  transform:translateY(-2px);
+  border-color:#F5A3A3;
+  background:#fff0f0;
+  transform:translateY(-3px);
 }
 
 .upload:hover img{
   opacity:1;
 }
+
 
 
 .upload.active{
@@ -158,11 +154,6 @@ h1{
 
 .upload.active p{
   color:#16a34a;
-}
-
-.upload.active img{
-  filter:grayscale(0);
-  opacity:1;
 }
 
 
@@ -177,52 +168,55 @@ h1{
 }
 
 
+
 .actions{
   margin-top:40px;
   display:flex;
   gap:12px;
 }
 
-
 .primary{
   flex:1;
-  background:linear-gradient(135deg,#258cf4,#1c6ed5);
+  background:#F5A3A3;
   color:white;
   border:none;
   padding:15px;
   border-radius:12px;
   font-weight:600;
   cursor:pointer;
-  transition:all 0.25s ease;
+  transition:0.3s;
+  box-shadow:0 10px 20px rgba(245,163,163,0.3);
 }
-
 
 .primary:hover{
-  transform:translateY(-1px);
-  box-shadow:0 12px 25px rgba(37,140,244,0.25);
+  background:#ec8f8f;
+  transform:translateY(-2px);
 }
+
 
 
 .primary:disabled{
-  background:#94a3b8;
+  background:#f3d1d1;
   opacity:0.7;
   cursor:not-allowed;
   box-shadow:none;
 }
 
 
+
 .cancel{
-  background:#f1f5f9;
+  background:#fff0f0;
   border:none;
   padding:15px 22px;
   border-radius:12px;
   cursor:pointer;
-  transition:all 0.2s ease;
+  transition:0.2s;
 }
 
 .cancel:hover{
-  background:#e2e8f0;
+  background:#ffe4e4;
 }
+
 
 
 @media (max-width: 768px){
