@@ -1,19 +1,10 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
 <div class="patient-page">
 
 <main class="form-container">
 
 <div class="card">
-
-<!-- PASO -->
-<!-- <div class="step">
-
-  <span>PASO 1 DE 3</span>
-
-  <div class="progress">
-    <div class="bar"></div>
-  </div>
-
-</div> -->
 
 <h1>Registro de Paciente</h1>
 
@@ -21,74 +12,77 @@
 Crea tu cuenta para comenzar tu proceso de atención en salud mental.
 </p>
 
-<!-- INFORMACIÓN PERSONAL -->
-
-<h3 class="section-title">
-Información Personal
-</h3>
+<h3 class="section-title">Información Personal</h3>
 
 <div class="grid">
 
-<input placeholder="Nombre completo">
+<input formControlName="names" placeholder="Nombres">
 
-<input placeholder="Correo electrónico">
+<input formControlName="first_lastname" placeholder="Primer apellido">
+
+<input formControlName="second_lastname" placeholder="Segundo apellido (opcional)">
+
+<input formControlName="ci_number" placeholder="Número de CI">
+
+<input type="date" formControlName="birth_date">
+
+<input formControlName="email" placeholder="Correo electrónico">
 
 </div>
 
 <div class="password">
-
-<input type="password" placeholder="Mínimo 8 caracteres">
-
+<label>Contraseña</label>
+<input type="password" formControlName="password" placeholder="Mínimo 8 caracteres">
 </div>
 
-<!-- DOCUMENTOS -->
-
-<h3 class="section-title">
-Documentos de Verificación
-</h3>
+<h3 class="section-title">Documentos de Verificación</h3>
 
 <div class="grid">
 
-<div class="upload">
+<div class="upload"
+      [class.active]="documentoNombre"
+      (click)="fileInput.click()">
 
-<img src="assets/icons/upload.svg" class="icon">
+  <input type="file" hidden #fileInput (change)="onFileSelected($event, 'documento')">
 
-<p>Subir documento de identidad</p>
+  <img src="assets/icons/upload.svg">
 
-</div>
-
-<div class="upload">
-
-<img src="assets/icons/user.svg" class="icon">
-
-
-<p>Tomar una selfie</p>
+  <p>
+    {{ documentoNombre || 'Subir documento de identidad' }}
+  </p>
 
 </div>
 
+<div class="upload"
+      [class.active]="selfieNombre"
+      (click)="selfieInput.click()">
+
+  <input type="file" hidden #selfieInput (change)="onFileSelected($event, 'selfie')">
+
+  <img src="assets/icons/user.svg">
+
+  <p>
+    {{ selfieNombre || 'Tomar una selfie' }}
+  </p>
+
 </div>
 
-<!-- TERMINOS -->
+</div>
 
 <div class="checkbox">
-
 <label>
-
-<input type="checkbox">
-
-Acepto los Términos de Servicio y la Política de Privacidad
-
+<input type="checkbox" formControlName="terms">
+Acepto los Términos de Servicio
 </label>
-
 </div>
 
 <div class="actions">
 
-<button class="primary">
+<button class="primary" type="submit" [disabled]="form.invalid">
 Crear cuenta
 </button>
 
-<button class="cancel">
+<button class="cancel" type="button" (click)="cancel()">
 Cancelar
 </button>
 
@@ -99,3 +93,5 @@ Cancelar
 </main>
 
 </div>
+
+</form>
