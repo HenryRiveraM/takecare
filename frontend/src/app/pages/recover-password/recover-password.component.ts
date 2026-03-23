@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Para el *ngIf
+import { CommonModule } from '@angular/common'; 
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router'; // Para el routerLink
+import { RouterModule } from '@angular/router'; 
 
 @Component({
   selector: 'app-recover-password',
-  standalone: true, // Esto indica que es versión nueva
-  imports: [CommonModule, ReactiveFormsModule, RouterModule], // ¡Importante!
+  standalone: true, 
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './recover-password.component.html',
   styleUrls: ['./recover-password.component.css']
 })
@@ -22,7 +22,6 @@ export class RecoverPasswordComponent {
     });
   }
 
-  // Getter para facilitar acceso en HTML
   get f() { return this.recoveryForm.controls; }
 
   onSubmit() {
@@ -35,10 +34,9 @@ export class RecoverPasswordComponent {
 
     console.log('Enviando correo a:', this.recoveryForm.value.email);
     
-    // Simulamos respuesta del servidor
     setTimeout(() => {
       this.isLoading = false;
-      this.isSent = true; // Indicamos que el correo ha sido "enviado"
+      this.isSent = true; 
       alert('Si el correo existe, recibirás un enlace pronto.');
     }, 2000);
   }

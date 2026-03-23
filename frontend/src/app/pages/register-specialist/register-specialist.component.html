@@ -25,6 +25,12 @@
             </div>
 
             <div class="field col-2">
+                <label>FECHA DE NACIMIENTO</label>
+                <input type="date" formControlName="fechaNacimiento">
+                <small class="error-msg" *ngIf="f['fechaNacimiento'].touched && f['fechaNacimiento'].invalid">Requerido</small>
+            </div>
+
+            <div class="field col-2">
                 <label>CORREO ELECTRÓNICO</label>
                 <input type="email" formControlName="email" placeholder="jane@example.com">
                 <small class="error-msg" *ngIf="f['email'].touched && f['email'].invalid">Formato inválido</small>
@@ -47,7 +53,7 @@
                 <input type="text" formControlName="complemento" placeholder="Ej: 1P">
             </div>
 
-            <div class="field col-2">
+            <div class="field full-width">
                 <label>FOTO DEL CARNET (ANVERSO)</label>
                 <div class="upload-zone success" *ngIf="carnetFile">
                     <div class="carnet-card">
@@ -62,25 +68,6 @@
                     <label class="upload-button">
                         <span>📷 Subir Carnet</span>
                         <input type="file" (change)="onCarnetSelected($event)" accept="image/*" style="display: none;">
-                    </label>
-                </div>
-            </div>
-
-            <div class="field col-2">
-                <label>FOTO SELFIE (PRUEBA DE VIDA)</label>
-                <div class="upload-zone success" *ngIf="selfiePreview">
-                    <div class="carnet-card">
-                        <img [src]="selfiePreview">
-                        <div class="carnet-info">
-                            <span>Selfie cargada ✅</span>
-                            <button type="button" (click)="removeSelfie()">Eliminar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="upload-zone carnet-zone" *ngIf="!selfiePreview">
-                    <label class="upload-button">
-                        <span>🤳 Subir Selfie</span>
-                        <input type="file" (change)="onSelfieSelected($event)" accept="image/*" style="display: none;">
                     </label>
                 </div>
             </div>
@@ -125,7 +112,6 @@
             </div>
 
             <div class="full-width consent-section">
-    
                 <div class="check-item consent-box">
                     <input type="checkbox" id="terminos" formControlName="aceptaTerminos">
                     <label for="terminos" class="consent-label">
@@ -146,12 +132,15 @@
             </div>
 
             <button type="submit" class="btn-complete" 
-                [disabled]="registerForm.invalid || fileList.length === 0 || !tieneEspecialidadSeleccionada() || !carnetFile || !selfiePreview">
-                Registro completo
+                [class.is-loading]="isLoading"
+                [disabled]="registerForm.invalid || fileList.length === 0 || !tieneEspecialidadSeleccionada() || !carnetFile || isLoading">
+                
+                <span *ngIf="isLoading" class="spinner"></span>
+                
+                <span>{{ isLoading ? 'Procesando registro...' : 'Registro completo' }}</span>
             </button>
 
             <p class="footer-note">ⓘ Su perfil será revisado por el administrador</p>
         </form>
     </div>
 </div>
-

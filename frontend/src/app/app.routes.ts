@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent, data: { showNavbar: true } },
 
   { path: 'login', component: LoginComponent, data: { showNavbar: false } },
-  { path: 'forgot-password', component: RecoverPasswordComponent, data: { showNavbar: false } },
+  { path: 'recover-password', component: RecoverPasswordComponent, data: { showNavbar: false } },
 
   { path: 'register-role', component: RegisterRoleComponent, data: { showNavbar: true } },
   { path: 'register/specialist', component: RegisterSpecialistComponent, data: { showNavbar: true } },
