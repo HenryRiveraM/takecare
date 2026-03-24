@@ -16,8 +16,8 @@ import lombok.Setter;
 public class SpecialistRegisterDTO extends UserRegisterDTO {
     
     @NotBlank
-    @Size(max = 1000, message = "Profile must be at most 1000 characters long")
-    @Pattern(regexp = "^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$", message = "Specialty must contain only letters")
+    @Size(max = 1000, message = "Biography must be at most 1000 characters long")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9.,;:!?()\\s-/#]*$", message = "Biography can only contain letters, numbers, spaces, and basic punctuation")
     private String biography;
 
     @NotBlank
