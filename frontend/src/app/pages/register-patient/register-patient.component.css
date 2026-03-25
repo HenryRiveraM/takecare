@@ -1,121 +1,233 @@
 .patient-page{
   min-height:100vh;
-  background:#f5f7f8;
-  font-family:Manrope;
+  background:linear-gradient(180deg,#fff6f6,#ffffff);
+  font-family:Manrope, sans-serif;
 }
 
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  padding:20px 40px;
-  background:white;
-  border-bottom:1px solid #eee;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.icon{
-  color:#258cf4;
-}
-
-.signin{
-  background:#258cf4;
-  color:white;
-  border:none;
-  padding:10px 20px;
-  border-radius:8px;
-}
 
 .form-container{
   display:flex;
   justify-content:center;
-  padding:40px;
+  align-items:center;
+  padding:80px 20px;
 }
+
 
 .card{
   background:white;
-  width:700px;
-  padding:40px;
-  border-radius:15px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.05);
+  width:740px;
+  padding:50px;
+  border-radius:25px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.08);
+  transition:all 0.3s ease;
 }
 
-.step{
-  margin-bottom:20px;
+.card:hover{
+  transform:translateY(-4px);
 }
 
-.progress{
-  height:4px;
-  background:#eee;
-  margin-top:5px;
-}
 
-.bar{
-  width:33%;
-  height:100%;
-  background:#258cf4;
+h1{
+  font-size:30px;
+  font-weight:800;
+  margin-bottom:10px;
+  color:#1f2937;
 }
 
 .subtitle{
   color:#6b7280;
-  margin-bottom:30px;
+  margin-bottom:35px;
+  font-size:14px;
+  line-height:1.5;
 }
 
 .section-title{
-  margin-top:30px;
-  margin-bottom:15px;
+  margin-top:40px;
+  margin-bottom:18px;
+  font-size:13px;
+  font-weight:600;
+  color:#4b5563;
+  letter-spacing:0.5px;
 }
+
 
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:20px;
+  column-gap:18px;
+  row-gap:22px;
+  margin-bottom:20px;
 }
 
-.grid input{
-  padding:12px;
-  border-radius:8px;
-  border:1px solid #ddd;
-}
 
+.grid input,
 .password input{
-  width:100%;
-  padding:12px;
-  margin-top:15px;
-  border-radius:8px;
-  border:1px solid #ddd;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid #f3d1d1;
+  outline:none;
+  font-size:14px;
+  background:#fffafa;
+  transition:all 0.25s ease;
 }
+
+
+
+.grid input:hover,
+.password input:hover{
+  border-color:#F5A3A3;
+}
+
+
+
+.grid input:focus,
+.password input:focus{
+  background:white;
+  border-color:#F5A3A3;
+  box-shadow:0 0 0 4px rgba(245,163,163,0.2);
+}
+
+
+.password{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.password label{
+  font-size:13px;
+  font-weight:500;
+  color:#374151;
+}
+
+
 
 .upload{
-  border:2px dashed #ccc;
-  border-radius:10px;
-  padding:30px;
+  border:2px dashed #f3d1d1;
+  border-radius:18px;
+  padding:25px;
   text-align:center;
   cursor:pointer;
+  transition:all 0.25s ease;
+  background:#fffafa;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+
+  height:150px;
 }
 
+.upload img{
+  width:42px;
+  opacity:0.6;
+  transition:0.3s;
+}
+
+.upload p{
+  font-size:14px;
+  color:#374151;
+  font-weight:500;
+}
+
+
+
+.upload:hover{
+  border-color:#F5A3A3;
+  background:#fff0f0;
+  transform:translateY(-3px);
+}
+
+.upload:hover img{
+  opacity:1;
+}
+
+
+
+.upload.active{
+  border-color:#22c55e;
+  background:#ecfdf5;
+}
+
+.upload.active p{
+  color:#16a34a;
+}
+
+
+.checkbox{
+  margin-top:18px;
+  font-size:13px;
+  color:#374151;
+}
+
+.checkbox input{
+  margin-right:6px;
+}
+
+
+
 .actions{
-  margin-top:30px;
+  margin-top:40px;
   display:flex;
-  gap:10px;
+  gap:12px;
 }
 
 .primary{
   flex:1;
-  background:#258cf4;
+  background:#F5A3A3;
   color:white;
   border:none;
-  padding:14px;
-  border-radius:10px;
+  padding:15px;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 10px 20px rgba(245,163,163,0.3);
 }
 
+.primary:hover{
+  background:#ec8f8f;
+  transform:translateY(-2px);
+}
+
+
+
+.primary:disabled{
+  background:#f3d1d1;
+  opacity:0.7;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+
+
+
 .cancel{
-  background:#eee;
+  background:#fff0f0;
   border:none;
-  padding:14px;
-  border-radius:10px;
+  padding:15px 22px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.cancel:hover{
+  background:#ffe4e4;
+}
+
+
+
+@media (max-width: 768px){
+
+  .card{
+    width:100%;
+    padding:30px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
 }

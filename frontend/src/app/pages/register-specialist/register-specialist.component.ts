@@ -13,14 +13,11 @@ export class RegisterSpecialistComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
   isDragging = false;
+  isLoading: boolean = false;
 
-  // --- Estado de Archivos ---
-  fileList: { file: File, size: string }[] = []; // Para los PDFs
-  carnetFile: { file: File, url: string } | null = null; // Para la foto del carnet
-  selfieArchivo: File | null = null; // Para el archivo real de la selfie
-  selfiePreview: string | null = null; // Para la vista previa de la selfie
+  fileList: { file: File, size: string }[] = []; 
+  carnetFile: { file: File, url: string } | null = null; 
 
-  // --- Opciones de Especialidad ---
   especialidadesOpciones = [
     { id: 'mental', nombre: 'Trastornos mentales', seleccionado: false },
     { id: 'adicciones', nombre: 'Adicciones', seleccionado: false },
@@ -36,20 +33,19 @@ export class RegisterSpecialistComponent implements OnInit {
     this.registerForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       apellidoPaterno: ['', [Validators.required, Validators.minLength(3)]],
-      apellidoMaterno: [''], // Opcional
+      apellidoMaterno: [''], 
+      fechaNacimiento: ['', Validators.required], 
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       documento: ['', Validators.required],
       complemento: [''],
-      aceptaTerminos: [false, Validators.requiredTrue], // Campo obligatorio: requiredTrue asegura que el checkbox esté marcado
-      aceptaComunicaciones: [false] // Campo opcional (marketing/comunicaciones)
+      aceptaTerminos: [false, Validators.requiredTrue], 
+      aceptaComunicaciones: [false] 
     });
   }
 
-  // Getter para facilitar el acceso a errores en el HTML
   get f() { return this.registerForm.controls; }
 
-  // --- Lógica de Certificaciones (PDFs) ---
   onFileSelected(event: any) {
     const files = event.target.files || event.dataTransfer?.files;
     this.addFiles(files);
@@ -71,7 +67,6 @@ export class RegisterSpecialistComponent implements OnInit {
     this.fileList.splice(index, 1);
   }
 
-  // --- Lógica de Foto Carnet ---
   onCarnetSelected(event: any) {
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
@@ -91,31 +86,10 @@ export class RegisterSpecialistComponent implements OnInit {
     this.carnetFile = null;
   }
 
-  // --- Lógica de Foto Selfie ---
-  onSelfieSelected(event: any) {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      this.selfieArchivo = file;
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.selfiePreview = e.target.result;
-        this.cd.detectChanges();
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  removeSelfie() {
-    this.selfieArchivo = null;
-    this.selfiePreview = null;
-  }
-
-  // --- Validaciones Auxiliares ---
   tieneEspecialidadSeleccionada(): boolean {
     return this.especialidadesOpciones.some(opt => opt.seleccionado);
   }
 
-  // --- Drag & Drop Helpers ---
   onDragOver(event: DragEvent) {
     event.preventDefault();
     this.isDragging = true;
@@ -134,38 +108,33 @@ export class RegisterSpecialistComponent implements OnInit {
     }
   }
 
-  // --- Envío Final ---
   onSubmit() {
     this.submitted = true;
 
-    if (this.registerForm.valid && this.fileList.length > 0 && this.tieneEspecialidadSeleccionada() && this.carnetFile && this.selfiePreview) {
+    if (this.registerForm.valid && this.fileList.length > 0 && this.tieneEspecialidadSeleccionada() && this.carnetFile) {
       
-      // 1. OBJETO PARA LA BASE DE DATOS (El que enviarás al servidor)
+      this.isLoading = true; 
+
       const dataParaBackend = {
         ...this.registerForm.value,
         especialidades: this.especialidadesOpciones
           .filter(opt => opt.seleccionado)
-          .map(opt => opt.nombre), // Enviamos un ARRAY: ["Mental", "Adicciones"]
-        
-        // En la vida real, aquí enviarías los archivos reales (File), no solo el nombre
+          .map(opt => opt.nombre), 
         certificaciones: this.fileList.map(f => f.file.name), 
         fotoCarnet: this.carnetFile?.file.name,
-        fotoSelfie: this.selfieArchivo?.name
       };
 
-      // 2. OBJETO SOLO PARA LA CONSOLA (Para que tú lo veas lindo en la tabla)
-      const visualDebug = {
-        ...dataParaBackend,
-        especialidades: dataParaBackend.especialidades.join(', '),
-        certificaciones: dataParaBackend.certificaciones.join(' | ')
-      };
+      console.log('%c🚀 PROCESANDO REGISTRO...', 'color: #F5A3A3; font-weight: bold;');
+      console.table(dataParaBackend); 
 
-      console.log('%c🚀 DATOS LISTOS PARA EL BACKEND', 'color: #22c55e; font-weight: bold;');
-      console.table(visualDebug); // Tabla limpia
-      console.log('Objeto Real:', dataParaBackend); // Objeto con Arrays para el programador
+      setTimeout(() => {
+        this.isLoading = false; 
+        alert('¡Registro enviado con éxito! El administrador revisará su perfil.');
+      }, 2000);
 
     } else {
-      alert('Revisa los campos obligatorios.');
+      this.isLoading = false;
+      alert('Por favor, completa todos los campos obligatorios, incluyendo documentos y especialidades.');
     }
   }
 }
