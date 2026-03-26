@@ -2,16 +2,25 @@
 
 <div class="logo" routerLink="/">
     <img src="assets/images/logo.png" alt="Take Care" />
-    <!-- <span>Take Care</span> -->
 </div>
 
 <nav class="links">
     <a routerLink="/">Inicio</a>
-    <a routerLink="/about">Nosotros</a>
+    <a routerLink="/">Nosotros</a>
 </nav>
 
 <div class="actions">
-    <button routerLink="/login">Iniciar sesión</button>
+
+    <!-- BOTÓN SECUNDARIO -->
+    <a routerLink="/login" class="btn-outline">
+        Iniciar sesión
+    </a>
+
+    <!-- BOTÓN PRINCIPAL -->
+    <a routerLink="/register-role" class="btn-primary">
+        Registrarse
+    </a>
+
 </div>
 
 </header>
