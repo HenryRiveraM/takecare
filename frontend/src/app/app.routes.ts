@@ -5,7 +5,7 @@ import { RegisterRoleComponent } from './pages/register-role/register-role.compo
 import { RegisterPatientComponent } from './pages/register-patient/register-patient.component';
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 import { RegisterSpecialistComponent } from './pages/register-specialist/register-specialist.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component'; 
 
 
 export const routes: Routes = [
@@ -17,6 +17,7 @@ export const routes: Routes = [
   { path: 'register-role', component: RegisterRoleComponent, data: { showNavbar: true } },
   { path: 'register/specialist', component: RegisterSpecialistComponent, data: { showNavbar: true } },
   { path: 'register/patient', component: RegisterPatientComponent, data: { showNavbar: true } },
+  { path: 'admin/validate-specialists',loadComponent: () =>import('./pages/admin-validate-specialists/admin-validate-specialists.component').then(m => m.AdminValidateSpecialistsComponent),data: { showNavbar: true }},
 
   {path: '**', component: NotFoundComponent, data: { showNavbar: false } }
 ];

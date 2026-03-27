@@ -1,0 +1,55 @@
+.admin-page{
+  padding:40px;
+}
+
+h1{
+  margin-bottom:30px;
+}
+
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);
+}
+
+.info{
+  flex:2;
+}
+
+.cert img{
+  width:120px;
+  border-radius:8px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+}
+
+.approve{
+  background:#22c55e;
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.reject{
+  background:#ef4444;
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+}
