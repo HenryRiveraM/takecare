@@ -68,10 +68,11 @@ public class SpecialistService extends UserService {
     }
 
     public boolean deleteSpecialist(Integer id) {
-        return specialistRepository.findById(id)
-            .map(specialist -> {
-                specialistRepository.delete(specialist);
-                return true;
-            }).orElse(false);
-    }
+    return specialistRepository.findById(id)
+        .map(specialist -> {
+            specialist.setStatus(false);
+            specialistRepository.save(specialist);
+            return true;
+        }).orElse(false);
+}
 }

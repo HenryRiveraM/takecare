@@ -50,35 +50,6 @@ public class AuthController {
         return ResponseEntity.ok("Contraseña actualizada");
     }
 
-    /**
-     * Endpoint de login
-     * POST /api/v1/auth/login
-     * 
-     * Request:
-     * {
-     *     "email": "usuario@gmail.com",
-     *     "password": "12345678"
-     * }
-     * 
-     * Response exitosa (200):
-     * {
-     *     "success": true,
-     *     "data": {
-     *         "id": 1,
-     *         "names": "Juan Perez",
-     *         "email": "juan@gmail.com",
-     *         "role": 1
-     *     },
-     *     "error": null
-     * }
-     * 
-     * Response error (401):
-     * {
-     *     "success": false,
-     *     "data": null,
-     *     "error": "Credenciales incorrectas"
-     * }
-     */
     @PostMapping("/login")
     public ResponseEntity<ApiResponseDTO<LoginResponseDTO>> login(
             @Valid @RequestBody LoginRequestDTO request) {
