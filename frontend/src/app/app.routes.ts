@@ -6,7 +6,7 @@ import { RegisterPatientComponent } from './pages/register-patient/register-pati
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 import { RegisterSpecialistComponent } from './pages/register-specialist/register-specialist.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-
+import { ProfilePatientComponents } from './pages/profile-patient/profile-patient.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, data: { showNavbar: true } },
@@ -17,6 +17,6 @@ export const routes: Routes = [
   { path: 'register-role', component: RegisterRoleComponent, data: { showNavbar: true } },
   { path: 'register/specialist', component: RegisterSpecialistComponent, data: { showNavbar: true } },
   { path: 'register/patient', component: RegisterPatientComponent, data: { showNavbar: true } },
-
+  { path: 'profile/patient', component: ProfilePatientComponents, data: { showNavbar: true } },
   {path: '**', component: NotFoundComponent, data: { showNavbar: false } }
 ];
