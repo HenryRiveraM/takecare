@@ -63,11 +63,17 @@ export class LoginComponent {
           this.errorMsg = response.error ?? 'Error desconocido';
         }
       },
-      error: (err) => {
-        this.loading = false;
-        this.errorMsg = 'Error de conexión. Intenta de nuevo';
-        console.error('Login error:', err);
-      }
+error: (err) => {
+  this.loading = false;
+
+  if (err.status === 401) {
+    this.errorMsg = 'Correo o contraseña incorrectos';
+  } else {
+    this.errorMsg = 'Error de conexión con el servidor';
+  }
+
+  console.error('Login error:', err);
+}
     });
   }
 }
