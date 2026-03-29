@@ -1,0 +1,142 @@
+<div class="admin-page">
+
+  <section class="admin-hero">
+    <div class="admin-hero-text">
+      <span class="tag">Panel de gestión</span>
+      <h1>Administración de usuarios</h1>
+      <p>
+        Visualiza, busca y administra los pacientes y especialistas registrados en Take Care.
+      </p>
+    </div>
+  </section>
+
+  <section class="admin-panel">
+
+    <div class="top-controls">
+      <div class="tab-bar">
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'patients'"
+          (click)="setTab('patients')">
+          Pacientes
+        </button>
+
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'specialists'"
+          (click)="setTab('specialists')">
+          Especialistas
+        </button>
+      </div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          placeholder="Buscar por nombre, apellido o correo"
+          class="search-input"
+        />
+      </div>
+    </div>
+
+    <div *ngIf="errorMsg" class="error-message">
+      {{ errorMsg }}
+    </div>
+
+    <div *ngIf="isLoading" class="loading-message">
+      Cargando información...
+    </div>
+
+    <div class="table-card" *ngIf="activeTab === 'patients' && !isLoading">
+      <div class="section-header">
+        <h2>Pacientes registrados</h2>
+        <span class="count-badge">{{ filteredPatients.length }}</span>
+      </div>
+
+      <table *ngIf="filteredPatients.length > 0; else noPatients">
+        <thead>
+          <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Fecha de nacimiento</th>
+            <th>Strikes</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let patient of filteredPatients">
+            <td>{{ patient.names }}</td>
+            <td>{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
+            <td>{{ patient.email }}</td>
+            <td>{{ patient.birthDate | date }}</td>
+            <td>{{ patient.strikes }}</td>
+            <td>
+              <button class="delete-button" (click)="deletePatient(patient.id, patient.names + ' ' + patient.firstLastname)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noPatients>
+        <p class="empty-message">No hay pacientes registrados.</p>
+      </ng-template>
+    </div>
+
+    <div class="table-card" *ngIf="activeTab === 'specialists' && !isLoading">
+      <div class="section-header">
+        <h2>Especialistas registrados</h2>
+        <span class="count-badge">{{ filteredSpecialists.length }}</span>
+      </div>
+
+      <table *ngIf="filteredSpecialists.length > 0; else noSpecialists">
+        <thead>
+          <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Fecha de nacimiento</th>
+            <th>Strikes</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let specialist of filteredSpecialists">
+            <td>{{ specialist.names }}</td>
+            <td>{{ specialist.firstLastname }} {{ specialist.secondLastname || '' }}</td>
+            <td>{{ specialist.email }}</td>
+            <td>{{ specialist.birthDate | date }}</td>
+            <td>{{ specialist.strikes }}</td>
+            <td>
+              <button class="delete-button" (click)="deleteSpecialist(specialist.id, specialist.names + ' ' + specialist.firstLastname)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noSpecialists>
+        <p class="empty-message">No hay especialistas registrados.</p>
+      </ng-template>
+    </div>
+
+    <div *ngIf="showDeleteConfirm" class="delete-modal-overlay">
+      <div class="delete-modal-card">
+        <h3>Confirmar eliminación</h3>
+        <p>
+          ¿Estás seguro de eliminar al usuario <strong>{{ deleteTarget?.name }}</strong>?
+          Esta acción marcará el registro como eliminado.
+        </p>
+        <div class="modal-actions">
+          <button class="cancel-button" (click)="cancelDelete()">Cancelar</button>
+          <button class="confirm-button" (click)="confirmDelete()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

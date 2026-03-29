@@ -6,7 +6,8 @@ import { RegisterPatientComponent } from './pages/register-patient/register-pati
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 import { RegisterSpecialistComponent } from './pages/register-specialist/register-specialist.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-
+import { AdminComponent } from './pages/admin/admin.component';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, data: { showNavbar: true } },
@@ -18,5 +19,7 @@ export const routes: Routes = [
   { path: 'register/specialist', component: RegisterSpecialistComponent, data: { showNavbar: true } },
   { path: 'register/patient', component: RegisterPatientComponent, data: { showNavbar: true } },
 
-  {path: '**', component: NotFoundComponent, data: { showNavbar: false } }
+  { path: 'admin', component: AdminComponent, canActivate: [adminGuard], data: { showNavbar: true } },
+
+  { path: '**', component: NotFoundComponent, data: { showNavbar: false } }
 ];

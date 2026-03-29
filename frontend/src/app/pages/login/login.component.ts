@@ -49,7 +49,15 @@ export class LoginComponent {
           localStorage.setItem('user', JSON.stringify(response.data));
           this.loginSuccess = true;
           setTimeout(() => {
-            this.router.navigate(['/dashboard']);
+            const role = response.data?.role;
+            if(role == 3){
+              this.router.navigate(['/admin'])
+            }else if (role == 2){
+              this.router.navigate(['/dashboard'])
+            }else if (role == 1)
+            {
+              this.router.navigate(['/dashboard']);
+            }
           }, 800);
         } else {
           this.errorMsg = response.error ?? 'Error desconocido';

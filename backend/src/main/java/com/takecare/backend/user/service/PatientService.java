@@ -64,7 +64,8 @@ public class PatientService extends UserService {
     public boolean deletePatient(Integer id) {
         return patientRepository.findById(id)
             .map(patient -> {
-                patientRepository.delete(patient);
+                patient.setStatus(false);
+                patientRepository.save(patient);
                 return true;
             }).orElse(false);
     }
