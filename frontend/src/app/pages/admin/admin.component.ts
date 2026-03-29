@@ -17,14 +17,18 @@ export class AdminComponent implements OnInit {
 
   filteredPatients: Patient[] = [];
   filteredSpecialists: Specialist[] = [];
+  filteredValidations: any[] = [];
 
-  activeTab: 'patients' | 'specialists' = 'patients';
+  activeTab: 'patients' | 'specialists' | 'validations' = 'patients';
   searchTerm: string = '';
 
   loadingPatients = false;
   loadingSpecialists = false;
+  loadingValidations = false;
   errorMsg = '';
 
+  pendingValidations: any[] = [];
+  
   showDeleteConfirm = false;
   deleteTarget: { type: 'patient' | 'specialist'; id: number; name: string } | null = null;
 
@@ -33,6 +37,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.loadPatients();
     this.loadSpecialists();
+    this.loadPendingValidations();
   }
 
   loadPatients(): void {
@@ -67,7 +72,43 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  setTab(tab: 'patients' | 'specialists'): void {
+  loadPendingValidations(): void {
+    this.loadingValidations = true;
+    this.adminService.getPendingValidations().subscribe({
+      next: (data) => {
+        this.pendingValidations = data;
+        this.filteredValidations = [...this.pendingValidations];
+        this.loadingValidations = false;
+      },
+      error: (err) => {
+        this.errorMsg = 'Error al cargar las validaciones pendientes';
+        this.loadingValidations = false;
+        console.error(err);
+      }
+    });
+  }
+
+  // Lógica para Aprobar o Rechazar
+  processValidation(id: number, status: 'approved' | 'rejected'): void {
+    this.adminService.validateUser(id, status).subscribe({
+      next: () => {
+        // Si todo sale bien, lo quitamos de la lista visual
+        this.pendingValidations = this.pendingValidations.filter(u => u.id !== id);
+        this.filteredValidations = this.filteredValidations.filter(u => u.id !== id);
+        
+        // Si fue aprobado, refrescamos la lista de pacientes para que aparezca allí
+        if (status === 'approved') {
+          this.loadPatients();
+        }
+      },
+      error: (err) => {
+        this.errorMsg = 'No se pudo completar la operación de validación';
+        console.error(err);
+      }
+    });
+  }
+
+  setTab(tab: 'patients' | 'specialists' | 'validations'): void {
     this.activeTab = tab;
     this.searchTerm = '';
     this.resetFilters();
@@ -84,12 +125,19 @@ export class AdminComponent implements OnInit {
         (patient.secondLastname?.toLowerCase().includes(term) ?? false) ||
         patient.email.toLowerCase().includes(term)
       );
-    } else {
+    } else if (this.activeTab === 'specialists') {
       this.filteredSpecialists = this.specialists.filter(specialist =>
         specialist.names.toLowerCase().includes(term) ||
         specialist.firstLastname.toLowerCase().includes(term) ||
         (specialist.secondLastname?.toLowerCase().includes(term) ?? false) ||
         specialist.email.toLowerCase().includes(term)
+      );
+    } else if (this.activeTab === 'validations') {
+      // --- Lógica de búsqueda para TU sección ---
+      this.filteredValidations = this.pendingValidations.filter(v => 
+        v.names.toLowerCase().includes(term) || 
+        v.firstLastname.toLowerCase().includes(term) ||
+        v.email.toLowerCase().includes(term)
       );
     }
   }
@@ -97,6 +145,7 @@ export class AdminComponent implements OnInit {
   resetFilters(): void {
     this.filteredPatients = [...this.patients];
     this.filteredSpecialists = [...this.specialists];
+    this.filteredValidations = [...this.pendingValidations];
   }
 
   deletePatient(id: number, fullName: string): void {
@@ -146,6 +195,6 @@ export class AdminComponent implements OnInit {
   }
 
   get isLoading(): boolean {
-    return this.loadingPatients || this.loadingSpecialists;
+    return this.loadingPatients || this.loadingSpecialists || this.loadingValidations;
   }
 }

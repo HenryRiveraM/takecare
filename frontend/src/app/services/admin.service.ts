@@ -52,6 +52,14 @@ export class AdminService {
     });
   }
 
+  getPendingValidations(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/admin/pending-validations`);
+  }
+
+  validateUser(id: number, status: 'approved' | 'rejected'): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/admin/validate-user/${id}`, { status });
+  }
+
   deletePatient(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/patients/${id}`, {
       headers: this.getHeaders()

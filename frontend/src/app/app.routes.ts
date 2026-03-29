@@ -19,7 +19,7 @@ export const routes: Routes = [
   { path: 'register/specialist', component: RegisterSpecialistComponent, data: { showNavbar: true } },
   { path: 'register/patient', component: RegisterPatientComponent, data: { showNavbar: true } },
 
-  { path: 'admin', component: AdminComponent, canActivate: [adminGuard], data: { showNavbar: true } },
+  { path: 'admin', component: AdminComponent, /*canActivate: [adminGuard], data: { showNavbar: true }*/ },
 
   { path: '**', component: NotFoundComponent, data: { showNavbar: false } }
 ];
