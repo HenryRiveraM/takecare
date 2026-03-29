@@ -24,6 +24,8 @@ export interface Specialist {
   strikes: number;
 }
 
+// En tu admin.service.ts
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,10 +42,15 @@ export class AdminService {
     });
   }
 
-  getPatients(): Observable<Patient[]> {
+  /*getPatients(): Observable<Patient[]> {
     return this.http.get<Patient[]>(`${this.apiUrl}/patients`, {
       headers: this.getHeaders()
     });
+  }*/
+
+  getPatients(): Observable<Patient[]> {
+    const headers = new HttpHeaders().set('X-Admin-Id', '1'); 
+    return this.http.get<Patient[]>(`${this.apiUrl}/patients`, { headers });
   }
 
   getSpecialists(): Observable<Specialist[]> {

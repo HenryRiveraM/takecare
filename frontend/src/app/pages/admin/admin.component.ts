@@ -35,9 +35,69 @@ export class AdminComponent implements OnInit {
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.loadPatients();
+    /*this.loadPatients();
     this.loadSpecialists();
-    this.loadPendingValidations();
+    this.loadPendingValidations();*/
+
+    this.specialists = [
+      { 
+        id: 101, 
+        names: 'Dr. Armando', 
+        firstLastname: 'Casas', 
+        secondLastname: 'Real', 
+        email: 'armando@takecare.com', 
+        status: true, 
+        strikes: 0, 
+        birthDate: '1980-03-15' 
+      },
+      { 
+        id: 102, 
+        names: 'Dra. Elena', 
+        firstLastname: 'Nito', 
+        secondLastname: 'Del Bosque', 
+        email: 'elena@takecare.com', 
+        status: true, 
+        strikes: 2, 
+        birthDate: '1988-11-25' 
+      }
+    ]
+    
+    this.patients = [
+      { id: 1, names: 'Roberto', firstLastname: 'Gomez', email: 'roberto@test.com', status: true, strikes: 0, birthDate: '1990-05-12' },
+      { id: 2, names: 'Ana', firstLastname: 'Pérez', email: 'ana@test.com', status: true, strikes: 1, birthDate: '1985-08-22' }
+    ];
+    this.pendingValidations = [
+    { 
+      id: 3, 
+      names: 'Carlos', 
+      firstLastname: 'Ruiz', 
+      email: 'carlos@pendientes.com', 
+      status: false, 
+      ciNumber: '1234567 LP',
+      // Usamos imágenes de placeholder para que no se vea roto
+      ciUrl: 'https://preview.redd.it/id-card-template-v0-v9cc83e9b1kb1.png?width=1080&crop=smart&auto=webp&s=6e326071f652399203929497e641773950d26815', 
+      selfieUrl: 'https://xsgames.co/randomusers/assets/avatars/male/40.jpg' 
+    },
+    { 
+      id: 4, 
+      names: 'Lucía', 
+      firstLastname: 'Méndez', 
+      email: 'lucia@pendientes.com', 
+      status: false, 
+      ciNumber: '8765432 SC',
+      ciUrl: 'https://www.shutterstock.com/image-vector/id-card-vector-illustration-blank-260nw-1090360346.jpg', 
+      selfieUrl: 'https://xsgames.co/randomusers/assets/avatars/female/8.jpg' 
+    }
+  ];
+  
+
+    // Inicializamos los filtros para que se vean en la tabla
+    this.filteredPatients = [...this.patients];
+    this.filteredValidations = [...this.pendingValidations];
+    
+    // Apagamos los cargando
+    this.loadingPatients = false;
+    this.loadingValidations = false;
   }
 
   loadPatients(): void {
@@ -89,7 +149,7 @@ export class AdminComponent implements OnInit {
   }
 
   // Lógica para Aprobar o Rechazar
-  processValidation(id: number, status: 'approved' | 'rejected'): void {
+  /*processValidation(id: number, status: 'approved' | 'rejected'): void {
     this.adminService.validateUser(id, status).subscribe({
       next: () => {
         // Si todo sale bien, lo quitamos de la lista visual
@@ -106,6 +166,33 @@ export class AdminComponent implements OnInit {
         console.error(err);
       }
     });
+  }*/
+
+  processValidation(id: number, status: 'approved' | 'rejected'): void {
+    // En lugar de llamar al servicio, lo hacemos local
+    const userIndex = this.pendingValidations.findIndex(u => u.id === id);
+    
+    if (userIndex !== -1) {
+      const user = this.pendingValidations[userIndex];
+      
+      if (status === 'approved') {
+        // Lo "pasamos" a la lista de pacientes
+        const newPatient: Patient = {
+          ...user,
+          status: true,
+          strikes: 0,
+          birthDate: '1995-01-01' // Dato genérico para el mock
+        };
+        this.patients.push(newPatient);
+        this.filteredPatients = [...this.patients];
+      }
+
+      // Lo quitamos de pendientes
+      this.pendingValidations.splice(userIndex, 1);
+      this.filteredValidations = [...this.pendingValidations];
+      
+      console.log(`Usuario ${status} localmente`);
+    }
   }
 
   setTab(tab: 'patients' | 'specialists' | 'validations'): void {
@@ -133,7 +220,7 @@ export class AdminComponent implements OnInit {
         specialist.email.toLowerCase().includes(term)
       );
     } else if (this.activeTab === 'validations') {
-      // --- Lógica de búsqueda para TU sección ---
+      const term = this.searchTerm.toLowerCase().trim(); // Usar el mismo formato
       this.filteredValidations = this.pendingValidations.filter(v => 
         v.names.toLowerCase().includes(term) || 
         v.firstLastname.toLowerCase().includes(term) ||
@@ -158,7 +245,7 @@ export class AdminComponent implements OnInit {
     this.deleteTarget = { type: 'specialist', id, name: fullName };
   }
 
-  confirmDelete(): void {
+  /*confirmDelete(): void {
     if (!this.deleteTarget) return;
 
     const { type, id } = this.deleteTarget;
@@ -183,8 +270,24 @@ export class AdminComponent implements OnInit {
         this.closeDeleteConfirm();
       }
     });
-  }
+  }*/
 
+  confirmDelete(): void {
+    if (!this.deleteTarget) return;
+
+    const { type, id } = this.deleteTarget;
+
+    // Lógica local sin llamar al servicio
+    if (type === 'patient') {
+      this.patients = this.patients.filter(item => item.id !== id);
+      this.filteredPatients = [...this.patients];
+    } else {
+      this.specialists = this.specialists.filter(item => item.id !== id);
+      this.filteredSpecialists = [...this.specialists];
+    }
+    
+    this.closeDeleteConfirm();
+  }
   cancelDelete(): void {
     this.closeDeleteConfirm();
   }
