@@ -95,7 +95,7 @@ public class SpecialistService extends UserService {
         logger.info("Attempting to delete specialist with id: {}", id);
         return specialistRepository.findById(id)
             .map(specialist -> {
-                specialist.setStatus(false);
+                specialist.setStatus(0);
                 specialistRepository.save(specialist);
                 logger.info("Specialist with id: {} deleted successfully", id);
                 return true;
