@@ -11,7 +11,6 @@ import com.takecare.backend.user.model.User;
 
 @Service
 public class UserService {
-
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     protected static final int ACCOUNT_VERIFIED_REJECTED = 0;
     protected static final int ACCOUNT_VERIFIED_APPROVED = 1;
@@ -29,7 +28,7 @@ public class UserService {
 
         user.setCreatedDate(LocalDateTime.now());
         user.setLastUpdate(LocalDateTime.now());
-        user.setStatus(true);
+        user.setStatus(1);
         user.setStrikes(0);
         user.setAccountVerified(ACCOUNT_VERIFIED_PENDING);
         user.setRole(role);

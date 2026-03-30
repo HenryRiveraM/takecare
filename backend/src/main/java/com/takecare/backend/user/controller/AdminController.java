@@ -1,5 +1,7 @@
 package com.takecare.backend.user.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
@@ -30,8 +32,6 @@ import com.takecare.backend.user.service.SpecialistService;
 import com.takecare.backend.user.service.UserVerificationService;
 
 import jakarta.validation.Valid;
-
-import java.util.List;
 
 
 
