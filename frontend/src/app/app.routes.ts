@@ -60,23 +60,7 @@ export const routes: Routes = [
     path: 'admin',
     canActivate: [adminGuard],
     data: { showNavbar: true },
-    children: [
-
-      {
-        path: '',
-        component: AdminComponent
-      },
-
-      {
-        path: 'validate-specialists',
-        loadComponent: () =>
-          import('./pages/admin-validate-specialists/admin-validate-specialists.component')
-            .then(m => m.AdminValidateSpecialistsComponent)
-      }
-
-
-
-    ]
+    component: AdminComponent
   },
 
   //  NOT FOUND
