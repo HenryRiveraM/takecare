@@ -10,6 +10,10 @@ import com.takecare.backend.user.model.User;
 @Service
 public class UserService {
 
+    protected static final int ACCOUNT_VERIFIED_REJECTED = 0;
+    protected static final int ACCOUNT_VERIFIED_APPROVED = 1;
+    protected static final int ACCOUNT_VERIFIED_PENDING = 2;
+
     private final BCryptPasswordEncoder passwordEncoder;
 
     public UserService(BCryptPasswordEncoder passwordEncoder) {
@@ -23,7 +27,7 @@ public class UserService {
         user.setLastUpdate(LocalDateTime.now());
         user.setStatus(true);
         user.setStrikes(0);
-        user.setAccountVerified(false);
+        user.setAccountVerified(ACCOUNT_VERIFIED_PENDING);
         user.setRole(role);
 
         return user;

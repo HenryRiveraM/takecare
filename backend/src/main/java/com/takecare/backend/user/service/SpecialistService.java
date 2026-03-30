@@ -1,5 +1,6 @@
 package com.takecare.backend.user.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,4 +76,15 @@ public class SpecialistService extends UserService {
             return true;
         }).orElse(false);
 }
+
+    public Optional<Specialist> validateSpecialist(Integer id, boolean approved) {
+        int verificationStatus = approved ? ACCOUNT_VERIFIED_APPROVED : ACCOUNT_VERIFIED_REJECTED;
+
+        return specialistRepository.findById(id)
+            .map(specialist -> {
+                specialist.setAccountVerified(verificationStatus);
+                specialist.setLastUpdate(LocalDateTime.now());
+                return specialistRepository.save(specialist);
+            });
+    }
 }
