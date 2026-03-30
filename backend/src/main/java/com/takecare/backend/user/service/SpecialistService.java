@@ -106,13 +106,13 @@ public class SpecialistService extends UserService {
     }
 
     public Optional<Specialist> validateSpecialist(Integer id, boolean approved) {
-        int verificationStatus = approved ? ACCOUNT_VERIFIED_APPROVED : ACCOUNT_VERIFIED_REJECTED;
+    int verificationStatus = approved ? ACCOUNT_VERIFIED_APPROVED : ACCOUNT_VERIFIED_REJECTED;
 
-        return specialistRepository.findById(id)
-            .map(specialist -> {
-                specialist.setAccountVerified(verificationStatus);
-                specialist.setLastUpdate(LocalDateTime.now());
-                return specialistRepository.save(specialist);
-            });
+    return specialistRepository.findById(id)
+        .map(specialist -> {
+            specialist.setAccountVerified(verificationStatus);
+            specialist.setLastUpdate(LocalDateTime.now());
+            return specialistRepository.save(specialist);
+        });
     }
 }
