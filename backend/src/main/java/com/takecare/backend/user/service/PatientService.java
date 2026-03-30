@@ -87,6 +87,8 @@ public class PatientService extends UserService {
             .map(patient -> {
                 patientRepository.delete(patient);
                 logger.info("Patient with id: {} deleted successfully", id);
+                patient.setStatus(false);
+                patientRepository.save(patient);
                 return true;
             }).orElseGet(() -> {
                 logger.warn("Cannot delete - no patient found with id: {}", id);

@@ -2,6 +2,9 @@ package com.takecare.backend.user.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.takecare.backend.user.dto.VerifyUserRequest;
 import com.takecare.backend.user.dto.VerifyUserResponse;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.model.User;
@@ -26,6 +32,7 @@ import com.takecare.backend.user.service.UserVerificationService;
 import jakarta.validation.Valid;
 
 import java.util.List;
+
 
 
 @CrossOrigin(origins = "http://localhost:4200")

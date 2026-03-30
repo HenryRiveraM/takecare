@@ -62,6 +62,6 @@ public class User {
     @Column(columnDefinition = "tinyint")
     private Boolean status;
 
-    @Column(name = "account_verified", columnDefinition = "tinyint")
-    private Boolean accountVerified;
+    @Column(name = "account_verified", columnDefinition = "tinyint default 2")
+    private Integer accountVerified;
 }

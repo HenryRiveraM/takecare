@@ -13,6 +13,9 @@ import com.takecare.backend.user.model.User;
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    protected static final int ACCOUNT_VERIFIED_REJECTED = 0;
+    protected static final int ACCOUNT_VERIFIED_APPROVED = 1;
+    protected static final int ACCOUNT_VERIFIED_PENDING = 2;
 
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -28,7 +31,7 @@ public class UserService {
         user.setLastUpdate(LocalDateTime.now());
         user.setStatus(true);
         user.setStrikes(0);
-        user.setAccountVerified(false);
+        user.setAccountVerified(ACCOUNT_VERIFIED_PENDING);
         user.setRole(role);
 
         logger.debug("User prepared - email: {}, role: {}, status: active, accountVerified: false", 
