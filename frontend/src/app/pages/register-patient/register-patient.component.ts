@@ -59,22 +59,22 @@ export class RegisterPatientComponent {
 
     if (this.form.invalid) return;
 
-const data = {
-  names: this.form.value.names.trim(),
-  firstLastname: this.form.value.first_lastname.trim(),
+  const data = {
+    names: this.form.value.names.trim(),
+    firstLastname: this.form.value.first_lastname.trim(),
 
-  ...(this.form.value.second_lastname?.trim() && {
-    secondLastname: this.form.value.second_lastname.trim()
-  }),
+    ...(this.form.value.second_lastname?.trim() && {
+      secondLastname: this.form.value.second_lastname.trim()
+    }),
 
-  ciNumber: String(this.form.value.ci_number).trim(),
-  birthDate: this.form.value.birth_date,
-  email: this.form.value.email.trim(),
-  password: this.form.value.password.trim(),
-  role: 1,
-  selfieVerification: this.selfieNombre || 'default.jpg',
-  clinicalHistory: 'Sin antecedentes'
-};
+    ciNumber: String(this.form.value.ci_number).trim(),
+    birthDate: this.form.value.birth_date,
+    email: this.form.value.email.trim(),
+    password: this.form.value.password.trim(),
+    role: 1,
+    selfieVerification: this.selfieNombre || 'default.jpg',
+    clinicalHistory: 'Sin antecedentes'
+  };
 
     this.api.registerPatient(data).subscribe({
       next: (res) => {
