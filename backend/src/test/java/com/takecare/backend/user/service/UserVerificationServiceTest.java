@@ -42,7 +42,11 @@ class UserVerificationServiceTest {
         mockUser.setEmail("juan@example.com");
         mockUser.setCiNumber("12345678");
         mockUser.setBirthDate(LocalDate.of(1990, 5, 20));
+<<<<<<< Updated upstream
         mockUser.setAccountVerified(0);
+=======
+        mockUser.setAccountVerified(0); // 0 = not verified
+>>>>>>> Stashed changes
         mockUser.setRole(1);
     }
 

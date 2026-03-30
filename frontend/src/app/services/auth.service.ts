@@ -24,9 +24,8 @@ export interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class AuthService {
-
-  private apiUrl = 'http://localhost:8080/api/v1/auth';
-
+    private apiUrl = "https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/auth";
+    
   constructor(private http: HttpClient) {}
 
   // 🔐 LOGIN

@@ -30,7 +30,7 @@ export interface Specialist {
   providedIn: 'root'
 })
 export class AdminService {
-  private apiUrl = 'http://localhost:8080/api/v1/admin';
+  private apiUrl = 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/admin';
 
   constructor(private http: HttpClient) {}
 
