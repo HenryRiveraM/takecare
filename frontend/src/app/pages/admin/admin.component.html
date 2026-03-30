@@ -77,7 +77,7 @@
             <td>{{ patient.names }}</td>
             <td>{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
             <td>{{ patient.email }}</td>
-            <td>{{ patient.birthDate | date }}</td>
+            <td>{{ patient.birthDate | date:'dd/MM/yyyy' }}</td>
             <td>{{ patient.strikes }}</td>
             <td>
               <button class="delete-button" (click)="deletePatient(patient.id, patient.names + ' ' + patient.firstLastname)">
@@ -141,6 +141,9 @@
       <div class="card-validation" *ngFor="let user of filteredValidations">
         
         <div class="user-info">
+          <span class="role-tag" [ngClass]="user.role">
+            {{ user.role === 'specialist' ? 'Especialista' : 'Paciente' }}
+          </span>
           <h3 class="user-name">{{ user.names }} {{ user.firstLastname }}</h3>
           <p class="user-email">{{ user.email }}</p>
           <span class="ci-tag">CI: {{ user.ciNumber }}</span>
@@ -148,23 +151,26 @@
 
         <div class="documents-container">
           <div class="doc-item">
-            <small class="doc-label">DOCUMENTO CI</small>
-            <img [src]="user.ciUrl" alt="CI" class="img-ci">
+            <small class="doc-label">CÉDULA DE IDENTIDAD</small>
+            <img [src]="user.ciUrl" alt="CI" class="img-doc">
           </div>
           
-          <div class="doc-item">
-            <small class="doc-label">SELFIE</small>
+          <div class="doc-item" *ngIf="user.role === 'patient'">
+            <small class="doc-label">FOTO (SELFIE)</small>
             <img [src]="user.selfieUrl" alt="Selfie" class="img-selfie">
+          </div>
+
+          <div class="doc-item" *ngIf="user.role === 'specialist'">
+            <small class="doc-label">CERTIFICACIÓN PROFESIONAL</small>
+            <div class="cert-wrapper">
+              <img [src]="user.certificationUrl || 'assets/images/default-certification.png'" alt="Certificación" class="img-doc cert">
+            </div>
           </div>
         </div>
 
         <div class="actions">
-          <button class="reject-btn" (click)="processValidation(user.id, 'rejected')">
-            Rechazar
-          </button>
-          <button class="approve-btn" (click)="processValidation(user.id, 'approved')">
-            Aprobar
-          </button>
+          <button class="reject-btn" (click)="processValidation(user.id, 'rejected')">Rechazar</button>
+          <button class="approve-btn" (click)="processValidation(user.id, 'approved')">Aprobar</button>
         </div>
 
       </div>
@@ -180,10 +186,15 @@
         <h3>Confirmar eliminación</h3>
         <p>¿Estás seguro de que deseas eliminar a {{ deleteTarget.name }}?</p>
         <div class="modal-actions">
-          <button class="cancel-btn" (click)="deleteTarget = null">Cancelar</button>
+          <button class="cancel-btn" (click)="cancelDelete()">Cancelar</button>
           <button class="confirm-btn" (click)="confirmDelete()">Eliminar</button>
         </div>
       </div>
+    </div>
+
+    <div class="toast-notification" *ngIf="notification">
+      <div class="toast-icon">✓</div>
+      <div class="toast-text">{{ notification.message }}</div>
     </div>
 
   </section>

@@ -110,7 +110,21 @@
   font-weight: 500;
 }
 
-.loading-message,
+.loading-message {
+  text-align: center;
+  padding: 40px;
+  color: #5a7d73;
+  font-weight: 600;
+  font-style: italic;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
 .empty-message {
   text-align: center;
   color: #6b7280;
@@ -301,7 +315,10 @@ tbody tr:hover {
 }
 
 .doc-item {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el título sobre la foto */
+  gap: 8px
 }
 
 .doc-label {
@@ -429,6 +446,71 @@ tbody tr:hover {
 .confirm-btn:hover {
   background: #ec8f8f;
   transform: translateY(-2px);
+}
+
+/* Tags de Rol */
+.role-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.role-tag.specialist { background: #e0ece9; color: #5a7d73; }
+.role-tag.patient { background: #e0f2fe; color: #0369a1; }
+
+/* Ajustes de imágenes */
+.img-doc {
+  width: 140px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.img-doc.cert {
+  border: 2px solid #8ca39c; /* Color temático de especialista */
+}
+
+.img-selfie {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%; /* La selfie siempre redonda para UX */
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #5a7d73; /* El verde de tu botón Aprobar */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 1000;
+  animation: slideUp 0.4s ease-out;
+}
+
+.toast-icon {
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.toast-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes fadeIn {
