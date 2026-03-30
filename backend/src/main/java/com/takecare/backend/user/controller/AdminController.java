@@ -1,5 +1,8 @@
 package com.takecare.backend.user.controller;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -8,11 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.model.Specialist;
+import com.takecare.backend.user.model.User;
+import com.takecare.backend.user.repository.UserRepository;
 import com.takecare.backend.user.service.PatientService;
 import com.takecare.backend.user.service.SpecialistService;
-import java.util.List;
 
 
 
@@ -23,11 +28,14 @@ public class AdminController {
 
     private final PatientService patientService;
     private final SpecialistService specialistService;
+    private final UserRepository userRepository;
 
     public AdminController(PatientService patientService,
-         SpecialistService specialistService) {
+         SpecialistService specialistService,
+         UserRepository userRepository) {
         this.patientService = patientService;
         this.specialistService = specialistService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/patients")
@@ -72,6 +80,18 @@ public class AdminController {
     public ResponseEntity<Specialist> rejectSpecialist(@PathVariable Integer id) {
         return specialistService.validateSpecialist(id, false)
                 .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/users/{id}/suspend")
+    public ResponseEntity<User> suspendUser(@PathVariable Integer id) {
+
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setStatus(false);
+                    user.setLastUpdate(LocalDateTime.now());
+                    return ResponseEntity.ok(userRepository.save(user));
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 }
