@@ -22,7 +22,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    protected User prepareUser(User user, int role) {
+    protected <T extends User> T prepareUser(T user, int role) {
         logger.info("Preparing user with email: {} and role: {}", user.getEmail(), role);
         user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
 

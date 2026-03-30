@@ -49,9 +49,7 @@ public class SpecialistService extends UserService {
 
     public Specialist registerSpecialist(Specialist specialist) {
         logger.info("Registering specialist entity directly");
-        Specialist saved = specialistRepository.save(
-            (Specialist) prepareUser(specialist, 2)
-        );
+        Specialist saved = specialistRepository.save(prepareUser(specialist, 2));
         logger.info("Specialist registered with id: {}", saved.getId());
         return saved;
     }
@@ -94,16 +92,17 @@ public class SpecialistService extends UserService {
     }
 
     public boolean deleteSpecialist(Integer id) {
-    logger.info("Attempting to delete specialist with id: {}", id);
-    return specialistRepository.findById(id)
-        .map(specialist -> {
-            specialistRepository.delete(specialist);
-            logger.info("Specialist with id: {} deleted successfully", id);
-            return true;
-        }).orElseGet(() -> {
-            logger.warn("Cannot delete - no specialist found with id: {}", id);
-            return false;
-        });
+        logger.info("Attempting to delete specialist with id: {}", id);
+        return specialistRepository.findById(id)
+            .map(specialist -> {
+                specialist.setStatus(0);
+                specialistRepository.save(specialist);
+                logger.info("Specialist with id: {} deleted successfully", id);
+                return true;
+            }).orElseGet(() -> {
+                logger.warn("Cannot delete - no specialist found with id: {}", id);
+                return false;
+            });
     }
 
     public Optional<Specialist> validateSpecialist(Integer id, boolean approved) {

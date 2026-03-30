@@ -6,13 +6,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiService {
 
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/';
 
   constructor(private http: HttpClient) {}
 
 registerPatient(data: any) {
   return this.http.post(
-    'http://localhost:8080/api/v1/users/register/patient',
+    'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/users/register/patient',
     data
   );
 }
