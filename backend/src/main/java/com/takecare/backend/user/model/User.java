@@ -60,7 +60,7 @@ public class User {
     private Integer strikes;
 
     @Column(columnDefinition = "tinyint")
-    private Boolean status;
+    private Integer status;
 
     @Column(name = "account_verified", columnDefinition = "tinyint default 2")
     private Integer accountVerified;
