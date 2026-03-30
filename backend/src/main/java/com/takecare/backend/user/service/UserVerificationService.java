@@ -46,11 +46,7 @@ public class UserVerificationService {
             logger.debug("CI document image updated for user id: {}", userId);
         }
 
-<<<<<<< Updated upstream
-        user.setAccountVerified(1);
-=======
         user.setAccountVerified(1); // 1 = verified, 0 = not verified, 2 = pending
->>>>>>> Stashed changes
         user.setLastUpdate(LocalDateTime.now());
         userRepository.save(user);
 
@@ -61,13 +57,9 @@ public class UserVerificationService {
                 user.getNames(),
                 user.getFirstLastname(),
                 user.getEmail(),
-<<<<<<< Updated upstream
                 user.getAccountVerified() == 1,
-=======
-                user.getAccountVerified() == 1, // Convert Integer to Boolean: 1 = true (verified)
->>>>>>> Stashed changes
                 user.getLastUpdate(),
                 "Usuario verificado exitosamente"
         );
-    }
-}
+    };
+};
