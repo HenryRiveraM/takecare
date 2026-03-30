@@ -46,7 +46,7 @@ public class UserVerificationService {
             logger.debug("CI document image updated for user id: {}", userId);
         }
 
-        user.setAccountVerified(true);
+        user.setAccountVerified(1);
         user.setLastUpdate(LocalDateTime.now());
         userRepository.save(user);
 
@@ -57,7 +57,7 @@ public class UserVerificationService {
                 user.getNames(),
                 user.getFirstLastname(),
                 user.getEmail(),
-                user.getAccountVerified(),
+                user.getAccountVerified() == 1,
                 user.getLastUpdate(),
                 "Usuario verificado exitosamente"
         );
