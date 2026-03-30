@@ -1,22 +1,89 @@
 import { Routes } from '@angular/router';
+
+// PÚBLICO
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
+
+// REGISTRO
 import { RegisterRoleComponent } from './pages/register-role/register-role.component';
 import { RegisterPatientComponent } from './pages/register-patient/register-patient.component';
-import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 import { RegisterSpecialistComponent } from './pages/register-specialist/register-specialist.component';
+
+// ADMIN
+import { AdminComponent } from './pages/admin/admin.component';
+import { adminGuard } from './guards/admin.guard';
+
+// OTROS
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
-
 export const routes: Routes = [
-  { path: '', component: HomeComponent, data: { showNavbar: true } },
 
-  { path: 'login', component: LoginComponent, data: { showNavbar: false } },
-  { path: 'recover-password', component: RecoverPasswordComponent, data: { showNavbar: false } },
+  //  HOME
+  {
+    path: '',
+    component: HomeComponent,
+    data: { showNavbar: true }
+  },
 
-  { path: 'register-role', component: RegisterRoleComponent, data: { showNavbar: true } },
-  { path: 'register/specialist', component: RegisterSpecialistComponent, data: { showNavbar: true } },
-  { path: 'register/patient', component: RegisterPatientComponent, data: { showNavbar: true } },
+  //  AUTH
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { showNavbar: false }
+  },
+  {
+    path: 'recover-password',
+    component: RecoverPasswordComponent,
+    data: { showNavbar: false }
+  },
 
-  {path: '**', component: NotFoundComponent, data: { showNavbar: false } }
+  //  REGISTRO
+  {
+    path: 'register-role',
+    component: RegisterRoleComponent,
+    data: { showNavbar: true }
+  },
+  {
+    path: 'register/patient',
+    component: RegisterPatientComponent,
+    data: { showNavbar: true }
+  },
+  {
+    path: 'register/specialist',
+    component: RegisterSpecialistComponent,
+    data: { showNavbar: true }
+  },
+
+  //  ADMIN (AGRUPADO Y SEGURO)
+  {
+    path: 'admin',
+    canActivate: [adminGuard],
+    data: { showNavbar: true },
+    children: [
+
+      {
+        path: '',
+        component: AdminComponent
+      },
+
+      {
+        path: 'validate-specialists',
+        loadComponent: () =>
+          import('./pages/admin-validate-specialists/admin-validate-specialists.component')
+            .then(m => m.AdminValidateSpecialistsComponent)
+      }
+
+
+
+    ]
+  },
+
+  //  NOT FOUND
+  {
+    path: '**',
+    component: NotFoundComponent,
+    data: { showNavbar: false }
+  }
+
 ];

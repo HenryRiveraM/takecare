@@ -49,17 +49,31 @@ export class LoginComponent {
           localStorage.setItem('user', JSON.stringify(response.data));
           this.loginSuccess = true;
           setTimeout(() => {
-            this.router.navigate(['/dashboard']);
+            const role = response.data?.role;
+            if(role == 3){
+              this.router.navigate(['/admin'])
+            }else if (role == 2){
+              this.router.navigate(['/dashboard'])
+            }else if (role == 1)
+            {
+              this.router.navigate(['/dashboard']);
+            }
           }, 800);
         } else {
           this.errorMsg = response.error ?? 'Error desconocido';
         }
       },
-      error: (err) => {
-        this.loading = false;
-        this.errorMsg = 'Error de conexión. Intenta de nuevo';
-        console.error('Login error:', err);
-      }
+error: (err) => {
+  this.loading = false;
+
+  if (err.status === 401) {
+    this.errorMsg = 'Correo o contraseña incorrectos';
+  } else {
+    this.errorMsg = 'Error de conexión con el servidor';
+  }
+
+  console.error('Login error:', err);
+}
     });
   }
 }
