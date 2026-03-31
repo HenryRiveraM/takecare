@@ -1,0 +1,143 @@
+<div class="admin-page">
+
+  <section class="admin-hero">
+    <div class="admin-hero-text">
+      <span class="tag">Panel de gestión</span>
+      <h1>Administración de usuarios</h1>
+      <p>
+        Visualiza, busca y administra los pacientes y especialistas registrados en Take Care.
+      </p>
+    </div>
+  </section>
+
+  <!-- NAV -->
+  <div class="admin-nav">
+    <button routerLink="/admin" class="nav-btn active">
+      Gestión General
+    </button>
+
+    <button routerLink="/admin/validations" class="nav-btn">
+      Validaciones pendientes
+    </button>
+
+    <button routerLink="/admin/suspension" class="nav-btn">
+      Suspensión de cuentas
+    </button>
+  </div>
+
+  <section class="admin-panel">
+
+    <!-- CONTROLES -->
+    <div class="top-controls">
+      <div class="tab-bar">
+
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'patients'"
+          (click)="setTab('patients')">
+          Pacientes
+        </button>
+
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'specialists'"
+          (click)="setTab('specialists')">
+          Especialistas
+        </button>
+
+      </div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          placeholder="Buscar por nombre, apellido o correo"
+          class="search-input"
+        />
+      </div>
+    </div>
+
+    <!-- ERROR -->
+    <div *ngIf="errorMsg" class="error-message">
+      {{ errorMsg }}
+    </div>
+
+    <!-- LOADING -->
+    <div *ngIf="loading" class="loading-message">
+      Cargando información...
+    </div>
+
+    <!-- TABLA GENERAL -->
+    <div class="table-card" *ngIf="!loading">
+
+      <div class="section-header">
+        <h2>
+          {{ activeTab === 'patients' ? 'Pacientes registrados' : 'Especialistas registrados' }}
+        </h2>
+        <span class="count-badge">{{ filteredUsers.length }}</span>
+      </div>
+
+      <table *ngIf="filteredUsers.length > 0; else empty">
+        <thead>
+          <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Fecha</th>
+            <th>Strikes</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of filteredUsers">
+
+            <td>{{ user.names }}</td>
+
+            <td>
+              {{ user.firstLastname }} {{ user.secondLastname || '' }}
+            </td>
+
+            <td>{{ user.email }}</td>
+
+            <td>{{ user.birthDate | date:'dd/MM/yyyy' }}</td>
+
+            <td>{{ user.strikes }}</td>
+
+            <td>
+              <span class="status" [class.inactive]="user.status === 0">
+                {{ user.status === 1 ? 'Activo' : 'Suspendido' }}
+              </span>
+            </td>
+
+            <td class="actions">
+
+              <button
+                class="delete-button"
+                (click)="deleteUser(user)">
+                Eliminar
+              </button>
+
+              <button
+                class="suspend-button"
+                (click)="suspendUser(user)"
+                *ngIf="user.status === 1">
+                Suspender
+              </button>
+
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #empty>
+        <p class="empty-message">No hay usuarios registrados.</p>
+      </ng-template>
+
+    </div>
+
+  </section>
+</div>

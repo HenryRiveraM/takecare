@@ -1,5 +1,6 @@
 package com.takecare.backend.user.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,12 +95,24 @@ public class SpecialistService extends UserService {
         logger.info("Attempting to delete specialist with id: {}", id);
         return specialistRepository.findById(id)
             .map(specialist -> {
-                specialistRepository.delete(specialist);
+                specialist.setStatus(0);
+                specialistRepository.save(specialist);
                 logger.info("Specialist with id: {} deleted successfully", id);
                 return true;
             }).orElseGet(() -> {
                 logger.warn("Cannot delete - no specialist found with id: {}", id);
                 return false;
             });
+    }
+
+    public Optional<Specialist> validateSpecialist(Integer id, boolean approved) {
+    int verificationStatus = approved ? ACCOUNT_VERIFIED_APPROVED : ACCOUNT_VERIFIED_REJECTED;
+
+    return specialistRepository.findById(id)
+        .map(specialist -> {
+            specialist.setAccountVerified(verificationStatus);
+            specialist.setLastUpdate(LocalDateTime.now());
+            return specialistRepository.save(specialist);
+        });
     }
 }

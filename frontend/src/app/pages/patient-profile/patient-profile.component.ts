@@ -4,13 +4,13 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-profile-patient',
+  selector: 'app-patient-profile',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './profile-patient.component.html',
-  styleUrl: './profile-patient.component.css'
+  templateUrl: './patient-profile.component.html',
+  styleUrl: './patient-profile.component.css'
 })
-export class ProfilePatientComponents implements OnInit {
+export class PatientProfileComponent implements OnInit {
   profileForm!: FormGroup;
   isEditing = false;
   isLoading = false;

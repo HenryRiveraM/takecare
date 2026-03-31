@@ -1,0 +1,68 @@
+<div class="profile-page">
+
+  <div class="container">
+
+    <!-- HEADER VISUAL -->
+    <div class="profile-header">
+      <div class="avatar">
+        <img src="assets/images/especialista.png" alt="perfil">
+      </div>
+
+      <div>
+        <span class="tag">Perfil profesional</span>
+        <h1>Editar perfil</h1>
+        <p>Actualiza tu información y mejora tu presencia en TakeCare</p>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <form (ngSubmit)="save()" class="form">
+
+      <div class="grid">
+
+        <div class="field">
+          <label>Nombre completo</label>
+          <div class="input-group">
+            <span class="material-symbols-outlined">person</span>
+            <input [(ngModel)]="profile.names" name="names" placeholder="Ej: Juan Pérez"/>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Correo</label>
+          <div class="input-group">
+            <span class="material-symbols-outlined">mail</span>
+            <input [(ngModel)]="profile.email" name="email" type="email"/>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>Teléfono</label>
+          <div class="input-group">
+            <span class="material-symbols-outlined">call</span>
+            <input [(ngModel)]="profile.phone" name="phone"/>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>Biografía</label>
+          <textarea [(ngModel)]="profile.bio" name="bio"
+            placeholder="Describe tu especialidad, experiencia o enfoque terapéutico...">
+          </textarea>
+        </div>
+
+      </div>
+
+      <button class="btn-primary" type="submit">
+        Guardar cambios
+      </button>
+
+      <p class="success" *ngIf="successMsg">
+        {{ successMsg }}
+      </p>
+
+    </form>
+
+  </div>
+
+</div>

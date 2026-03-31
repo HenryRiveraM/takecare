@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-register-patient',
@@ -20,7 +21,11 @@ export class RegisterPatientComponent {
   documentoNombre = '';
   selfieNombre = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private api: ApiService
+  ) {
 
     this.form = this.fb.group({
       names: ['', Validators.required],
@@ -37,7 +42,6 @@ export class RegisterPatientComponent {
 
   onFileSelected(event: any, tipo: string) {
     const file = event.target.files[0];
-
     if (!file) return;
 
     if (tipo === 'documento') {
@@ -55,32 +59,33 @@ export class RegisterPatientComponent {
 
     if (this.form.invalid) return;
 
-    const formData = new FormData();
+const data = {
+  names: this.form.value.names.trim(),
+  firstLastname: this.form.value.first_lastname.trim(),
 
+  ...(this.form.value.second_lastname?.trim() && {
+    secondLastname: this.form.value.second_lastname.trim()
+  }),
 
-    formData.append('names', this.form.value.names);
-    formData.append('first_lastname', this.form.value.first_lastname);
-    formData.append('second_lastname', this.form.value.second_lastname || '');
-    formData.append('ci_number', this.form.value.ci_number);
-    formData.append('birth_date', this.form.value.birth_date);
-    formData.append('email', this.form.value.email);
-    formData.append('password', this.form.value.password);
+  ciNumber: String(this.form.value.ci_number).trim(),
+  birthDate: this.form.value.birth_date,
+  email: this.form.value.email.trim(),
+  password: this.form.value.password.trim(),
+  role: 1,
+  selfieVerification: this.selfieNombre || 'default.jpg',
+  clinicalHistory: 'Sin antecedentes'
+};
 
-
-    formData.append('role', '1');
-
-
-    if (this.documentoFile) {
-      formData.append('ci_document_img', this.documentoFile);
-    }
-
-    if (this.selfieFile) {
-      formData.append('selfie_verification', this.selfieFile);
-    }
-
-    console.log('🚀 DATA FINAL PARA BACKEND:', formData);
-
-
+    this.api.registerPatient(data).subscribe({
+      next: (res) => {
+        console.log('✅ REGISTRO EXITOSO', res);
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('❌ ERROR BACKEND COMPLETO:', err);
+        alert(JSON.stringify(err.error));
+      }
+    });
   }
 
   cancel() {
