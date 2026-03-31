@@ -15,7 +15,10 @@ export class AdminComponent implements OnInit {
   users: User[] = [];
   filteredUsers: User[] = [];
 
-  activeTab: 'patients' | 'specialists' = 'patients';
+  pendingValidations: any[] = [];
+  filteredValidations: any[] = [];
+
+  activeTab: 'patients' | 'specialists' | 'validations' = 'patients';
   searchTerm = '';
 
   loading = false;
@@ -24,12 +27,22 @@ export class AdminComponent implements OnInit {
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.loadUsers();
+    this.loadData();
+  }
+
+
+  loadData() {
+    this.loading = true;
+    this.errorMsg = '';
+
+    if (this.activeTab === 'validations') {
+      this.loadPendingValidations();
+    } else {
+      this.loadUsers();
+    }
   }
 
   loadUsers() {
-    this.loading = true;
-
     const request$ =
       this.activeTab === 'patients'
         ? this.adminService.getPatients()
@@ -42,51 +55,85 @@ export class AdminComponent implements OnInit {
         this.loading = false;
       },
       error: () => {
-        this.errorMsg = 'Error cargando datos';
+        this.errorMsg = 'Error cargando usuarios';
         this.loading = false;
       }
     });
   }
 
-  setTab(tab: 'patients' | 'specialists') {
+
+  loadPendingValidations() {
+    this.adminService.getPendingValidations().subscribe({
+      next: (data) => {
+        this.pendingValidations = data;
+        this.filteredValidations = data;
+        this.loading = false;
+      },
+      error: () => {
+        this.errorMsg = 'Error cargando validaciones';
+        this.loading = false;
+      }
+    });
+  }
+
+  setTab(tab: 'patients' | 'specialists' | 'validations') {
     this.activeTab = tab;
     this.searchTerm = '';
-    this.loadUsers();
+    this.loadData();
   }
 
   onSearch() {
-    const term = this.searchTerm.toLowerCase();
+    const term = this.searchTerm.toLowerCase().trim();
 
-    this.filteredUsers = this.users.filter(u =>
-      u.names.toLowerCase().includes(term) ||
-      u.firstLastname.toLowerCase().includes(term) ||
-      u.email.toLowerCase().includes(term)
-    );
+    if (this.activeTab === 'validations') {
+      this.filteredValidations = this.pendingValidations.filter(v =>
+        v.names.toLowerCase().includes(term) ||
+        v.email.toLowerCase().includes(term)
+      );
+    } else {
+      this.filteredUsers = this.users.filter(u =>
+        u.names.toLowerCase().includes(term) ||
+        u.firstLastname.toLowerCase().includes(term) ||
+        u.email.toLowerCase().includes(term)
+      );
+    }
   }
 
-deleteUser(user: User) {
+  processValidation(id: number, status: 'approved' | 'rejected') {
+    this.adminService.validateUser(id, status).subscribe({
+      next: () => {
+        this.pendingValidations = this.pendingValidations.filter(v => v.id !== id);
+        this.onSearch(); // Refresca la vista
+      },
+      error: () => {
+        this.errorMsg = 'No se pudo procesar la validación';
+      }
+    });
+  }
 
-  const request$ =
-    this.activeTab === 'patients'
-      ? this.adminService.deletePatient(user.id)
-      : this.adminService.deleteSpecialist(user.id);
+  deleteUser(user: User) {
+    const request$ =
+      this.activeTab === 'patients'
+        ? this.adminService.deletePatient(user.id)
+        : this.adminService.deleteSpecialist(user.id);
 
-  request$.subscribe({
-    next: () => {
-      this.users = this.users.filter(u => u.id !== user.id);
-      this.filteredUsers = this.filteredUsers.filter(u => u.id !== user.id);
-    },
-    error: (err: any) => {
-      console.error(err);
-      this.errorMsg = 'No se pudo eliminar el usuario';
-    }
-  });
-
-}
+    request$.subscribe({
+      next: () => {
+        this.users = this.users.filter(u => u.id !== user.id);
+        this.filteredUsers = this.filteredUsers.filter(u => u.id !== user.id);
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.errorMsg = 'No se pudo eliminar el usuario';
+      }
+    });
+  }
 
   suspendUser(user: User) {
-    this.adminService.suspendUser(user.id).subscribe(() => {
-      user.status = 0;
+    this.adminService.suspendUser(user.id).subscribe({
+      next: () => {
+        user.status = 0;
+      }
     });
   }
 }

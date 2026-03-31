@@ -295,7 +295,201 @@ tbody tr:hover {
   }
 }
 
+.validations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #fdf2f2;
+}
 
+.title-rev {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.badge-pendientes {
+  background: #fce7e7;
+  color: #d9534f;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.validation-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 15px 30px;
+  border: 1px solid #f1f1f1; 
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: 0.3s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.validation-row:hover {
+  background: #fdfdfd;
+  border-color: #e5e7eb;
+}
+
+/* Info del Usuario */
+.user-main-info {
+  flex: 1;
+}
+
+.user-fullname {
+  font-size: 18px;
+  font-weight: 700;
+  color: #374151;
+  margin: 0 0 4px 0;
+}
+
+.user-mail-sub {
+  color: #9ca3af;
+  font-size: 14px;
+  margin: 0 0 8px 0;
+}
+
+.ci-badge-red {
+  font-size: 12px;
+  color: #d9534f;
+  background: #fff5f5;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* Sección de Fotos (Centro) */
+.docs-section {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.doc-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.doc-text {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #9ca3af;
+  font-weight: 700;
+}
+
+.img-ci-rect {
+  width: 85px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.img-selfie-circle {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%; /* Hace la foto circular */
+  border: 2px solid #8ca39c; /* Borde verde suave para el selfie */
+}
+
+/* Botones de Acción (Derecha) */
+.row-actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-rechazar {
+  background: #fff5f5;      
+  color: #d9534f;          
+  border: 1px solid #fce7e7; 
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.btn-rechazar:hover {
+  background: #fce7e7;
+  border-color: #f8d7da;
+}
+
+.btn-aprobar {
+  background: #8ca39c;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(140, 163, 156, 0.2);
+}
+
+.btn-aprobar:hover {
+  background: #7a8f88;
+  transform: translateY(-2px);
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+
+.role-specialist {
+  background-color: #e6f4ea; 
+  color: #1e7e34;            
+  border: 1px solid #c3e6cb;
+}
+
+
+.role-patient {
+  background-color: #e3f2fd; 
+  color: #007bff;            
+  border: 1px solid #bee5eb;
+}
+
+
+.user-fullname {
+  margin-top: 5px !important;
+}
+
+/* Ajuste Responsive para las filas */
+@media (max-width: 900px) {
+  .validation-row {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 30px 10px;
+  }
+  .row-actions {
+    justify-content: center;
+    width: 100%;
+  }
+}
 /* ========================= */
 /* MÓVIL GRANDE (<= 768px) */
 /* ========================= */
@@ -413,7 +607,6 @@ tbody tr:hover {
   }
 
 }
-
 
 /* ========================= */
 /*  VALIDACIONES (CARDS) */
