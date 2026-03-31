@@ -64,4 +64,19 @@ deleteSpecialist(id: number): Observable<void> {
     headers: this.getHeaders()
   });
 }
+// 🔹 VALIDACIONES (Mezcla pacientes y especialistas pendientes)
+  getPendingValidations(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/pending-validations`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  // 🔹 APROBAR O RECHAZAR VALIDACIÓN
+  validateUser(id: number, status: 'approved' | 'rejected'): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/validations/${id}`,
+      { status }, // El body con el nuevo estado
+      { headers: this.getHeaders() }
+    );
+  }
 }
