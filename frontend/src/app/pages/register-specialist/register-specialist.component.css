@@ -315,8 +315,172 @@
   justify-content: center;
 }
 
+/* ========================= */
+/*  TABLET (<= 1024px) */
+/* ========================= */
+@media (max-width: 1024px) {
+
+  .register-card {
+    width: 100%;
+    max-width: 650px;
+    padding: 40px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .checkbox-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+
+/* ========================= */
+/* MÓVIL (<= 768px) */
+/* ========================= */
 @media (max-width: 768px) {
-  .register-card { width: 100%; padding: 30px; }
-  .form-grid, .checkbox-grid { grid-template-columns: 1fr; }
-  .full-width, .btn-complete { grid-column: span 1; }
+
+  .register-container {
+    padding: 40px 15px;
+    align-items: flex-start;
+  }
+
+  .register-card {
+    width: 100%;
+    padding: 28px;
+    border-radius: 18px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .header p {
+    text-align: center;
+    font-size: 13px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+  }
+
+  .full-width,
+  .btn-complete {
+    grid-column: span 1;
+  }
+
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carnet-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .carnet-card img {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+  }
+
+  .file-item {
+    padding: 12px;
+  }
+
+  .file-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .file-details-group {
+    width: 100%;
+  }
+
+  .remove-btn {
+    align-self: flex-end;
+  }
+
+  .btn-complete {
+    width: 100%;
+    font-size: 14px;
+    padding: 14px;
+  }
+
+}
+
+
+/* ========================= */
+/*  MÓVIL PEQUEÑO (<= 480px) */
+/* ========================= */
+@media (max-width: 480px) {
+
+  .register-card {
+    padding: 22px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .header p {
+    font-size: 12px;
+  }
+
+  .field label {
+    font-size: 11px;
+  }
+
+  .field input {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .upload-zone {
+    padding: 18px;
+    min-height: 100px;
+  }
+
+  .checkbox-grid {
+    padding: 15px;
+  }
+
+  .check-item {
+    font-size: 12px;
+  }
+
+  .file-name {
+    font-size: 12px;
+  }
+
+  .file-status {
+    font-size: 10px;
+  }
+
+}
+
+
+/* ========================= */
+/*  ULTRA SMALL (<= 360px) */
+/* ========================= */
+@media (max-width: 360px) {
+
+  .header h1 {
+    font-size: 18px;
+  }
+
+  .field input {
+    font-size: 12px;
+  }
+
+  .btn-complete {
+    font-size: 13px;
+  }
+
 }

@@ -78,3 +78,119 @@ th, td {
   padding: 12px;
   border-radius: 10px;
 }
+
+/* ========================= */
+/*  TABLET (<= 1024px) */
+/* ========================= */
+@media (max-width: 1024px) {
+
+  .admin-page {
+    padding: 30px 20px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+}
+
+
+/* ========================= */
+/*  MÓVIL (<= 768px) */
+/* ========================= */
+@media (max-width: 768px) {
+
+  .admin-page {
+    padding: 20px 15px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  /* TABLA SCROLL */
+  .table-container {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  th, td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+}
+
+
+/* ========================= */
+/* MÓVIL PEQUEÑO (<= 480px) */
+/* ========================= */
+@media (max-width: 480px) {
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .header p {
+    font-size: 13px;
+  }
+
+  .search-input {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  th, td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .status {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+}
+
+
+/* ========================= */
+/* TOAST RESPONSIVE */
+/* ========================= */
+@media (max-width: 768px) {
+
+  .toast {
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    width: 90%;
+    text-align: center;
+  }
+
+}

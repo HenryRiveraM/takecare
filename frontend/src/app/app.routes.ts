@@ -14,10 +14,12 @@ import { RegisterSpecialistComponent } from './pages/register-specialist/registe
 import { AdminComponent } from './pages/admin/admin.component';
 import { adminGuard } from './guards/admin.guard';
 
-// OTROS
-import { NotFoundComponent } from './pages/not-found/not-found.component';
+// ESPECIALISTA
 import { SpecialistDashboardComponent } from './pages/specialist-dashboard/specialist-dashboard.component';
 import { SpecialistProfileComponent } from './pages/specialist-profile/specialist-profile.component';
+
+// OTROS
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
 
@@ -40,7 +42,7 @@ export const routes: Routes = [
     data: { showNavbar: false }
   },
 
-  //  REGISTRO
+  // REGISTRO
   {
     path: 'register-role',
     component: RegisterRoleComponent,
@@ -57,24 +59,29 @@ export const routes: Routes = [
     data: { showNavbar: true }
   },
 
-  //  ADMIN (AGRUPADO Y SEGURO)
+  // ADMIN (PROTEGIDO)
   {
     path: 'admin',
+    component: AdminComponent,
     canActivate: [adminGuard],
-    data: { showNavbar: true },
-    component: AdminComponent
+    data: { showNavbar: true }
   },
 
-{
-  path: 'specialist',
-  component: SpecialistDashboardComponent,
-  data: { showNavbar: false } // 🔥 IMPORTANTE
-},
-
-{
-  path: 'specialist/profile',
-  component: SpecialistProfileComponent
-},
+  // ESPECIALISTA 
+  {
+    path: 'specialist',
+    data: { showNavbar: false },
+    children: [
+      {
+        path: '',
+        component: SpecialistDashboardComponent
+      },
+      {
+        path: 'profile',
+        component: SpecialistProfileComponent
+      }
+    ]
+  },
 
   //  NOT FOUND
   {
@@ -82,7 +89,5 @@ export const routes: Routes = [
     component: NotFoundComponent,
     data: { showNavbar: false }
   }
-
-
 
 ];
