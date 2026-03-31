@@ -31,17 +31,15 @@ export class PatientProfileComponent implements OnInit {
       names: ['', Validators.required],
       first_lastname: ['', Validators.required],
       second_lastname: [''],
-      ci_number: [{ value: '', disabled: true }], // El CI suele ser estático
+      ci_number: [{ value: '', disabled: true }], 
       birth_date: ['', Validators.required],
       email: [{ value: '', disabled: true }],
-      phone: [''], // Campo extra útil para contacto
+      phone: [''], 
       bio: ['']
     });
   }
 
   loadUserData() {
-    // Aquí simularás o usarás el servicio que tus compañeros subieron
-    // Por ahora, cargamos datos de ejemplo
     const mockData = {
       fullName: 'Usuario Take Care',
       email: 'usuario@ejemplo.com',

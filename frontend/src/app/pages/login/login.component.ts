@@ -53,7 +53,6 @@ export class LoginComponent {
 
           console.log('LOGIN RESPONSE:', response);
 
-          // Guardar usuario en localStorage
           localStorage.setItem('user', JSON.stringify(response.data));
 
           this.loginSuccess = true;
@@ -82,15 +81,16 @@ export class LoginComponent {
     });
   }
 
-  // 🔥 REDIRECCIÓN POR ROL
   redirectByRole(role: number) {
 
     console.log('ROLE:', role);
 
     if (role === 3) {
-      this.router.navigate(['/admin']); // ADMIN
+      this.router.navigate(['/admin']); 
+    } else if (role === 2) {
+      this.router.navigate(['/specialist']); 
     } else {
-      this.router.navigate(['/']); // USUARIO NORMAL
+      this.router.navigate(['/patient'])
     }
 
   }
