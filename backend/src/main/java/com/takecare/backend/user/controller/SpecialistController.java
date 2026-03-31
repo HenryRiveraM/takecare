@@ -15,9 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.takecare.backend.user.dto.SpecialistProfileDTO;
 import com.takecare.backend.user.dto.SpecialistRegisterDTO;
+import com.takecare.backend.user.dto.UpdateSpecialistProfileDTO;
 import com.takecare.backend.user.model.Specialist;
+import com.takecare.backend.user.service.SpecialistProfileService;
 import com.takecare.backend.user.service.SpecialistService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/specialists")
@@ -26,9 +31,12 @@ public class SpecialistController {
     private static final Logger logger = LoggerFactory.getLogger(SpecialistController.class);
 
     private final SpecialistService specialistService;
+    private final SpecialistProfileService specialistProfileService;
 
-    public SpecialistController(SpecialistService specialistService) {
+    public SpecialistController(SpecialistService specialistService,
+                                SpecialistProfileService specialistProfileService) {
         this.specialistService = specialistService;
+        this.specialistProfileService = specialistProfileService;
     }
 
     @GetMapping
@@ -53,6 +61,28 @@ public class SpecialistController {
                 });
     }
 
+    @GetMapping("/{id}/profile")
+    public ResponseEntity<SpecialistProfileDTO> getSpecialistProfile(@PathVariable Integer id) {
+        try {
+            logger.info("GET /api/v1/specialists/{}/profile - Fetching specialist profile", id);
+            return specialistProfileService.getProfile(id)
+                    .map(profile -> {
+                        logger.info("GET /api/v1/specialists/{}/profile - Specialist profile found", id);
+                        return ResponseEntity.ok(profile);
+                    })
+                    .orElseGet(() -> {
+                        logger.warn("GET /api/v1/specialists/{}/profile - Specialist profile not found", id);
+                        return ResponseEntity.notFound().build();
+                    });
+        } catch (RuntimeException e) {
+            logger.error("GET /api/v1/specialists/{}/profile - Error fetching specialist profile", id, e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("GET /api/v1/specialists/{}/profile - Unexpected error fetching specialist profile", id, e);
+            throw new RuntimeException("Error al obtener perfil del especialista");
+        }
+    }
+
     @PostMapping
     public ResponseEntity<Specialist> registerSpecialist(@RequestBody SpecialistRegisterDTO specialistDTO) {
         logger.info("POST /api/v1/specialists - Registering new specialist with email: {}", specialistDTO.getEmail());
@@ -73,6 +103,30 @@ public class SpecialistController {
                     logger.warn("PUT /api/v1/specialists/{} - Specialist not found for update", id);
                     return ResponseEntity.notFound().build();
                 });
+    }
+
+    @PutMapping("/{id}/profile")
+    public ResponseEntity<SpecialistProfileDTO> updateSpecialistProfile(
+            @PathVariable Integer id,
+            @Valid @RequestBody UpdateSpecialistProfileDTO dto) {
+        try {
+            logger.info("PUT /api/v1/specialists/{}/profile - Updating specialist profile", id);
+            return specialistProfileService.updateProfile(id, dto)
+                    .map(profile -> {
+                        logger.info("PUT /api/v1/specialists/{}/profile - Specialist profile updated successfully", id);
+                        return ResponseEntity.ok(profile);
+                    })
+                    .orElseGet(() -> {
+                        logger.warn("PUT /api/v1/specialists/{}/profile - Specialist profile not found for update", id);
+                        return ResponseEntity.notFound().build();
+                    });
+        } catch (RuntimeException e) {
+            logger.error("PUT /api/v1/specialists/{}/profile - Error updating specialist profile", id, e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("PUT /api/v1/specialists/{}/profile - Unexpected error updating specialist profile", id, e);
+            throw new RuntimeException("Error al actualizar perfil del especialista");
+        }
     }
 
     @DeleteMapping("/{id}")
