@@ -144,12 +144,117 @@ textarea:focus {
 }
 
 /* RESPONSIVE */
-@media (max-width: 600px) {
+/* ========================= */
+/*  TABLET (<= 900px) */
+/* ========================= */
+@media (max-width: 900px) {
+
+  .container {
+    padding: 30px;
+    border-radius: 20px;
+  }
+
+  .profile-header {
+    gap: 15px;
+  }
+
+  .profile-header h1 {
+    font-size: 24px;
+  }
+
+}
+
+
+/* ========================= */
+/*  MÓVIL (<= 768px) */
+/* ========================= */
+@media (max-width: 768px) {
+
+  .profile-page {
+    padding: 30px 15px;
+  }
+
+  .container {
+    padding: 25px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .avatar img {
+    width: 70px;
+    height: 70px;
+  }
+
   .grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .full {
     grid-column: span 1;
   }
+
+  .btn-primary {
+    width: 100%;
+    font-size: 14px;
+  }
+
+}
+
+
+/* ========================= */
+/*  MÓVIL PEQUEÑO (<= 480px) */
+/* ========================= */
+@media (max-width: 480px) {
+
+  .container {
+    padding: 20px;
+  }
+
+  .profile-header h1 {
+    font-size: 20px;
+  }
+
+  .profile-header p {
+    font-size: 13px;
+  }
+
+  .tag {
+    font-size: 11px;
+  }
+
+  .input-group {
+    padding: 8px 12px;
+  }
+
+  .input-group input {
+    font-size: 13px;
+  }
+
+  textarea {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+}
+
+
+/* ========================= */
+/*  ULTRA SMALL (<= 360px) */
+/* ========================= */
+@media (max-width: 360px) {
+
+  .profile-header h1 {
+    font-size: 18px;
+  }
+
+  .btn-primary {
+    font-size: 13px;
+    padding: 12px;
+  }
+
 }
