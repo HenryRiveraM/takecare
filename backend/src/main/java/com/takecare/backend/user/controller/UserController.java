@@ -1,23 +1,25 @@
 package com.takecare.backend.user.controller;
 
-import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.takecare.backend.auth.DTO.ApiResponseDTO;
 import com.takecare.backend.user.dto.PatientRegisterDTO;
 import com.takecare.backend.user.dto.SpecialistRegisterDTO;
-import com.takecare.backend.user.model.Patient;
-import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.service.PatientService;
 import com.takecare.backend.user.service.SpecialistService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final PatientService patientService;
     private final SpecialistService specialistService;
@@ -29,14 +31,17 @@ public class UserController {
 
     @PostMapping("/register/patient")
     public ResponseEntity<?> registerPatient(@Valid @RequestBody PatientRegisterDTO dto) {
-        Patient patient = patientService.registerPatientFromDTO(dto);
-        return ResponseEntity.ok(new ApiResponseDTO<>(true, patient, null));
+        logger.info("POST /api/v1/users/register/patient - Registering patient with email: {}", dto.getEmail());
+        patientService.registerPatientFromDTO(dto);
+        logger.info("POST /api/v1/users/register/patient - Patient registered successfully");
+        return ResponseEntity.ok("Patient registered");
     }
 
     @PostMapping("/register/specialist")
     public ResponseEntity<?> registerSpecialist(@Valid @RequestBody SpecialistRegisterDTO dto) {
-        Specialist specialist = specialistService.registerSpecialistFromDTO(dto);
-        return ResponseEntity.ok(new ApiResponseDTO<>(true, specialist, null));
+        logger.info("POST /api/v1/users/register/specialist - Registering specialist with email: {}", dto.getEmail());
+        specialistService.registerSpecialistFromDTO(dto);
+        logger.info("POST /api/v1/users/register/specialist - Specialist registered successfully");
+        return ResponseEntity.ok("Specialist registered");
     }
-
 }

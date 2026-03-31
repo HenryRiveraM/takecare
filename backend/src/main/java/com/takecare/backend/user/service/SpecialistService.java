@@ -3,6 +3,8 @@ package com.takecare.backend.user.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import com.takecare.backend.user.repository.SpecialistRepository;
 @Service
 public class SpecialistService extends UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(SpecialistService.class);
+
     private final SpecialistRepository specialistRepository;
 
     public SpecialistService(SpecialistRepository specialistRepository, 
@@ -22,6 +26,7 @@ public class SpecialistService extends UserService {
     }
 
     public Specialist registerSpecialistFromDTO(SpecialistRegisterDTO dto) {
+        logger.info("Registering new specialist with email: {}", dto.getEmail());
         Specialist specialist = new Specialist();
         specialist.setNames(dto.getNames());
         specialist.setFirstLastname(dto.getFirstLastname());
@@ -34,24 +39,40 @@ public class SpecialistService extends UserService {
         specialist.setCertificationImg(dto.getCertificationImg());
         specialist.setSessionCost(dto.getSessionCost());
 
-        prepareUser(specialist, 2); 
+        prepareUser(specialist, 2);
 
-        return specialistRepository.save(specialist);
+        Specialist saved = specialistRepository.save(specialist);
+        logger.info("Specialist registered successfully with id: {}", saved.getId());
+        return saved;
     }
 
     public Specialist registerSpecialist(Specialist specialist) {
-        return specialistRepository.save(prepareUser(specialist, 2));
+        logger.info("Registering specialist entity directly");
+        Specialist saved = specialistRepository.save(prepareUser(specialist, 2));
+        logger.info("Specialist registered with id: {}", saved.getId());
+        return saved;
     }
 
     public List<Specialist> getAllSpecialists() {
-        return specialistRepository.findAll();
+        logger.info("Fetching all specialists from repository");
+        List<Specialist> specialists = specialistRepository.findAll();
+        logger.info("Found {} specialists", specialists.size());
+        return specialists;
     }
 
     public Optional<Specialist> getSpecialistById(Integer id) {
-        return specialistRepository.findById(id);
+        logger.info("Fetching specialist with id: {}", id);
+        Optional<Specialist> specialist = specialistRepository.findById(id);
+        if (specialist.isPresent()) {
+            logger.info("Specialist found with id: {}", id);
+        } else {
+            logger.warn("No specialist found with id: {}", id);
+        }
+        return specialist;
     }
 
     public Optional<Specialist> updateSpecialist(Integer id, Specialist specialistDetails) {
+        logger.info("Attempting to update specialist with id: {}", id);
         return specialistRepository.findById(id)
             .map(specialist -> {
                 specialist.setNames(specialistDetails.getNames());
@@ -63,15 +84,22 @@ public class SpecialistService extends UserService {
                 specialist.setBiography(specialistDetails.getBiography());
                 specialist.setCertificationImg(specialistDetails.getCertificationImg());
                 specialist.setSessionCost(specialistDetails.getSessionCost());
-                return specialistRepository.save(specialist);
+                Specialist updated = specialistRepository.save(specialist);
+                logger.info("Specialist with id: {} updated successfully", id);
+                return updated;
             });
     }
 
     public boolean deleteSpecialist(Integer id) {
+        logger.info("Attempting to delete specialist with id: {}", id);
         return specialistRepository.findById(id)
             .map(specialist -> {
                 specialistRepository.delete(specialist);
+                logger.info("Specialist with id: {} deleted successfully", id);
                 return true;
-            }).orElse(false);
+            }).orElseGet(() -> {
+                logger.warn("Cannot delete - no specialist found with id: {}", id);
+                return false;
+            });
     }
 }

@@ -3,6 +3,8 @@ package com.takecare.backend.user.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import com.takecare.backend.user.repository.PatientRepository;
 @Service
 public class PatientService extends UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(PatientService.class);
+
     private final PatientRepository patientRepository;
 
     public PatientService(PatientRepository patientRepository,
@@ -22,6 +26,7 @@ public class PatientService extends UserService {
     }
 
     public Patient registerPatientFromDTO(PatientRegisterDTO dto) {
+        logger.info("Registering new patient with email: {}", dto.getEmail());
         Patient patient = new Patient();
         patient.setNames(dto.getNames());
         patient.setFirstLastname(dto.getFirstLastname());
@@ -35,18 +40,31 @@ public class PatientService extends UserService {
 
         prepareUser(patient, 1);
 
-        return patientRepository.save(patient);
+        Patient saved = patientRepository.save(patient);
+        logger.info("Patient registered successfully with id: {}", saved.getId());
+        return saved;
     }
 
     public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
+        logger.info("Fetching all patients from repository");
+        List<Patient> patients = patientRepository.findAll();
+        logger.info("Found {} patients", patients.size());
+        return patients;
     }
 
     public Optional<Patient> getPatientById(Integer id) {
-        return patientRepository.findById(id);
+        logger.info("Fetching patient with id: {}", id);
+        Optional<Patient> patient = patientRepository.findById(id);
+        if (patient.isPresent()) {
+            logger.info("Patient found with id: {}", id);
+        } else {
+            logger.warn("No patient found with id: {}", id);
+        }
+        return patient;
     }
 
     public Optional<Patient> updatePatient(Integer id, Patient patientDetails) {
+        logger.info("Attempting to update patient with id: {}", id);
         return patientRepository.findById(id)
             .map(patient -> {
                 patient.setNames(patientDetails.getNames());
@@ -57,15 +75,22 @@ public class PatientService extends UserService {
                 patient.setEmail(patientDetails.getEmail());
                 patient.setSelfieVerification(patientDetails.getSelfieVerification());
                 patient.setClinicalHistory(patientDetails.getClinicalHistory());
-                return patientRepository.save(patient);
+                Patient updated = patientRepository.save(patient);
+                logger.info("Patient with id: {} updated successfully", id);
+                return updated;
             });
     }
 
     public boolean deletePatient(Integer id) {
+        logger.info("Attempting to delete patient with id: {}", id);
         return patientRepository.findById(id)
             .map(patient -> {
                 patientRepository.delete(patient);
+                logger.info("Patient with id: {} deleted successfully", id);
                 return true;
-            }).orElse(false);
+            }).orElseGet(() -> {
+                logger.warn("Cannot delete - no patient found with id: {}", id);
+                return false;
+            });
     }
 }
