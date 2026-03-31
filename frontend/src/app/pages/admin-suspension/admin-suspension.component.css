@@ -1,0 +1,80 @@
+.admin-page {
+  padding: 40px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.header h1 {
+  font-size: 34px;
+}
+
+.controls {
+  margin: 20px 0;
+}
+
+.search-input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  width: 300px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.status.active {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.btn.suspend {
+  background: #ef4444;
+}
+
+.btn.activate {
+  background: #10b981;
+}
+
+.loading {
+  text-align: center;
+}
+
+.error {
+  color: red;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #8ca39c;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+}

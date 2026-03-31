@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AdminService, Patient, Specialist } from '../../services/admin.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { AdminService, User } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin',
@@ -12,201 +11,82 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  patients: Patient[] = [];
-  specialists: Specialist[] = [];
-  pendingValidations: any[] = [];
 
-  filteredPatients: Patient[] = [];
-  filteredSpecialists: Specialist[] = [];
-  filteredValidations: any[] = [];
+  users: User[] = [];
+  filteredUsers: User[] = [];
 
-  activeTab: 'patients' | 'specialists' | 'validations' = 'patients';
-  searchTerm: string = '';
+  activeTab: 'patients' | 'specialists' = 'patients';
+  searchTerm = '';
 
-  loadingPatients = false;
-  loadingSpecialists = false;
-  loadingValidations = false;
+  loading = false;
   errorMsg = '';
-
-  showDeleteConfirm = false;
-  deleteTarget: { type: 'patient' | 'specialist'; id: number; name: string } | null = null;
-  notification: { message: string, type: 'success' | 'error' } | null = null;
 
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.loadAllData();
+    this.loadUsers();
   }
 
-  loadAllData(): void {
-    this.loadPatients();
-    this.loadSpecialists();
-    this.loadPendingValidations();
-  }
+  loadUsers() {
+    this.loading = true;
 
-  loadPatients(): void {
-    this.loadingPatients = true;
-    this.adminService.getPatients().subscribe({
-      next: (data: Patient[]) => {
-        this.patients = data.filter(p => p.status === true);
-        this.filteredPatients = [...this.patients];
-        this.loadingPatients = false;
-      },
-      error: (err: HttpErrorResponse) => {
-        this.errorMsg = 'No se pudieron cargar los pacientes';
-        this.loadingPatients = false;
-        console.error(err);
-      }
-    });
-  }
+    const request$ =
+      this.activeTab === 'patients'
+        ? this.adminService.getPatients()
+        : this.adminService.getSpecialists();
 
-  loadSpecialists(): void {
-    this.loadingSpecialists = true;
-    this.adminService.getSpecialists().subscribe({
-      next: (data: Specialist[]) => {
-        this.specialists = data.filter(s => s.status === true);
-        this.filteredSpecialists = [...this.specialists];
-        this.loadingSpecialists = false;
-      },
-      error: (err: HttpErrorResponse) => {
-        this.errorMsg = 'No se pudieron cargar los especialistas';
-        this.loadingSpecialists = false;
-        console.error(err);
-      }
-    });
-  }
-
-  loadPendingValidations(): void {
-    this.loadingValidations = true;
-    this.adminService.getPendingValidations().subscribe({
+    request$.subscribe({
       next: (data) => {
-        this.pendingValidations = data;
-        this.filteredValidations = [...this.pendingValidations];
-        this.loadingValidations = false;
+        this.users = data;
+        this.filteredUsers = data;
+        this.loading = false;
       },
-      error: (err) => {
-        this.errorMsg = 'Error al cargar las validaciones pendientes';
-        this.loadingValidations = false;
-        console.error(err);
+      error: () => {
+        this.errorMsg = 'Error cargando datos';
+        this.loading = false;
       }
     });
   }
 
-  processValidation(id: number, status: 'approved' | 'rejected'): void {
-    const user = this.pendingValidations.find(u => u.id === id);
-    if (!user) return;
-
-    this.adminService.validateUser(id, status).subscribe({
-      next: () => {
-        const roleText = user.role === 'specialist' ? 'Especialista' : 'Paciente';
-        this.showNotification(`${roleText} ${status === 'approved' ? 'validado' : 'rechazado'} correctamente`);
-        this.loadPendingValidations();
-        if (status === 'approved') {
-          user.role === 'specialist' ? this.loadSpecialists() : this.loadPatients();
-        }
-      },
-      error: (err) => {
-        this.errorMsg = 'No se pudo completar la operación en el servidor';
-        console.error(err);
-      }
-    });
-  }
-
-  showNotification(msg: string) {
-    this.notification = { message: msg, type: 'success' };
-    setTimeout(() => {
-      this.notification = null;
-    }, 3000); 
-  }
-
-  setTab(tab: 'patients' | 'specialists' | 'validations'): void {
+  setTab(tab: 'patients' | 'specialists') {
     this.activeTab = tab;
     this.searchTerm = '';
-    this.onSearch(); 
-    this.resetFilters();
-    this.errorMsg = '';
+    this.loadUsers();
   }
 
-  resetFilters(): void {
-    this.filteredPatients = [...this.patients];
-    this.filteredSpecialists = [...this.specialists];
-    this.filteredValidations = [...this.pendingValidations];
+  onSearch() {
+    const term = this.searchTerm.toLowerCase();
+
+    this.filteredUsers = this.users.filter(u =>
+      u.names.toLowerCase().includes(term) ||
+      u.firstLastname.toLowerCase().includes(term) ||
+      u.email.toLowerCase().includes(term)
+    );
   }
 
-  onSearch(): void {
-    const term = this.searchTerm.toLowerCase().trim();
+deleteUser(user: User) {
 
-    if (this.activeTab === 'patients') {
-      this.filteredPatients = this.patients.filter(patient =>
-        patient.names.toLowerCase().includes(term) ||
-        patient.firstLastname.toLowerCase().includes(term) ||
-        (patient.secondLastname?.toLowerCase().includes(term) ?? false) ||
-        patient.email.toLowerCase().includes(term)
-      );
-    } else if (this.activeTab === 'specialists') {
-      this.filteredSpecialists = this.specialists.filter(specialist =>
-        specialist.names.toLowerCase().includes(term) ||
-        specialist.firstLastname.toLowerCase().includes(term) ||
-        (specialist.secondLastname?.toLowerCase().includes(term) ?? false) ||
-        specialist.email.toLowerCase().includes(term)
-      );
-    } else if (this.activeTab === 'validations') {
-      const term = this.searchTerm.toLowerCase().trim(); // Usar el mismo formato
-      this.filteredValidations = this.pendingValidations.filter(v => 
-        v.names.toLowerCase().includes(term) || 
-        v.firstLastname.toLowerCase().includes(term) ||
-        v.email.toLowerCase().includes(term)
-      );
+  const request$ =
+    this.activeTab === 'patients'
+      ? this.adminService.deletePatient(user.id)
+      : this.adminService.deleteSpecialist(user.id);
+
+  request$.subscribe({
+    next: () => {
+      this.users = this.users.filter(u => u.id !== user.id);
+      this.filteredUsers = this.filteredUsers.filter(u => u.id !== user.id);
+    },
+    error: (err: any) => {
+      console.error(err);
+      this.errorMsg = 'No se pudo eliminar el usuario';
     }
-  }
+  });
 
-  deletePatient(id: number, fullName: string): void {
-    this.showDeleteConfirm = true;
-    this.deleteTarget = { type: 'patient', id, name: fullName };
-  }
+}
 
-  deleteSpecialist(id: number, fullName: string): void {
-    this.showDeleteConfirm = true;
-    this.deleteTarget = { type: 'specialist', id, name: fullName };
-  }
-
-  cancelDelete(): void {
-    this.closeDeleteConfirm();
-  }
-
-  confirmDelete(): void {
-    if (!this.deleteTarget) return;
-
-    const { type, id } = this.deleteTarget;
-    const service$ = type === 'patient'
-      ? this.adminService.deletePatient(id)
-      : this.adminService.deleteSpecialist(id);
-
-    service$.subscribe({
-      next: () => {
-        if (type === 'patient') {
-          this.patients = this.patients.filter(item => item.id !== id);
-          this.filteredPatients = this.filteredPatients.filter(item => item.id !== id);
-        } else {
-          this.specialists = this.specialists.filter(item => item.id !== id);
-          this.filteredSpecialists = this.filteredSpecialists.filter(item => item.id !== id);
-        }
-        this.closeDeleteConfirm();
-      },
-      error: (err: HttpErrorResponse) => {
-        this.errorMsg = `No se pudo eliminar el ${type}`;
-        console.error(err);
-        this.closeDeleteConfirm();
-      }
+  suspendUser(user: User) {
+    this.adminService.suspendUser(user.id).subscribe(() => {
+      user.status = 0;
     });
-  }
-
-  private closeDeleteConfirm(): void {
-    this.showDeleteConfirm = false;
-    this.deleteTarget = null;
-  }
-
-  get isLoading(): boolean {
-    return this.loadingPatients || this.loadingSpecialists || this.loadingValidations;
   }
 }

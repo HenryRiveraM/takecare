@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
   loading = false;
   errorMsg = '';
   loginSuccess = false;
@@ -30,6 +31,7 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+
     if (this.loginForm.invalid) {
       this.errorMsg = 'Completa todos los campos correctamente';
       this.loginForm.markAllAsTouched();
@@ -43,37 +45,53 @@ export class LoginComponent {
     const credentials = this.loginForm.getRawValue();
 
     this.authService.login(credentials).subscribe({
+
       next: (response: ApiResponse<LoginResponse>) => {
         this.loading = false;
+
         if (response.success && response.data) {
+
+          console.log('LOGIN RESPONSE:', response);
+
+          // Guardar usuario en localStorage
           localStorage.setItem('user', JSON.stringify(response.data));
+
           this.loginSuccess = true;
+
           setTimeout(() => {
-            const role = response.data?.role;
-            if(role == 3){
-              this.router.navigate(['/admin'])
-            }else if (role == 2){
-              this.router.navigate(['/dashboard'])
-            }else if (role == 1)
-            {
-              this.router.navigate(['/dashboard']);
-            }
+            this.redirectByRole(response.data!.role);
           }, 800);
+
         } else {
           this.errorMsg = response.error ?? 'Error desconocido';
         }
       },
-error: (err) => {
-  this.loading = false;
 
-  if (err.status === 401) {
-    this.errorMsg = 'Correo o contraseña incorrectos';
-  } else {
-    this.errorMsg = 'Error de conexión con el servidor';
+      error: (err) => {
+        this.loading = false;
+
+        if (err.status === 401) {
+          this.errorMsg = 'Correo o contraseña incorrectos';
+        } else {
+          this.errorMsg = 'Error de conexión con el servidor';
+        }
+
+        console.error('Login error:', err);
+      }
+
+    });
   }
 
-  console.error('Login error:', err);
-}
-    });
+  // 🔥 REDIRECCIÓN POR ROL
+  redirectByRole(role: number) {
+
+    console.log('ROLE:', role);
+
+    if (role === 3) {
+      this.router.navigate(['/admin']); // ADMIN
+    } else {
+      this.router.navigate(['/']); // USUARIO NORMAL
+    }
+
   }
 }

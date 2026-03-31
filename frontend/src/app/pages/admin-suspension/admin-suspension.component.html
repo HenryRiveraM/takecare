@@ -1,0 +1,75 @@
+<div class="admin-page">
+
+  <div class="header">
+    <h1>Suspensión de cuentas</h1>
+    <p>Gestiona usuarios activos y suspendidos</p>
+  </div>
+
+  <div class="controls">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+      placeholder="Buscar usuario..."
+      class="search-input"
+    />
+  </div>
+
+  <div *ngIf="loading" class="loading">Cargando usuarios...</div>
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+
+  <div class="table-container" *ngIf="!loading">
+
+    <table *ngIf="filteredUsers.length > 0; else empty">
+
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+
+          <td>{{ user.names }} {{ user.firstLastname }}</td>
+
+          <td>{{ user.email }}</td>
+
+          <td>
+            <span class="status"
+                  [class.active]="user.status === 1"
+                  [class.inactive]="user.status === 0">
+              {{ user.status === 1 ? 'Activo' : 'Suspendido' }}
+            </span>
+          </td>
+
+          <td>
+            <button
+              class="btn"
+              [class.suspend]="user.status === 1"
+              [class.activate]="user.status === 0"
+              (click)="toggleStatus(user)">
+
+              {{ user.status === 1 ? 'Suspender' : 'Activar' }}
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+    <ng-template #empty>
+      <p class="empty">No hay usuarios</p>
+    </ng-template>
+
+  </div>
+
+  <div class="toast" *ngIf="notification">
+    {{ notification }}
+  </div>
+
+</div>
