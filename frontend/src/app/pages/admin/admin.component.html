@@ -51,17 +51,17 @@
       {{ errorMsg }}
     </div>
 
-    <div *ngIf="isLoading" class="loading-message">
-      Cargando información...
-    </div>
-
-    <div class="table-card" *ngIf="activeTab === 'patients' && !isLoading">
+    <div class="table-card" *ngIf="activeTab === 'patients'">
       <div class="section-header">
         <h2>Pacientes registrados</h2>
         <span class="count-badge">{{ filteredPatients.length }}</span>
       </div>
 
-      <table *ngIf="filteredPatients.length > 0; else noPatients">
+      <div *ngIf="loadingPatients" class="loading-message">
+        Cargando pacientes...
+      </div>
+
+      <table *ngIf="!loadingPatients && filteredPatients.length > 0; else noPatients">
         <thead>
           <tr>
             <th>Nombres</th>
@@ -80,8 +80,8 @@
             <td>{{ patient.birthDate | date:'dd/MM/yyyy' }}</td>
             <td>{{ patient.strikes }}</td>
             <td>
-              <button class="delete-button" (click)="deletePatient(patient.id, patient.names + ' ' + patient.firstLastname)">
-                Eliminar
+              <button type="button" class="delete-button" (click)="deletePatient(patient.id, patient.names + ' ' + patient.firstLastname)">
+                Suspender
               </button>
             </td>
           </tr>
@@ -89,17 +89,21 @@
       </table>
 
       <ng-template #noPatients>
-        <p class="empty-message">No hay pacientes registrados.</p>
+        <p class="empty-message" *ngIf="!loadingPatients">No hay pacientes registrados.</p>
       </ng-template>
     </div>
 
-    <div class="table-card" *ngIf="activeTab === 'specialists' && !isLoading">
+    <div class="table-card" *ngIf="activeTab === 'specialists'">
       <div class="section-header">
         <h2>Especialistas registrados</h2>
         <span class="count-badge">{{ filteredSpecialists.length }}</span>
       </div>
 
-      <table *ngIf="filteredSpecialists.length > 0; else noSpecialists">
+      <div *ngIf="loadingSpecialists" class="loading-message">
+        Cargando especialistas...
+      </div>
+
+      <table *ngIf="!loadingSpecialists && filteredSpecialists.length > 0; else noSpecialists">
         <thead>
           <tr>
             <th>Nombres</th>
@@ -118,8 +122,8 @@
             <td>{{ specialist.birthDate | date }}</td>
             <td>{{ specialist.strikes }}</td>
             <td>
-              <button class="delete-button" (click)="deleteSpecialist(specialist.id, specialist.names + ' ' + specialist.firstLastname)">
-                Eliminar
+              <button type="button" class="delete-button" (click)="deleteSpecialist(specialist.id, specialist.names + ' ' + specialist.firstLastname)">
+                Suspender
               </button>
             </td>
           </tr>
@@ -127,17 +131,21 @@
       </table>
 
       <ng-template #noSpecialists>
-        <p class="empty-message">No hay especialistas registrados.</p>
+        <p class="empty-message" *ngIf="!loadingSpecialists">No hay especialistas registrados.</p>
       </ng-template>
     </div>
 
-    <div class="table-card" *ngIf="activeTab === 'validations' && !isLoading">
+    <div class="table-card" *ngIf="activeTab === 'validations'">
     <div class="section-header">
       <h2>Revisiones de Identidad</h2>
       <span class="count-badge">{{ filteredValidations.length }} pendientes</span>
     </div>
 
-    <div class="list" *ngIf="filteredValidations.length > 0; else noValidations">
+    <div *ngIf="loadingValidations" class="loading-message">
+      Cargando validaciones...
+    </div>
+
+    <div class="list" *ngIf="!loadingValidations && filteredValidations.length > 0; else noValidations">
       <div class="card-validation" *ngFor="let user of filteredValidations">
         
         <div class="user-info">
@@ -177,22 +185,33 @@
     </div>
 
     <ng-template #noValidations>
-      <p class="empty-message">No hay solicitudes por revisar.</p>
+      <p class="empty-message" *ngIf="!loadingValidations">No hay solicitudes por revisar.</p>
     </ng-template>
   </div>
 
-    <div class="modal-backdrop" *ngIf="deleteTarget">
-      <div class="modal">
-        <h3>Confirmar eliminación</h3>
-        <p>¿Estás seguro de que deseas eliminar a {{ deleteTarget.name }}?</p>
+    <div
+      class="modal-backdrop"
+      *ngIf="showDeleteConfirm"
+      (click)="cancelDelete()">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-confirm-title"
+        (click)="$event.stopPropagation()">
+        <h3 id="delete-confirm-title">Confirmar suspensión</h3>
+        <p>
+          ¿Estás seguro de que deseas suspender al usuario
+          <strong>{{ deleteTarget?.name }}</strong>?
+        </p>
         <div class="modal-actions">
-          <button class="cancel-btn" (click)="cancelDelete()">Cancelar</button>
-          <button class="confirm-btn" (click)="confirmDelete()">Eliminar</button>
+          <button type="button" class="cancel-btn" (click)="cancelDelete()">Cancelar</button>
+          <button type="button" class="confirm-btn" (click)="confirmDelete()">Suspender</button>
         </div>
       </div>
     </div>
 
-    <div class="toast-notification" *ngIf="notification">
+    <div class="toast-notification" [class.error]="notification.type === 'error'" *ngIf="notification">
       <div class="toast-icon">✓</div>
       <div class="toast-text">{{ notification.message }}</div>
     </div>

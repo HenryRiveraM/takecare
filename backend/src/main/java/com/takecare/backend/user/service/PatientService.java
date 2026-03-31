@@ -1,5 +1,6 @@
 package com.takecare.backend.user.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,13 +83,13 @@ public class PatientService extends UserService {
     }
 
     public boolean deletePatient(Integer id) {
-        logger.info("Attempting to delete patient with id: {}", id);
+        logger.info("Attempting logical delete for patient with id: {}", id);
         return patientRepository.findById(id)
             .map(patient -> {
-                patientRepository.delete(patient);
-                logger.info("Patient with id: {} deleted successfully", id);
                 patient.setStatus(0);
+                patient.setLastUpdate(LocalDateTime.now());
                 patientRepository.save(patient);
+                logger.info("Patient with id: {} marked as inactive successfully", id);
                 return true;
             }).orElseGet(() -> {
                 logger.warn("Cannot delete - no patient found with id: {}", id);

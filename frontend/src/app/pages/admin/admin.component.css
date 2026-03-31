@@ -497,6 +497,10 @@ tbody tr:hover {
   animation: slideUp 0.4s ease-out;
 }
 
+.toast-notification.error {
+  background-color: #b54747;
+}
+
 .toast-icon {
   margin-right: 10px;
   font-weight: bold;

@@ -48,7 +48,7 @@ export class AdminComponent implements OnInit {
     this.loadingPatients = true;
     this.adminService.getPatients().subscribe({
       next: (data: Patient[]) => {
-        this.patients = data.filter(p => p.status === true);
+        this.patients = data.filter(patient => this.isActiveUser(patient.status));
         this.filteredPatients = [...this.patients];
         this.loadingPatients = false;
       },
@@ -64,7 +64,7 @@ export class AdminComponent implements OnInit {
     this.loadingSpecialists = true;
     this.adminService.getSpecialists().subscribe({
       next: (data: Specialist[]) => {
-        this.specialists = data.filter(s => s.status === true);
+        this.specialists = data.filter(specialist => this.isActiveUser(specialist.status));
         this.filteredSpecialists = [...this.specialists];
         this.loadingSpecialists = false;
       },
@@ -85,9 +85,10 @@ export class AdminComponent implements OnInit {
         this.loadingValidations = false;
       },
       error: (err) => {
-        this.errorMsg = 'Error al cargar las validaciones pendientes';
+        this.pendingValidations = [];
+        this.filteredValidations = [];
         this.loadingValidations = false;
-        console.error(err);
+        console.warn('No se pudieron cargar las validaciones pendientes', err);
       }
     });
   }
@@ -112,11 +113,11 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  showNotification(msg: string) {
-    this.notification = { message: msg, type: 'success' };
+  showNotification(msg: string, type: 'success' | 'error' = 'success') {
+    this.notification = { message: msg, type };
     setTimeout(() => {
       this.notification = null;
-    }, 3000); 
+    }, 3000);
   }
 
   setTab(tab: 'patients' | 'specialists' | 'validations'): void {
@@ -161,13 +162,15 @@ export class AdminComponent implements OnInit {
   }
 
   deletePatient(id: number, fullName: string): void {
-    this.showDeleteConfirm = true;
+    this.errorMsg = '';
     this.deleteTarget = { type: 'patient', id, name: fullName };
+    this.showDeleteConfirm = true;
   }
 
   deleteSpecialist(id: number, fullName: string): void {
-    this.showDeleteConfirm = true;
+    this.errorMsg = '';
     this.deleteTarget = { type: 'specialist', id, name: fullName };
+    this.showDeleteConfirm = true;
   }
 
   cancelDelete(): void {
@@ -178,6 +181,7 @@ export class AdminComponent implements OnInit {
     if (!this.deleteTarget) return;
 
     const { type, id } = this.deleteTarget;
+    const label = type === 'patient' ? 'Paciente' : 'Especialista';
     const service$ = type === 'patient'
       ? this.adminService.deletePatient(id)
       : this.adminService.deleteSpecialist(id);
@@ -191,14 +195,21 @@ export class AdminComponent implements OnInit {
           this.specialists = this.specialists.filter(item => item.id !== id);
           this.filteredSpecialists = this.filteredSpecialists.filter(item => item.id !== id);
         }
+
         this.closeDeleteConfirm();
+        this.showNotification(`${label} suspendido correctamente`, 'success');
       },
       error: (err: HttpErrorResponse) => {
-        this.errorMsg = `No se pudo eliminar el ${type}`;
+        this.errorMsg = `No se pudo suspender el ${type === 'patient' ? 'paciente' : 'especialista'}`;
         console.error(err);
         this.closeDeleteConfirm();
+        this.showNotification(`No se pudo suspender el ${label.toLowerCase()}`, 'error');
       }
     });
+  }
+
+  private isActiveUser(status: number | boolean | null | undefined): boolean {
+    return status !== 0 && status !== false;
   }
 
   private closeDeleteConfirm(): void {

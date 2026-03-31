@@ -8,8 +8,8 @@ export interface Patient {
   firstLastname: string;
   secondLastname?: string;
   email: string;
-  birthDate: string; // fecha en formato ISO o similar
-  status: boolean;
+  birthDate: string;
+  status: number | boolean | null;
   strikes: number;
 }
 
@@ -19,8 +19,8 @@ export interface Specialist {
   firstLastname: string;
   secondLastname?: string;
   email: string;
-  birthDate: string; // fecha en formato ISO o similar
-  status: boolean;
+  birthDate: string;
+  status: number | boolean | null;
   strikes: number;
 }
 
@@ -30,27 +30,31 @@ export interface Specialist {
   providedIn: 'root'
 })
 export class AdminService {
-  private apiUrl = 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/admin';
+  private readonly apiUrl =
+    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:8080/api/v1/admin'
+      : 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/admin';
 
   constructor(private http: HttpClient) {}
 
   private getHeaders(): HttpHeaders {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const storedUser = localStorage.getItem('user');
+    if (!storedUser) {
+      return new HttpHeaders();
+    }
 
-    return new HttpHeaders({
-      'X-Admin-Id': user.id
-    });
+    const user = JSON.parse(storedUser);
+    const adminId = user?.id ? String(user.id) : '';
+
+    return adminId
+      ? new HttpHeaders({ 'X-Admin-Id': adminId })
+      : new HttpHeaders();
   }
 
-  /*getPatients(): Observable<Patient[]> {
+  getPatients(): Observable<Patient[]> {
     return this.http.get<Patient[]>(`${this.apiUrl}/patients`, {
       headers: this.getHeaders()
     });
-  }*/
-
-  getPatients(): Observable<Patient[]> {
-    const headers = new HttpHeaders().set('X-Admin-Id', '1'); 
-    return this.http.get<Patient[]>(`${this.apiUrl}/patients`, { headers });
   }
 
   getSpecialists(): Observable<Specialist[]> {
@@ -60,11 +64,15 @@ export class AdminService {
   }
 
   getPendingValidations(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/admin/pending-validations`);
+    return this.http.get<any[]>(`${this.apiUrl}/pending-validations`, {
+      headers: this.getHeaders()
+    });
   }
 
   validateUser(id: number, status: 'approved' | 'rejected'): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/admin/validate-user/${id}`, { status });
+    return this.http.patch(`${this.apiUrl}/users/${id}/verify`, { status }, {
+      headers: this.getHeaders()
+    });
   }
 
   deletePatient(id: number): Observable<void> {
