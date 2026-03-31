@@ -16,6 +16,8 @@ import { adminGuard } from './guards/admin.guard';
 
 // OTROS
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { SpecialistDashboardComponent } from './pages/specialist-dashboard/specialist-dashboard.component';
+import { SpecialistProfileComponent } from './pages/specialist-profile/specialist-profile.component';
 
 export const routes: Routes = [
 
@@ -63,11 +65,24 @@ export const routes: Routes = [
     component: AdminComponent
   },
 
+{
+  path: 'specialist',
+  component: SpecialistDashboardComponent,
+  data: { showNavbar: false } // 🔥 IMPORTANTE
+},
+
+{
+  path: 'specialist/profile',
+  component: SpecialistProfileComponent
+},
+
   //  NOT FOUND
   {
     path: '**',
     component: NotFoundComponent,
     data: { showNavbar: false }
   }
+
+
 
 ];

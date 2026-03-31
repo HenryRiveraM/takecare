@@ -5,6 +5,16 @@
 
 /* MANROPE FONT */
 
+:root {
+  --primary: #8ca39c;
+  --primary-dark: #5a7d73;
+  --primary-light: #e6f0ed;
+
+  --background: #fff6f6;
+  --white: #ffffff;
+  --border: #f1e8e8;
+}
+
 @font-face {
     font-family: 'Manrope';
     src: url('assets/fonts/Manrope/static/Manrope-Regular.ttf') format('truetype');
