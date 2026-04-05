@@ -233,3 +233,65 @@ Using generated security password: dedb4b74-f7d6-4e5f-ba3c-cd765cf21873
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
 2026-04-05 02:18:58 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 11.809 seconds (process running for 313.429)
+2026-04-05 15:29:01 [main] INFO  c.t.b.TakecareBackendApplicationTests - Starting TakecareBackendApplicationTests using Java 25.0.2 with PID 13236 (started by ISABELLA in C:\Users\ISABELLA\takecare\backend)
+2026-04-05 15:29:01 [main] INFO  c.t.b.TakecareBackendApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2026-04-05 15:29:26 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-05 15:29:27 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 24d7efdd-3bc2-4000-9f5e-25fee30d64f5
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-05 15:29:29 [main] INFO  c.t.b.TakecareBackendApplicationTests - Started TakecareBackendApplicationTests in 29.309 seconds (process running for 33.195)
+2026-04-05 15:29:32 [main] INFO  c.t.b.u.s.UserVerificationService - Attempting to verify user with id: 99
+2026-04-05 15:29:32 [main] WARN  c.t.b.u.s.UserVerificationService - User not found with id: 99
+2026-04-05 15:29:32 [main] INFO  c.t.b.u.s.UserVerificationService - Attempting to verify user with id: 1
+2026-04-05 15:29:32 [main] WARN  c.t.b.u.s.UserVerificationService - CI mismatch for user id: 1
+2026-04-05 15:29:32 [main] INFO  c.t.b.u.s.UserVerificationService - Attempting to verify user with id: 1
+2026-04-05 15:29:32 [main] INFO  c.t.b.u.s.UserVerificationService - User with id: 1 verified successfully
+2026-04-05 15:29:32 [main] INFO  c.t.b.u.s.UserVerificationService - Attempting to verify user with id: 1
+2026-04-05 15:29:32 [main] WARN  c.t.b.u.s.UserVerificationService - CI mismatch for user id: 1
+2026-04-05 15:29:32 [main] INFO  c.t.b.u.s.UserVerificationService - Attempting to verify user with id: 1
+2026-04-05 15:29:32 [main] INFO  c.t.b.u.s.UserVerificationService - User with id: 1 verified successfully
+2026-04-05 15:30:20 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 25.0.2 with PID 30300 (C:\Users\ISABELLA\takecare\backend\target\classes started by ISABELLA in C:\Users\ISABELLA\takecare\backend)
+2026-04-05 15:30:20 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-05 15:30:40 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-05 15:30:41 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 925822c9-574b-4f7b-9d29-496845c03dd3
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-05 15:30:42 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 22.841 seconds (process running for 23.908)
+2026-04-05 15:36:52 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 25.0.2 with PID 18940 (C:\Users\ISABELLA\takecare\backend\target\classes started by ISABELLA in C:\Users\ISABELLA\takecare\backend)
+2026-04-05 15:36:52 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-05 15:37:13 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-05 15:37:13 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: df03388b-eb7e-4111-84fc-7d00b841ea13
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-05 15:37:15 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 24.348 seconds (process running for 25.559)
+2026-04-05 15:49:08 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 25.0.2 with PID 18940 (C:\Users\ISABELLA\takecare\backend\target\classes started by ISABELLA in C:\Users\ISABELLA\takecare\backend)
+2026-04-05 15:49:08 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-05 15:49:19 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-05 15:49:20 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: a23fd221-893c-4b5d-84eb-aceb9f1de044
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-05 15:49:20 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 11.843 seconds (process running for 751.007)
+2026-04-05 17:11:44 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2d9ff285 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:11:45 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h971ms565µs200ns).
+2026-04-05 17:11:55 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@169f8f05 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:11:55 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@af797a7 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:11:55 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@464967ec (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:11:55 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2c442f87 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:11:55 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@66dc1a6c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:11:55 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5020f3bf (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:11:55 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5d5b9850 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:11:55 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@50eeac6b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:11:55 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5667d360 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:28:36 [HikariPool-2:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-2 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4d29ace8 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
