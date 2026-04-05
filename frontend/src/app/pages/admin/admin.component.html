@@ -8,123 +8,196 @@
     </div>
   </section>
 
-  <div class="admin-nav">
-    <button (click)="setTab('patients')" class="nav-btn" [class.active]="activeTab === 'patients' || activeTab === 'specialists'">
-      Gestión General
-    </button>
-    <button (click)="setTab('validations')" class="nav-btn" [class.active]="activeTab === 'validations'">
-      Validaciones pendientes
-    </button>
-    <button class="nav-btn">Suspensión de cuentas</button>
-  </div>
-
   <section class="admin-panel">
+
     <div class="top-controls">
-      <div class="tab-bar" *ngIf="activeTab !== 'validations'">
-        <button class="tab-button" [class.active]="activeTab === 'patients'" (click)="setTab('patients')">Pacientes</button>
-        <button class="tab-button" [class.active]="activeTab === 'specialists'" (click)="setTab('specialists')">Especialistas</button>
+      <div class="tab-bar">
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'patients'"
+          (click)="setTab('patients')">
+          Pacientes
+        </button>
+
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'specialists'"
+          (click)="setTab('specialists')">
+          Especialistas
+        </button>
+
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'validations'"
+          (click)="setTab('validations')">
+          Validaciones Pendientes
+        </button>
       </div>
+
       <div class="search-box">
-        <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Buscar por nombre, apellido o correo" class="search-input" />
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          placeholder="Buscar por nombre, apellido o correo"
+          class="search-input"
+        />
       </div>
     </div>
 
-    <div *ngIf="errorMsg" class="error-message">{{ errorMsg }}</div>
-    <div *ngIf="loading" class="loading-message">Cargando información...</div>
+    <div *ngIf="errorMsg" class="error-message">
+      {{ errorMsg }}
+    </div>
 
-    <div class="table-card" *ngIf="activeTab !== 'validations' && !loading">
+    <!-- TAB: PACIENTES -->
+    <div class="table-card" *ngIf="activeTab === 'patients'">
       <div class="section-header">
-        <h2>{{ activeTab === 'patients' ? 'Pacientes registrados' : 'Especialistas registrados' }}</h2>
-        <span class="count-badge">{{ filteredUsers.length }}</span>
+        <h2>Pacientes registrados</h2>
+        <span class="count-badge">{{ filteredPatients.length }}</span>
       </div>
-      <table *ngIf="filteredUsers.length > 0; else emptyUsers">
+
+      <div *ngIf="loadingPatients" class="loading-message">
+        Cargando pacientes...
+      </div>
+
+      <table *ngIf="!loadingPatients && filteredPatients.length > 0; else noPatients">
         <thead>
           <tr>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Correo</th>
-            <th>Fecha</th>
+            <th>Fecha de nacimiento</th>
             <th>Strikes</th>
-            <th>Estado</th>
             <th>Acción</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of filteredUsers">
-            <td>{{ user.names }}</td>
-            <td>{{ user.firstLastname }} {{ user.secondLastname || '' }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.birthDate | date:'dd/MM/yyyy' }}</td>
-            <td>{{ user.strikes }}</td>
+          <tr *ngFor="let patient of filteredPatients">
+            <td>{{ patient.names }}</td>
+            <td>{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
+            <td>{{ patient.email }}</td>
+            <td>{{ patient.birthDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ patient.strikes }}</td>
             <td>
-              <span class="status" [class.inactive]="user.status === 0">{{ user.status === 1 ? 'Activo' : 'Suspendido' }}</span>
-            </td>
-            <td class="actions">
-              <button class="delete-button" (click)="deleteUser(user)">Eliminar</button>
-              <button class="suspend-button" (click)="suspendUser(user)" *ngIf="user.status === 1">Suspender</button>
+              <button type="button" class="delete-button" (click)="deletePatient(patient.id, patient.names + ' ' + patient.firstLastname)">
+                Suspender
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
-      <ng-template #emptyUsers>
-        <p class="empty-message">No hay usuarios registrados en esta categoría.</p>
+
+      <ng-template #noPatients>
+        <p class="empty-message" *ngIf="!loadingPatients">No hay pacientes registrados.</p>
       </ng-template>
     </div>
 
-    <div class="validations-container" *ngIf="activeTab === 'validations' && !loading">
-      <div class="validations-header">
-        <h2 class="title-rev">Revisiones de Identidad</h2>
-        <span class="badge-pendientes" *ngIf="filteredValidations.length > 0">
-          {{ filteredValidations.length }} pendientes
-        </span>
+    <!-- TAB: ESPECIALISTAS -->
+    <div class="table-card" *ngIf="activeTab === 'specialists'">
+      <div class="section-header">
+        <h2>Especialistas registrados</h2>
+        <span class="count-badge">{{ filteredSpecialists.length }}</span>
       </div>
 
-      <div class="validations-list">
-        <div *ngFor="let user of filteredValidations" class="validation-row">
-          <div class="user-main-info">
-            <span class="role-badge" [ngClass]="user.role === 'specialist' ? 'role-specialist' : 'role-patient'">
+      <div *ngIf="loadingSpecialists" class="loading-message">
+        Cargando especialistas...
+      </div>
+
+      <table *ngIf="!loadingSpecialists && filteredSpecialists.length > 0; else noSpecialists">
+        <thead>
+          <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Fecha de nacimiento</th>
+            <th>Strikes</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let specialist of filteredSpecialists">
+            <td>{{ specialist.names }}</td>
+            <td>{{ specialist.firstLastname }} {{ specialist.secondLastname || '' }}</td>
+            <td>{{ specialist.email }}</td>
+            <td>{{ specialist.birthDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ specialist.strikes }}</td>
+            <td>
+              <button type="button" class="delete-button" (click)="deleteSpecialist(specialist.id, specialist.names + ' ' + specialist.firstLastname)">
+                Suspender
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noSpecialists>
+        <p class="empty-message" *ngIf="!loadingSpecialists">No hay especialistas registrados.</p>
+      </ng-template>
+    </div>
+
+    <!-- TAB: VALIDACIONES -->
+    <div class="table-card" *ngIf="activeTab === 'validations'">
+      <div class="section-header">
+        <h2>Revisiones de Identidad</h2>
+        <span class="count-badge">{{ filteredValidations.length }} pendientes</span>
+      </div>
+
+      <div *ngIf="loadingValidations" class="loading-message">
+        Cargando validaciones...
+      </div>
+
+      <div class="list" *ngIf="!loadingValidations && filteredValidations.length > 0; else noValidations">
+        <div class="card-validation" *ngFor="let user of filteredValidations">
+          
+          <div class="user-info">
+            <span class="role-tag" [ngClass]="user.role">
               {{ user.role === 'specialist' ? 'Especialista' : 'Paciente' }}
             </span>
-            <h3 class="user-fullname">{{ user.names }} {{ user.firstLastname }}</h3>
-            <p class="user-mail-sub">{{ user.email }}</p>
-            <span class="ci-badge-red">CI: {{ user.idNumber }}</span>
+            <h3 class="user-name">{{ user.names }} {{ user.firstLastname }}</h3>
+            <p class="user-email">{{ user.email }}</p>
+            <span class="ci-tag">CI: {{ user.ciNumber }}</span>
           </div>
 
-          <div class="docs-section" *ngIf="user.role === 'patient'">
-            <div class="doc-box">
-              <span class="doc-text">DOCUMENTO CI</span>
-              <img [src]="user.ciFrontUrl" class="img-ci-rect" alt="CI">
-            </div>
-            <div class="doc-box">
-              <span class="doc-text">SELFIE</span>
-              <img [src]="user.selfieUrl" class="img-selfie-circle" alt="Selfie">
-            </div>
+          <div class="actions">
+            <button class="reject-btn" (click)="processValidation(user.id, 'rejected')">Rechazar</button>
+            <button class="approve-btn" (click)="processValidation(user.id, 'approved')">Aprobar</button>
           </div>
 
-          <div class="docs-section" *ngIf="user.role === 'specialist'">
-            <div class="doc-box">
-              <span class="doc-text">DOCUMENTO CI</span>
-              <img [src]="user.ciFrontUrl" class="img-ci-rect" alt="CI">
-            </div>
-            <div class="doc-box">
-              <span class="doc-text">TÍTULO PROFESIONAL</span>
-              <div class="cert-preview-box">
-                <img [src]="user.certificatesUrl?.[0]" class="img-ci-rect cert-img" alt="Título">
-                <span class="cert-count" *ngIf="user.certificatesUrl?.length > 1">+{{ user.certificatesUrl.length - 1 }}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row-actions">
-            <button class="btn-rechazar" (click)="processValidation(user.id, 'rejected')">Rechazar</button>
-            <button class="btn-aprobar" (click)="processValidation(user.id, 'approved')">Aprobar</button>
-          </div>
-        </div>
-
-        <div *ngIf="filteredValidations.length === 0" class="empty-state">
-          <p>No hay revisiones pendientes por ahora.</p>
         </div>
       </div>
-    </div> 
+
+      <ng-template #noValidations>
+        <p class="empty-message" *ngIf="!loadingValidations">No hay solicitudes por revisar.</p>
+      </ng-template>
+    </div>
+
+    <!-- MODAL: CONFIRMACIÓN DE ELIMINACIÓN -->
+    <div
+      class="modal-backdrop"
+      *ngIf="showDeleteConfirm"
+      (click)="cancelDelete()">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-confirm-title"
+        (click)="$event.stopPropagation()">
+        <h3 id="delete-confirm-title">Confirmar suspensión</h3>
+        <p>
+          ¿Estás seguro de que deseas suspender al usuario
+          <strong>{{ deleteTarget?.name }}</strong>?
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" (click)="cancelDelete()">Cancelar</button>
+          <button type="button" class="confirm-btn" (click)="confirmDelete()">Suspender</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICACIÓN TOAST -->
+    <div class="toast-notification" [class.error]="notification?.type === 'error'" *ngIf="notification">
+      <div class="toast-icon">✓</div>
+      <div class="toast-text">{{ notification?.message }}</div>
+    </div>
   </section> 
 </div> 

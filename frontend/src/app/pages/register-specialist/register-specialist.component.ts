@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService, SpecialistRegisterRequest } from '../../services/api.service';
 
 @Component({
   selector: 'app-register-specialist',
@@ -27,7 +29,12 @@ export class RegisterSpecialistComponent implements OnInit {
     { id: 'ocupacional', nombre: 'Terapia ocupacional', seleccionado: false }
   ];
 
-  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
+  constructor(
+  private fb: FormBuilder,
+  private cd: ChangeDetectorRef,
+  private api: ApiService,
+  private router: Router
+  ){}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -36,7 +43,7 @@ export class RegisterSpecialistComponent implements OnInit {
       apellidoMaterno: [''], 
       fechaNacimiento: ['', Validators.required], 
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       documento: ['', Validators.required],
       complemento: [''],
       aceptaTerminos: [false, Validators.requiredTrue], 
@@ -111,30 +118,51 @@ export class RegisterSpecialistComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    if (this.registerForm.valid && this.fileList.length > 0 && this.tieneEspecialidadSeleccionada() && this.carnetFile) {
-      
-      this.isLoading = true; 
-
-      const dataParaBackend = {
-        ...this.registerForm.value,
-        especialidades: this.especialidadesOpciones
-          .filter(opt => opt.seleccionado)
-          .map(opt => opt.nombre), 
-        certificaciones: this.fileList.map(f => f.file.name), 
-        fotoCarnet: this.carnetFile?.file.name,
-      };
-
-      console.log('%c🚀 PROCESANDO REGISTRO...', 'color: #F5A3A3; font-weight: bold;');
-      console.table(dataParaBackend); 
-
-      setTimeout(() => {
-        this.isLoading = false; 
-        alert('¡Registro enviado con éxito! El administrador revisará su perfil.');
-      }, 2000);
-
-    } else {
+    if (!(this.registerForm.valid && this.fileList.length > 0 && this.tieneEspecialidadSeleccionada() && this.carnetFile)) {
       this.isLoading = false;
       alert('Por favor, completa todos los campos obligatorios, incluyendo documentos y especialidades.');
+      return;
     }
+
+    this.isLoading = true;
+
+    const selectedSpecialties = this.especialidadesOpciones
+      .filter(opt => opt.seleccionado)
+      .map(opt => opt.nombre);
+
+    const dataParaBackend: SpecialistRegisterRequest = {
+      names: this.registerForm.value.nombre.trim(),
+      firstLastname: this.registerForm.value.apellidoPaterno.trim(),
+      birthDate: this.registerForm.value.fechaNacimiento,
+      ciNumber: String(this.registerForm.value.documento).trim(),
+      email: this.registerForm.value.email.trim(),
+      password: this.registerForm.value.password.trim(),
+      biography: `Especialista en ${selectedSpecialties.join(', ')}`,
+      certificationImg: this.fileList.map(fileItem => fileItem.file.name).join(', '),
+      officeUbi: 'Por definir',
+      sessionCost: 1
+    };
+
+    const secondLastname = this.registerForm.value.apellidoMaterno?.trim();
+    if (secondLastname) {
+      dataParaBackend.secondLastname = secondLastname;
+    }
+
+    console.log('%c🚀 PROCESANDO REGISTRO...', 'color: #F5A3A3; font-weight: bold;');
+    console.table(dataParaBackend);
+
+    this.api.registerSpecialist(dataParaBackend).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        console.log('✅ REGISTRO DE ESPECIALISTA EXITOSO', res);
+        alert('¡Registro enviado con éxito! El administrador revisará su perfil.');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        console.error('❌ ERROR BACKEND COMPLETO:', err);
+        alert(err?.error?.message || err?.error || 'No se pudo registrar al especialista.');
+      }
+    });
   }
 }

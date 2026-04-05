@@ -3,7 +3,6 @@ package com.takecare.backend.auth.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,6 @@ import com.takecare.backend.auth.DTO.LoginResponseDTO;
 import com.takecare.backend.auth.service.AuthService;
 import com.takecare.backend.auth.service.PasswordRecoveryService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {

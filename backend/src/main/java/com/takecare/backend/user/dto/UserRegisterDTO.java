@@ -23,7 +23,9 @@ public class UserRegisterDTO {
     private String firstLastname;
 
     @Nullable
-    @Pattern(regexp = "^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$", message = "Second lastname must contain only letters")
+    @Pattern(
+    regexp = "^$|^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$",
+    message = "Second lastname must contain only letters")
     private String secondLastname;
 
     @NotNull
@@ -38,6 +40,8 @@ public class UserRegisterDTO {
     private String email;
 
     @NotBlank(message = "Password cannot be blank")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Password must contain letters and numbers")
+    @Pattern(
+    regexp = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$",
+    message = "Password must contain at least 8 characters, including letters and numbers")
     private String password;
 }

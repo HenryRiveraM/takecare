@@ -233,3 +233,85 @@ Using generated security password: dedb4b74-f7d6-4e5f-ba3c-cd765cf21873
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
 2026-04-05 02:18:58 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 11.809 seconds (process running for 313.429)
+2026-04-05 14:20:02 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 7476 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-05 14:20:02 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-05 14:20:19 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-05 14:20:19 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 253fd18a-1e47-4962-8e5e-a6f71ec9dd49
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-05 14:20:19 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 18.354 seconds (process running for 18.86)
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@24c8e811 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h34m14s653ms898µs400ns).
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5f32c9fa (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2d916871 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@639e38b1 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@20c9c9ce (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@69fda934 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4f09969a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5d40747a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@33a941a5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:02:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3799faed (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m18s564ms256µs200ns).
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6a9a4698 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6b715810 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6764dbbb (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5ff2ff49 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@70aaad1e (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7ace3254 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@391def8b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@37ec1015 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2001afda (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 17:16:40 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2bd6751c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=42m21s584ms467µs100ns).
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7d61a65a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@78878b5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1f6e93cd (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6fcda50c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@16842d1b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@528db2ae (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3996b3c9 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3b718432 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@caa8ab2 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:11:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@338d414b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-05 18:13:18 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-05 18:13:19 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 8 patients
+2026-04-05 18:13:24 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-05 18:13:25 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-05 18:13:35 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-05 18:13:37 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 8 patients
+2026-04-05 18:13:42 [http-nio-8080-exec-8] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-05 18:13:43 [http-nio-8080-exec-8] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-05 18:17:10 [http-nio-8080-exec-4] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Registering patient with email: natalipa12@gmail.com
+2026-04-05 18:17:10 [http-nio-8080-exec-4] INFO  c.t.b.user.service.PatientService - Registering new patient with email: natalipa12@gmail.com
+2026-04-05 18:17:10 [http-nio-8080-exec-4] INFO  c.t.backend.user.service.UserService - Preparing user with email: natalipa12@gmail.com and role: 1
+2026-04-05 18:17:11 [http-nio-8080-exec-4] INFO  c.t.b.user.service.PatientService - Patient registered successfully with id: 30
+2026-04-05 18:17:11 [http-nio-8080-exec-4] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Patient registered successfully
+2026-04-05 18:20:24 [http-nio-8080-exec-7] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Registering specialist with email: santipotato@gmail.com
+2026-04-05 18:20:24 [http-nio-8080-exec-7] INFO  c.t.b.user.service.SpecialistService - Registering new specialist with email: santipotato@gmail.com
+2026-04-05 18:20:24 [http-nio-8080-exec-7] INFO  c.t.backend.user.service.UserService - Preparing user with email: santipotato@gmail.com and role: 2
+2026-04-05 18:20:25 [http-nio-8080-exec-7] INFO  c.t.b.user.service.SpecialistService - Specialist registered successfully with id: 31
+2026-04-05 18:20:25 [http-nio-8080-exec-7] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Specialist registered successfully
+2026-04-05 18:39:13 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-05 18:39:15 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Found 9 patients
+2026-04-05 18:39:21 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-05 18:39:22 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-05 18:39:39 [http-nio-8080-exec-7] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-05 18:39:41 [http-nio-8080-exec-7] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-05 18:39:46 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-05 18:39:47 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-05 18:40:00 [http-nio-8080-exec-1] INFO  c.t.b.u.controller.AdminController - PUT /api/v1/admin/specialists/17/validate/approve - approving specialist
+2026-04-05 18:40:03 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-05 18:40:04 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-05 18:40:04 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-05 18:40:05 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Found 9 patients
+2026-04-05 18:40:07 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-05 18:40:08 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-05 18:40:12 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-05 18:40:13 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 9 patients
+2026-04-05 18:41:58 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/31/profile - Fetching specialist profile
+2026-04-05 18:41:58 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 31
+2026-04-05 18:42:00 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 31
+2026-04-05 18:42:00 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/31/profile - Specialist profile found

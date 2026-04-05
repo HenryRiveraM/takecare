@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService, PatientProfile } from '../../services/api.service';
+import { PatientService, PatientProfile } from '../../services/patient.service';
 
 @Component({
   selector: 'app-patient-profile',
@@ -14,11 +14,11 @@ export class PatientProfileComponent implements OnInit {
   profileForm!: FormGroup;
   isEditing = false;
   isLoading = false;
-  userDataBackup: PatientProfile | null = null; // Para guardar el estado anterior
+  userDataBackup: PatientProfile | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private apiService: ApiService
+    private patientService: PatientService
   ) {}
 
   ngOnInit(): void {
@@ -39,9 +39,9 @@ export class PatientProfileComponent implements OnInit {
   }
 
   loadUserData() {
-    this.isLoading = true;  // Mostrar spinner de carga
+    this.isLoading = true;
     
-    this.apiService.getPatientProfile().subscribe({
+    this.patientService.getProfile().subscribe({
       next: (profile) => {
         if (profile) {
           this.profileForm.patchValue({
@@ -85,8 +85,8 @@ export class PatientProfileComponent implements OnInit {
       const formData = this.profileForm.getRawValue();
       
       // Enviar al backend
-      this.apiService.updatePatientProfile(formData).subscribe({
-        next: (updatedProfile) => {
+      this.patientService.updateProfile(formData).subscribe({
+        next: (updatedProfile: any) => {
           if (updatedProfile) {
             this.userDataBackup = formData;
             this.isEditing = false;
@@ -98,7 +98,7 @@ export class PatientProfileComponent implements OnInit {
             this.isLoading = false;
           }
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error('Error de conexión:', error);
           this.isLoading = false;
           alert('❌ Error al actualizar el perfil. Intenta de nuevo.');
