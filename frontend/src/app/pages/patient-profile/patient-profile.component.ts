@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { ApiService, PatientProfile } from '../../services/api.service';
 
 @Component({
   selector: 'app-patient-profile',
@@ -14,11 +14,11 @@ export class PatientProfileComponent implements OnInit {
   profileForm!: FormGroup;
   isEditing = false;
   isLoading = false;
-  userDataBackup: any; // Para guardar el estado anterior
+  userDataBackup: PatientProfile | null = null; // Para guardar el estado anterior
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private apiService: ApiService
   ) {}
 
   ngOnInit(): void {
@@ -29,47 +29,84 @@ export class PatientProfileComponent implements OnInit {
   initForm() {
     this.profileForm = this.fb.group({
       names: ['', Validators.required],
-      first_lastname: ['', Validators.required],
-      second_lastname: [''],
-      ci_number: [{ value: '', disabled: true }], 
-      birth_date: ['', Validators.required],
+      firstLastname: ['', Validators.required],
+      secondLastname: [''],
+      ciNumber: [{ value: '', disabled: true }], 
+      birthDate: ['', Validators.required],
       email: [{ value: '', disabled: true }],
-      phone: [''], 
-      bio: ['']
+      clinicalHistory: ['']
     });
   }
 
   loadUserData() {
-    const mockData = {
-      fullName: 'Usuario Take Care',
-      email: 'usuario@ejemplo.com',
-      bio: 'Buscando equilibrio y bienestar mental.',
-      phone: '+51 987 654 321'
-    };
-
-    this.profileForm.patchValue(mockData);
-    this.userDataBackup = mockData; 
+    this.isLoading = true;  // Mostrar spinner de carga
+    
+    this.apiService.getPatientProfile().subscribe({
+      next: (profile) => {
+        if (profile) {
+          this.profileForm.patchValue({
+            names: profile.names,
+            firstLastname: profile.firstLastname,
+            secondLastname: profile.secondLastname || '',
+            ciNumber: profile.ciNumber || '',
+            birthDate: profile.birthDate,
+            email: profile.email,
+            clinicalHistory: profile.clinicalHistory || ''
+          });
+          this.userDataBackup = profile;
+          console.log('✅ Datos cargados:', profile);
+        } else {
+          console.error('❌ Error: perfil vacío');
+          alert('Error al cargar el perfil.');
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('❌ Error de conexión:', error);
+        this.isLoading = false;
+        alert('Error de conexión. Verifica tu internet e intenta de nuevo.');
+      }
+    });
   }
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
-    if (!this.isEditing) {
+    if (!this.isEditing && this.userDataBackup) {
       this.profileForm.patchValue(this.userDataBackup);
     }
   }
 
   onSave() {
+    // Validar que el formulario esté completo
     if (this.profileForm.valid) {
-      this.isLoading = true;
+      this.isLoading = true;  // Mostrar spinner
       
-      console.log('Enviando a HU08-BE:', this.profileForm.getRawValue());
+      // Obtener todos los valores del formulario (incluyendo disabled)
+      const formData = this.profileForm.getRawValue();
       
-      setTimeout(() => {
-        this.userDataBackup = this.profileForm.getRawValue(); 
-        this.isEditing = false;
-        this.isLoading = false;
-        alert('¡Perfil actualizado con éxito!');
-      }, 1500);
+      // Enviar al backend
+      this.apiService.updatePatientProfile(formData).subscribe({
+        next: (updatedProfile) => {
+          if (updatedProfile) {
+            this.userDataBackup = formData;
+            this.isEditing = false;
+            this.isLoading = false;
+            alert('✅ ¡Perfil actualizado con éxito!');
+          } else {
+            console.error('Error: perfil actualizado inválido');
+            alert('❌ Error al actualizar el perfil.');
+            this.isLoading = false;
+          }
+        },
+        error: (error) => {
+          console.error('Error de conexión:', error);
+          this.isLoading = false;
+          alert('❌ Error al actualizar el perfil. Intenta de nuevo.');
+        }
+      });
+    } else {
+      // Formulario inválido
+      alert('Por favor, completa todos los campos requeridos.');
     }
   }
 
