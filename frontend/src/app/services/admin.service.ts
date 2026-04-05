@@ -2,34 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface Patient {
+export interface User {
   id: number;
   names: string;
   firstLastname: string;
   secondLastname?: string;
   email: string;
-  birthDate: string; // fecha en formato ISO o similar
-  status: boolean;
+  birthDate: string;
+  status: number; // ⚠️ IMPORTANTE: 1 = activo | 0 = suspendido
   strikes: number;
 }
-
-export interface Specialist {
-  id: number;
-  names: string;
-  firstLastname: string;
-  secondLastname?: string;
-  email: string;
-  birthDate: string; // fecha en formato ISO o similar
-  status: boolean;
-  strikes: number;
-}
-
-// En tu admin.service.ts
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
+
   private apiUrl = 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/admin';
 
   constructor(private http: HttpClient) {}
@@ -38,44 +26,57 @@ export class AdminService {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     return new HttpHeaders({
-      'X-Admin-Id': user.id
+      'X-Admin-Id': user.id?.toString() || ''
     });
   }
 
-  /*getPatients(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(`${this.apiUrl}/patients`, {
-      headers: this.getHeaders()
-    });
-  }*/
-
-  getPatients(): Observable<Patient[]> {
-    const headers = new HttpHeaders().set('X-Admin-Id', '1'); 
-    return this.http.get<Patient[]>(`${this.apiUrl}/patients`, { headers });
-  }
-
-  getSpecialists(): Observable<Specialist[]> {
-    return this.http.get<Specialist[]>(`${this.apiUrl}/specialists`, {
+  // 🔹 PACIENTES
+  getPatients(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/patients`, {
       headers: this.getHeaders()
     });
   }
 
-  getPendingValidations(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/admin/pending-validations`);
+  // 🔹 ESPECIALISTAS
+  getSpecialists(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/specialists`, {
+      headers: this.getHeaders()
+    });
   }
 
-  validateUser(id: number, status: 'approved' | 'rejected'): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/admin/validate-user/${id}`, { status });
+  // 🔥 SUSPENDER (UNIFICADO)
+  suspendUser(id: number): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/users/${id}/suspend`,
+      {},
+      { headers: this.getHeaders() }
+    );
   }
 
   deletePatient(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/patients/${id}`, {
+  return this.http.delete<void>(`${this.apiUrl}/patients/${id}`, {
+    headers: this.getHeaders()
+  });
+}
+
+deleteSpecialist(id: number): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/specialists/${id}`, {
+    headers: this.getHeaders()
+  });
+}
+// 🔹 VALIDACIONES (Mezcla pacientes y especialistas pendientes)
+  getPendingValidations(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/pending-validations`, {
       headers: this.getHeaders()
     });
   }
 
-  deleteSpecialist(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/specialists/${id}`, {
-      headers: this.getHeaders()
-    });
+  // 🔹 APROBAR O RECHAZAR VALIDACIÓN
+  validateUser(id: number, status: 'approved' | 'rejected'): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/validations/${id}`,
+      { status }, // El body con el nuevo estado
+      { headers: this.getHeaders() }
+    );
   }
 }

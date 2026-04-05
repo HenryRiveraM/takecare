@@ -1,0 +1,64 @@
+<div class="profile-page animate__fadeIn">
+  <main class="form-container">
+    <div class="card">
+      <h1>Mi Perfil de Paciente</h1>
+      <p class="subtitle">Gestiona tu información personal y verifica el estado de tus documentos.</p>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onSave()">
+        
+        <div class="header-actions">
+           <h3 class="section-title">Información Personal</h3>
+           <button type="button" class="btn-edit-toggle" (click)="toggleEdit()">
+              <span class="material-symbols-outlined">{{ isEditing ? 'close' : 'edit' }}</span>
+              {{ isEditing ? 'Cancelar' : 'Editar Datos' }}
+           </button>
+        </div>
+
+        <div class="grid">
+          <div class="field-group">
+            <label>Nombres</label>
+            <input formControlName="names" [readonly]="!isEditing">
+          </div>
+          <div class="field-group">
+            <label>Primer Apellido</label>
+            <input formControlName="first_lastname" [readonly]="!isEditing">
+          </div>
+          <div class="field-group">
+            <label>Segundo Apellido</label>
+            <input formControlName="second_lastname" [readonly]="!isEditing">
+          </div>
+          <div class="field-group">
+            <label>Número de CI</label>
+            <input formControlName="ci_number" readonly class="readonly-field">
+          </div>
+          <div class="field-group">
+            <label>Fecha de Nacimiento</label>
+            <input type="date" formControlName="birth_date" [readonly]="!isEditing">
+          </div>
+          <div class="field-group">
+            <label>Correo Electrónico</label>
+            <input formControlName="email" readonly class="readonly-field">
+          </div>
+        </div>
+
+        <h3 class="section-title">Estado de Verificación</h3>
+        <div class="grid">
+          <div class="upload-status active">
+            <img src="assets/icons/upload.svg" width="20">
+            <p>Documento de Identidad Verificado</p>
+          </div>
+          <div class="upload-status active">
+            <img src="assets/icons/user.svg" width="20">
+            <p>Selfie de Identidad Verificada</p>
+          </div>
+        </div>
+
+        <div class="actions" *ngIf="isEditing">
+          <button class="primary" type="submit" [disabled]="profileForm.invalid || isLoading">
+            {{ isLoading ? 'Guardando...' : 'Actualizar Perfil' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>

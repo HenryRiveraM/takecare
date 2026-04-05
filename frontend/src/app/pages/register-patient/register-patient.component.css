@@ -219,15 +219,145 @@ h1{
 
 
 
-@media (max-width: 768px){
+/* ========================= */
+/* TABLET (<= 1024px) */
+/* ========================= */
+@media (max-width: 1024px) {
 
-  .card{
-    width:100%;
-    padding:30px;
+  .card {
+    width: 90%;
+    padding: 40px 30px;
   }
 
-  .grid{
-    grid-template-columns:1fr;
+  h1 {
+    font-size: 26px;
+  }
+
+}
+
+
+/* ========================= */
+/* MÓVIL (<= 768px) */
+/* ========================= */
+@media (max-width: 768px){
+
+  .form-container {
+    padding: 40px 15px;
+  }
+
+  .card {
+    width: 100%;
+    padding: 30px 20px;
+    border-radius: 20px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .grid input,
+  .password input {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .upload {
+    height: 130px;
+    padding: 20px;
+  }
+
+  .upload img {
+    width: 36px;
+  }
+
+  .upload p {
+    font-size: 13px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .primary,
+  .cancel {
+    width: 100%;
+  }
+
+}
+
+
+/* ========================= */
+/* MÓVIL PEQUEÑO (<= 480px) */
+/* ========================= */
+@media (max-width: 480px){
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  .section-title {
+    font-size: 11px;
+  }
+
+  .grid input,
+  .password input {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .upload {
+    height: 110px;
+  }
+
+  .upload img {
+    width: 30px;
+  }
+
+  .upload p {
+    font-size: 12px;
+  }
+
+  .checkbox {
+    font-size: 12px;
+  }
+
+  .primary {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .cancel {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+}
+
+
+/* ========================= */
+/* ULTRA SMALL (<= 360px) */
+/* ========================= */
+@media (max-width: 360px){
+
+  h1 {
+    font-size: 18px;
+  }
+
+  .subtitle {
+    font-size: 11px;
   }
 
 }
