@@ -1,115 +1,80 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="patient-page">
 
-<div class="patient-page">
-
-<!-- ── Toast Notification ── -->
-<div class="toast-wrapper" [class.toast-visible]="toast.visible">
-  <div class="toast" [class.toast-error]="toast.type === 'error'"
-                     [class.toast-success]="toast.type === 'success'"
-                     [class.toast-warning]="toast.type === 'warning'">
-    <span class="toast-icon">
-      <span *ngIf="toast.type === 'error'">✕</span>
-      <span *ngIf="toast.type === 'success'">✓</span>
-      <span *ngIf="toast.type === 'warning'">!</span>
-    </span>
-    <div class="toast-body">
-      <strong class="toast-title">{{ toast.title }}</strong>
-      <p class="toast-message">{{ toast.message }}</p>
+    <div class="toast-wrapper" [class.toast-visible]="toast.visible">
+      <div class="toast" 
+           [class.toast-error]="toast.type === 'error'"
+           [class.toast-success]="toast.type === 'success'"
+           [class.toast-warning]="toast.type === 'warning'">
+        <span class="toast-icon">
+          <span *ngIf="toast.type === 'error'">✕</span>
+          <span *ngIf="toast.type === 'success'">✓</span>
+          <span *ngIf="toast.type === 'warning'">!</span>
+        </span>
+        <div class="toast-body">
+          <strong class="toast-title">{{ toast.title }}</strong>
+          <p class="toast-message">{{ toast.message }}</p>
+        </div>
+        <button class="toast-close" type="button" (click)="closeToast()">✕</button>
+      </div>
     </div>
-    <button class="toast-close" type="button" (click)="closeToast()">✕</button>
+
+    <main class="form-container">
+      <div class="card">
+        <h1>Registro de Paciente</h1>
+        <p class="subtitle">
+          Crea tu cuenta para comenzar tu proceso de atención en salud mental.
+        </p>
+
+        <h3 class="section-title">Información Personal</h3>
+
+        <div class="grid">
+          <input formControlName="names" placeholder="Nombres">
+          <input formControlName="first_lastname" placeholder="Primer apellido">
+          <input formControlName="second_lastname" placeholder="Segundo apellido (opcional)">
+          <input formControlName="ci_number" placeholder="Número de CI">
+          <input type="date" formControlName="birth_date">
+          <input formControlName="email" placeholder="Correo electrónico">
+        </div>
+
+        <div class="password">
+          <label>Contraseña</label>
+          <input type="password" formControlName="password" placeholder="Mínimo 8 caracteres">
+        </div>
+
+        <h3 class="section-title">Documentos de Verificación</h3>
+
+        <div class="grid">
+          <div class="upload" [class.active]="documentoNombre" (click)="fileInput.click()">
+            <input type="file" hidden #fileInput (change)="onFileSelected($event, 'documento')">
+            <img src="assets/icons/upload.svg">
+            <p>{{ documentoNombre || 'Subir documento de identidad' }}</p>
+          </div>
+
+          <div class="upload" [class.active]="selfieNombre" (click)="selfieInput.click()">
+            <input type="file" hidden #selfieInput (change)="onFileSelected($event, 'selfie')">
+            <img src="assets/icons/user.svg">
+            <p>{{ selfieNombre || 'Tomar una selfie' }}</p>
+          </div>
+        </div>
+
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" formControlName="terms">
+            Acepto los Términos de Servicio
+          </label>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="submit" [disabled]="form.invalid">
+            Crear cuenta
+          </button>
+          <button class="cancel" type="button" (click)="cancel()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </main>
+
   </div>
-</div>
-
-<main class="form-container">
-
-<div class="card">
-
-<h1>Registro de Paciente</h1>
-
-<p class="subtitle">
-Crea tu cuenta para comenzar tu proceso de atención en salud mental.
-</p>
-
-<h3 class="section-title">Información Personal</h3>
-
-<div class="grid">
-
-<input formControlName="names" placeholder="Nombres">
-
-<input formControlName="first_lastname" placeholder="Primer apellido">
-
-<input formControlName="second_lastname" placeholder="Segundo apellido (opcional)">
-
-<input formControlName="ci_number" placeholder="Número de CI">
-
-<input type="date" formControlName="birth_date">
-
-<input formControlName="email" placeholder="Correo electrónico">
-
-</div>
-
-<div class="password">
-<label>Contraseña</label>
-<input type="password" formControlName="password" placeholder="Mínimo 8 caracteres">
-</div>
-
-<h3 class="section-title">Documentos de Verificación</h3>
-
-<div class="grid">
-
-<div class="upload"
-      [class.active]="documentoNombre"
-      (click)="fileInput.click()">
-
-  <input type="file" hidden #fileInput (change)="onFileSelected($event, 'documento')">
-
-  <img src="assets/icons/upload.svg">
-
-  <p>
-    {{ documentoNombre || 'Subir documento de identidad' }}
-  </p>
-
-</div>
-
-<div class="upload"
-      [class.active]="selfieNombre"
-      (click)="selfieInput.click()">
-
-  <input type="file" hidden #selfieInput (change)="onFileSelected($event, 'selfie')">
-
-  <img src="assets/icons/user.svg">
-
-  <p>
-    {{ selfieNombre || 'Tomar una selfie' }}
-  </p>
-
-</div>
-
-</div>
-
-<div class="checkbox">
-<label>
-<input type="checkbox" formControlName="terms">
-Acepto los Términos de Servicio
-</label>
-</div>
-
-<div class="actions">
-
-<button class="primary" type="submit" [disabled]="form.invalid">
-Crear cuenta
-</button>
-
-<button class="cancel" type="button" (click)="cancel()">
-Cancelar
-</button>
-
-</div>
-
-</div>
-
-</main>
-
-</div>
-
 </form>

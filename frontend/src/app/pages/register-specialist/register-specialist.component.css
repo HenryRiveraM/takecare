@@ -1,6 +1,6 @@
 .register-container {
   min-height: 100vh;
-  background: linear-gradient(180deg, #fff6f6, #ffffff);
+  background: linear-gradient(180deg, #86afa2, #89a79e);
   font-family: 'Manrope', sans-serif;
   display: flex;
   justify-content: center;
@@ -64,10 +64,10 @@
   font-family: 'Manrope', sans-serif;
 }
 
-.field input:hover { border-color: #F5A3A3; }
+.field input:hover { border-color: #96cebd; }
 .field input:focus {
   background: white;
-  border-color: #F5A3A3;
+  border-color: #7fa79b;
   box-shadow: 0 0 0 4px rgba(245, 163, 163, 0.2);
 }
 
@@ -125,7 +125,7 @@
 }
 
 .upload-zone:hover {
-  border-color: #F5A3A3;
+  border-color: #96cebd;
   background: #fff0f0;
   transform: translateY(-3px);
 }

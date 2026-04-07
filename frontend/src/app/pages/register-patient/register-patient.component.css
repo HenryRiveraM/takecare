@@ -167,8 +167,6 @@ h1{
   margin-right:6px;
 }
 
-
-
 .actions{
   margin-top:40px;
   display:flex;
@@ -193,16 +191,12 @@ h1{
   transform:translateY(-2px);
 }
 
-
-
 .primary:disabled{
   background:#f3d1d1;
   opacity:0.7;
   cursor:not-allowed;
   box-shadow:none;
 }
-
-
 
 .cancel{
   background:#fff0f0;
@@ -217,6 +211,19 @@ h1{
   background:#ffe4e4;
 }
 
+.required {
+  color: red;
+  margin-left: 4px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
 
 /* ========================= */
 /* TOAST NOTIFICATION        */

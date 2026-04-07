@@ -39,12 +39,17 @@ export class RegisterPatientComponent {
       names: ['', Validators.required],
       first_lastname: ['', Validators.required],
       second_lastname: [''],
-      ci_number: ['', Validators.required],
+      ci_number: ['', Validators.required, Validators.minLength(6)],
       birth_date: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       terms: [false, Validators.requiredTrue]
     });
+  }
+
+  isInvalid(field: string): boolean {
+    const control = this.form.get(field);
+    return !!(control && control.touched && control.invalid);
   }
 
   onFileSelected(event: any, tipo: string) {
@@ -142,7 +147,10 @@ export class RegisterPatientComponent {
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
+   }
 
     const data = {
       names: this.form.value.names.trim(),
