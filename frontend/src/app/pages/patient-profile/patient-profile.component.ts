@@ -32,7 +32,6 @@ export class PatientProfileComponent implements OnInit {
       firstLastname: ['', Validators.required],
       secondLastname: [''],
       ciNumber: [{ value: '', disabled: true }], 
-      birthDate: ['', Validators.required],
       email: [{ value: '', disabled: true }],
       clinicalHistory: ['']
     });
@@ -49,20 +48,19 @@ export class PatientProfileComponent implements OnInit {
             firstLastname: profile.firstLastname,
             secondLastname: profile.secondLastname || '',
             ciNumber: profile.ciNumber || '',
-            birthDate: profile.birthDate,
             email: profile.email,
             clinicalHistory: profile.clinicalHistory || ''
           });
           this.userDataBackup = profile;
-          console.log('✅ Datos cargados:', profile);
+          console.log('Datos cargados:', profile);
         } else {
-          console.error('❌ Error: perfil vacío');
+          console.error('Error: perfil vacío');
           alert('Error al cargar el perfil.');
         }
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('❌ Error de conexión:', error);
+        console.error('Error de conexión:', error);
         this.isLoading = false;
         alert('Error de conexión. Verifica tu internet e intenta de nuevo.');
       }
@@ -77,35 +75,30 @@ export class PatientProfileComponent implements OnInit {
   }
 
   onSave() {
-    // Validar que el formulario esté completo
     if (this.profileForm.valid) {
-      this.isLoading = true;  // Mostrar spinner
-      
-      // Obtener todos los valores del formulario (incluyendo disabled)
+      this.isLoading = true;      
       const formData = this.profileForm.getRawValue();
       
-      // Enviar al backend
       this.patientService.updateProfile(formData).subscribe({
         next: (updatedProfile: any) => {
           if (updatedProfile) {
             this.userDataBackup = formData;
             this.isEditing = false;
             this.isLoading = false;
-            alert('✅ ¡Perfil actualizado con éxito!');
+            alert('¡Perfil actualizado con éxito!');
           } else {
             console.error('Error: perfil actualizado inválido');
-            alert('❌ Error al actualizar el perfil.');
+            alert('Error al actualizar el perfil.');
             this.isLoading = false;
           }
         },
         error: (error: any) => {
           console.error('Error de conexión:', error);
           this.isLoading = false;
-          alert('❌ Error al actualizar el perfil. Intenta de nuevo.');
+          alert('Error al actualizar el perfil. Intenta de nuevo.');
         }
       });
     } else {
-      // Formulario inválido
       alert('Por favor, completa todos los campos requeridos.');
     }
   }

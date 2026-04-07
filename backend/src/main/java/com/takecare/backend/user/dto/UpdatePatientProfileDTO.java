@@ -26,6 +26,4 @@ public class UpdatePatientProfileDTO {
              message = "Second lastname must contain only letters")
     private String secondLastname;
 
-    @Nullable
-    private LocalDate birthDate;
 }

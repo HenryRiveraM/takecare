@@ -34,21 +34,19 @@ export class PatientService {
 
   constructor(private http: HttpClient) {}
 
-  // ✅ OBTENER PERFIL DEL PACIENTE LOGUEADO
   getProfile(): Observable<PatientProfile> {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const userId = user?.id;
     return this.http.get<PatientProfile>(
-      `${this.baseUrl}/${userId}/profile`
+      `${this.baseUrl}/profile/${userId}`
     );
   }
 
-  // ✅ ACTUALIZAR PERFIL DEL PACIENTE
   updateProfile(data: UpdatePatientProfile): Observable<PatientProfile> {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const userId = user?.id;
     return this.http.put<PatientProfile>(
-      `${this.baseUrl}/${userId}/profile`,
+      `${this.baseUrl}/profile/${userId}`,
       data
     );
   }

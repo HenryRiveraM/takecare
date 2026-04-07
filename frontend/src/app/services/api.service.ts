@@ -66,7 +66,7 @@ export class ApiService {
     const userId = user?.id;
     console.log(`API: Obteniendo perfil de paciente. UserId: ${userId}`);
     return this.http.get<PatientProfile>(
-      `${this.baseUrl}/api/v1/users/${userId}/profile`
+      `${this.baseUrl}/api/v1/users/profile/${userId}`
     );
   }
 
@@ -75,7 +75,7 @@ export class ApiService {
     const userId = user?.id;
     console.log(`API: Actualizando perfil de paciente. UserId: ${userId}`);
     return this.http.put<PatientProfile>(
-      `${this.baseUrl}/api/v1/users/${userId}/profile`,
+      `${this.baseUrl}/api/v1/users/profile/${userId}`,
       data
     );
   }

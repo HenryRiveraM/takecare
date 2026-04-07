@@ -135,6 +135,53 @@ textarea:focus {
   transform:translateY(-2px);
 }
 
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.btn-secondary {
+  margin-top: 10px;
+  background: #e5e7eb;
+  color: #374151;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-secondary:hover {
+  background: #d1d5db;
+}
+
+.error {
+  margin-bottom: 15px;
+  color: #dc2626;
+  text-align: center;
+  font-weight: 500;
+}
+
+.info-message {
+  margin-bottom: 15px;
+  color: #374151;
+  text-align: center;
+  font-weight: 500;
+}
+
+.readonly-field {
+  background: #f9fafb;
+}
+
+.input-group input[readonly],
+textarea[readonly] {
+  background: transparent;
+  cursor: default;
+}
+
 /* SUCCESS */
 .success {
   margin-top: 10px;
@@ -163,7 +210,6 @@ textarea:focus {
   }
 
 }
-
 
 /* ========================= */
 /*  MÓVIL (<= 768px) */
@@ -205,7 +251,6 @@ textarea:focus {
 
 }
 
-
 /* ========================= */
 /*  MÓVIL PEQUEÑO (<= 480px) */
 /* ========================= */
@@ -241,7 +286,6 @@ textarea:focus {
   }
 
 }
-
 
 /* ========================= */
 /*  ULTRA SMALL (<= 360px) */

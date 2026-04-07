@@ -1,5 +1,4 @@
 <div class="profile-page">
-
   <div class="container">
 
     <!-- HEADER VISUAL -->
@@ -15,54 +14,122 @@
       </div>
     </div>
 
+    <div *ngIf="loading" class="info-message">
+      Cargando información...
+    </div>
+
+    <div *ngIf="errorMsg" class="error">
+      {{ errorMsg }}
+    </div>
+
     <!-- FORM -->
-    <form (ngSubmit)="save()" class="form">
+    <form (ngSubmit)="save()" class="form" *ngIf="!loading">
 
       <div class="grid">
 
         <div class="field">
-          <label>Nombre completo</label>
+          <label>Nombres</label>
           <div class="input-group">
             <span class="material-symbols-outlined">person</span>
-            <input [(ngModel)]="profile.names" name="names" placeholder="Ej: Juan Pérez"/>
+            <input 
+            [(ngModel)]="profile.names" 
+            name="names"
+            [readonly] = "!isEditing"
+            />
           </div>
         </div>
 
         <div class="field">
-          <label>Correo</label>
+          <label>Primer Apellido</label>
           <div class="input-group">
-            <span class="material-symbols-outlined">mail</span>
-            <input [(ngModel)]="profile.email" name="email" type="email"/>
+            <span class="material-symbols-outlined">person</span>
+            <input [(ngModel)]="profile.firstLastname" 
+            name="firstLastname"
+            [readonly] = "!isEditing"
+            />
           </div>
         </div>
 
-        <div class="field full">
-          <label>Teléfono</label>
+        <div class="field">
+          <label>Segundo Apellido</label>
           <div class="input-group">
-            <span class="material-symbols-outlined">call</span>
-            <input [(ngModel)]="profile.phone" name="phone"/>
+            <span class="material-symbols-outlined">person</span>
+            <input [(ngModel)]="profile.secondLastname" 
+            name="secondLastname"
+            placeholder="Ej: García"
+            [readonly] = "!isEditing"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Correo electrónico</label>
+          <div class="input-group">
+            <span class="material-symbols-outlined">mail</span>
+            <input [(ngModel)]="profile.email" 
+            name="email" type="email"
+            readonly/>
           </div>
         </div>
 
         <div class="field full">
           <label>Biografía</label>
-          <textarea [(ngModel)]="profile.bio" name="bio"
-            placeholder="Describe tu especialidad, experiencia o enfoque terapéutico...">
+          <textarea [(ngModel)]="profile.biography" name="biography"
+            placeholder="Describe tu especialidad, experiencia o enfoque terapéutico..."
+            [readonly] = "!isEditing">
           </textarea>
+        </div>
+
+        <div class="field">
+          <label>Ubicación del consultorio</label>
+          <div class="input-group">
+            <span class="material-symbols-outlined">location_on</span>
+            <input
+              [(ngModel)]="profile.officeUbi"
+              name="officeUbi"
+              placeholder="Ej: Av. América #123"
+              [readonly]="!isEditing"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Costo por sesión</label>
+          <div class="input-group">
+            <span class="material-symbols-outlined">payments</span>
+            <input
+              [(ngModel)]="profile.sessionCost"
+              name="sessionCost"
+              type="number"
+              min="0"
+              placeholder="Ej: 150"
+              [readonly]="!isEditing"
+            />
+          </div>
         </div>
 
       </div>
 
-      <button class="btn-primary" type="submit">
-        Guardar cambios
-      </button>
+      <div class="actions" *ngIf="!isEditing">
+        <button class="btn-primary" type="button" (click)="enableEdit()">
+          Editar perfil
+        </button>
+      </div>
+
+      <div class="actions" *ngIf="isEditing">
+        <button class="btn-secondary" type="button" (click)="cancelEdit()">
+          Cancelar
+        </button>
+
+        <button class="btn-primary" type="submit" [disabled]="loading">
+          Guardar cambios
+        </button>
+      </div>
 
       <p class="success" *ngIf="successMsg">
         {{ successMsg }}
       </p>
 
     </form>
-
   </div>
-
 </div>
