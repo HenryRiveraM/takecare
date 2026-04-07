@@ -52,9 +52,6 @@ public class PatientProfileService {
         if (dto.getSecondLastname() != null) {
             patient.setSecondLastname(dto.getSecondLastname());
         }
-        if (dto.getBirthDate() != null) {
-            patient.setBirthDate(dto.getBirthDate());
-        }
 
         patient.setLastUpdate(LocalDateTime.now());
         Patient updated = patientRepository.save(patient);
@@ -69,7 +66,6 @@ public class PatientProfileService {
         dto.setNames(patient.getNames());
         dto.setFirstLastname(patient.getFirstLastname());
         dto.setSecondLastname(patient.getSecondLastname());
-        dto.setBirthDate(patient.getBirthDate());
         dto.setCiNumber(patient.getCiNumber());
         dto.setEmail(patient.getEmail());
         dto.setClinicalHistory(patient.getClinicalHistory());

@@ -211,3 +211,79 @@ This generated password is for development use only. Your security configuration
 2026-04-07 10:17:33 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
 2026-04-07 10:17:35 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
 2026-04-07 10:17:35 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@92646e (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@41af6e55 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6386c68f (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@70246f85 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Thread starvation or clock leap detected (housekeeper delta=21m40s440ms166µs100ns).
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1be799f5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2180911a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7467991b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@276c8855 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@e3957c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@25cecc3b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:50:35 [HikariPool-9:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Pool is empty, failed to create/setup connection (e6a2a148-7b9a-47bf-b919-72db16464402)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at jdk.internal.reflect.GeneratedConstructorAccessor184.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: No such host is known (caboose.proxy.rlwy.net)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-07 10:51:00 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Thread starvation or clock leap detected (housekeeper delta=10m833ms127µs300ns).
+2026-04-07 10:53:16 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6d2936d8 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:53:18 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@32900dc9 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:53:22 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@61ecb0b4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:53:23 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@45d7c5a7 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:53:36 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4a34c470 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 10:53:43 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6bef5b1f (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4583ae4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@320ba8af (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2f64015d (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6aae914f (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Thread starvation or clock leap detected (housekeeper delta=1m4s68ms271µs600ns).
+2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@200afae4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4f2b609a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@404aeecb (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:12 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5e702b64 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:19 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3de1bd85 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-07 11:03:47 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@753e1572 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
