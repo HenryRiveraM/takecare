@@ -14,6 +14,7 @@ import { ApiService } from '../../services/api.service';
 export class RegisterPatientComponent {
 
   form: FormGroup;
+  submitted = false;
 
   documentoFile: File | null = null;
   selfieFile: File | null = null;
@@ -21,23 +22,57 @@ export class RegisterPatientComponent {
   documentoNombre = '';
   selfieNombre = '';
 
+  toast: { visible: boolean; type: 'error' | 'success' | 'warning'; title: string; message: string } = {
+    visible: false,
+    type: 'error',
+    title: '',
+    message: ''
+  };
+  private toastTimer: any;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private api: ApiService
   ) {
-
     this.form = this.fb.group({
-      names: ['', Validators.required],
-      first_lastname: ['', Validators.required],
-      second_lastname: [''],
-      ci_number: ['', Validators.required],
+      names: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+      ]],
+      first_lastname: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+      ]],
+      second_lastname: ['', [
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+      ]],
+      ci_number: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(10),
+        Validators.pattern(/^[0-9A-Za-z-]+$/)
+      ]],
       birth_date: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(50)
+      ]],
       terms: [false, Validators.requiredTrue]
     });
+  }
 
+  isInvalid(field: string): boolean {
+    const control = this.form.get(field);
+    return !!(control && control.touched && control.invalid);
   }
 
   onFileSelected(event: any, tipo: string) {
@@ -55,35 +90,114 @@ export class RegisterPatientComponent {
     }
   }
 
+  showToast(type: 'error' | 'success' | 'warning', title: string, message: string) {
+    clearTimeout(this.toastTimer);
+    this.toast = { visible: true, type, title, message };
+    this.toastTimer = setTimeout(() => this.closeToast(), 5000);
+  }
+
+  closeToast() {
+    this.toast.visible = false;
+  }
+
+  private getFriendlyErrorMessage(err: any): { title: string; message: string } {
+    const status = err?.status;
+    const backendMessage: string = err?.error?.message || err?.error?.error || '';
+
+    if (status === 400) {
+      if (backendMessage.toLowerCase().includes('email')) {
+        return {
+          title: 'Correo inválido',
+          message: 'El correo electrónico ingresado no es válido o ya está registrado. Verifica e intenta de nuevo.'
+        };
+      }
+      if (backendMessage.toLowerCase().includes('ci') || backendMessage.toLowerCase().includes('document')) {
+        return {
+          title: 'CI duplicado',
+          message: 'El número de CI ingresado ya está registrado en el sistema.'
+        };
+      }
+      if (backendMessage.toLowerCase().includes('password')) {
+        return {
+          title: 'Contraseña inválida',
+          message: 'La contraseña no cumple con los requisitos mínimos de seguridad.'
+        };
+      }
+      return {
+        title: 'Datos incompletos',
+        message: 'Algunos campos no son válidos. Revisa que toda la información esté correctamente ingresada.'
+      };
+    }
+
+    if (status === 409) {
+      return {
+        title: 'Cuenta existente',
+        message: 'Ya existe una cuenta con ese correo electrónico o número de CI. ¿Quizás ya tienes una cuenta?'
+      };
+    }
+
+    if (status === 422) {
+      return {
+        title: 'Información inválida',
+        message: 'Algunos datos no tienen el formato esperado. Revisa la fecha de nacimiento y el correo.'
+      };
+    }
+
+    if (status >= 500) {
+      return {
+        title: 'Error del servidor',
+        message: 'Ocurrió un problema en nuestros servidores. Por favor, intenta de nuevo en unos minutos.'
+      };
+    }
+
+    if (status === 0 || status == null) {
+      return {
+        title: 'Sin conexión',
+        message: 'No se pudo conectar con el servidor. Verifica tu conexión a internet e intenta de nuevo.'
+      };
+    }
+
+    return {
+      title: 'Error al registrarse',
+      message: 'Ocurrió un error inesperado. Por favor, intenta de nuevo más tarde.'
+    };
+  }
+
   onSubmit() {
+    this.submitted = true;
 
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
-  const data = {
-    names: this.form.value.names.trim(),
-    firstLastname: this.form.value.first_lastname.trim(),
+    const data = {
+      names: this.form.value.names.trim(),
+      firstLastname: this.form.value.first_lastname.trim(),
 
-    ...(this.form.value.second_lastname?.trim() && {
-      secondLastname: this.form.value.second_lastname.trim()
-    }),
+      ...(this.form.value.second_lastname?.trim() && {
+        secondLastname: this.form.value.second_lastname.trim()
+      }),
 
-    ciNumber: String(this.form.value.ci_number).trim(),
-    birthDate: this.form.value.birth_date,
-    email: this.form.value.email.trim(),
-    password: this.form.value.password.trim(),
-    role: 1,
-    selfieVerification: this.selfieNombre || 'default.jpg',
-    clinicalHistory: 'Sin antecedentes'
-  };
+      ciNumber: String(this.form.value.ci_number).trim(),
+      birthDate: this.form.value.birth_date,
+      email: this.form.value.email.trim(),
+      password: this.form.value.password.trim(),
+      role: 1,
+      selfieVerification: this.selfieNombre || 'default.jpg',
+      clinicalHistory: 'Sin antecedentes'
+    };
 
     this.api.registerPatient(data).subscribe({
       next: (res) => {
         console.log('✅ REGISTRO EXITOSO', res);
-        this.router.navigate(['/login']);
+        this.showToast('success', '¡Cuenta creada!', 'Tu registro fue exitoso. Redirigiendo al inicio de sesión...');
+        setTimeout(() => this.router.navigate(['/login']), 2000);
       },
       error: (err) => {
         console.error('❌ ERROR BACKEND COMPLETO:', err);
-        alert(JSON.stringify(err.error));
+        const { title, message } = this.getFriendlyErrorMessage(err);
+        this.showToast('error', title, message);
       }
     });
   }
@@ -91,5 +205,4 @@ export class RegisterPatientComponent {
   cancel() {
     this.router.navigate(['/']);
   }
-
 }

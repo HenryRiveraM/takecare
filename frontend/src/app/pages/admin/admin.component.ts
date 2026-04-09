@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AdminService, Patient, Specialist } from '../../services/admin.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AdminService, User, Specialist } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin',
@@ -12,17 +12,23 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  patients: Patient[] = [];
-  specialists: Specialist[] = [];
-  pendingValidations: any[] = [];
+  // Datos generales (hotfix)
+  users: User[] = [];
+  filteredUsers: User[] = [];
 
-  filteredPatients: Patient[] = [];
+  // Datos separados (release)
+  patients: User[] = [];
+  filteredPatients: User[] = [];
+  specialists: Specialist[] = [];
   filteredSpecialists: Specialist[] = [];
+
+  pendingValidations: any[] = [];
   filteredValidations: any[] = [];
 
   activeTab: 'patients' | 'specialists' | 'validations' = 'patients';
-  searchTerm: string = '';
+  searchTerm = '';
 
+  loading = false;
   loadingPatients = false;
   loadingSpecialists = false;
   loadingValidations = false;
@@ -30,30 +36,38 @@ export class AdminComponent implements OnInit {
 
   showDeleteConfirm = false;
   deleteTarget: { type: 'patient' | 'specialist'; id: number; name: string } | null = null;
-  notification: { message: string, type: 'success' | 'error' } | null = null;
+  notification: { message: string; type: 'success' | 'error' } | null = null;
 
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.loadAllData();
+    this.loadData();
   }
 
-  loadAllData(): void {
-    this.loadPatients();
-    this.loadSpecialists();
-    this.loadPendingValidations();
+  loadData(): void {
+    this.errorMsg = '';
+
+    if (this.activeTab === 'validations') {
+      this.loadPendingValidations();
+    } else if (this.activeTab === 'patients') {
+      this.loadPatients();
+    } else {
+      this.loadSpecialists();
+    }
   }
 
   loadPatients(): void {
     this.loadingPatients = true;
     this.adminService.getPatients().subscribe({
-      next: (data: Patient[]) => {
+      next: (data: User[]) => {
         this.patients = data.filter(patient => this.isActiveUser(patient.status));
         this.filteredPatients = [...this.patients];
+        this.users = this.patients; // Mantener sincronizado con versión genérica
+        this.filteredUsers = this.filteredPatients;
         this.loadingPatients = false;
       },
       error: (err: HttpErrorResponse) => {
-        this.errorMsg = 'No se pudieron cargar los pacientes';
+        this.errorMsg = 'Error cargando pacientes';
         this.loadingPatients = false;
         console.error(err);
       }
@@ -66,6 +80,8 @@ export class AdminComponent implements OnInit {
       next: (data: Specialist[]) => {
         this.specialists = data.filter(specialist => this.isActiveUser(specialist.status));
         this.filteredSpecialists = [...this.specialists];
+        this.users = this.specialists as any; // Mantener sincronizado con versión genérica
+        this.filteredUsers = this.filteredSpecialists as any;
         this.loadingSpecialists = false;
       },
       error: (err: HttpErrorResponse) => {
@@ -79,10 +95,14 @@ export class AdminComponent implements OnInit {
   loadPendingValidations(): void {
     this.loadingValidations = true;
     this.adminService.getPendingValidations().subscribe({
-      next: (data) => {
-        this.pendingValidations = data;
+      next: (data: Specialist[]) => {
+        // Filtramos especialistas con cuenta NO verificada (accountVerified === 2 o null)
+        this.pendingValidations = data.filter(specialist => 
+          specialist.accountVerified === 2 || specialist.accountVerified === null
+        );
         this.filteredValidations = [...this.pendingValidations];
         this.loadingValidations = false;
+        console.log(`✅ ${this.pendingValidations.length} validaciones pendientes cargadas`);
       },
       error: (err) => {
         this.pendingValidations = [];
@@ -91,6 +111,35 @@ export class AdminComponent implements OnInit {
         console.warn('No se pudieron cargar las validaciones pendientes', err);
       }
     });
+  }
+
+  setTab(tab: 'patients' | 'specialists' | 'validations'): void {
+    this.activeTab = tab;
+    this.searchTerm = '';
+    this.loadData();
+  }
+
+  onSearch(): void {
+    const term = this.searchTerm.toLowerCase().trim();
+
+    if (this.activeTab === 'validations') {
+      this.filteredValidations = this.pendingValidations.filter(v =>
+        v.names.toLowerCase().includes(term) ||
+        v.email.toLowerCase().includes(term)
+      );
+    } else if (this.activeTab === 'patients') {
+      this.filteredPatients = this.patients.filter(u =>
+        u.names.toLowerCase().includes(term) ||
+        u.firstLastname.toLowerCase().includes(term) ||
+        u.email.toLowerCase().includes(term)
+      );
+    } else {
+      this.filteredSpecialists = this.specialists.filter(u =>
+        u.names.toLowerCase().includes(term) ||
+        u.firstLastname.toLowerCase().includes(term) ||
+        u.email.toLowerCase().includes(term)
+      );
+    }
   }
 
   processValidation(id: number, status: 'approved' | 'rejected'): void {
@@ -111,54 +160,6 @@ export class AdminComponent implements OnInit {
         console.error(err);
       }
     });
-  }
-
-  showNotification(msg: string, type: 'success' | 'error' = 'success') {
-    this.notification = { message: msg, type };
-    setTimeout(() => {
-      this.notification = null;
-    }, 3000);
-  }
-
-  setTab(tab: 'patients' | 'specialists' | 'validations'): void {
-    this.activeTab = tab;
-    this.searchTerm = '';
-    this.onSearch(); 
-    this.resetFilters();
-    this.errorMsg = '';
-  }
-
-  resetFilters(): void {
-    this.filteredPatients = [...this.patients];
-    this.filteredSpecialists = [...this.specialists];
-    this.filteredValidations = [...this.pendingValidations];
-  }
-
-  onSearch(): void {
-    const term = this.searchTerm.toLowerCase().trim();
-
-    if (this.activeTab === 'patients') {
-      this.filteredPatients = this.patients.filter(patient =>
-        patient.names.toLowerCase().includes(term) ||
-        patient.firstLastname.toLowerCase().includes(term) ||
-        (patient.secondLastname?.toLowerCase().includes(term) ?? false) ||
-        patient.email.toLowerCase().includes(term)
-      );
-    } else if (this.activeTab === 'specialists') {
-      this.filteredSpecialists = this.specialists.filter(specialist =>
-        specialist.names.toLowerCase().includes(term) ||
-        specialist.firstLastname.toLowerCase().includes(term) ||
-        (specialist.secondLastname?.toLowerCase().includes(term) ?? false) ||
-        specialist.email.toLowerCase().includes(term)
-      );
-    } else if (this.activeTab === 'validations') {
-      const term = this.searchTerm.toLowerCase().trim(); // Usar el mismo formato
-      this.filteredValidations = this.pendingValidations.filter(v => 
-        v.names.toLowerCase().includes(term) || 
-        v.firstLastname.toLowerCase().includes(term) ||
-        v.email.toLowerCase().includes(term)
-      );
-    }
   }
 
   deletePatient(id: number, fullName: string): void {
@@ -197,13 +198,13 @@ export class AdminComponent implements OnInit {
         }
 
         this.closeDeleteConfirm();
-        this.showNotification(`${label} suspendido correctamente`, 'success');
+        this.showNotification(`${label} respaldado correctamente`, 'success');
       },
       error: (err: HttpErrorResponse) => {
-        this.errorMsg = `No se pudo suspender el ${type === 'patient' ? 'paciente' : 'especialista'}`;
+        this.errorMsg = `No se pudo respaldar el ${type === 'patient' ? 'paciente' : 'especialista'}`;
         console.error(err);
         this.closeDeleteConfirm();
-        this.showNotification(`No se pudo suspender el ${label.toLowerCase()}`, 'error');
+        this.showNotification(`No se pudo respaldar el ${label.toLowerCase()}`, 'error');
       }
     });
   }
@@ -217,7 +218,22 @@ export class AdminComponent implements OnInit {
     this.deleteTarget = null;
   }
 
-  get isLoading(): boolean {
-    return this.loadingPatients || this.loadingSpecialists || this.loadingValidations;
+  suspendUser(user: User): void {
+    this.adminService.suspendUser(user.id).subscribe({
+      next: () => {
+        user.status = 0;
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMsg = 'No se pudo suspender el usuario';
+      }
+    });
+  }
+
+  private showNotification(msg: string, type: 'success' | 'error' = 'success'): void {
+    this.notification = { message: msg, type };
+    setTimeout(() => {
+      this.notification = null;
+    }, 3000);
   }
 }

@@ -103,3 +103,93 @@
   background: #ec8f8f;
   transform: translateY(-2px);
 }
+
+/* ========================= */
+/* 📱 TABLET (<= 900px) */
+/* ========================= */
+@media (max-width: 900px) {
+
+  .navbar {
+    padding: 15px 30px;
+  }
+
+  .links {
+    gap: 20px;
+  }
+
+  .actions a {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+
+}
+
+
+/* ========================= */
+/* 📱 MÓVIL (<= 768px) */
+/* ========================= */
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 12px 20px;
+  }
+
+  .links {
+    display: none; /* 🔥 ocultamos menú para móvil */
+  }
+
+  .logo img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .actions {
+    gap: 8px;
+  }
+
+  .actions a {
+    padding: 8px 12px;
+    font-size: 13px;
+    height: auto;
+  }
+
+}
+
+
+/* ========================= */
+/* 📱 MÓVIL PEQUEÑO (<= 480px) */
+/* ========================= */
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 10px 15px;
+  }
+
+  .btn-outline {
+    display: none; /* 🔥 ocultamos login (solo dejamos CTA principal) */
+  }
+
+  .btn-primary {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+}
+
+
+/* ========================= */
+/* 📱 ULTRA SMALL (<= 360px) */
+/* ========================= */
+@media (max-width: 360px) {
+
+  .logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn-primary {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+}

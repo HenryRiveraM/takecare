@@ -4,9 +4,7 @@
     <div class="admin-hero-text">
       <span class="tag">Panel de gestión</span>
       <h1>Administración de usuarios</h1>
-      <p>
-        Visualiza, busca y administra los pacientes y especialistas registrados en Take Care.
-      </p>
+      <p>Visualiza, busca y administra los pacientes y especialistas registrados en Take Care.</p>
     </div>
   </section>
 
@@ -51,6 +49,7 @@
       {{ errorMsg }}
     </div>
 
+    <!-- TAB: PACIENTES -->
     <div class="table-card" *ngIf="activeTab === 'patients'">
       <div class="section-header">
         <h2>Pacientes registrados</h2>
@@ -93,6 +92,7 @@
       </ng-template>
     </div>
 
+    <!-- TAB: ESPECIALISTAS -->
     <div class="table-card" *ngIf="activeTab === 'specialists'">
       <div class="section-header">
         <h2>Especialistas registrados</h2>
@@ -119,7 +119,7 @@
             <td>{{ specialist.names }}</td>
             <td>{{ specialist.firstLastname }} {{ specialist.secondLastname || '' }}</td>
             <td>{{ specialist.email }}</td>
-            <td>{{ specialist.birthDate | date }}</td>
+            <td>{{ specialist.birthDate | date:'dd/MM/yyyy' }}</td>
             <td>{{ specialist.strikes }}</td>
             <td>
               <button type="button" class="delete-button" (click)="deleteSpecialist(specialist.id, specialist.names + ' ' + specialist.firstLastname)">
@@ -135,60 +135,43 @@
       </ng-template>
     </div>
 
+    <!-- TAB: VALIDACIONES -->
     <div class="table-card" *ngIf="activeTab === 'validations'">
-    <div class="section-header">
-      <h2>Revisiones de Identidad</h2>
-      <span class="count-badge">{{ filteredValidations.length }} pendientes</span>
-    </div>
-
-    <div *ngIf="loadingValidations" class="loading-message">
-      Cargando validaciones...
-    </div>
-
-    <div class="list" *ngIf="!loadingValidations && filteredValidations.length > 0; else noValidations">
-      <div class="card-validation" *ngFor="let user of filteredValidations">
-        
-        <div class="user-info">
-          <span class="role-tag" [ngClass]="user.role">
-            {{ user.role === 'specialist' ? 'Especialista' : 'Paciente' }}
-          </span>
-          <h3 class="user-name">{{ user.names }} {{ user.firstLastname }}</h3>
-          <p class="user-email">{{ user.email }}</p>
-          <span class="ci-tag">CI: {{ user.ciNumber }}</span>
-        </div>
-
-        <div class="documents-container">
-          <div class="doc-item">
-            <small class="doc-label">CÉDULA DE IDENTIDAD</small>
-            <img [src]="user.ciUrl" alt="CI" class="img-doc">
-          </div>
-          
-          <div class="doc-item" *ngIf="user.role === 'patient'">
-            <small class="doc-label">FOTO (SELFIE)</small>
-            <img [src]="user.selfieUrl" alt="Selfie" class="img-selfie">
-          </div>
-
-          <div class="doc-item" *ngIf="user.role === 'specialist'">
-            <small class="doc-label">CERTIFICACIÓN PROFESIONAL</small>
-            <div class="cert-wrapper">
-              <img [src]="user.certificationUrl || 'assets/images/default-certification.png'" alt="Certificación" class="img-doc cert">
-            </div>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button class="reject-btn" (click)="processValidation(user.id, 'rejected')">Rechazar</button>
-          <button class="approve-btn" (click)="processValidation(user.id, 'approved')">Aprobar</button>
-        </div>
-
+      <div class="section-header">
+        <h2>Revisiones de Identidad</h2>
+        <span class="count-badge">{{ filteredValidations.length }} pendientes</span>
       </div>
+
+      <div *ngIf="loadingValidations" class="loading-message">
+        Cargando validaciones...
+      </div>
+
+      <div class="list" *ngIf="!loadingValidations && filteredValidations.length > 0; else noValidations">
+        <div class="card-validation" *ngFor="let user of filteredValidations">
+          
+          <div class="user-info">
+            <span class="role-tag" [ngClass]="user.role">
+              {{ user.role === 'specialist' ? 'Especialista' : 'Paciente' }}
+            </span>
+            <h3 class="user-name">{{ user.names }} {{ user.firstLastname }}</h3>
+            <p class="user-email">{{ user.email }}</p>
+            <span class="ci-tag">CI: {{ user.ciNumber }}</span>
+          </div>
+
+          <div class="actions">
+            <button class="reject-btn" (click)="processValidation(user.id, 'rejected')">Rechazar</button>
+            <button class="approve-btn" (click)="processValidation(user.id, 'approved')">Aprobar</button>
+          </div>
+
+        </div>
+      </div>
+
+      <ng-template #noValidations>
+        <p class="empty-message" *ngIf="!loadingValidations">No hay solicitudes por revisar.</p>
+      </ng-template>
     </div>
 
-    <ng-template #noValidations>
-      <p class="empty-message" *ngIf="!loadingValidations">No hay solicitudes por revisar.</p>
-    </ng-template>
-  </div>
-
+    <!-- MODAL: CONFIRMACIÓN DE ELIMINACIÓN -->
     <div
       class="modal-backdrop"
       *ngIf="showDeleteConfirm"
@@ -211,10 +194,10 @@
       </div>
     </div>
 
-    <div class="toast-notification" [class.error]="notification.type === 'error'" *ngIf="notification">
+    <!-- NOTIFICACIÓN TOAST -->
+    <div class="toast-notification" [class.error]="notification?.type === 'error'" *ngIf="notification">
       <div class="toast-icon">✓</div>
-      <div class="toast-text">{{ notification.message }}</div>
+      <div class="toast-text">{{ notification?.message }}</div>
     </div>
-
-  </section>
-</div>
+  </section> 
+</div> 

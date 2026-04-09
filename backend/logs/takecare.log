@@ -1,0 +1,253 @@
+2026-04-09 01:16:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29780 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-09 01:16:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-09 01:17:04 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-09 01:17:04 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 48ee2c4a-3860-4c5e-9e79-ad7e6f3a7511
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-09 01:17:04 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 17.689 seconds (process running for 18.095)
+2026-04-09 01:47:40 [http-nio-8080-exec-3] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Registering specialist with email: angelicaazogue@gmail.com
+2026-04-09 01:47:40 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Registering new specialist with email: angelicaazogue@gmail.com
+2026-04-09 01:47:40 [http-nio-8080-exec-3] INFO  c.t.backend.user.service.UserService - Preparing user with email: angelicaazogue@gmail.com and role: 2
+2026-04-09 01:47:42 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Specialist registered successfully with id: 43
+2026-04-09 01:47:42 [http-nio-8080-exec-3] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Specialist registered successfully
+2026-04-09 01:50:21 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 01:50:21 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 01:50:22 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 01:50:22 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 01:50:57 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Updating specialist profile
+2026-04-09 01:50:57 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Updating profile for specialist id: 43
+2026-04-09 01:50:59 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile updated successfully for specialist id: 43
+2026-04-09 01:50:59 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Specialist profile updated successfully
+2026-04-09 01:53:14 [http-nio-8080-exec-10] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Registering patient with email: lauraortunio@gmail.com
+2026-04-09 01:53:14 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Registering new patient with email: lauraortunio@gmail.com
+2026-04-09 01:53:14 [http-nio-8080-exec-10] INFO  c.t.backend.user.service.UserService - Preparing user with email: lauraortunio@gmail.com and role: 1
+2026-04-09 01:53:16 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Patient registered successfully with id: 44
+2026-04-09 01:53:16 [http-nio-8080-exec-10] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Patient registered successfully
+2026-04-09 01:54:15 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/44 - Fetching patient profile
+2026-04-09 01:54:15 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 44
+2026-04-09 01:54:17 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/44 - Profile found
+2026-04-09 01:54:36 [http-nio-8080-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.PatientProfileDTO> com.takecare.backend.user.controller.UserProfileController.updateProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdatePatientProfileDTO): [Field error in object 'updatePatientProfileDTO' on field 'names': rejected value [Laura Gabriela@#!#!]; codes [Pattern.updatePatientProfileDTO.names,Pattern.names,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updatePatientProfileDTO.names,names]; arguments []; default message [names],[Ljakarta.validation.constraints.Pattern$Flag;@3c412fba,^(?!.*[ ]{2})[a-zA-Z·ÈÌÛ˙¡…Õ”⁄Ò—]+(?: [a-zA-Z·ÈÌÛ˙¡…Õ”⁄Ò—]+)*$]; default message [Names must contain only letters]] ]
+2026-04-09 01:54:43 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/44 - Updating patient profile
+2026-04-09 01:54:43 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Updating profile for patient id: 44
+2026-04-09 01:54:46 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Profile updated successfully for patient id: 44
+2026-04-09 01:54:46 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/44 - Profile updated successfully
+2026-04-09 03:12:57 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:12:57 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:12:58 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:12:58 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:13:56 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:13:56 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:13:58 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:13:58 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:14:47 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:14:47 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:14:48 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:14:48 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:14:51 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:14:51 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:14:53 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:14:53 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:15:10 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:15:10 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:15:11 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:15:11 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:15:58 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:15:58 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:16:00 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:16:00 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:16:21 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:16:21 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:16:22 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:16:22 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:17:04 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:17:04 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:17:06 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:17:06 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:18:42 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:18:42 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:18:44 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:18:44 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:19:27 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:19:27 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:19:28 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:19:28 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:19:46 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:19:46 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:19:47 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:19:47 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:20:42 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:20:42 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:20:43 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:20:43 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:21:01 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:21:01 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:21:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:21:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:21:20 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:21:20 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:21:21 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:21:21 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:23:19 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:23:19 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:23:20 [http-nio-8080-exec-3] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:23:20 [http-nio-8080-exec-3] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:23:34 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:23:34 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:23:35 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:24:03 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:24:03 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:24:05 [http-nio-8080-exec-7] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:24:05 [http-nio-8080-exec-7] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:24:16 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:24:16 [http-nio-8080-exec-8] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:24:17 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:24:17 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:24:18 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:24:18 [http-nio-8080-exec-5] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:24:18 [http-nio-8080-exec-5] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:24:44 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:24:44 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:24:45 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:24:48 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:24:48 [http-nio-8080-exec-9] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:24:50 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:25:17 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:25:17 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:25:18 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:25:29 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:25:29 [http-nio-8080-exec-2] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:25:30 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:25:38 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:25:38 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:25:39 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:25:45 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:25:45 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:25:46 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:38:01 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:38:01 [http-nio-8080-exec-8] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:38:03 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:38:12 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:38:12 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:38:14 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:38:50 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:38:50 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:38:52 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:39:59 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:39:59 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:40:00 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:40:02 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:40:02 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:40:03 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:16 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:16 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:18 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:30 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:30 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:31 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:36 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:36 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:37 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:43 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:43 [http-nio-8080-exec-8] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:45 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:50 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:50 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:52 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:42:28 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:42:28 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:42:29 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:43:14 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:43:14 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:43:15 [http-nio-8080-exec-9] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:43:15 [http-nio-8080-exec-9] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:43:16 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:43:16 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:43:17 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:43:22 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:43:22 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:43:23 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:45:56 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:45:56 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:45:58 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:46:53 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:46:53 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:46:55 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:47:16 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:47:16 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:47:17 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:51:02 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:51:02 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:51:03 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:51:35 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/5 - Updating patient profile
+2026-04-09 03:51:35 [http-nio-8080-exec-9] INFO  c.t.b.u.s.PatientProfileService - Updating profile for patient id: 5
+2026-04-09 03:51:37 [http-nio-8080-exec-9] INFO  c.t.b.u.s.PatientProfileService - Profile updated successfully for patient id: 5
+2026-04-09 03:51:37 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/5 - Profile updated successfully
+2026-04-09 03:52:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:52:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:52:03 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:53:14 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:53:14 [http-nio-8080-exec-2] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:53:15 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:53:29 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:53:29 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:53:30 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:53:48 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:53:48 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:53:49 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:55:09 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:55:09 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:55:11 [http-nio-8080-exec-8] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:55:11 [http-nio-8080-exec-8] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:55:28 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:55:28 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:55:30 [http-nio-8080-exec-5] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:55:30 [http-nio-8080-exec-5] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:55:31 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:55:31 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:55:32 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:55:44 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:55:44 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:55:45 [http-nio-8080-exec-9] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:55:45 [http-nio-8080-exec-9] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:03 [http-nio-8080-exec-10] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:03 [http-nio-8080-exec-10] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:21 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:56:21 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:56:23 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:56:24 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:24 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:25 [http-nio-8080-exec-2] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:25 [http-nio-8080-exec-2] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:35 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:35 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:36 [http-nio-8080-exec-3] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:36 [http-nio-8080-exec-3] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:40 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:40 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:42 [http-nio-8080-exec-4] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:42 [http-nio-8080-exec-4] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:46 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:46 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:47 [http-nio-8080-exec-7] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:47 [http-nio-8080-exec-7] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:57:19 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:57:19 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:57:20 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:57:20 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:57:31 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Updating specialist profile
+2026-04-09 03:57:31 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Updating profile for specialist id: 43
+2026-04-09 03:57:33 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile updated successfully for specialist id: 43
+2026-04-09 03:57:33 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Specialist profile updated successfully
+2026-04-09 03:58:07 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:58:07 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:58:09 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:58:09 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:58:13 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:58:13 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:58:15 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:58:15 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found

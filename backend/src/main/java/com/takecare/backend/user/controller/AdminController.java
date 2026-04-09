@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.takecare.backend.user.dto.VerifyUserRequest;
 import com.takecare.backend.user.dto.VerifyUserResponse;
-
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.model.User;
@@ -101,10 +99,8 @@ public class AdminController {
     @PutMapping("/specialists/{id}/validate/approve")
     public ResponseEntity<Specialist> approveSpecialist(
             @PathVariable Integer id
-            // , @RequestHeader("X-Admin-Id") Integer adminId
     ) {
         logger.info("PUT /api/v1/admin/specialists/{}/validate/approve - approving specialist", id);
-        // validateAdminRole(adminId);
 
         return specialistService.validateSpecialist(id, true)
                 .map(ResponseEntity::ok)
@@ -114,10 +110,8 @@ public class AdminController {
     @PutMapping("/specialists/{id}/validate/reject")
     public ResponseEntity<Specialist> rejectSpecialist(
             @PathVariable Integer id
-            // , @RequestHeader("X-Admin-Id") Integer adminId
     ) {
         logger.info("PUT /api/v1/admin/specialists/{}/validate/reject - rejecting specialist", id);
-        // validateAdminRole(adminId);
 
         return specialistService.validateSpecialist(id, false)
                 .map(ResponseEntity::ok)
@@ -127,10 +121,8 @@ public class AdminController {
     @PutMapping("/users/{id}/suspend")
     public ResponseEntity<User> suspendUser(
             @PathVariable Integer id
-            // , @RequestHeader("X-Admin-Id") Integer adminId
     ) {
         logger.info("PUT /api/v1/admin/users/{}/suspend - suspending user", id);
-        // validateAdminRole(adminId);
 
         return userRepository.findById(id)
                 .map(user -> {
