@@ -1,289 +1,253 @@
-2026-04-07 04:40:16 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (09e541ab-77ba-49cd-b764-e57009dbefa1)
-com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+2026-04-09 01:16:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29780 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-09 01:16:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-09 01:17:04 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-09 01:17:04 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
 
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
-	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
-	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
-	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-	at jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
-	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
-	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
-	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
-	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
-	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
-	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
-	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
-	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
-	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
-	... 13 common frames omitted
-Caused by: java.net.UnknownHostException: No such host is known (caboose.proxy.rlwy.net)
-	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
-	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
-	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
-	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
-	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
-	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
-	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
-	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
-	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
-	... 16 common frames omitted
-2026-04-07 08:15:33 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8h33m55s496ms491µs400ns).
-2026-04-07 08:18:21 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 08:18:21 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 08:18:23 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 08:18:23 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 08:37:35 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 08:37:35 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 08:37:37 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 08:37:37 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 08:47:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 08:47:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 08:47:03 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 08:47:03 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:02:15 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:02:15 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:02:16 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:02:16 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:02:42 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:02:42 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:02:44 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:02:44 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:03:49 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:03:49 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:03:50 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:03:50 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:04:13 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:04:13 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:04:15 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:04:15 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:11:59 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:11:59 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:12:00 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:12:00 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:23:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:23:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:23:04 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:23:04 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:23:30 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:23:30 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:23:32 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:23:32 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:24:22 [http-nio-8080-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.SpecialistProfileDTO> com.takecare.backend.user.controller.SpecialistController.updateSpecialistProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdateSpecialistProfileDTO) with 2 errors: [Field error in object 'updateSpecialistProfileDTO' on field 'fullName': rejected value [null]; codes [NotBlank.updateSpecialistProfileDTO.fullName,NotBlank.fullName,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updateSpecialistProfileDTO.fullName,fullName]; arguments []; default message [fullName]]; default message [Full name cannot be blank]] [Field error in object 'updateSpecialistProfileDTO' on field 'email': rejected value [null]; codes [NotBlank.updateSpecialistProfileDTO.email,NotBlank.email,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updateSpecialistProfileDTO.email,email]; arguments []; default message [email]]; default message [Email cannot be blank]] ]
-2026-04-07 09:30:33 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 15184 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
-2026-04-07 09:30:33 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-07 09:30:48 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-07 09:30:48 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: 5a0b05e6-6df6-42ac-b760-6da295c5beb0
+Using generated security password: 48ee2c4a-3860-4c5e-9e79-ad7e6f3a7511
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2026-04-07 09:30:48 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 15.145 seconds (process running for 68417.99)
-2026-04-07 09:30:51 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 15184 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
-2026-04-07 09:30:51 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-07 09:31:03 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-07 09:31:03 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: 87b08509-a380-43ad-bc63-87d3f695f1d2
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-04-07 09:31:04 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 12.96 seconds (process running for 68433.166)
-2026-04-07 09:33:17 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:33:17 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:33:18 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:33:18 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:35:11 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:35:11 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:35:13 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:35:13 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 09:38:18 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3cba718f (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:38:28 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7d877bb4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:38:38 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4c306656 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:38:48 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3b886c4e (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:13 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Thread starvation or clock leap detected (housekeeper delta=1m15s516ms769µs800ns).
-2026-04-07 09:44:13 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@19e6fde2 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:13 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@385a7145 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:21 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7999da23 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:27 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@530af489 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:28 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@fceea13 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:36 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@295e943c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:37 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1e49dfbf (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:38 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@66af3017 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:41 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3b8db78a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:44:56 [HikariPool-3:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-3 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@32e9de4a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 09:52:02 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 09:52:02 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 09:52:03 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 09:52:03 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 10:00:59 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 15184 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
-2026-04-07 10:00:59 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-07 10:01:12 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-07 10:01:12 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: 1650b66c-0ef5-48b1-a334-6b25cb40fd89
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-04-07 10:01:13 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 13.964 seconds (process running for 70242.154)
-2026-04-07 10:03:15 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 15184 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
-2026-04-07 10:03:15 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-07 10:03:29 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-07 10:03:29 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: f5da37b0-711c-4bfc-9215-df9a51853421
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-04-07 10:03:29 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 13.917 seconds (process running for 70378.558)
-2026-04-07 10:06:57 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 15184 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
-2026-04-07 10:06:57 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-07 10:07:11 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-07 10:07:11 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: 135eacfb-9a91-47c0-8ece-f9b29e51be6b
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-04-07 10:07:11 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 14.361 seconds (process running for 70601.082)
-2026-04-07 10:08:25 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 15184 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
-2026-04-07 10:08:25 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-07 10:08:43 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-07 10:08:43 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: f2cfbaae-9059-4def-8fdb-455eb0fedeb4
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-04-07 10:08:43 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 17.911 seconds (process running for 70692.842)
-2026-04-07 10:09:06 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 10:09:06 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 10:09:08 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 10:09:08 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 10:09:28 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.SpecialistProfileDTO> com.takecare.backend.user.controller.SpecialistController.updateSpecialistProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdateSpecialistProfileDTO): [Field error in object 'updateSpecialistProfileDTO' on field 'email': rejected value [null]; codes [NotBlank.updateSpecialistProfileDTO.email,NotBlank.email,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updateSpecialistProfileDTO.email,email]; arguments []; default message [email]]; default message [Email cannot be blank]] ]
-2026-04-07 10:13:27 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 15184 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
-2026-04-07 10:13:27 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-07 10:13:41 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-07 10:13:41 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: 90e433c0-2c64-4514-abd6-3b9538448662
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-04-07 10:13:41 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 14.027 seconds (process running for 70990.954)
-2026-04-07 10:13:45 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 15184 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
-2026-04-07 10:13:45 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-07 10:13:59 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-07 10:13:59 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: bcaa479e-7f20-4c3b-8463-9cef07e6f309
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-04-07 10:13:59 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 14.125 seconds (process running for 71008.731)
-2026-04-07 10:16:09 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 10:16:09 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 10:16:11 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 10:16:11 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 10:16:22 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/26/profile - Updating specialist profile
-2026-04-07 10:16:22 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Updating profile for specialist id: 26
-2026-04-07 10:16:25 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Profile updated successfully for specialist id: 26
-2026-04-07 10:16:25 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/26/profile - Specialist profile updated successfully
-2026-04-07 10:17:33 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Fetching specialist profile
-2026-04-07 10:17:33 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 26
-2026-04-07 10:17:35 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 26
-2026-04-07 10:17:35 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/26/profile - Specialist profile found
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@92646e (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@41af6e55 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6386c68f (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@70246f85 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Thread starvation or clock leap detected (housekeeper delta=21m40s440ms166µs100ns).
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1be799f5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2180911a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7467991b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@276c8855 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@e3957c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:40:59 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@25cecc3b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:50:35 [HikariPool-9:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Pool is empty, failed to create/setup connection (e6a2a148-7b9a-47bf-b919-72db16464402)
-com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
-	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
-	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
-	at java.base/java.lang.Thread.run(Thread.java:840)
-Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
-
-The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-	at jdk.internal.reflect.GeneratedConstructorAccessor184.newInstance(Unknown Source)
-	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
-	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
-	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
-	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
-	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
-	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
-	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
-	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
-	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
-	... 13 common frames omitted
-Caused by: java.net.UnknownHostException: No such host is known (caboose.proxy.rlwy.net)
-	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
-	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
-	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
-	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
-	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
-	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
-	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
-	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
-	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
-	... 16 common frames omitted
-2026-04-07 10:51:00 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Thread starvation or clock leap detected (housekeeper delta=10m833ms127µs300ns).
-2026-04-07 10:53:16 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6d2936d8 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:53:18 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@32900dc9 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:53:22 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@61ecb0b4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:53:23 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@45d7c5a7 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:53:36 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4a34c470 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 10:53:43 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6bef5b1f (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4583ae4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@320ba8af (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2f64015d (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6aae914f (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Thread starvation or clock leap detected (housekeeper delta=1m4s68ms271µs600ns).
-2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@200afae4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4f2b609a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:06 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@404aeecb (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:12 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5e702b64 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:19 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3de1bd85 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2026-04-07 11:03:47 [HikariPool-9:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-9 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@753e1572 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-09 01:17:04 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 17.689 seconds (process running for 18.095)
+2026-04-09 01:47:40 [http-nio-8080-exec-3] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Registering specialist with email: angelicaazogue@gmail.com
+2026-04-09 01:47:40 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Registering new specialist with email: angelicaazogue@gmail.com
+2026-04-09 01:47:40 [http-nio-8080-exec-3] INFO  c.t.backend.user.service.UserService - Preparing user with email: angelicaazogue@gmail.com and role: 2
+2026-04-09 01:47:42 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Specialist registered successfully with id: 43
+2026-04-09 01:47:42 [http-nio-8080-exec-3] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Specialist registered successfully
+2026-04-09 01:50:21 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 01:50:21 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 01:50:22 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 01:50:22 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 01:50:57 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Updating specialist profile
+2026-04-09 01:50:57 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Updating profile for specialist id: 43
+2026-04-09 01:50:59 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile updated successfully for specialist id: 43
+2026-04-09 01:50:59 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Specialist profile updated successfully
+2026-04-09 01:53:14 [http-nio-8080-exec-10] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Registering patient with email: lauraortunio@gmail.com
+2026-04-09 01:53:14 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Registering new patient with email: lauraortunio@gmail.com
+2026-04-09 01:53:14 [http-nio-8080-exec-10] INFO  c.t.backend.user.service.UserService - Preparing user with email: lauraortunio@gmail.com and role: 1
+2026-04-09 01:53:16 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Patient registered successfully with id: 44
+2026-04-09 01:53:16 [http-nio-8080-exec-10] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Patient registered successfully
+2026-04-09 01:54:15 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/44 - Fetching patient profile
+2026-04-09 01:54:15 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 44
+2026-04-09 01:54:17 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/44 - Profile found
+2026-04-09 01:54:36 [http-nio-8080-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.PatientProfileDTO> com.takecare.backend.user.controller.UserProfileController.updateProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdatePatientProfileDTO): [Field error in object 'updatePatientProfileDTO' on field 'names': rejected value [Laura Gabriela@#!#!]; codes [Pattern.updatePatientProfileDTO.names,Pattern.names,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updatePatientProfileDTO.names,names]; arguments []; default message [names],[Ljakarta.validation.constraints.Pattern$Flag;@3c412fba,^(?!.*[ ]{2})[a-zA-Z·ÈÌÛ˙¡…Õ”⁄Ò—]+(?: [a-zA-Z·ÈÌÛ˙¡…Õ”⁄Ò—]+)*$]; default message [Names must contain only letters]] ]
+2026-04-09 01:54:43 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/44 - Updating patient profile
+2026-04-09 01:54:43 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Updating profile for patient id: 44
+2026-04-09 01:54:46 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Profile updated successfully for patient id: 44
+2026-04-09 01:54:46 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/44 - Profile updated successfully
+2026-04-09 03:12:57 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:12:57 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:12:58 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:12:58 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:13:56 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:13:56 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:13:58 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:13:58 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:14:47 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:14:47 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:14:48 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:14:48 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:14:51 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:14:51 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:14:53 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:14:53 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:15:10 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:15:10 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:15:11 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:15:11 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:15:58 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:15:58 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:16:00 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:16:00 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:16:21 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:16:21 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:16:22 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:16:22 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:17:04 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:17:04 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:17:06 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:17:06 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:18:42 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:18:42 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:18:44 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:18:44 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:19:27 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:19:27 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:19:28 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:19:28 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:19:46 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:19:46 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:19:47 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:19:47 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:20:42 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:20:42 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:20:43 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:20:43 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:21:01 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:21:01 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:21:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:21:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:21:20 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:21:20 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:21:21 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:21:21 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:23:19 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:23:19 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:23:20 [http-nio-8080-exec-3] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:23:20 [http-nio-8080-exec-3] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:23:34 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:23:34 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:23:35 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:24:03 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:24:03 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:24:05 [http-nio-8080-exec-7] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:24:05 [http-nio-8080-exec-7] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:24:16 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:24:16 [http-nio-8080-exec-8] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:24:17 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:24:17 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:24:18 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:24:18 [http-nio-8080-exec-5] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:24:18 [http-nio-8080-exec-5] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:24:44 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:24:44 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:24:45 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:24:48 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:24:48 [http-nio-8080-exec-9] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:24:50 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:25:17 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:25:17 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:25:18 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:25:29 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:25:29 [http-nio-8080-exec-2] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:25:30 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:25:38 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:25:38 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:25:39 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:25:45 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:25:45 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:25:46 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:38:01 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:38:01 [http-nio-8080-exec-8] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:38:03 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:38:12 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:38:12 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:38:14 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:38:50 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:38:50 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:38:52 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:39:59 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:39:59 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:40:00 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:40:02 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:40:02 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:40:03 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:16 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:16 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:18 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:30 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:30 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:31 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:36 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:36 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:37 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:43 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:43 [http-nio-8080-exec-8] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:45 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:41:50 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:41:50 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:41:52 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:42:28 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:42:28 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:42:29 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:43:14 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:43:14 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:43:15 [http-nio-8080-exec-9] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:43:15 [http-nio-8080-exec-9] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:43:16 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:43:16 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:43:17 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:43:22 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:43:22 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:43:23 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:45:56 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:45:56 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:45:58 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:46:53 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:46:53 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:46:55 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:47:16 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:47:16 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:47:17 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:51:02 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:51:02 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:51:03 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:51:35 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/5 - Updating patient profile
+2026-04-09 03:51:35 [http-nio-8080-exec-9] INFO  c.t.b.u.s.PatientProfileService - Updating profile for patient id: 5
+2026-04-09 03:51:37 [http-nio-8080-exec-9] INFO  c.t.b.u.s.PatientProfileService - Profile updated successfully for patient id: 5
+2026-04-09 03:51:37 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/5 - Profile updated successfully
+2026-04-09 03:52:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:52:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:52:03 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:53:14 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:53:14 [http-nio-8080-exec-2] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:53:15 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:53:29 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:53:29 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:53:30 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:53:48 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:53:48 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:53:49 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:55:09 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:55:09 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:55:11 [http-nio-8080-exec-8] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:55:11 [http-nio-8080-exec-8] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:55:28 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:55:28 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:55:30 [http-nio-8080-exec-5] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:55:30 [http-nio-8080-exec-5] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:55:31 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:55:31 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:55:32 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:55:44 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:55:44 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:55:45 [http-nio-8080-exec-9] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:55:45 [http-nio-8080-exec-9] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:03 [http-nio-8080-exec-10] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:03 [http-nio-8080-exec-10] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:21 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-09 03:56:21 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-09 03:56:23 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-09 03:56:24 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:24 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:25 [http-nio-8080-exec-2] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:25 [http-nio-8080-exec-2] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:35 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:35 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:36 [http-nio-8080-exec-3] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:36 [http-nio-8080-exec-3] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:40 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:40 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:42 [http-nio-8080-exec-4] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:42 [http-nio-8080-exec-4] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:56:46 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
+2026-04-09 03:56:46 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
+2026-04-09 03:56:47 [http-nio-8080-exec-7] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
+2026-04-09 03:56:47 [http-nio-8080-exec-7] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
+2026-04-09 03:57:19 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:57:19 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:57:20 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:57:20 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:57:31 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Updating specialist profile
+2026-04-09 03:57:31 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Updating profile for specialist id: 43
+2026-04-09 03:57:33 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile updated successfully for specialist id: 43
+2026-04-09 03:57:33 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Specialist profile updated successfully
+2026-04-09 03:58:07 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:58:07 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:58:09 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:58:09 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-09 03:58:13 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
+2026-04-09 03:58:13 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
+2026-04-09 03:58:15 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
+2026-04-09 03:58:15 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found

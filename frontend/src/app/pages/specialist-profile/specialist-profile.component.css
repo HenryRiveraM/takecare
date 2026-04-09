@@ -33,14 +33,14 @@
 
 .tag {
   color:#F5A3A3;
-  font-weight:700;
-  font-size:13px;
-  text-transform:uppercase;
+  font-weight:500;
+  font-size:15px;
 }
 
 .profile-header h1 {
   margin: 5px 0;
   font-size: 28px;
+  font-weight: 500;
   color:#1f2937;
 }
 
@@ -180,6 +180,26 @@ textarea:focus {
 textarea[readonly] {
   background: transparent;
   cursor: default;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  padding: 5px;
+  border: none;
+  background: transparent;
+  color: #5f7f75;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.back-btn:hover {
+  color: #3e5f56;
+  transform: translateX(-2px);
 }
 
 /* SUCCESS */

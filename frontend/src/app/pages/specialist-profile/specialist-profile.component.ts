@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpecialistService } from '../../services/specialist.service';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-specialist-profile',
@@ -34,7 +35,8 @@ export class SpecialistProfileComponent implements OnInit {
 
   constructor(
     private specialistService: SpecialistService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -89,6 +91,10 @@ export class SpecialistProfileComponent implements OnInit {
     this.isEditing = false;
     this.successMsg = '';
     this.errorMsg = '';
+  }
+
+  goBackToProfile(): void {
+  this.router.navigate(['/specialist']);
   }
 
   save() : void {

@@ -1,44 +1,80 @@
 <div class="profile-page animate__fadeIn">
   <main class="form-container">
-    <div class="card">
-      <h1>Mi Perfil de Paciente</h1>
-      <p class="subtitle">Gestiona tu información personal y verifica el estado de tus documentos.</p>
 
-      <form [formGroup]="profileForm" (ngSubmit)="onSave()">
-        
-        <div class="header-actions">
-           <h3 class="section-title">Información Personal</h3>
-           <button type="button" class="btn-edit-toggle" (click)="toggleEdit()">
-              <span class="material-symbols-outlined">{{ isEditing ? 'close' : 'edit' }}</span>
-              {{ isEditing ? 'Cancelar' : 'Editar Datos' }}
-           </button>
+    <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="form-shell">
+      
+      <div class="card">
+
+        <button type="button" class="back-btn" (click)="goBackToProfile()">
+          ← Volver
+        </button>
+
+        <div class="profile-header">
+          <div class="avatar">
+            <img src="assets/images/paciente.png" alt="perfil paciente">
+          </div>
+
+          <div class="header-content">
+            <span class="tag">Perfil del paciente</span>
+            <h1>Editar perfil</h1>
+            <p class="subtitle">
+              Actualiza tu información y mejora tu presencia en TakeCare.
+            </p>
+          </div>
         </div>
 
         <div class="grid">
           <div class="field-group">
             <label>Nombres</label>
-            <input formControlName="names" [readonly]="!isEditing">
+            <div class="input-wrap">
+              <span class="material-symbols-outlined">person</span>
+              <input formControlName="names" [readonly]="!isEditing" placeholder="Ingresa tus nombres">
+            </div>
           </div>
+
           <div class="field-group">
-            <label>Primer Apellido</label>
-            <input formControlName="firstLastname" [readonly]="!isEditing">
+            <label>Primer apellido</label>
+            <div class="input-wrap">
+              <span class="material-symbols-outlined">badge</span>
+              <input formControlName="firstLastname" [readonly]="!isEditing" placeholder="Ingresa tu primer apellido">
+            </div>
           </div>
+
           <div class="field-group">
-            <label>Segundo Apellido</label>
-            <input formControlName="secondLastname" [readonly]="!isEditing">
+            <label>Segundo apellido</label>
+            <div class="input-wrap">
+              <span class="material-symbols-outlined">badge</span>
+              <input formControlName="secondLastname" [readonly]="!isEditing" placeholder="Ingresa tu segundo apellido">
+            </div>
           </div>
+
           <div class="field-group">
-            <label>Correo Electrónico</label>
-            <input formControlName="email" readonly class="readonly-field">
+            <label>Correo electrónico</label>
+            <div class="input-wrap readonly-wrap">
+              <span class="material-symbols-outlined">mail</span>
+              <input formControlName="email" readonly class="readonly-field" placeholder="Correo electrónico">
+            </div>
           </div>
         </div>
 
-        <div class="actions" *ngIf="isEditing">
-          <button class="primary" type="submit" [disabled]="profileForm.invalid || isLoading">
-            {{ isLoading ? 'Guardando...' : 'Actualizar Perfil' }}
+        <div class="actions" *ngIf="!isEditing">
+          <button class="btn-primary" type="button" (click)="toggleEdit()">
+            Editar perfil
           </button>
         </div>
-      </form>
-    </div>
+
+        <div class="actions" *ngIf="isEditing">
+          <button class="btn-secondary" type="button" (click)="toggleEdit()">
+            Cancelar
+          </button>
+
+          <button class="btn-primary" type="submit" [disabled]="profileForm.invalid || isLoading">
+            {{ isLoading ? 'Guardando...' : 'Guardar cambios' }}
+          </button>
+        </div>
+
+      </div>
+    </form>
+
   </main>
 </div>

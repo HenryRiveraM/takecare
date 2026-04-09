@@ -47,14 +47,33 @@ export class RegisterSpecialistComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      apellidoPaterno: ['', [Validators.required, Validators.minLength(3)]],
-      apellidoMaterno: [''],
+      nombre: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)]],
+      apellidoPaterno: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)]],
+      apellidoMaterno: ['', [
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)]],
       fechaNacimiento: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      documento: ['', Validators.required],
-      complemento: [''],
+      email: ['', [
+        Validators.required, 
+        Validators.email]],
+      password: ['', [
+        Validators.required, 
+        Validators.minLength(8), 
+        Validators.maxLength(50)]],
+      documento: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(10),
+        Validators.pattern(/^[0-9-A-Za-z\s]+$/)]],
       aceptaTerminos: [false, Validators.requiredTrue],
       aceptaComunicaciones: [false]
     });
@@ -201,10 +220,10 @@ export class RegisterSpecialistComponent implements OnInit {
     }
   }
 
-  // ── Submit ─────────────────────────────────────────────────────────────────
-
+  // ── Submit ──
   onSubmit() {
     this.submitted = true;
+    this.registerForm.markAllAsTouched();
 
     if (!(this.registerForm.valid && this.fileList.length > 0 && this.tieneEspecialidadSeleccionada() && this.carnetFile)) {
       this.isLoading = false;
@@ -218,6 +237,20 @@ export class RegisterSpecialistComponent implements OnInit {
       } else {
         this.showToast('warning', 'Formulario incompleto', 'Revisa que todos los campos obligatorios estén correctamente llenados.');
       }
+      
+      console.log('registerForm.valid:', this.registerForm.valid);
+      console.log('Especialidades seleccionadas:', this.especialidadesOpciones.filter(opt => opt.seleccionado).map(opt => opt.nombre));
+      console.log('Archivos seleccionados:', this.fileList);
+      console.log('Carnet seleccionado:', this.carnetFile);
+
+      Object.keys(this.registerForm.controls).forEach(key => {
+        const control = this.registerForm.get(key);
+        console.log(key, {
+          value: control?.value,
+          valid: control?.valid,
+          errors: control?.errors
+        });
+      });
       return;
     }
 
@@ -236,6 +269,7 @@ export class RegisterSpecialistComponent implements OnInit {
       password: this.registerForm.value.password.trim(),
       biography: `Especialista en ${selectedSpecialties.join(', ')}`,
       certificationImg: this.fileList.map(fileItem => fileItem.file.name).join(', '),
+      ciDocumentImg: this.carnetFile?.file.name || '',
       officeUbi: 'Por definir',
       sessionCost: 1
     };
@@ -245,8 +279,7 @@ export class RegisterSpecialistComponent implements OnInit {
       dataParaBackend.secondLastname = secondLastname;
     }
 
-    console.log('%c🚀 PROCESANDO REGISTRO...', 'color: #F5A3A3; font-weight: bold;');
-    console.table(dataParaBackend);
+    console.log('Payload enviado: ',dataParaBackend);
 
     this.api.registerSpecialist(dataParaBackend).subscribe({
       next: (res) => {

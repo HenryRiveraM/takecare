@@ -14,6 +14,7 @@ import { ApiService } from '../../services/api.service';
 export class RegisterPatientComponent {
 
   form: FormGroup;
+  submitted = false;
 
   documentoFile: File | null = null;
   selfieFile: File | null = null;
@@ -21,7 +22,6 @@ export class RegisterPatientComponent {
   documentoNombre = '';
   selfieNombre = '';
 
-  // Toast notification state
   toast: { visible: boolean; type: 'error' | 'success' | 'warning'; title: string; message: string } = {
     visible: false,
     type: 'error',
@@ -36,13 +36,36 @@ export class RegisterPatientComponent {
     private api: ApiService
   ) {
     this.form = this.fb.group({
-      names: ['', Validators.required],
-      first_lastname: ['', Validators.required],
-      second_lastname: [''],
-      ci_number: ['', Validators.required, Validators.minLength(6)],
+      names: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+      ]],
+      first_lastname: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+      ]],
+      second_lastname: ['', [
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+      ]],
+      ci_number: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(10),
+        Validators.pattern(/^[0-9A-Za-z-]+$/)
+      ]],
       birth_date: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(50)
+      ]],
       terms: [false, Validators.requiredTrue]
     });
   }
@@ -77,12 +100,10 @@ export class RegisterPatientComponent {
     this.toast.visible = false;
   }
 
-  /** Maps backend HTTP errors to friendly Spanish messages */
   private getFriendlyErrorMessage(err: any): { title: string; message: string } {
     const status = err?.status;
     const backendMessage: string = err?.error?.message || err?.error?.error || '';
 
-    // 400 Bad Request — validation issues
     if (status === 400) {
       if (backendMessage.toLowerCase().includes('email')) {
         return {
@@ -108,7 +129,6 @@ export class RegisterPatientComponent {
       };
     }
 
-    // 409 Conflict — duplicate user
     if (status === 409) {
       return {
         title: 'Cuenta existente',
@@ -116,7 +136,6 @@ export class RegisterPatientComponent {
       };
     }
 
-    // 422 Unprocessable Entity
     if (status === 422) {
       return {
         title: 'Información inválida',
@@ -124,7 +143,6 @@ export class RegisterPatientComponent {
       };
     }
 
-    // 500+ Server errors
     if (status >= 500) {
       return {
         title: 'Error del servidor',
@@ -132,7 +150,6 @@ export class RegisterPatientComponent {
       };
     }
 
-    // Network / unknown
     if (status === 0 || status == null) {
       return {
         title: 'Sin conexión',
@@ -147,10 +164,12 @@ export class RegisterPatientComponent {
   }
 
   onSubmit() {
+    this.submitted = true;
+
     if (this.form.invalid) {
-    this.form.markAllAsTouched();
-    return;
-   }
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const data = {
       names: this.form.value.names.trim(),

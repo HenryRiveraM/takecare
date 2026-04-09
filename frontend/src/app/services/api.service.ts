@@ -26,6 +26,7 @@ export interface SpecialistRegisterRequest {
   certificationImg: string;
   officeUbi?: string;
   sessionCost: number;
+  ciDocumentImg: string;
 }
 
 export interface ApiResponse<T> {

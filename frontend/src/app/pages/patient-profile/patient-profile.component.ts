@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PatientService, PatientProfile } from '../../services/patient.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-profile',
@@ -18,12 +19,17 @@ export class PatientProfileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.loadUserData();
+  }
+
+  goBackToProfile(): void {
+  this.router.navigate(['/patient']);
   }
 
   initForm() {

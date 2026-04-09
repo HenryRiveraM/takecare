@@ -18,147 +18,174 @@
         </div>
     </div>
 
-    <div class="register-card">
-        <div class="header">
-            <h1>Registro de especialista</h1>
-            <p>Únase a nuestra red de profesionales de salud mental y comience a ayudar a otros.</p>
-        </div>
-
-        <form [formGroup]="registerForm" class="form-grid" (ngSubmit)="onSubmit()">
-    
-            <div class="field col-3">
-                <label>NOMBRE</label>
-                <input type="text" formControlName="nombre" placeholder="Ej: Jane">
-                <small class="error-msg" *ngIf="f['nombre'].touched && f['nombre'].invalid">Requerido</small>
+    <div class="profile-page">
+        <div class="register-card">
+            <div class="header">
+                <h1>Registro de Especialista</h1>
+                <p>Únase a nuestra red de profesionales de salud mental y comience a ayudar a otros.</p>
             </div>
 
-            <div class="field col-3">
-                <label>APELLIDO PATERNO</label>
-                <input type="text" formControlName="apellidoPaterno" placeholder="Ej: Smith">
-                <small class="error-msg" *ngIf="f['apellidoPaterno'].touched && f['apellidoPaterno'].invalid">Requerido</small>
+            <div class="form-helper">
+                Los campos marcados con <span class="required">*</span> son obligatorios.
             </div>
 
-            <div class="field col-3">
-                <label>APELLIDO MATERNO</label>
-                <input type="text" formControlName="apellidoMaterno" placeholder="Ej: Johnson">
-            </div>
-
-            <div class="field col-2">
-                <label>FECHA DE NACIMIENTO</label>
-                <input type="date" formControlName="fechaNacimiento">
-                <small class="error-msg" *ngIf="f['fechaNacimiento'].touched && f['fechaNacimiento'].invalid">Requerido</small>
-            </div>
-
-            <div class="field col-2">
-                <label>CORREO ELECTRÓNICO</label>
-                <input type="email" formControlName="email" placeholder="jane@example.com">
-                <small class="error-msg" *ngIf="f['email'].touched && f['email'].invalid">Formato inválido</small>
-            </div>
-
-            <div class="field col-2">
-                <label>CONTRASEÑA</label>
-                <input type="password" formControlName="password" placeholder="******">
-                <small class="error-msg" *ngIf="f['password'].touched && f['password'].invalid">Mínimo 6 caracteres</small>
-            </div>
-
-            <div class="field col-2">
-                <label>DOCUMENTO DE IDENTIDAD</label>
-                <input type="text" formControlName="documento" placeholder="Número de CI">
-                <small class="error-msg" *ngIf="f['documento'].touched && f['documento'].invalid">Requerido</small>
-            </div>
-
-            <div class="field col-2">
-                <label>COMPLEMENTO</label>
-                <input type="text" formControlName="complemento" placeholder="Ej: 1P">
-            </div>
-
-            <div class="field full-width">
-                <label>FOTO DEL CARNET (ANVERSO)</label>
-                <div class="upload-zone success" *ngIf="carnetFile">
-                    <div class="carnet-card">
-                        <img [src]="carnetFile.url">
-                        <div class="carnet-info">
-                            <span>{{ carnetFile.file.name | slice:0:15 }}...</span>
-                            <button type="button" (click)="removeCarnet()">Eliminar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="upload-zone carnet-zone" *ngIf="!carnetFile">
-                    <label class="upload-button">
-                        <span>📷 Subir Carnet</span>
-                        <input type="file" (change)="onCarnetSelected($event)" accept="image/*" style="display: none;">
-                    </label>
-                </div>
-            </div>
-
-            <div class="full-width">
-                <label>ESPECIALIDADES</label>
-                <div class="checkbox-grid">
-                    <label class="check-item" *ngFor="let opt of especialidadesOpciones">
-                        <input type="checkbox" [(ngModel)]="opt.seleccionado" [ngModelOptions]="{standalone: true}">
-                        {{ opt.nombre }}
-                    </label>
-                </div>
-            </div>
-
-            <div class="full-width">
-                <label>CERTIFICACIONES Y CREDENCIALES (PDF)</label>
-                <div class="upload-zone" [class.dragging]="isDragging" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
-                    <label class="upload-button">
-                        <span>➕ Arrastra o haz clic para subir PDFs</span>
-                        <input type="file" (change)="onFileSelected($event)" accept=".pdf" multiple style="display: none;">
-                    </label>
+            <form [formGroup]="registerForm" class="form-grid" (ngSubmit)="onSubmit()">
+        
+                <div class="field col-3">
+                    <label>NOMBRE <span class="required">*</span></label>
+                    <input type="text" formControlName="nombre" placeholder="Ej: Jane">
+                    <small class="error-msg" *ngIf="(f['nombre'].touched || submitted)&& f['nombre'].invalid">
+                        <span *ngIf="f['nombre'].errors?.['required']">El nombre es obligatorio.</span>
+                        <span *ngIf="f['nombre'].errors?.['pattern']">El nombre solo debe tener carácteres.</span>
+                        <span *ngIf="f['nombre'].errors?.['maxlength']">El nombre debe tener como máximo 30 caracteres.</span>
+                        <span *ngIf="f['nombre'].errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</span>
+                    </small>
                 </div>
 
-                <div class="files-container" *ngIf="fileList.length > 0">
-                    <div class="file-item" *ngFor="let item of fileList; let i = index">
-                        <div class="file-info-row">
-                            <div class="file-details-group">
-                                <span class="check-icon">✓</span>
-                                <div class="file-text">
-                                    <p class="file-name">{{ item.file.name }}</p>
-                                    <p class="file-status">{{ item.size }} • Listo para subir</p>
-                                </div>
+                <div class="field col-3">
+                    <label>APELLIDO PATERNO <span class="required">*</span></label>
+                    <input type="text" formControlName="apellidoPaterno" placeholder="Ej: Smith">
+                    <small class="error-msg" *ngIf="(f['apellidoPaterno'].touched || submitted) && f['apellidoPaterno'].invalid">
+                        <span *ngIf="f['apellidoPaterno'].errors?.['required']">El primer apellido es obligatorio.</span>
+                        <span *ngIf="f['apellidoPaterno'].errors?.['pattern']">El primer apellido solo debe tener carácteres.</span>
+                        <span *ngIf="f['apellidoPaterno'].errors?.['maxlength']">El primer apellido debe tener como máximo 30 caracteres.</span>
+                        <span *ngIf="f['apellidoPaterno'].errors?.['minlength']">El primer apellido debe tener al menos 3 caracteres.</span>
+                    </small>
+                </div>
+
+                <div class="field col-3">
+                    <label>APELLIDO MATERNO</label>
+                    <input type="text" formControlName="apellidoMaterno" placeholder="Ej: Johnson">
+                    <small class="error-msg" *ngIf="(f['apellidoMaterno'].touched || submitted) && f['apellidoMaterno'].invalid">
+                        <span *ngIf="f['apellidoMaterno'].errors?.['pattern']">El segundo apellido solo debe tener carácteres.</span>
+                        <span *ngIf="f['apellidoMaterno'].errors?.['maxlength']">El segundo apellido debe tener como máximo 30 caracteres.</span>
+                        <span *ngIf="f['apellidoMaterno'].errors?.['minlength']">El segundo apellido debe tener al menos 3 caracteres.</span>
+                    </small>
+                    <small class="helper-msg" *ngIf="!f['apellidoMaterno'].touched && f['apellidoMaterno'].valid">
+                        Opcional.
+                    </small>
+                </div>
+
+                <div class="field col-2">
+                    <label>FECHA DE NACIMIENTO <span class="required">*</span></label>
+                    <input type="date" formControlName="fechaNacimiento">
+                    <small class="error-msg" *ngIf="(f['fechaNacimiento'].touched || submitted) && f['fechaNacimiento'].invalid">
+                        La fecha de nacimiento es obligatoria.
+                    </small>
+                </div>
+
+                <div class="field col-2">
+                    <label>CORREO ELECTRÓNICO <span class="required">*</span></label>
+                    <input type="email" formControlName="email" placeholder="jane@example.com">
+                    <small class="error-msg" *ngIf="(f['email'].touched || submitted) && f['email'].invalid">
+                        <span *ngIf="f['email'].errors?.['required']">El correo electrónico es obligatorio.</span>
+                        <span *ngIf="f['email'].errors?.['email']">El formato del correo electrónico es inválido.</span>
+                    </small>
+                </div>
+
+                <div class="field col-2">
+                    <label>CONTRASEÑA <span class="required">*</span></label>
+                    <input type="password" formControlName="password" placeholder="* * * * * * * *">
+                    <small class="error-msg" *ngIf="(f['password'].touched || submitted) && f['password'].invalid">Mínimo 8 caracteres y máximo 50 caracteres.</small>
+                </div>
+
+                <div class="field col-2">
+                    <label>DOCUMENTO DE IDENTIDAD <span class="required">*</span></label>
+                    <input type="text" formControlName="documento" placeholder="Número de CI">
+                    <small class="error-msg" *ngIf="!f['documento'].touched || submitted && f['documento'].valid">
+                        <span *ngIf="f['documento'].errors?.['required']">El documento de identidad es obligatorio.</span>
+                        <span *ngIf="f['documento'].errors?.['minlength']">El documento de identidad debe tener al menos 6 caracteres.</span>
+                        <span *ngIf="f['documento'].errors?.['maxlength']">El documento de identidad debe tener como máximo 10 caracteres.</span>
+                        <span *ngIf="f['documento'].errors?.['pattern']">El documento de identidad solo puede contener números y letras.</span>
+                    </small>
+                </div>
+
+                <div class="field full-width">
+                    <label>FOTO DEL CARNET (ANVERSO)</label>
+                    <div class="upload-zone success" *ngIf="carnetFile">
+                        <div class="carnet-card">
+                            <img [src]="carnetFile.url">
+                            <div class="carnet-info">
+                                <span>{{ carnetFile.file.name | slice:0:15 }}...</span>
+                                <button type="button" (click)="removeCarnet()">Eliminar</button>
                             </div>
-                            <button type="button" class="remove-btn" (click)="removeFile(i)">✕</button>
                         </div>
                     </div>
+                    <div class="upload-zone carnet-zone" *ngIf="!carnetFile">
+                        <label class="upload-button">
+                            <span>📷 Subir fotografia de CI</span>
+                            <input type="file" (change)="onCarnetSelected($event)" accept="image/*" style="display: none;">
+                        </label>
+                    </div>
+                    <small class="error-msg" *ngIf="submitted && !carnetFile">
+                        Debes subir una fotografía del carnet de identidad, donde se vea el numero del documento.
+                    </small>
                 </div>
 
-                <small class="error-msg" *ngIf="submitted && fileList.length === 0">
-                    Debes subir al menos un documento PDF.
-                </small>
-            </div>
-
-            <div class="full-width consent-section">
-                <div class="check-item consent-box">
-                    <input type="checkbox" id="terminos" formControlName="aceptaTerminos">
-                    <label for="terminos" class="consent-label">
-                        Acepto los <strong>Términos de Servicio</strong> y la <strong>Política de Privacidad</strong>. 
-                        Entiendo cómo se gestionarán mis datos de salud.
-                    </label>
+                <div class="full-width">
+                    <label>ESPECIALIDADES</label>
+                    <div class="checkbox-grid">
+                        <label class="check-item" *ngFor="let opt of especialidadesOpciones">
+                            <input type="checkbox" [(ngModel)]="opt.seleccionado" [ngModelOptions]="{standalone: true}">
+                            {{ opt.nombre }}
+                        </label>
+                    </div>
+                    <small class="error-msg" *ngIf="submitted && !tieneEspecialidadSeleccionada()"></small>
                 </div>
-                <small class="error-msg" *ngIf="submitted && f['aceptaTerminos'].invalid">
-                    Debes aceptar los términos para continuar.
-                </small>
 
-                <div class="check-item consent-box">
-                    <input type="checkbox" id="comunicaciones" formControlName="aceptaComunicaciones">
-                    <label for="comunicaciones" class="consent-label">
-                        Doy mi consentimiento para recibir comunicaciones electrónicas sobre mi atención y actualizaciones de la plataforma.
-                    </label>
+                <div class="full-width">
+                    <label>CERTIFICACIONES Y CREDENCIALES (PDF)</label>
+                    <div class="upload-zone" [class.dragging]="isDragging" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+                        <label class="upload-button">
+                            <span>➕ Arrastra o haz clic para subir PDFs</span>
+                            <input type="file" (change)="onFileSelected($event)" accept=".pdf" multiple style="display: none;">
+                        </label>
+                    </div>
+
+                    <div class="files-container" *ngIf="fileList.length > 0">
+                        <div class="file-item" *ngFor="let item of fileList; let i = index">
+                            <div class="file-info-row">
+                                <div class="file-details-group">
+                                    <span class="check-icon">✓</span>
+                                    <div class="file-text">
+                                        <p class="file-name">{{ item.file.name }}</p>
+                                        <p class="file-status">{{ item.size }} • Listo para subir</p>
+                                    </div>
+                                </div>
+                                <button type="button" class="remove-btn" (click)="removeFile(i)">✕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <small class="error-msg" *ngIf="submitted && fileList.length === 0">
+                        Debes subir al menos un documento PDF.
+                    </small>
                 </div>
-            </div>
 
-            <button type="submit" class="btn-complete" 
-                [class.is-loading]="isLoading"
-                [disabled]="registerForm.invalid || fileList.length === 0 || !tieneEspecialidadSeleccionada() || !carnetFile || isLoading">
-                
-                <span *ngIf="isLoading" class="spinner"></span>
-                <span>{{ isLoading ? 'Procesando registro...' : 'Registro completo' }}</span>
-            </button>
+                <div class="full-width consent-section">
+                    <div class="check-item consent-box">
+                        <input type="checkbox" id="terminos" formControlName="aceptaTerminos">
+                        <label for="terminos" class="consent-label">
+                            Acepto los <strong>Términos de Servicio</strong> y la <strong>Política de Privacidad</strong>. 
+                            Entiendo cómo se gestionarán mis datos de salud.
+                        </label>
+                    </div>
+                    <small class="error-msg" *ngIf="submitted && f['aceptaTerminos'].invalid">
+                        Debes aceptar los términos para continuar.
+                    </small>
+                </div>
 
-            <p class="footer-note">ⓘ Su perfil será revisado por el administrador</p>
-        </form>
+                <button type="submit" class="btn-complete" 
+                    [class.is-loading]="isLoading"
+                    [disabled]="registerForm.invalid || fileList.length === 0 || !tieneEspecialidadSeleccionada() || !carnetFile || isLoading">
+                    
+                    <span *ngIf="isLoading" class="spinner"></span>
+                    <span>{{ isLoading ? 'Procesando registro...' : 'Registro completo' }}</span>
+                </button>
+
+                <p class="footer-note">ⓘ Su perfil será revisado por el administrador</p>
+            </form>
+        </div>
     </div>
+    
 </div>
