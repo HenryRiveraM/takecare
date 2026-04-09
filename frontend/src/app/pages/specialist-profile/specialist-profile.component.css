@@ -33,14 +33,14 @@
 
 .tag {
   color:#F5A3A3;
-  font-weight:700;
-  font-size:13px;
-  text-transform:uppercase;
+  font-weight:500;
+  font-size:15px;
 }
 
 .profile-header h1 {
   margin: 5px 0;
   font-size: 28px;
+  font-weight: 500;
   color:#1f2937;
 }
 
@@ -135,6 +135,73 @@ textarea:focus {
   transform:translateY(-2px);
 }
 
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.btn-secondary {
+  margin-top: 10px;
+  background: #e5e7eb;
+  color: #374151;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-secondary:hover {
+  background: #d1d5db;
+}
+
+.error {
+  margin-bottom: 15px;
+  color: #dc2626;
+  text-align: center;
+  font-weight: 500;
+}
+
+.info-message {
+  margin-bottom: 15px;
+  color: #374151;
+  text-align: center;
+  font-weight: 500;
+}
+
+.readonly-field {
+  background: #f9fafb;
+}
+
+.input-group input[readonly],
+textarea[readonly] {
+  background: transparent;
+  cursor: default;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  padding: 5px;
+  border: none;
+  background: transparent;
+  color: #5f7f75;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.back-btn:hover {
+  color: #3e5f56;
+  transform: translateX(-2px);
+}
+
 /* SUCCESS */
 .success {
   margin-top: 10px;
@@ -163,7 +230,6 @@ textarea:focus {
   }
 
 }
-
 
 /* ========================= */
 /*  MÓVIL (<= 768px) */
@@ -205,7 +271,6 @@ textarea:focus {
 
 }
 
-
 /* ========================= */
 /*  MÓVIL PEQUEÑO (<= 480px) */
 /* ========================= */
@@ -241,7 +306,6 @@ textarea:focus {
   }
 
 }
-
 
 /* ========================= */
 /*  ULTRA SMALL (<= 360px) */

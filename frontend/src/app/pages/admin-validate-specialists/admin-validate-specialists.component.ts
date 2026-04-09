@@ -17,7 +17,7 @@ export class AdminValidateSpecialistsComponent {
       email: 'juan@test.com',
       specialty: 'Psicología',
       certification_img: 'assets/images/cert1.png'
-    }
+    } 
   ];
 
   approve(id: number){

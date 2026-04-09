@@ -92,12 +92,13 @@ public class SpecialistService extends UserService {
     }
 
     public boolean deleteSpecialist(Integer id) {
-        logger.info("Attempting to delete specialist with id: {}", id);
+        logger.info("Attempting logical delete for specialist with id: {}", id);
         return specialistRepository.findById(id)
             .map(specialist -> {
                 specialist.setStatus(0);
+                specialist.setLastUpdate(LocalDateTime.now());
                 specialistRepository.save(specialist);
-                logger.info("Specialist with id: {} deleted successfully", id);
+                logger.info("Specialist with id: {} marked as inactive successfully", id);
                 return true;
             }).orElseGet(() -> {
                 logger.warn("Cannot delete - no specialist found with id: {}", id);
