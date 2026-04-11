@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { SpecialistService } from '../../services/specialist.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-specialist-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './specialist-profile.component.html',
   styleUrls: ['./specialist-profile.component.css']
 })

@@ -69,7 +69,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 50px; /* Aumentamos a 50px para alejarlo de los bordes */
+  padding: 0 50px;
 }
 
 /* INPUT */
@@ -82,7 +82,6 @@
   font-family: 'Manrope', sans-serif;
   color: #1f2937;
   
-  /* Agregamos una Lupa Rosa (SVG en línea) */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23F5A3A3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 15px center;
@@ -102,7 +101,7 @@
   width: 450px; 
 }
 
-/* BUTTON (igual que tu home) */
+/* BUTTON */
 .btn-primary {
   background:#F5A3A3;
   color:white;
