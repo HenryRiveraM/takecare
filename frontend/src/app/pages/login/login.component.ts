@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { AuthService, LoginRequest, ApiResponse, LoginResponse } from '../../services/auth.service';
+import { AuthService, ApiResponse, LoginResponse } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslatePipe],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
   loading = false;
   errorMsg = '';
   loginSuccess = false;
@@ -21,7 +23,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.loginForm = this.fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]],
@@ -30,8 +33,9 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+
     if (this.loginForm.invalid) {
-      this.errorMsg = 'Completa todos los campos correctamente';
+      this.errorMsg = this.translate.instant('login.errors.completeFields');
       this.loginForm.markAllAsTouched();
       return;
     }
@@ -43,23 +47,52 @@ export class LoginComponent {
     const credentials = this.loginForm.getRawValue();
 
     this.authService.login(credentials).subscribe({
+
       next: (response: ApiResponse<LoginResponse>) => {
         this.loading = false;
+
         if (response.success && response.data) {
+
+          console.log('LOGIN RESPONSE:', response);
+
           localStorage.setItem('user', JSON.stringify(response.data));
+
           this.loginSuccess = true;
+
           setTimeout(() => {
-            this.router.navigate(['/dashboard']);
+            this.redirectByRole(response.data!.role);
           }, 800);
+
         } else {
-          this.errorMsg = response.error ?? 'Error desconocido';
+          this.errorMsg = response.error ?? this.translate.instant('login.errors.unknown');
         }
       },
+
       error: (err) => {
         this.loading = false;
-        this.errorMsg = 'Error de conexión. Intenta de nuevo';
+
+        if (err.status === 401) {
+          this.errorMsg = this.translate.instant('login.errors.invalidCredentials');
+        } else {
+          this.errorMsg = this.translate.instant('login.errors.connection');
+        }
+
         console.error('Login error:', err);
       }
+
     });
+  }
+
+  redirectByRole(role: number): void {
+
+    console.log('ROLE:', role);
+
+    if (role === 3) {
+      this.router.navigate(['/admin']);
+    } else if (role === 2) {
+      this.router.navigate(['/specialist']);
+    } else {
+      this.router.navigate(['/patient']);
+    }
   }
 }

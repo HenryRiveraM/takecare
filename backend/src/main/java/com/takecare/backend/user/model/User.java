@@ -19,7 +19,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,8 +60,8 @@ public abstract class User {
     private Integer strikes;
 
     @Column(columnDefinition = "tinyint")
-    private Boolean status;
+    private Integer status;
 
-    @Column(name = "account_verified", columnDefinition = "tinyint")
-    private Boolean accountVerified;
+    @Column(name = "account_verified", columnDefinition = "tinyint default 2")
+    private Integer accountVerified;
 }
