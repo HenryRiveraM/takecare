@@ -4,7 +4,22 @@ import { CommonModule } from '@angular/common';
 import { SpecialistService } from '../../services/specialist.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import {
+  LocationVisibility,
+  SpecialistLocationPreferences,
+  SpecialistLocationPreferencesService
+} from '../../services/specialist-location-preferences.service';
+
+interface SpecialistProfileForm {
+  names: string;
+  firstLastname: string;
+  secondLastname: string;
+  email: string;
+  biography: string;
+  officeUbi: string;
+  sessionCost: number;
+}
 
 @Component({
   selector: 'app-specialist-profile',
@@ -17,7 +32,7 @@ export class SpecialistProfileComponent implements OnInit {
 
   user: any;
 
-  profile: any = {
+  profile: SpecialistProfileForm = {
     names: '',
     firstLastname: '',
     secondLastname: '',
@@ -27,17 +42,23 @@ export class SpecialistProfileComponent implements OnInit {
     sessionCost: 0,
   };
 
-  originalProfile: any = {};
+  originalProfile: SpecialistProfileForm = { ...this.profile };
+
+  locationDetails: SpecialistLocationPreferences = this.createEmptyLocationDetails();
+  originalLocationDetails: SpecialistLocationPreferences = this.createEmptyLocationDetails();
 
   loading = false;
   successMsg = '';
   errorMsg = '';
+  locationErrorMsg = '';
   isEditing = false;
 
   constructor(
     private specialistService: SpecialistService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService,
+    private specialistLocationPreferencesService: SpecialistLocationPreferencesService
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +91,7 @@ export class SpecialistProfileComponent implements OnInit {
           sessionCost: data.sessionCost || 0
         };
 
+        this.loadLocationDetails();
         this.originalProfile = { ...this.profile };
         this.loading = false;
       },
@@ -85,13 +107,16 @@ export class SpecialistProfileComponent implements OnInit {
     this.isEditing = true;
     this.successMsg = '';
     this.errorMsg = '';
+    this.locationErrorMsg = '';
   }
 
   cancelEdit(): void {
     this.profile = { ...this.originalProfile };
+    this.locationDetails = { ...this.originalLocationDetails };
     this.isEditing = false;
     this.successMsg = '';
     this.errorMsg = '';
+    this.locationErrorMsg = '';
   }
 
   goBackToProfile(): void {
@@ -100,9 +125,21 @@ export class SpecialistProfileComponent implements OnInit {
 
   save() : void {
     if (!this.isEditing) return;
+
+    const validationError = this.validateLocationDetails();
+    if (validationError) {
+      this.locationErrorMsg = validationError;
+      this.errorMsg = '';
+      return;
+    }
+
     this.loading = true;
     this.errorMsg = '';
     this.successMsg = '';
+    this.locationErrorMsg = '';
+
+    const officeUbi = this.buildOfficeLocationSummary(this.locationDetails);
+    this.profile.officeUbi = officeUbi;
 
     const payload = {
       names: this.profile.names,
@@ -119,6 +156,8 @@ export class SpecialistProfileComponent implements OnInit {
         console.log('Perfil actualizado:', response);
 
         this.originalProfile = { ...this.profile };
+        this.originalLocationDetails = { ...this.locationDetails };
+        this.specialistLocationPreferencesService.saveByUserId(this.user.id, this.locationDetails);
         this.successMsg = 'Perfil actualizado correctamente';
         this.isEditing = false;
         this.loading = false;
@@ -131,5 +170,88 @@ export class SpecialistProfileComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  private loadLocationDetails(): void {
+    const persistedLocation = this.user?.id
+      ? this.specialistLocationPreferencesService.getByUserId(this.user.id)
+      : null;
+
+    const parsedOfficeLocation = this.parseOfficeLocation(this.profile.officeUbi);
+
+    this.locationDetails = {
+      addressLine: persistedLocation?.addressLine || parsedOfficeLocation.addressLine,
+      city: persistedLocation?.city || parsedOfficeLocation.city,
+      neighborhood: persistedLocation?.neighborhood || parsedOfficeLocation.neighborhood,
+      reference: persistedLocation?.reference || parsedOfficeLocation.reference,
+      visibility: persistedLocation?.visibility || parsedOfficeLocation.visibility
+    };
+
+    this.originalLocationDetails = { ...this.locationDetails };
+    this.profile.officeUbi = this.buildOfficeLocationSummary(this.locationDetails);
+  }
+
+  private validateLocationDetails(): string {
+    const hasAnyLocationValue = [
+      this.locationDetails.addressLine,
+      this.locationDetails.city,
+      this.locationDetails.neighborhood,
+      this.locationDetails.reference
+    ].some(value => value.trim().length > 0);
+
+    if (!hasAnyLocationValue) {
+      return '';
+    }
+
+    if (!this.locationDetails.addressLine.trim()) {
+      return this.translate.instant('specialistProfile.validation.addressRequired');
+    }
+
+    if (!this.locationDetails.city.trim()) {
+      return this.translate.instant('specialistProfile.validation.cityRequired');
+    }
+
+    return '';
+  }
+
+  private buildOfficeLocationSummary(location: SpecialistLocationPreferences): string {
+    const parts = [
+      location.addressLine.trim(),
+      location.city.trim(),
+      location.neighborhood.trim() ? `Zona ${location.neighborhood.trim()}` : '',
+      location.reference.trim() ? `Ref. ${location.reference.trim()}` : ''
+    ].filter(Boolean);
+
+    return parts.join(' | ');
+  }
+
+  private parseOfficeLocation(officeUbi: string): SpecialistLocationPreferences {
+    if (!officeUbi.trim()) {
+      return this.createEmptyLocationDetails();
+    }
+
+    const parts = officeUbi.split('|').map(item => item.trim()).filter(Boolean);
+
+    return {
+      addressLine: parts[0] || officeUbi,
+      city: parts[1] || '',
+      neighborhood: this.stripPrefix(parts[2], 'Zona'),
+      reference: this.stripPrefix(parts[3], 'Ref.'),
+      visibility: 'private'
+    };
+  }
+
+  private stripPrefix(value: string | undefined, prefix: string): string {
+    return value ? value.replace(prefix, '').trim() : '';
+  }
+
+  private createEmptyLocationDetails(): SpecialistLocationPreferences {
+    return {
+      addressLine: '',
+      city: '',
+      neighborhood: '',
+      reference: '',
+      visibility: 'private' as LocationVisibility
+    };
   }
 }

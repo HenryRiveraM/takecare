@@ -3,7 +3,27 @@
     "home": "Home",
     "about": "About us",
     "login": "Log in",
-    "register": "Sign up"
+    "register": "Sign up",
+    "private": {
+      "common": {
+        "home": "Home",
+        "logout": "Log out"
+      },
+      "patient": {
+        "label": "Patient area",
+        "dashboard": "My dashboard",
+        "profile": "My profile"
+      },
+      "specialist": {
+        "label": "Specialist area",
+        "dashboard": "My dashboard",
+        "profile": "My profile"
+      },
+      "admin": {
+        "label": "Admin panel",
+        "panel": "Administration"
+      }
+    }
   },
 
     "footer": {
@@ -525,6 +545,36 @@
       "biography": "Describe your specialty, experience or therapeutic approach...",
       "office": "Ex: America Ave #123",
       "cost": "Ex: 150"
+    },
+
+    "location": {
+      "tag": "In-person care",
+      "title": "Professional location",
+      "subtitle": "Register the place where you provide in-person care and decide how visible it should be to patients.",
+      "fields": {
+        "addressLine": "Main address",
+        "city": "City",
+        "neighborhood": "Neighborhood or area",
+        "reference": "Reference"
+      },
+      "placeholders": {
+        "addressLine": "Ex: America Ave #123, Health Center Building",
+        "city": "Ex: Cochabamba",
+        "neighborhood": "Ex: Queru Queru",
+        "reference": "Ex: In front of the square or office floor"
+      },
+      "visibility": {
+        "title": "Location privacy",
+        "help": "Choose whether the location can be shown publicly or remain private until manual confirmation.",
+        "public": "Public location",
+        "private": "Private location"
+      },
+      "note": "For now, the full address and privacy preference are stored only on the frontend. The current backend will still receive a summarized location."
+    },
+
+    "validation": {
+      "addressRequired": "Enter the main office address.",
+      "cityRequired": "Enter the city where you provide care."
     },
 
     "buttons": {

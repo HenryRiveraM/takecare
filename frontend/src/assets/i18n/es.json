@@ -3,7 +3,27 @@
     "home": "Inicio",
     "about": "Nosotros",
     "login": "Iniciar sesión",
-    "register": "Registrarse"
+    "register": "Registrarse",
+    "private": {
+      "common": {
+        "home": "Inicio",
+        "logout": "Cerrar sesión"
+      },
+      "patient": {
+        "label": "Espacio del paciente",
+        "dashboard": "Mi panel",
+        "profile": "Mi perfil"
+      },
+      "specialist": {
+        "label": "Espacio del especialista",
+        "dashboard": "Mi panel",
+        "profile": "Mi perfil"
+      },
+      "admin": {
+        "label": "Panel administrativo",
+        "panel": "Administración"
+      }
+    }
   },
 
     "footer": {
@@ -529,6 +549,36 @@
       "cost": "Ej: 150"
     },
 
+    "location": {
+      "tag": "Atención presencial",
+      "title": "Ubicación profesional",
+      "subtitle": "Registra el lugar donde atiendes de forma presencial y define qué tan visible será para los pacientes.",
+      "fields": {
+        "addressLine": "Dirección principal",
+        "city": "Ciudad",
+        "neighborhood": "Zona o barrio",
+        "reference": "Referencia"
+      },
+      "placeholders": {
+        "addressLine": "Ej: Av. América #123, Edif. Centro Salud",
+        "city": "Ej: Cochabamba",
+        "neighborhood": "Ej: Queru Queru",
+        "reference": "Ej: Frente a la plaza o piso del consultorio"
+      },
+      "visibility": {
+        "title": "Privacidad de la ubicación",
+        "help": "Decide si la ubicación podrá mostrarse públicamente o si se mantendrá privada hasta una confirmación manual.",
+        "public": "Ubicación pública",
+        "private": "Ubicación privada"
+      },
+      "note": "Por ahora, la dirección completa y la preferencia de privacidad se guardan solo en el frontend. El backend actual seguirá recibiendo un resumen de la ubicación."
+    },
+
+    "validation": {
+      "addressRequired": "Ingresa la dirección principal del consultorio.",
+      "cityRequired": "Ingresa la ciudad de atención."
+    },
+
     "buttons": {
       "edit": "Editar perfil",
       "cancel": "Cancelar",
@@ -545,6 +595,4 @@
 
 
 }
-
-
 

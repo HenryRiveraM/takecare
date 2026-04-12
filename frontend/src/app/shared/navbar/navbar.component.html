@@ -1,4 +1,4 @@
-<header *ngIf="showNavbar" class="navbar">
+<header *ngIf="navbarMode === 'public'" class="navbar">
 
   <div class="logo" routerLink="/">
     <img src="assets/images/logo.png" alt="Take Care" />
@@ -27,6 +27,64 @@
       {{ 'navbar.register' | translate }}
     </a>
 
+  </div>
+
+</header>
+
+<header *ngIf="navbarMode === 'private'" class="navbar private-navbar">
+
+  <div class="logo" routerLink="/">
+    <img src="assets/images/logo.png" alt="Take Care" />
+    <div class="brand-copy">
+      <strong>TakeCare</strong>
+      <span>{{ ('navbar.private.' + privateArea + '.label') | translate }}</span>
+    </div>
+  </div>
+
+  <nav class="links private-links" *ngIf="privateArea === 'patient'">
+    <a routerLink="/patient" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'navbar.private.patient.dashboard' | translate }}
+    </a>
+    <a routerLink="/patient/profile" routerLinkActive="active-link">
+      {{ 'navbar.private.patient.profile' | translate }}
+    </a>
+  </nav>
+
+  <nav class="links private-links" *ngIf="privateArea === 'specialist'">
+    <a routerLink="/specialist" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'navbar.private.specialist.dashboard' | translate }}
+    </a>
+    <a routerLink="/specialist/profile" routerLinkActive="active-link">
+      {{ 'navbar.private.specialist.profile' | translate }}
+    </a>
+  </nav>
+
+  <nav class="links private-links" *ngIf="privateArea === 'admin'">
+    <a routerLink="/admin" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'navbar.private.admin.panel' | translate }}
+    </a>
+    <a [routerLink]="getPrivateHomeRoute()" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'navbar.private.common.home' | translate }}
+    </a>
+  </nav>
+
+  <div class="actions private-actions">
+    <select
+      class="lang-select"
+      [value]="languageService.getCurrentLanguage()"
+      (change)="changeLanguage($event)">
+      <option value="es">ES</option>
+      <option value="en">EN</option>
+    </select>
+
+    <div class="user-pill" *ngIf="user">
+      <span class="material-symbols-outlined">account_circle</span>
+      <span>{{ user.names }}</span>
+    </div>
+
+    <button type="button" class="btn-outline private-logout" (click)="logout()">
+      {{ 'navbar.private.common.logout' | translate }}
+    </button>
   </div>
 
 </header>
