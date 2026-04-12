@@ -13,14 +13,17 @@ import { RegisterSpecialistComponent } from './pages/register-specialist/registe
 // ADMIN
 import { AdminComponent } from './pages/admin/admin.component';
 import { adminGuard } from './guards/admin.guard';
+import { guestGuard } from './guards/guest.guard';
 
 // ESPECIALISTA
 import { SpecialistDashboardComponent } from './pages/specialist-dashboard/specialist-dashboard.component';
 import { SpecialistProfileComponent } from './pages/specialist-profile/specialist-profile.component';
+import { specialistGuard } from './guards/specialist.guard';
 
 // PACIENTE
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
 import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
+import { patientGuard } from './guards/patient.guard';
 
 // OTROS
 import { NotFoundComponent } from './pages/not-found/not-found.component';
@@ -38,11 +41,13 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: false }
   },
   {
     path: 'recover-password',
     component: RecoverPasswordComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: false }
   },
 
@@ -50,16 +55,19 @@ export const routes: Routes = [
   {
     path: 'register-role',
     component: RegisterRoleComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: true }
   },
   {
     path: 'register/patient',
     component: RegisterPatientComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: true }
   },
   {
     path: 'register/specialist',
     component: RegisterSpecialistComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: true }
   },
 
@@ -69,13 +77,14 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    //canActivate: [adminGuard], // comentar 
+    canActivate: [adminGuard],
     data: { showNavbar: true }
   },
 
   // PACIENTE (Tu nueva ruta)
   {
     path: 'patient',
+    canActivate: [patientGuard],
     data: { showNavbar: false },
     children: [
       {
@@ -92,6 +101,7 @@ export const routes: Routes = [
   // ESPECIALISTA 
   {
     path: 'specialist',
+    canActivate: [specialistGuard],
     data: { showNavbar: false },
     children: [
       {

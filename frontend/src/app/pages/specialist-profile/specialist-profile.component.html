@@ -103,6 +103,101 @@
           </div>
         </div>
 
+        <div class="location-card full">
+          <div class="section-copy">
+            <span class="section-tag">{{ 'specialistProfile.location.tag' | translate }}</span>
+            <h2>{{ 'specialistProfile.location.title' | translate }}</h2>
+            <p>{{ 'specialistProfile.location.subtitle' | translate }}</p>
+          </div>
+
+          <div class="location-grid">
+            <div class="field">
+              <label>{{ 'specialistProfile.location.fields.addressLine' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">home_pin</span>
+                <input
+                  [(ngModel)]="locationDetails.addressLine"
+                  name="addressLine"
+                  [placeholder]="'specialistProfile.location.placeholders.addressLine' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.location.fields.city' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">apartment</span>
+                <input
+                  [(ngModel)]="locationDetails.city"
+                  name="city"
+                  [placeholder]="'specialistProfile.location.placeholders.city' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.location.fields.neighborhood' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">map</span>
+                <input
+                  [(ngModel)]="locationDetails.neighborhood"
+                  name="neighborhood"
+                  [placeholder]="'specialistProfile.location.placeholders.neighborhood' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.location.fields.reference' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">pin_drop</span>
+                <input
+                  [(ngModel)]="locationDetails.reference"
+                  name="reference"
+                  [placeholder]="'specialistProfile.location.placeholders.reference' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="visibility-panel">
+            <div>
+              <h3>{{ 'specialistProfile.location.visibility.title' | translate }}</h3>
+              <p>{{ 'specialistProfile.location.visibility.help' | translate }}</p>
+            </div>
+
+            <div class="visibility-options" [class.readonly-options]="!isEditing">
+              <label class="visibility-option" [class.active]="locationDetails.visibility === 'public'">
+                <input
+                  type="radio"
+                  name="visibility"
+                  [(ngModel)]="locationDetails.visibility"
+                  value="public"
+                  [disabled]="!isEditing"/>
+                <span>{{ 'specialistProfile.location.visibility.public' | translate }}</span>
+              </label>
+
+              <label class="visibility-option" [class.active]="locationDetails.visibility === 'private'">
+                <input
+                  type="radio"
+                  name="visibility"
+                  [(ngModel)]="locationDetails.visibility"
+                  value="private"
+                  [disabled]="!isEditing"/>
+                <span>{{ 'specialistProfile.location.visibility.private' | translate }}</span>
+              </label>
+            </div>
+          </div>
+
+          <p class="helper-text">
+            {{ 'specialistProfile.location.note' | translate }}
+          </p>
+
+          <p class="error location-error" *ngIf="locationErrorMsg">
+            {{ locationErrorMsg }}
+          </p>
+        </div>
+
       </div>
 
       <!-- ACTIONS -->

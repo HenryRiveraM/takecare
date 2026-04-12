@@ -6,14 +6,14 @@ export const adminGuard: CanActivateFn = () => {
     const userData = localStorage.getItem('user');
 
     if (!userData){
-        router.navigate(['/login']);
+        router.navigate(['/login'], { replaceUrl: true });
         return false;
     }
 
     const user = JSON.parse(userData);
     if (user.role !== 3)
     {
-        router.navigate(['/login']);
+        router.navigate(['/login'], { replaceUrl: true });
         return false;
     }
 
