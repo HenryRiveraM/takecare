@@ -6,7 +6,7 @@
       <div class="card">
 
         <button type="button" class="back-btn" (click)="goBackToProfile()">
-          ← Volver
+          ← {{ 'patientProfile.back' | translate }}
         </button>
 
         <div class="profile-header">
@@ -15,61 +15,74 @@
           </div>
 
           <div class="header-content">
-            <span class="tag">Perfil del paciente</span>
-            <h1>Editar perfil</h1>
+            <span class="tag">{{ 'patientProfile.tag' | translate }}</span>
+            <h1>{{ 'patientProfile.title' | translate }}</h1>
             <p class="subtitle">
-              Actualiza tu información y mejora tu presencia en TakeCare.
+              {{ 'patientProfile.subtitle' | translate }}
             </p>
           </div>
         </div>
 
         <div class="grid">
           <div class="field-group">
-            <label>Nombres</label>
+            <label>{{ 'patientProfile.fields.names' | translate }}</label>
             <div class="input-wrap">
               <span class="material-symbols-outlined">person</span>
-              <input formControlName="names" [readonly]="!isEditing" placeholder="Ingresa tus nombres">
+              <input
+                formControlName="names"
+                [readonly]="!isEditing"
+                [placeholder]="'patientProfile.placeholders.names' | translate">
             </div>
           </div>
 
           <div class="field-group">
-            <label>Primer apellido</label>
+            <label>{{ 'patientProfile.fields.firstLastname' | translate }}</label>
             <div class="input-wrap">
               <span class="material-symbols-outlined">badge</span>
-              <input formControlName="firstLastname" [readonly]="!isEditing" placeholder="Ingresa tu primer apellido">
+              <input
+                formControlName="firstLastname"
+                [readonly]="!isEditing"
+                [placeholder]="'patientProfile.placeholders.firstLastname' | translate">
             </div>
           </div>
 
           <div class="field-group">
-            <label>Segundo apellido</label>
+            <label>{{ 'patientProfile.fields.secondLastname' | translate }}</label>
             <div class="input-wrap">
               <span class="material-symbols-outlined">badge</span>
-              <input formControlName="secondLastname" [readonly]="!isEditing" placeholder="Ingresa tu segundo apellido">
+              <input
+                formControlName="secondLastname"
+                [readonly]="!isEditing"
+                [placeholder]="'patientProfile.placeholders.secondLastname' | translate">
             </div>
           </div>
 
           <div class="field-group">
-            <label>Correo electrónico</label>
+            <label>{{ 'patientProfile.fields.email' | translate }}</label>
             <div class="input-wrap readonly-wrap">
               <span class="material-symbols-outlined">mail</span>
-              <input formControlName="email" readonly class="readonly-field" placeholder="Correo electrónico">
+              <input
+                formControlName="email"
+                readonly
+                class="readonly-field"
+                [placeholder]="'patientProfile.placeholders.email' | translate">
             </div>
           </div>
         </div>
 
         <div class="actions" *ngIf="!isEditing">
           <button class="btn-primary" type="button" (click)="toggleEdit()">
-            Editar perfil
+            {{ 'patientProfile.actions.edit' | translate }}
           </button>
         </div>
 
         <div class="actions" *ngIf="isEditing">
           <button class="btn-secondary" type="button" (click)="toggleEdit()">
-            Cancelar
+            {{ 'patientProfile.actions.cancel' | translate }}
           </button>
 
           <button class="btn-primary" type="submit" [disabled]="profileForm.invalid || isLoading">
-            {{ isLoading ? 'Guardando...' : 'Guardar cambios' }}
+            {{ isLoading ? ('patientProfile.actions.saving' | translate) : ('patientProfile.actions.save' | translate) }}
           </button>
         </div>
 

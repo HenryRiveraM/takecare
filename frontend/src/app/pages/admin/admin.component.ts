@@ -2,21 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AdminService, User, Specialist } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  // Datos generales (hotfix)
   users: User[] = [];
   filteredUsers: User[] = [];
 
-  // Datos separados (release)
   patients: User[] = [];
   filteredPatients: User[] = [];
   specialists: Specialist[] = [];
@@ -38,7 +37,10 @@ export class AdminComponent implements OnInit {
   deleteTarget: { type: 'patient' | 'specialist'; id: number; name: string } | null = null;
   notification: { message: string; type: 'success' | 'error' } | null = null;
 
-  constructor(private adminService: AdminService) {}
+  constructor(
+    private adminService: AdminService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -62,12 +64,12 @@ export class AdminComponent implements OnInit {
       next: (data: User[]) => {
         this.patients = data.filter(patient => this.isActiveUser(patient.status));
         this.filteredPatients = [...this.patients];
-        this.users = this.patients; // Mantener sincronizado con versión genérica
+        this.users = this.patients;
         this.filteredUsers = this.filteredPatients;
         this.loadingPatients = false;
       },
       error: (err: HttpErrorResponse) => {
-        this.errorMsg = 'Error cargando pacientes';
+        this.errorMsg = this.translate.instant('admin.errors.loadPatients');
         this.loadingPatients = false;
         console.error(err);
       }
@@ -80,12 +82,12 @@ export class AdminComponent implements OnInit {
       next: (data: Specialist[]) => {
         this.specialists = data.filter(specialist => this.isActiveUser(specialist.status));
         this.filteredSpecialists = [...this.specialists];
-        this.users = this.specialists as any; // Mantener sincronizado con versión genérica
+        this.users = this.specialists as any;
         this.filteredUsers = this.filteredSpecialists as any;
         this.loadingSpecialists = false;
       },
       error: (err: HttpErrorResponse) => {
-        this.errorMsg = 'No se pudieron cargar los especialistas';
+        this.errorMsg = this.translate.instant('admin.errors.loadSpecialists');
         this.loadingSpecialists = false;
         console.error(err);
       }
@@ -96,13 +98,11 @@ export class AdminComponent implements OnInit {
     this.loadingValidations = true;
     this.adminService.getPendingValidations().subscribe({
       next: (data: Specialist[]) => {
-        // Filtramos especialistas con cuenta NO verificada (accountVerified === 2 o null)
-        this.pendingValidations = data.filter(specialist => 
+        this.pendingValidations = data.filter(specialist =>
           specialist.accountVerified === 2 || specialist.accountVerified === null
         );
         this.filteredValidations = [...this.pendingValidations];
         this.loadingValidations = false;
-        console.log(`✅ ${this.pendingValidations.length} validaciones pendientes cargadas`);
       },
       error: (err) => {
         this.pendingValidations = [];
@@ -148,15 +148,23 @@ export class AdminComponent implements OnInit {
 
     this.adminService.validateUser(id, status).subscribe({
       next: () => {
-        const roleText = user.role === 'specialist' ? 'Especialista' : 'Paciente';
-        this.showNotification(`${roleText} ${status === 'approved' ? 'validado' : 'rechazado'} correctamente`);
+        const roleText = user.role === 'specialist'
+          ? this.translate.instant('admin.roles.specialist')
+          : this.translate.instant('admin.roles.patient');
+
+        const actionText = status === 'approved'
+          ? this.translate.instant('admin.notifications.validated')
+          : this.translate.instant('admin.notifications.rejected');
+
+        this.showNotification(`${roleText} ${actionText}`);
         this.loadPendingValidations();
+
         if (status === 'approved') {
           user.role === 'specialist' ? this.loadSpecialists() : this.loadPatients();
         }
       },
       error: (err) => {
-        this.errorMsg = 'No se pudo completar la operación en el servidor';
+        this.errorMsg = this.translate.instant('admin.errors.processValidation');
         console.error(err);
       }
     });
@@ -182,7 +190,10 @@ export class AdminComponent implements OnInit {
     if (!this.deleteTarget) return;
 
     const { type, id } = this.deleteTarget;
-    const label = type === 'patient' ? 'Paciente' : 'Especialista';
+    const label = type === 'patient'
+      ? this.translate.instant('admin.roles.patient')
+      : this.translate.instant('admin.roles.specialist');
+
     const service$ = type === 'patient'
       ? this.adminService.deletePatient(id)
       : this.adminService.deleteSpecialist(id);
@@ -198,13 +209,19 @@ export class AdminComponent implements OnInit {
         }
 
         this.closeDeleteConfirm();
-        this.showNotification(`${label} respaldado correctamente`, 'success');
+        this.showNotification(
+          `${label} ${this.translate.instant('admin.notifications.suspendedSuccessfully')}`,
+          'success'
+        );
       },
       error: (err: HttpErrorResponse) => {
-        this.errorMsg = `No se pudo respaldar el ${type === 'patient' ? 'paciente' : 'especialista'}`;
+        this.errorMsg = this.translate.instant('admin.errors.suspendUser');
         console.error(err);
         this.closeDeleteConfirm();
-        this.showNotification(`No se pudo respaldar el ${label.toLowerCase()}`, 'error');
+        this.showNotification(
+          this.translate.instant('admin.errors.couldNotSuspend'),
+          'error'
+        );
       }
     });
   }
@@ -225,7 +242,7 @@ export class AdminComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        this.errorMsg = 'No se pudo suspender el usuario';
+        this.errorMsg = this.translate.instant('admin.errors.suspendUser');
       }
     });
   }

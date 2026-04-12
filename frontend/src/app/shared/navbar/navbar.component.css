@@ -14,8 +14,6 @@
   border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-
-
 .logo img {
   width: 55px;
   height: 55px;
@@ -25,8 +23,6 @@
 .logo:hover img {
   transform: scale(1.05);
 }
-
-
 
 .links {
   display: flex;
@@ -60,7 +56,6 @@
   width: 100%;
 }
 
-
 .actions {
   display: flex;
   gap: 12px;
@@ -79,6 +74,29 @@
   transition: all 0.3s ease;
 }
 
+.lang-select {
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1.5px solid #f3c1c1;
+  background: rgba(255, 255, 255, 0.9);
+  color: #F5A3A3;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Manrope', sans-serif;
+}
+
+.lang-select:hover {
+  background: #fff0f0;
+  transform: translateY(-2px);
+}
+
+.lang-select:focus {
+  border-color: #F5A3A3;
+  box-shadow: 0 0 0 3px rgba(245,163,163,0.15);
+}
 
 .btn-outline {
   border: 1.5px solid #f3c1c1;
@@ -90,7 +108,6 @@
   background: #fff0f0;
   transform: translateY(-2px);
 }
-
 
 .btn-primary {
   background: #F5A3A3;
@@ -122,8 +139,12 @@
     font-size: 14px;
   }
 
-}
+  .lang-select {
+    font-size: 14px;
+    padding: 0 10px;
+  }
 
+}
 
 /* ========================= */
 /* 📱 MÓVIL (<= 768px) */
@@ -135,7 +156,7 @@
   }
 
   .links {
-    display: none; /* 🔥 ocultamos menú para móvil */
+    display: none;
   }
 
   .logo img {
@@ -153,8 +174,13 @@
     height: auto;
   }
 
-}
+  .lang-select {
+    height: 38px;
+    font-size: 13px;
+    padding: 0 8px;
+  }
 
+}
 
 /* ========================= */
 /* 📱 MÓVIL PEQUEÑO (<= 480px) */
@@ -166,7 +192,7 @@
   }
 
   .btn-outline {
-    display: none; /* 🔥 ocultamos login (solo dejamos CTA principal) */
+    display: none;
   }
 
   .btn-primary {
@@ -174,8 +200,13 @@
     font-size: 12px;
   }
 
-}
+  .lang-select {
+    height: 36px;
+    font-size: 12px;
+    padding: 0 8px;
+  }
 
+}
 
 /* ========================= */
 /* 📱 ULTRA SMALL (<= 360px) */
@@ -190,6 +221,11 @@
   .btn-primary {
     font-size: 11px;
     padding: 6px 10px;
+  }
+
+  .lang-select {
+    font-size: 11px;
+    height: 34px;
   }
 
 }

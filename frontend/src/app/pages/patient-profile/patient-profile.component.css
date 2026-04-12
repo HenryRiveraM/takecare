@@ -282,37 +282,40 @@
   opacity: 0.85;
 }
 
+.header-content h1,
+.subtitle,
+.field-group label,
+.back-btn,
+.btn-primary,
+.btn-secondary {
+  word-break: break-word;
+}
+
+.actions {
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+  white-space: nowrap;
+}
+
 @media (max-width: 768px) {
-  .profile-page {
-    padding: 24px 14px;
+  .back-btn {
+    font-size: 0.9rem;
   }
 
-  .profile-header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 22px;
+  .header-content h1 {
+    font-size: 1.6rem;
   }
 
-  .card {
-    padding: 22px;
-    border-radius: 22px;
+  .subtitle {
+    font-size: 0.92rem;
   }
 
-  .section-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .actions {
-    justify-content: stretch;
-  }
-
-  .primary {
+  .btn-primary,
+  .btn-secondary {
     width: 100%;
+    justify-content: center;
   }
 }

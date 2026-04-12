@@ -251,3 +251,67 @@ This generated password is for development use only. Your security configuration
 2026-04-09 03:58:13 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
 2026-04-09 03:58:15 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
 2026-04-09 03:58:15 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-11 13:13:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 93810 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-11 13:13:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-11 13:13:56 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-11 13:13:57 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 4bfbebc1-6301-4b9c-9f3b-8ff91b5fdd10
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-11 13:13:57 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 9.504 seconds (process running for 9.67)
+2026-04-11 13:14:13 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 13:14:15 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 13:20:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 99415 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-11 13:20:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-11 13:20:59 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-11 13:20:59 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: e8e8bdad-eae5-4724-9d41-2641edc0e600
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-11 13:21:00 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 12.571 seconds (process running for 12.727)
+2026-04-11 13:21:02 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-11 13:21:04 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-11 13:21:09 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-11 13:21:11 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-11 13:21:16 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 13:21:17 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 13:21:39 [http-nio-8080-exec-8] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-11 13:21:41 [http-nio-8080-exec-8] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-11 13:21:46 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-11 13:21:47 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-11 13:21:52 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 13:21:53 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 13:34:44 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 13:34:46 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 13:39:14 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 13:39:15 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 13:39:38 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 13:39:39 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 13:39:58 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 13:39:59 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 13:40:16 [http-nio-8080-exec-4] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 13:40:18 [http-nio-8080-exec-4] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 13:40:21 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 13:40:23 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 14:22:05 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 47305 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-11 14:22:05 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-11 14:22:14 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-11 14:22:14 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: ec1192b3-b967-4f52-9491-f127a69f04a3
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-11 14:22:14 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 9.566 seconds (process running for 9.728)
+2026-04-11 14:26:03 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 14:26:04 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 14:26:05 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-11 14:26:06 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-11 14:26:09 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 14:26:10 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 13 patients
+2026-04-11 14:37:26 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-11 14:37:28 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Found 13 patients
