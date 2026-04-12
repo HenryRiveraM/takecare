@@ -3,44 +3,47 @@
   <div class="container">
 
     <h1>
-      {{ 'registerRole.titlePart1' | translate }}
-      <span class="primary">Take Care</span>{{ 'registerRole.titlePart2' | translate }}
+      ¿Cómo te gustaría usar
+      <span class="primary">Take Care</span>?
     </h1>
 
     <p>
-      {{ 'registerRole.subtitle' | translate }}
+      Selecciona la opción que mejor se adapte a tu situación.
     </p>
 
     <div class="role-cards">
 
+      <!-- PACIENTE -->
       <div class="card"
-           [class.selected]="selectedRole === 'patient'"
-           (click)="selectRole('patient')">
+            [class.selected]="selectedRole === 'patient'"
+            (click)="selectRole('patient')">
 
         <div class="image">
-          <img src="assets/images/paciente.png" [alt]="'registerRole.patient.alt' | translate">
+          <img src="assets/images/paciente.png" alt="Paciente">
         </div>
 
-        <h3>{{ 'registerRole.patient.title' | translate }}</h3>
+        <h3>Necesito apoyo</h3>
 
         <p>
-          {{ 'registerRole.patient.description' | translate }}
+          Busco un terapeuta cualificado que me ayude a mejorar mi bienestar.
         </p>
 
       </div>
 
+
+      <!-- ESPECIALISTA -->
       <div class="card"
-           [class.selected]="selectedRole === 'specialist'"
-           (click)="selectRole('specialist')">
+            [class.selected]="selectedRole === 'specialist'"
+            (click)="selectRole('specialist')">
 
         <div class="image">
-          <img src="assets/images/especialista.png" [alt]="'registerRole.specialist.alt' | translate">
+          <img src="assets/images/especialista.png" alt="Especialista">
         </div>
 
-        <h3>{{ 'registerRole.specialist.title' | translate }}</h3>
+        <h3>Soy un especialista</h3>
 
         <p>
-          {{ 'registerRole.specialist.description' | translate }}
+          Soy un profesional certificado que desea ayudar a pacientes.
         </p>
 
       </div>
@@ -50,7 +53,7 @@
     <button class="continue"
             [disabled]="!selectedRole"
             (click)="continue()">
-      {{ 'registerRole.continue' | translate }}
+      Continuar
     </button>
 
   </div>

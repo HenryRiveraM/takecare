@@ -1,32 +1,26 @@
 <header *ngIf="showNavbar" class="navbar">
 
-  <div class="logo" routerLink="/">
+<div class="logo" routerLink="/">
     <img src="assets/images/logo.png" alt="Take Care" />
-  </div>
+</div>
 
-  <nav class="links">
-    <a routerLink="/">{{ 'navbar.home' | translate }}</a>
-    <a routerLink="/">{{ 'navbar.about' | translate }}</a>
-  </nav>
+<nav class="links">
+    <a routerLink="/">Inicio</a>
+    <a routerLink="/">Nosotros</a>
+</nav>
 
-  <div class="actions">
+<div class="actions">
 
-    <select
-      class="lang-select"
-      [value]="languageService.getCurrentLanguage()"
-      (change)="changeLanguage($event)">
-      <option value="es">ES</option>
-      <option value="en">EN</option>
-    </select>
-
+    <!-- BOTÓN SECUNDARIO -->
     <a routerLink="/login" class="btn-outline">
-      {{ 'navbar.login' | translate }}
+        Iniciar sesión
     </a>
 
+    <!-- BOTÓN PRINCIPAL -->
     <a routerLink="/register-role" class="btn-primary">
-      {{ 'navbar.register' | translate }}
+        Registrarse
     </a>
 
-  </div>
+</div>
 
 </header>

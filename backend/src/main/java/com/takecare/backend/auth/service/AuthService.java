@@ -26,17 +26,21 @@ public class AuthService {
      * @throws RuntimeException si las credenciales son incorrectas
      */
     public LoginResponseDTO login(String email, String password) {
+        // Buscar usuario por email
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Credenciales incorrectas"));
 
+        // Validar contraseña usando BCrypt
         if (!passwordEncoder.matches(password, user.getPasswordHash())) {
             throw new RuntimeException("Credenciales incorrectas");
         }
 
-        if (user.getStatus() == null || user.getStatus() != 1) {
+        // Validar que la cuenta esté activa
+        if (user.getStatus() == null || !user.getStatus()) {
             throw new RuntimeException("Cuenta inactiva");
         }
 
+        // Retornar datos del usuario sin la contraseña
         return new LoginResponseDTO(
                 user.getId(),
                 user.getNames(),

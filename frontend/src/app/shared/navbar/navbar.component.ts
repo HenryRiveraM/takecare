@@ -1,26 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute, RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { TranslatePipe } from '@ngx-translate/core';
-import { LanguageService } from '../../services/language.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslatePipe],
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   showNavbar: boolean = true;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    public languageService: LanguageService
-  ) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.router.events
@@ -34,10 +29,5 @@ export class NavbarComponent implements OnInit {
 
         this.showNavbar = currentRoute?.snapshot.data['showNavbar'] !== false;
       });
-  }
-
-  changeLanguage(event: Event): void {
-    const lang = (event.target as HTMLSelectElement).value as 'es' | 'en';
-    this.languageService.setLanguage(lang);
   }
 }

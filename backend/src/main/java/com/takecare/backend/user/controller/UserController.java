@@ -1,7 +1,5 @@
 package com.takecare.backend.user.controller;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +34,7 @@ public class UserController {
         logger.info("POST /api/v1/users/register/patient - Registering patient with email: {}", dto.getEmail());
         patientService.registerPatientFromDTO(dto);
         logger.info("POST /api/v1/users/register/patient - Patient registered successfully");
-        return ResponseEntity.ok(Map.of("message", "Patient registered"));
+        return ResponseEntity.ok("Patient registered");
     }
 
     @PostMapping("/register/specialist")
@@ -44,6 +42,6 @@ public class UserController {
         logger.info("POST /api/v1/users/register/specialist - Registering specialist with email: {}", dto.getEmail());
         specialistService.registerSpecialistFromDTO(dto);
         logger.info("POST /api/v1/users/register/specialist - Specialist registered successfully");
-        return ResponseEntity.ok(Map.of("message", "Specialist registered"));
+        return ResponseEntity.ok("Specialist registered");
     }
 }

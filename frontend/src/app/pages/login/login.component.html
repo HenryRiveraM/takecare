@@ -5,13 +5,13 @@
         <span class="material-symbols-outlined">lock</span>
       </div>
 
-      <h1>{{ 'login.title' | translate }}</h1>
-      <p>{{ 'login.subtitle' | translate }}</p>
+      <h1>Tu espacio seguro comienza aquí</h1>
+      <p>Take Care: Tu bienestar mental es nuestra prioridad.</p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label>{{ 'login.emailLabel' | translate }}</label>
+        <label>Email</label>
         <div class="input-icon">
           <span class="material-symbols-outlined">mail</span>
           <input type="email" formControlName="email" />
@@ -20,39 +20,35 @@
           *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
           class="error"
         >
-          {{ 'login.errors.invalidEmail' | translate }}
+          Email inválido
         </div>
       </div>
 
       <div class="form-group">
-        <label>{{ 'login.passwordLabel' | translate }}</label>
+        <label>Contraseña</label>
         <div class="input-icon">
           <span class="material-symbols-outlined">lock</span>
-          <input
-            type="password"
-            formControlName="password"
-            [placeholder]="'login.passwordPlaceholder' | translate"
-          />
+          <input type="password" formControlName="password" placeholder="••••••••" />
         </div>
         <div
           *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
           class="error"
         >
-          {{ 'login.errors.passwordRequired' | translate }}
+          Contraseña requerida (mín. 8 caracteres)
         </div>
       </div>
 
       <div class="login-options">
         <label>
           <input type="checkbox" />
-          {{ 'login.rememberMe' | translate }}
+          Recordarme
         </label>
 
-        <a routerLink="/recover-password">{{ 'login.forgotPassword' | translate }}</a>
+        <a routerLink="/recover-password">¿Olvidaste tu contraseña?</a>
       </div>
 
       <button type="submit" class="login-btn" [disabled]="loading">
-        <span *ngIf="!loading">{{ 'login.submit' | translate }}</span>
+        <span *ngIf="!loading">Iniciar Sesión</span>
         <span *ngIf="loading" class="loader"></span>
       </button>
 
@@ -61,13 +57,13 @@
       </p>
 
       <p *ngIf="loginSuccess" class="success">
-        ✔ {{ 'login.success' | translate }}
+        ✔ Inicio de sesión exitoso
       </p>
     </form>
 
     <div class="secure">
       <span class="material-symbols-outlined">verified_user</span>
-      <p>{{ 'login.secure' | translate }}</p>
+      <p>Conexión segura</p>
     </div>
   </div>
 </div>

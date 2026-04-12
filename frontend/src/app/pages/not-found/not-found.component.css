@@ -3,6 +3,7 @@
   width: 100vw;
 }
 
+
 .text-primary {
   color: #F5A3A3;
 }
@@ -15,6 +16,7 @@
   background: #fff0f0;
 }
 
+
 .rounded-custom {
   border-radius: 20px;
 }
@@ -22,6 +24,7 @@
 .soft-shadow {
   box-shadow: 0 20px 40px rgba(0,0,0,0.06);
 }
+
 
 .floating-illustration {
   animation: float 4s ease-in-out infinite;
