@@ -25,6 +25,10 @@ export class SpecialistLocationPreferencesService {
     localStorage.setItem(this.buildKey(userId), JSON.stringify(data));
   }
 
+  clearByUserId(userId: number): void {
+    localStorage.removeItem(this.buildKey(userId));
+  }
+
   private buildKey(userId: number): string {
     return `${this.storagePrefix}:${userId}`;
   }

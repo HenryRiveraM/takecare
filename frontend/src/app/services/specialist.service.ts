@@ -16,6 +16,25 @@ export interface SpecialistDirectoryItem {
   speciality?: string;
 }
 
+export interface SpecialistLocationRequest {
+  addressLine: string;
+  city: string;
+  neighborhood?: string;
+  reference?: string;
+  visibility?: 'public' | 'private';
+}
+
+export interface SpecialistLocationResponse {
+  specialistId: number;
+  addressLine: string;
+  city: string;
+  neighborhood: string;
+  reference: string;
+  visibility: 'public' | 'private' | null;
+  visibilityPersisted: boolean;
+  officeUbi: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,6 +49,10 @@ export class SpecialistService {
 
   getAllSpecialists(): Observable<SpecialistDirectoryItem[]> {
     return this.http.get<SpecialistDirectoryItem[]>(this.baseUrl);
+  }
+
+  updateLocation(id: number, data: SpecialistLocationRequest): Observable<SpecialistLocationResponse> {
+    return this.http.put<SpecialistLocationResponse>(`${this.baseUrl}/${id}/location`, data);
   }
 
   getProfile(id: number): Observable<any> {

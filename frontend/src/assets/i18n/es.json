@@ -593,7 +593,8 @@
         "public": "Ubicación pública",
         "private": "Ubicación privada"
       },
-      "note": "Por ahora, la dirección completa y la preferencia de privacidad se guardan solo en el frontend. El backend actual seguirá recibiendo un resumen de la ubicación."
+      "note": "Tu dirección profesional se guardará junto con esta configuración para que puedas gestionar mejor tu atención presencial.",
+      "visibilityStatus": "Si eliges ubicación pública, los pacientes podrán verla. Si eliges privada, la mantendremos reservada."
     },
 
     "validation": {
