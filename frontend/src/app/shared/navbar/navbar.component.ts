@@ -5,6 +5,7 @@ import { filter } from 'rxjs/operators';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language.service';
 import { AuthService } from '../../services/auth.service';
+import { SidebarService } from '../../services/sidebar.service';
 
 type NavbarMode = 'hidden' | 'public' | 'private';
 type PrivateArea = 'patient' | 'specialist' | 'admin' | null;
@@ -29,7 +30,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public languageService: LanguageService,
-    private authService: AuthService
+    private authService: AuthService,
+    public sidebarService: SidebarService,
   ) {}
 
   ngOnInit(): void {
@@ -100,5 +102,9 @@ export class NavbarComponent implements OnInit {
     }
 
     return currentRoute?.snapshot.data['showNavbar'] === false;
+  }
+
+  toggleSidebar() {
+    this.sidebarService.toggle();
   }
 }

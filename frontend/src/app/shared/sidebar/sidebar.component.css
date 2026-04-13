@@ -47,15 +47,19 @@
 
 @media (max-width: 768px) {
   .sidebar {
-    left: -260px; 
-    transition: all 0.3s ease;
-    z-index: 2000;
-    top: 0;
+    position: fixed;
+    top: 0; /* Que ocupe toda la altura */
+    left: -260px; /* Escondido */
+    width: 260px;
     height: 100vh;
+    background-color: white;
+    z-index: 2000; /* 👈 Muy importante para que no se pierda detrás */
+    transition: all 0.3s ease-in-out;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
   }
 
+  /* Cuando el servicio dice que está abierto, lo movemos a la vista */
   .sidebar.open {
-    left: 0;
+    left: 0 !important;
   }
 }
-

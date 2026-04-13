@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
+import { SidebarService } from '../../services/sidebar.service';
 
 const ROL_MAP: { [key: number]: 'patient' | 'specialist' | 'admin' } = {
   1: 'patient',
@@ -23,7 +24,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private authService: AuthService, 
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public sidebarService: SidebarService
   ) {}
 
   ngOnInit(): void {

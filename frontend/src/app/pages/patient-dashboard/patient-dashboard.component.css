@@ -159,6 +159,16 @@
   font-weight: 600;
 }
 
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4); /* Oscurece el fondo */
+  z-index: 1500; /* Por debajo del sidebar pero sobre el contenido */
+}
+
 @media (max-width: 768px) {
   .main {
     margin-left: 0; /* Ya no hay espacio reservado a la izquierda */
@@ -186,5 +196,9 @@
   .hero-img {
     width: 120px;
     margin-top: 20px;
+  }
+
+  .dashboard {
+    margin-top: 70px; /* Ajusta según la altura de tu navbar en móvil */
   }
 }

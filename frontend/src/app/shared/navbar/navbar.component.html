@@ -29,6 +29,10 @@
 
 <header *ngIf="navbarMode === 'private'" class="navbar private-navbar">
 
+  <button class="menu-toggle" (click)="toggleSidebar()" *ngIf="isDashboard">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  
   <div class="logo" routerLink="/">
     <img src="assets/images/logo.png" alt="Take Care" />
     <div class="brand-copy">
