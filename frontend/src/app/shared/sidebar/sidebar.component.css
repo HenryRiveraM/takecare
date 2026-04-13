@@ -1,0 +1,61 @@
+/* --- SIDEBAR --- */
+
+.sidebar {
+  position: fixed;
+  top: 80px; /* 👈 debajo del header global */
+  left: 0;
+  width: 260px;
+  height: calc(100vh - 80px);
+  background-color: white;
+  border-right: 1px solid #edf2f1;
+  padding: 30px 20px;
+  overflow-y: auto;
+}
+
+/* --- MENÚ --- */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 15px;
+  color: #3a5c53;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.menu-item i {
+  width: 20px;
+  text-align: center;
+}
+
+.menu-item:hover,.menu-item.active {
+  background-color: #f0f4f3;
+  color: #F5A3A3;
+}
+
+.menu-item.active {
+  font-weight: 700;
+  border-left: 4px solid #F5A3A3;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    left: -260px; 
+    transition: all 0.3s ease;
+    z-index: 2000;
+    top: 0;
+    height: 100vh;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+}
+

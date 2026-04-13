@@ -16,10 +16,12 @@ type PrivateArea = 'patient' | 'specialist' | 'admin' | null;
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
+
 export class NavbarComponent implements OnInit {
 
   navbarMode: NavbarMode = 'public';
   privateArea: PrivateArea = null;
+  isDashboard: boolean = false;
   currentUrl = '';
   user: { names?: string } | null = null;
 
@@ -71,6 +73,8 @@ export class NavbarComponent implements OnInit {
     const firstSegment = segments[0] ?? '';
     const secondSegment = segments[1] ?? '';
 
+    this.isDashboard = ['patient', 'specialist', 'admin'].includes(firstSegment);
+
     if (firstSegment === 'admin') {
       this.privateArea = 'admin';
       this.navbarMode = 'private';
@@ -83,6 +87,7 @@ export class NavbarComponent implements OnInit {
       return;
     }
 
+    this.isDashboard = false;
     this.privateArea = null;
     this.navbarMode = this.shouldHidePublicNavbar() ? 'hidden' : 'public';
   }

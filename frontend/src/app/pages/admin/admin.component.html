@@ -203,9 +203,9 @@
     </div>
 
     <!-- TOAST -->
-    <div class="toast-notification" [class.error]="notification?.type === 'error'" *ngIf="notification">
+    <div class="toast-notification" [class.error]="notification.type === 'error'" *ngIf="notification">
       <div class="toast-icon">✓</div>
-      <div class="toast-text">{{ notification?.message }}</div>
+      <div class="toast-text">{{ notification.message }}</div>
     </div>
 
   </section> 
