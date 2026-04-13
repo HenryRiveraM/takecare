@@ -1,6 +1,8 @@
 package com.takecare.backend.user.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.takecare.backend.user.dto.SpecialistLocationResponseDto;
 import com.takecare.backend.user.dto.SpecialistProfileDTO;
 import com.takecare.backend.user.dto.SpecialistRegisterDTO;
+import com.takecare.backend.user.dto.UpdateSpecialistLocationRequestDto;
 import com.takecare.backend.user.dto.UpdateSpecialistProfileDTO;
 import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.service.SpecialistProfileService;
@@ -126,6 +130,37 @@ public class SpecialistController {
         } catch (Exception e) {
             logger.error("PUT /api/v1/specialists/{}/profile - Unexpected error updating specialist profile", id, e);
             throw new RuntimeException("Error al actualizar perfil del especialista");
+        }
+    }
+
+    @PutMapping("/{id}/location")
+    public ResponseEntity<?> updateSpecialistLocation(
+            @PathVariable Integer id,
+            @Valid @RequestBody UpdateSpecialistLocationRequestDto dto) {
+        try {
+            logger.info("PUT /api/v1/specialists/{}/location - Updating specialist location", id);
+            SpecialistLocationResponseDto response =
+                specialistProfileService.updateSpecialistLocation(id, id, dto);
+            logger.info("PUT /api/v1/specialists/{}/location - Specialist location updated successfully", id);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            logger.warn("PUT /api/v1/specialists/{}/location - Invalid location data", id, e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", e.getMessage()));
+        } catch (SecurityException e) {
+            logger.warn("PUT /api/v1/specialists/{}/location - Forbidden location update", id, e);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", e.getMessage()));
+        } catch (NoSuchElementException e) {
+            logger.warn("PUT /api/v1/specialists/{}/location - Specialist not found", id, e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", e.getMessage()));
+        } catch (RuntimeException e) {
+            logger.error("PUT /api/v1/specialists/{}/location - Error updating specialist location", id, e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("PUT /api/v1/specialists/{}/location - Unexpected error updating specialist location", id, e);
+            throw new RuntimeException("Error al actualizar ubicación del especialista");
         }
     }
 
