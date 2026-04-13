@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms'; // 👈 Importante para el buscado
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -17,7 +18,7 @@ export class PatientDashboardComponent implements OnInit {
   user: any;
   searchTerm: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, public sidebarService: SidebarService) {}
 
   ngOnInit(): void {
     this.user = this.authService.getUser();

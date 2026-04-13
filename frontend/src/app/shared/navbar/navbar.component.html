@@ -30,7 +30,9 @@
 <header *ngIf="navbarMode === 'private'" class="navbar private-navbar">
 
   <button class="menu-toggle" (click)="toggleSidebar()" *ngIf="isDashboard">
-    <span class="material-symbols-outlined">menu</span>
+    <span class="material-symbols-outlined">
+      {{ sidebarService.isOpen() ? 'close' : 'menu' }}
+    </span>
   </button>
   
   <div class="logo" routerLink="/">

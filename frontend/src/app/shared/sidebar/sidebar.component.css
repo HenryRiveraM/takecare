@@ -48,12 +48,12 @@
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
-    top: 0; /* Que ocupe toda la altura */
+    top: 75px; /* Que ocupe toda la altura */
     left: -260px; /* Escondido */
     width: 260px;
-    height: 100vh;
+    height: calc(100vh - 75px);
     background-color: white;
-    z-index: 2000; /* 👈 Muy importante para que no se pierda detrás */
+    z-index: 1100; /* 👈 Muy importante para que no se pierda detrás */
     transition: all 0.3s ease-in-out;
     box-shadow: 5px 0 15px rgba(0,0,0,0.1);
   }

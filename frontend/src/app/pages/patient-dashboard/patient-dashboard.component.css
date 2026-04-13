@@ -201,4 +201,15 @@
   .dashboard {
     margin-top: 70px; /* Ajusta según la altura de tu navbar en móvil */
   }
+
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4); /* Un color oscuro suave */
+    z-index: 1050; /* Entre el contenido y el sidebar */
+    display: block;
+  }
 }
