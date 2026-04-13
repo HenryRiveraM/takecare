@@ -358,3 +358,55 @@ This generated password is for development use only. Your security configuration
 2026-04-12 11:38:39 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/42 - Fetching patient profile
 2026-04-12 11:38:39 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 42
 2026-04-12 11:38:40 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/42 - Profile found
+2026-04-12 23:05:17 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 48399 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-12 23:05:17 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-12 23:05:23 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-12 23:05:23 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: d6c2e9c2-6c2a-4088-b7fe-29f558a0d26d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-12 23:05:23 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 6.884 seconds (process running for 269.211)
+2026-04-12 23:15:00 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching all specialists
+2026-04-12 23:15:00 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-12 23:15:01 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-12 23:15:01 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 8 specialists
+2026-04-12 23:15:04 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/42 - Fetching patient profile
+2026-04-12 23:15:04 [http-nio-8080-exec-2] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 42
+2026-04-12 23:15:05 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/42 - Profile found
+2026-04-12 23:15:07 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching all specialists
+2026-04-12 23:15:07 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-12 23:15:09 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-12 23:15:09 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 8 specialists
+2026-04-12 23:15:20 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching all specialists
+2026-04-12 23:15:20 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-12 23:15:22 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-12 23:15:22 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 8 specialists
+2026-04-12 23:15:22 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/42 - Fetching patient profile
+2026-04-12 23:15:22 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 42
+2026-04-12 23:15:24 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/42 - Profile found
+2026-04-12 23:16:13 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching all specialists
+2026-04-12 23:16:13 [http-nio-8080-exec-8] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-12 23:16:14 [http-nio-8080-exec-8] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-12 23:16:14 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 8 specialists
+2026-04-12 23:16:20 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching all specialists
+2026-04-12 23:16:20 [http-nio-8080-exec-9] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-12 23:16:21 [http-nio-8080-exec-9] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-12 23:16:21 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 8 specialists
+2026-04-12 23:16:32 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching all specialists
+2026-04-12 23:16:32 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-12 23:16:33 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-12 23:16:33 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 8 specialists
+2026-04-12 23:16:38 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching all specialists
+2026-04-12 23:16:38 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-12 23:16:40 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-12 23:16:40 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 8 specialists
+2026-04-12 23:16:49 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching all specialists
+2026-04-12 23:16:49 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-12 23:16:51 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-12 23:16:51 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 8 specialists
+2026-04-12 23:17:07 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching all specialists
+2026-04-12 23:17:07 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-12 23:17:09 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Found 8 specialists
+2026-04-12 23:17:09 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 8 specialists

@@ -1,0 +1,100 @@
+<div class="directory-page">
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="assets/images/logo.png" alt="logo">
+      <span>TakeCare</span>
+    </div>
+
+    <div class="menu">
+      <a class="menu-item" routerLink="/patient">
+        {{ 'patientDashboard.menu.panel' | translate }}
+      </a>
+      <div class="menu-item">{{ 'patientDashboard.menu.appointments' | translate }}</div>
+      <a class="menu-item active" routerLink="/patient/search-specialists">
+        {{ 'patientDashboard.menu.searchSpecialist' | translate }}
+      </a>
+      <div class="menu-item">{{ 'patientDashboard.menu.history' | translate }}</div>
+      <a class="menu-item" routerLink="/patient/profile">
+        {{ 'patientDashboard.menu.editProfile' | translate }}
+      </a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="toolbar">
+      <div>
+        <span class="tag">{{ 'patientSearch.tag' | translate }}</span>
+        <h1>{{ 'patientSearch.title' | translate }}</h1>
+        <p>{{ 'patientSearch.subtitle' | translate }}</p>
+      </div>
+
+      <div class="search-box">
+        <input
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="onSearch()"
+          class="search-input"
+          [placeholder]="'patientSearch.searchPlaceholder' | translate" />
+        <button type="button" class="btn-primary" (click)="onSearch()">
+          {{ 'patientSearch.searchButton' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="status-card" *ngIf="loading">
+      {{ 'patientSearch.states.loading' | translate }}
+    </div>
+
+    <div class="status-card error" *ngIf="errorMsg">
+      {{ errorMsg }}
+    </div>
+
+    <div class="results-header" *ngIf="!loading && !errorMsg">
+      <span>{{ filteredSpecialists.length }} {{ 'patientSearch.results' | translate }}</span>
+    </div>
+
+    <div class="grid" *ngIf="!loading && !errorMsg && filteredSpecialists.length > 0">
+      <article class="specialist-card" *ngFor="let specialist of filteredSpecialists; trackBy: trackBySpecialistId">
+        <div class="card-top">
+          <div class="avatar">
+            {{ specialist.names.charAt(0) }}{{ specialist.firstLastname.charAt(0) }}
+          </div>
+          <div>
+            <h2>{{ specialist.names }} {{ specialist.firstLastname }} {{ specialist.secondLastname || '' }}</h2>
+            <p class="speciality">{{ specialist.speciality || ('patientSearch.fallback.speciality' | translate) }}</p>
+          </div>
+        </div>
+
+        <p class="biography">
+          {{ specialist.biography || ('patientSearch.fallback.biography' | translate) }}
+        </p>
+
+        <div class="meta">
+          <div class="meta-item">
+            <span class="material-symbols-outlined">location_on</span>
+            <span>{{ specialist.officeUbi || ('patientSearch.fallback.location' | translate) }}</span>
+          </div>
+
+          <div class="meta-item">
+            <span class="material-symbols-outlined">payments</span>
+            <span>
+              {{
+                specialist.sessionCost != null
+                  ? ('patientSearch.costPrefix' | translate) + ' ' + specialist.sessionCost
+                  : ('patientSearch.fallback.cost' | translate)
+              }}
+            </span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          {{ 'patientSearch.cardNote' | translate }}
+        </div>
+      </article>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && !errorMsg && filteredSpecialists.length === 0">
+      <h2>{{ 'patientSearch.states.emptyTitle' | translate }}</h2>
+      <p>{{ 'patientSearch.states.emptyText' | translate }}</p>
+    </div>
+  </div>
+</div>

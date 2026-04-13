@@ -36,11 +36,19 @@
 }
 
 /* MENU */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .menu-item {
   padding: 12px;
   border-radius: 12px;
   cursor: pointer;
   color: #6b7280;
+  text-decoration: none;
+  line-height: 1.25;
   transition: 0.3s;
 }
 

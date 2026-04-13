@@ -229,6 +229,28 @@
     }
   },
 
+  "patientSearch": {
+    "tag": "Specialist search",
+    "title": "Find a specialist",
+    "subtitle": "Browse active and verified specialists to continue your care process.",
+    "searchPlaceholder": "Search by name, specialty or location",
+    "searchButton": "Search",
+    "results": "specialists found",
+    "costPrefix": "Session cost:",
+    "cardNote": "Soon you will be able to review more details and request an appointment from here.",
+    "states": {
+      "loading": "Loading specialists...",
+      "emptyTitle": "We couldn't find specialists for that criteria",
+      "emptyText": "Try another name, specialty or location to expand the results."
+    },
+    "fallback": {
+      "speciality": "Specialty pending confirmation",
+      "biography": "This specialist has not added a public biography yet.",
+      "location": "Location to be defined",
+      "cost": "Cost pending"
+    }
+  },
+
 
   "recoverPassword": {
     "title": "Recover password",

@@ -24,6 +24,7 @@ import { specialistGuard } from './guards/specialist.guard';
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
 import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
 import { patientGuard } from './guards/patient.guard';
+import { PatientSearchSpecialistsComponent } from './pages/patient-search-specialists/patient-search-specialists.component';
 
 // OTROS
 import { NotFoundComponent } from './pages/not-found/not-found.component';
@@ -94,6 +95,10 @@ export const routes: Routes = [
       {
         path: 'profile',
         component: PatientProfileComponent
+      },
+      {
+        path: 'search-specialists',
+        component: PatientSearchSpecialistsComponent
       }
     ]
   },

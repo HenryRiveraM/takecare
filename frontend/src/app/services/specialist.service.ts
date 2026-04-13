@@ -2,6 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface SpecialistDirectoryItem {
+  id: number;
+  names: string;
+  firstLastname: string;
+  secondLastname?: string;
+  email: string;
+  biography?: string;
+  officeUbi?: string;
+  sessionCost?: number;
+  status?: number | boolean | null;
+  accountVerified?: number | null;
+  speciality?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +27,10 @@ export class SpecialistService {
       : 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/specialists';
 
   constructor(private http: HttpClient) {}
+
+  getAllSpecialists(): Observable<SpecialistDirectoryItem[]> {
+    return this.http.get<SpecialistDirectoryItem[]>(this.baseUrl);
+  }
 
   getProfile(id: number): Observable<any> {
     console.log(`Obteniendo perfil de especialista: ${this.baseUrl}/${id}/profile`);

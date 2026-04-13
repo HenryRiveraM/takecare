@@ -9,7 +9,7 @@
     <div class="menu">
       <div class="menu-item active">{{ 'patientDashboard.menu.panel' | translate }}</div>
       <div class="menu-item">{{ 'patientDashboard.menu.appointments' | translate }}</div>
-      <div class="menu-item">{{ 'patientDashboard.menu.searchSpecialist' | translate }}</div>
+      <a class="menu-item" routerLink="/patient/search-specialists">{{ 'patientDashboard.menu.searchSpecialist' | translate }}</a>
       <div class="menu-item">{{ 'patientDashboard.menu.history' | translate }}</div>
       <div class="menu-item" routerLink="/patient/profile">{{ 'patientDashboard.menu.editProfile' | translate }}</div>
     </div>
@@ -18,7 +18,11 @@
   <div class="main">
 
     <div class="header">
-      <input class="search" [placeholder]="'patientDashboard.searchPlaceholder' | translate" />
+      <input
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="goToSpecialistSearch()"
+        class="search"
+        [placeholder]="'patientDashboard.searchPlaceholder' | translate" />
       <button class="btn-primary">{{ 'patientDashboard.newAppointment' | translate }}</button>
     </div>
 
@@ -60,7 +64,7 @@
         <p style="color: #6b7280; margin-top: 10px;">
           {{ 'patientDashboard.section.text' | translate }}
           <br>
-          <a routerLink="/search" style="color: #F5A3A3; font-weight: 600; text-decoration: none;">
+          <a routerLink="/patient/search-specialists" style="color: #F5A3A3; font-weight: 600; text-decoration: none;">
             {{ 'patientDashboard.section.link' | translate }}
           </a>
         </p>
