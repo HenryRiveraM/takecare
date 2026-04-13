@@ -118,6 +118,7 @@
                 <input
                   [(ngModel)]="locationDetails.addressLine"
                   name="addressLine"
+                  maxlength="120"
                   [placeholder]="'specialistProfile.location.placeholders.addressLine' | translate"
                   [readonly]="!isEditing"/>
               </div>
@@ -130,6 +131,7 @@
                 <input
                   [(ngModel)]="locationDetails.city"
                   name="city"
+                  maxlength="60"
                   [placeholder]="'specialistProfile.location.placeholders.city' | translate"
                   [readonly]="!isEditing"/>
               </div>
@@ -142,6 +144,7 @@
                 <input
                   [(ngModel)]="locationDetails.neighborhood"
                   name="neighborhood"
+                  maxlength="60"
                   [placeholder]="'specialistProfile.location.placeholders.neighborhood' | translate"
                   [readonly]="!isEditing"/>
               </div>
@@ -154,6 +157,7 @@
                 <input
                   [(ngModel)]="locationDetails.reference"
                   name="reference"
+                  maxlength="120"
                   [placeholder]="'specialistProfile.location.placeholders.reference' | translate"
                   [readonly]="!isEditing"/>
               </div>
@@ -191,6 +195,10 @@
 
           <p class="helper-text">
             {{ 'specialistProfile.location.note' | translate }}
+          </p>
+
+          <p class="helper-text visibility-note" *ngIf="!loading && locationDetails.visibility">
+            {{ 'specialistProfile.location.visibilityStatus' | translate }}
           </p>
 
           <p class="error location-error" *ngIf="locationErrorMsg">

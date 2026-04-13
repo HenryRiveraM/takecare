@@ -591,7 +591,8 @@
         "public": "Public location",
         "private": "Private location"
       },
-      "note": "For now, the full address and privacy preference are stored only on the frontend. The current backend will still receive a summarized location."
+      "note": "Your professional address will be saved together with this setting so you can better manage in-person care.",
+      "visibilityStatus": "If you choose public location, patients will be able to see it. If you choose private, we will keep it reserved."
     },
 
     "validation": {

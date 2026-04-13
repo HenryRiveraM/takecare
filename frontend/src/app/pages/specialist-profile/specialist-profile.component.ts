@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SpecialistService } from '../../services/specialist.service';
+import {
+  SpecialistLocationResponse,
+  SpecialistService
+} from '../../services/specialist.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -18,7 +21,7 @@ interface SpecialistProfileForm {
   email: string;
   biography: string;
   officeUbi: string;
-  sessionCost: number;
+  sessionCost: number | null;
 }
 
 @Component({
@@ -39,7 +42,7 @@ export class SpecialistProfileComponent implements OnInit {
     email: '',
     biography: '',
     officeUbi: '',
-    sessionCost: 0,
+    sessionCost: null,
   };
 
   originalProfile: SpecialistProfileForm = { ...this.profile };
@@ -138,38 +141,30 @@ export class SpecialistProfileComponent implements OnInit {
     this.successMsg = '';
     this.locationErrorMsg = '';
 
-    const officeUbi = this.buildOfficeLocationSummary(this.locationDetails);
-    this.profile.officeUbi = officeUbi;
+    if (this.hasLocationData()) {
+      this.specialistService.updateLocation(this.user.id, {
+        addressLine: this.locationDetails.addressLine.trim(),
+        city: this.locationDetails.city.trim(),
+        neighborhood: this.locationDetails.neighborhood.trim(),
+        reference: this.locationDetails.reference.trim(),
+        visibility: this.locationDetails.visibility
+      }).subscribe({
+        next: (locationResponse) => {
+          this.applyLocationResponse(locationResponse);
+          this.updateProfileData();
+        },
+        error: (error: any) => {
+          console.error('Error actualizando ubicación:', error);
+          this.errorMsg = error?.error?.message || 'Error al actualizar la ubicación del especialista';
+          this.loading = false;
+        }
+      });
+      return;
+    }
 
-    const payload = {
-      names: this.profile.names,
-      firstLastname: this.profile.firstLastname,
-      secondLastname: this.profile.secondLastname,
-      email: this.profile.email,
-      biography: this.profile.biography,
-      officeUbi: this.profile.officeUbi,
-      sessionCost: this.profile.sessionCost
-    };
-
-    this.specialistService.updateProfile(this.user.id, payload).subscribe({
-      next: (response: any) => {
-        console.log('Perfil actualizado:', response);
-
-        this.originalProfile = { ...this.profile };
-        this.originalLocationDetails = { ...this.locationDetails };
-        this.specialistLocationPreferencesService.saveByUserId(this.user.id, this.locationDetails);
-        this.successMsg = 'Perfil actualizado correctamente';
-        this.isEditing = false;
-        this.loading = false;
-
-        setTimeout(() => this.successMsg = '', 3000);
-      },
-      error: (error: any) => {
-        console.error('Error actualizando perfil:', error);
-        this.errorMsg = 'Error al actualizar el perfil';
-        this.loading = false;
-      }
-    });
+    this.profile.officeUbi = '';
+    this.specialistLocationPreferencesService.clearByUserId(this.user.id);
+    this.updateProfileData();
   }
 
   private loadLocationDetails(): void {
@@ -192,14 +187,7 @@ export class SpecialistProfileComponent implements OnInit {
   }
 
   private validateLocationDetails(): string {
-    const hasAnyLocationValue = [
-      this.locationDetails.addressLine,
-      this.locationDetails.city,
-      this.locationDetails.neighborhood,
-      this.locationDetails.reference
-    ].some(value => value.trim().length > 0);
-
-    if (!hasAnyLocationValue) {
+    if (!this.hasLocationData()) {
       return '';
     }
 
@@ -212,6 +200,37 @@ export class SpecialistProfileComponent implements OnInit {
     }
 
     return '';
+  }
+
+  private updateProfileData(): void {
+    const payload = {
+      names: this.profile.names,
+      firstLastname: this.profile.firstLastname,
+      secondLastname: this.profile.secondLastname,
+      email: this.profile.email,
+      biography: this.profile.biography,
+      officeUbi: this.profile.officeUbi,
+      sessionCost: this.profile.sessionCost
+    };
+
+    this.specialistService.updateProfile(this.user.id, payload).subscribe({
+      next: (response: any) => {
+        console.log('Perfil actualizado:', response);
+
+        this.originalProfile = { ...this.profile };
+        this.originalLocationDetails = { ...this.locationDetails };
+        this.successMsg = 'Perfil actualizado correctamente';
+        this.isEditing = false;
+        this.loading = false;
+
+        setTimeout(() => this.successMsg = '', 3000);
+      },
+      error: (error: any) => {
+        console.error('Error actualizando perfil:', error);
+        this.errorMsg = error?.error?.message || 'Error al actualizar el perfil';
+        this.loading = false;
+      }
+    });
   }
 
   private buildOfficeLocationSummary(location: SpecialistLocationPreferences): string {
@@ -230,7 +249,9 @@ export class SpecialistProfileComponent implements OnInit {
       return this.createEmptyLocationDetails();
     }
 
-    const parts = officeUbi.split('|').map(item => item.trim()).filter(Boolean);
+    const parts = officeUbi.includes('|||TC|||')
+      ? officeUbi.split('|||TC|||').map(item => item.trim())
+      : officeUbi.split('|').map(item => item.trim()).filter(Boolean);
 
     return {
       addressLine: parts[0] || officeUbi,
@@ -253,5 +274,32 @@ export class SpecialistProfileComponent implements OnInit {
       reference: '',
       visibility: 'private' as LocationVisibility
     };
+  }
+
+  private hasLocationData(): boolean {
+    return [
+      this.locationDetails.addressLine,
+      this.locationDetails.city,
+      this.locationDetails.neighborhood,
+      this.locationDetails.reference
+    ].some(value => value.trim().length > 0);
+  }
+
+  private applyLocationResponse(response: SpecialistLocationResponse): void {
+    this.locationDetails = {
+      addressLine: response.addressLine || '',
+      city: response.city || '',
+      neighborhood: response.neighborhood || '',
+      reference: response.reference || '',
+      visibility: response.visibility === 'public' ? 'public' : 'private'
+    };
+
+    this.profile.officeUbi = response.officeUbi || this.buildOfficeLocationSummary(this.locationDetails);
+
+    if (response.visibilityPersisted) {
+      this.specialistLocationPreferencesService.clearByUserId(this.user.id);
+    } else {
+      this.specialistLocationPreferencesService.saveByUserId(this.user.id, this.locationDetails);
+    }
   }
 }
