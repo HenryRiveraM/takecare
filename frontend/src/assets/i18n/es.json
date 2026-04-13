@@ -230,6 +230,28 @@
     }
   },
 
+  "patientSearch": {
+    "tag": "Búsqueda de especialistas",
+    "title": "Encuentra un especialista",
+    "subtitle": "Explora especialistas activos y verificados para continuar tu proceso de atención.",
+    "searchPlaceholder": "Busca por nombre, especialidad o ubicación",
+    "searchButton": "Buscar",
+    "results": "especialistas encontrados",
+    "costPrefix": "Costo por sesión:",
+    "cardNote": "Muy pronto podrás revisar más detalles y agendar una cita desde aquí.",
+    "states": {
+      "loading": "Cargando especialistas...",
+      "emptyTitle": "No encontramos especialistas con ese criterio",
+      "emptyText": "Prueba con otro nombre, especialidad o ubicación para ampliar los resultados."
+    },
+    "fallback": {
+      "speciality": "Especialidad por confirmar",
+      "biography": "Este especialista todavía no agregó una biografía pública.",
+      "location": "Ubicación por definir",
+      "cost": "Costo pendiente"
+    }
+  },
+
 
 
   "recoverPassword": {
@@ -595,4 +617,3 @@
 
 
 }
-
