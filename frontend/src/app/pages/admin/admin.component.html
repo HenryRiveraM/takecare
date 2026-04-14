@@ -76,7 +76,7 @@
             <td>{{ patient.names }}</td>
             <td>{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
             <td>{{ patient.email }}</td>
-            <td>{{ patient.birthDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ patient.birthDate | localizedDate }}</td>
             <td>{{ patient.strikes }}</td>
             <td>
               <button type="button" class="delete-button" (click)="deletePatient(patient.id, patient.names + ' ' + patient.firstLastname)">
@@ -116,11 +116,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let specialist of filteredSpecialists">
-            <td>{{ specialist.names }}</td>
-            <td>{{ specialist.firstLastname }} {{ specialist.secondLastname || '' }}</td>
-            <td>{{ specialist.email }}</td>
-            <td>{{ specialist.birthDate | date:'dd/MM/yyyy' }}</td>
-            <td>{{ specialist.strikes }}</td>
+            <td>{{ specialist.names || '-' }}</td>
+            <td>{{ (specialist.firstLastname || '') + ((specialist.secondLastname ? ' ' + specialist.secondLastname : '')) || '-' }}</td>
+            <td>{{ specialist.email || '-' }}</td>
+            <td>{{ specialist.birthDate | localizedDate }}</td>
+            <td>{{ specialist.strikes ?? 0 }}</td>
             <td>
               <button type="button" class="delete-button" (click)="deleteSpecialist(specialist.id, specialist.names + ' ' + specialist.firstLastname)">
                 {{ 'admin.actions.suspend' | translate }}

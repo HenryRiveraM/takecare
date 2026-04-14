@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SpecialistDirectoryItem, SpecialistService } from '../../services/specialist.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
@@ -31,6 +31,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public sidebarService: SidebarService,
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +66,38 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     return specialist.id;
   }
 
+  getDisplayName(specialist: SpecialistDirectoryItem): string {
+    return specialist.fullName?.trim() || [
+      specialist.names,
+      specialist.firstLastname,
+      specialist.secondLastname
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .trim();
+  }
+
+  getInitials(specialist: SpecialistDirectoryItem): string {
+    const displayName = this.getDisplayName(specialist);
+    const initials = displayName
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part.charAt(0).toUpperCase())
+      .join('');
+
+    return initials || 'TC';
+  }
+
+  getSpecialtiesLabel(specialist: SpecialistDirectoryItem): string {
+    const specialties = specialist.specialties?.filter(Boolean) ?? [];
+    if (specialties.length > 0) {
+      return specialties.map((specialty) => this.translateSpecialty(specialty)).join(', ');
+    }
+
+    return this.translateSpecialty(specialist.speciality?.trim() || '');
+  }
+
   private loadSpecialists(): void {
     this.loading = true;
     this.errorMsg = '';
@@ -89,11 +122,18 @@ export class PatientSearchSpecialistsComponent implements OnInit {
 
     this.filteredSpecialists = this.specialists.filter(s => {
       const matchesTerm = !term || [
-        s.names, s.firstLastname, s.secondLastname, s.biography, s.speciality
+        this.getDisplayName(s),
+        s.names,
+        s.firstLastname,
+        s.secondLastname,
+        s.biography,
+        s.speciality,
+        this.getSpecialtiesLabel(s),
+        s.officeUbi
       ].filter(Boolean).join(' ').toLowerCase().includes(term);
 
       const matchesCategory = !this.selectedCategory || 
-        s.speciality?.toLowerCase() === this.selectedCategory.toLowerCase();
+        this.getSpecialtiesLabel(s).toLowerCase().includes(this.selectedCategory.toLowerCase());
       const matchesSchedule = !this.selectedSchedule || 
         (s as any).shift === this.selectedSchedule;
 
@@ -108,5 +148,36 @@ export class PatientSearchSpecialistsComponent implements OnInit {
                        specialist.accountVerified === undefined || 
                        specialist.accountVerified === null;
     return isActive && isVerified;
+  }
+
+  private translateSpecialty(specialty: string): string {
+    const key = this.getSpecialtyTranslationKey(specialty);
+    return key ? this.translateService.instant(key) : specialty;
+  }
+
+  private getSpecialtyTranslationKey(specialty: string): string | null {
+    const normalized = this.normalizeText(specialty);
+
+    const specialtyMap: Record<string, string> = {
+      'trastornos mentales': 'patientSearch.filters.mentalHealth',
+      'adicciones': 'patientSearch.filters.addictions',
+      'terapia familiar': 'patientSearch.filters.familyTherapy',
+      'psicologia infantil': 'patientSearch.filters.childPsychology',
+      'depresion y ansiedad': 'patientSearch.filters.depressionAnxiety',
+      'terapia ocupacional': 'patientSearch.filters.occupationalTherapy',
+      'psicologia': 'patientSearch.specialties.psychology',
+      'cardiologia': 'patientSearch.specialties.cardiology',
+      'nutricion': 'patientSearch.specialties.nutrition'
+    };
+
+    return specialtyMap[normalized] || null;
+  }
+
+  private normalizeText(value: string): string {
+    return value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
   }
 }

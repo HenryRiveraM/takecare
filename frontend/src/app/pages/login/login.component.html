@@ -19,7 +19,10 @@
         <label>{{ 'login.emailLabel' | translate }}</label>
         <div class="input-icon">
           <span class="material-symbols-outlined">mail</span>
-          <input type="email" formControlName="email" />
+          <input
+            type="email"
+            formControlName="email"
+            [placeholder]="'login.emailPlaceholder' | translate" />
         </div>
         <div
           *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
