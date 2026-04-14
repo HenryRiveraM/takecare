@@ -3,21 +3,47 @@
 
   <div class="main">
     <div class="toolbar">
-      <div>
+      <div class="header-info">
         <span class="tag">{{ 'patientSearch.tag' | translate }}</span>
         <h1>{{ 'patientSearch.title' | translate }}</h1>
         <p>{{ 'patientSearch.subtitle' | translate }}</p>
       </div>
+      <div class="search-and-filters">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input
+            [(ngModel)]="searchTerm"
+            (keyup.enter)="onSearch()"
+            class="search-input"
+            [placeholder]="'patientSearch.searchPlaceholder' | translate" />
+        </div>
 
-      <div class="search-box">
-        <input
-          [(ngModel)]="searchTerm"
-          (keyup.enter)="onSearch()"
-          class="search-input"
-          [placeholder]="'patientSearch.searchPlaceholder' | translate" />
-        <button type="button" class="btn-primary" (click)="onSearch()">
-          {{ 'patientSearch.searchButton' | translate }}
-        </button>
+        <div class="filters-group">
+          <select [(ngModel)]="selectedCategory" (change)="onSearch()" class="filter-select">
+            <option value="">{{ 'patientSearch.filters.allCategories' | translate }}</option>
+            <option value="Trastornos mentales">{{ 'patientSearch.filters.mentalHealth' | translate }}</option>
+            <option value="Adicciones">{{ 'patientSearch.filters.addictions' | translate }}</option>
+            <option value="Terapia familiar">{{ 'patientSearch.filters.familyTherapy' | translate }}</option>
+            <option value="Psicología infantil">{{ 'patientSearch.filters.childPsychology' | translate }}</option>
+            <option value="Depresión y ansiedad">{{ 'patientSearch.filters.depressionAnsiedad' | translate }}</option>
+            <option value="Terapia ocupacional">{{ 'patientSearch.filters.occupationalTherapy' | translate }}</option>
+          </select>
+
+          <select [(ngModel)]="selectedSchedule" (change)="onSearch()" class="filter-select">
+            <option value="">{{ 'patientSearch.filters.allSchedules' | translate }}</option>
+            <option value="Mañana">Mañana</option>
+            <option value="Tarde">Tarde</option>
+            <option value="Noche">Noche</option>
+          </select>
+
+          <button type="button" class="btn-primary" (click)="onSearch()">
+            {{ 'patientSearch.searchButton' | translate }}
+          </button>
+
+          <button type="button" class="btn-reset" (click)="resetFilters()" title="Limpiar filtros">
+            <i class="fas fa-undo"></i>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -39,9 +65,12 @@
           <div class="avatar">
             {{ specialist.names.charAt(0) }}{{ specialist.firstLastname.charAt(0) }}
           </div>
-          <div>
+          <div class="card-titles">
             <h2>{{ specialist.names }} {{ specialist.firstLastname }} {{ specialist.secondLastname || '' }}</h2>
-            <p class="speciality">{{ specialist.speciality || ('patientSearch.fallback.speciality' | translate) }}</p>
+            <div class="badge-row">
+              <p class="speciality">{{ specialist.speciality || ('patientSearch.fallback.speciality' | translate) }}</p>
+              <span class="badge-schedule" *ngIf="specialist.shift">{{ specialist.shift }}</span>
+            </div>
           </div>
         </div>
 
@@ -74,8 +103,10 @@
     </div>
 
     <div class="empty-state" *ngIf="!loading && !errorMsg && filteredSpecialists.length === 0">
+      <i class="fas fa-search-minus empty-icon"></i>
       <h2>{{ 'patientSearch.states.emptyTitle' | translate }}</h2>
       <p>{{ 'patientSearch.states.emptyText' | translate }}</p>
+      <button class="btn-outline" (click)="resetFilters()">Ver todos los especialistas</button>
     </div>
   </div>
 </div>
