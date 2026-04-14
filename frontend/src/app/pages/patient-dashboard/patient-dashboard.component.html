@@ -1,0 +1,53 @@
+<div class="dashboard">
+    <app-sidebar><div class="sidebar-overlay" 
+      *ngIf="sidebarService.isOpen()" 
+      (click)="sidebarService.close()">
+  </div>  </app-sidebar>
+
+
+  <div class="main">
+    <header class="top-bar">
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="goToSpecialistSearch()"
+          [placeholder]="'patientDashboard.searchPlaceholder' | translate" 
+          class="search-input">
+      </div>
+      
+      <button class="btn-dashboard-action">
+        <i class="fas fa-plus"></i> {{ 'patientDashboard.newAppointment' | translate }}
+      </button>
+    </header>
+
+    <div class="content">
+      <section class="hero-dashboard">
+        <div class="hero-text">
+          <span class="tag">{{ 'patientDashboard.tag' | translate }}</span>
+          <h1>{{ 'patientDashboard.welcome' | translate }} {{ user?.names }}</h1>
+          <p>{{ 'patientDashboard.subtitle' | translate }}</p>
+        </div>
+        <img src="assets/images/paciente.png" alt="paciente" class="hero-img">
+      </section>
+
+      <div class="stats">
+        <div class="card">
+          <h3>0</h3>
+          <p>{{ 'patientDashboard.stats.nextAppointments' | translate }}</p>
+        </div>
+
+        <div class="card">
+          <h3>0</h3>
+          <p>{{ 'patientDashboard.stats.newMessages' | translate }}</p>
+        </div>
+
+        <div class="card">
+          <h3>0</h3>
+          <p>{{ 'patientDashboard.stats.favoriteSpecialists' | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

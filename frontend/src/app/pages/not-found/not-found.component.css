@@ -1,0 +1,34 @@
+.bg-softPink {
+  background: linear-gradient(135deg,#fff6f6,#ffffff);
+  width: 100vw;
+}
+
+.text-primary {
+  color: #F5A3A3;
+}
+
+.bg-primary {
+  background: #F5A3A3;
+}
+
+.bg-soft {
+  background: #fff0f0;
+}
+
+.rounded-custom {
+  border-radius: 20px;
+}
+
+.soft-shadow {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+}
+
+.floating-illustration {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}

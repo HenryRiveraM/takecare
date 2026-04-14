@@ -1,0 +1,58 @@
+<div class="role-page">
+
+  <div class="container">
+
+    <h1>
+      {{ 'registerRole.titlePart1' | translate }}
+      <span class="primary">Take Care</span>{{ 'registerRole.titlePart2' | translate }}
+    </h1>
+
+    <p>
+      {{ 'registerRole.subtitle' | translate }}
+    </p>
+
+    <div class="role-cards">
+
+      <div class="card"
+           [class.selected]="selectedRole === 'patient'"
+           (click)="selectRole('patient')">
+
+        <div class="image">
+          <img src="assets/images/paciente.png" [alt]="'registerRole.patient.alt' | translate">
+        </div>
+
+        <h3>{{ 'registerRole.patient.title' | translate }}</h3>
+
+        <p>
+          {{ 'registerRole.patient.description' | translate }}
+        </p>
+
+      </div>
+
+      <div class="card"
+           [class.selected]="selectedRole === 'specialist'"
+           (click)="selectRole('specialist')">
+
+        <div class="image">
+          <img src="assets/images/especialista.png" [alt]="'registerRole.specialist.alt' | translate">
+        </div>
+
+        <h3>{{ 'registerRole.specialist.title' | translate }}</h3>
+
+        <p>
+          {{ 'registerRole.specialist.description' | translate }}
+        </p>
+
+      </div>
+
+    </div>
+
+    <button class="continue"
+            [disabled]="!selectedRole"
+            (click)="continue()">
+      {{ 'registerRole.continue' | translate }}
+    </button>
+
+  </div>
+
+</div>

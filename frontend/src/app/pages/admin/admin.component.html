@@ -1,0 +1,212 @@
+<div class="admin-page">
+
+  <section class="admin-hero">
+    <div class="admin-hero-text">
+      <span class="tag">{{ 'admin.hero.tag' | translate }}</span>
+      <h1>{{ 'admin.hero.title' | translate }}</h1>
+      <p>{{ 'admin.hero.subtitle' | translate }}</p>
+    </div>
+  </section>
+
+  <section class="admin-panel">
+
+    <div class="top-controls">
+      <div class="tab-bar">
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'patients'"
+          (click)="setTab('patients')">
+          {{ 'admin.tabs.patients' | translate }}
+        </button>
+
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'specialists'"
+          (click)="setTab('specialists')">
+          {{ 'admin.tabs.specialists' | translate }}
+        </button>
+
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'validations'"
+          (click)="setTab('validations')">
+          {{ 'admin.tabs.validations' | translate }}
+        </button>
+      </div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          [placeholder]="'admin.searchPlaceholder' | translate"
+          class="search-input"
+        />
+      </div>
+    </div>
+
+    <div *ngIf="errorMsg" class="error-message">
+      {{ errorMsg }}
+    </div>
+
+    <!-- TAB: PACIENTES -->
+    <div class="table-card" *ngIf="activeTab === 'patients'">
+      <div class="section-header">
+        <h2>{{ 'admin.sections.patientsRegistered' | translate }}</h2>
+        <span class="count-badge">{{ filteredPatients.length }}</span>
+      </div>
+
+      <div *ngIf="loadingPatients" class="loading-message">
+        {{ 'admin.loading.patients' | translate }}
+      </div>
+
+      <table *ngIf="!loadingPatients && filteredPatients.length > 0; else noPatients">
+        <thead>
+          <tr>
+            <th>{{ 'admin.table.names' | translate }}</th>
+            <th>{{ 'admin.table.lastnames' | translate }}</th>
+            <th>{{ 'admin.table.email' | translate }}</th>
+            <th>{{ 'admin.table.birthDate' | translate }}</th>
+            <th>{{ 'admin.table.strikes' | translate }}</th>
+            <th>{{ 'admin.table.action' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let patient of filteredPatients">
+            <td>{{ patient.names }}</td>
+            <td>{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
+            <td>{{ patient.email }}</td>
+            <td>{{ patient.birthDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ patient.strikes }}</td>
+            <td>
+              <button type="button" class="delete-button" (click)="deletePatient(patient.id, patient.names + ' ' + patient.firstLastname)">
+                {{ 'admin.actions.suspend' | translate }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noPatients>
+        <p class="empty-message" *ngIf="!loadingPatients">{{ 'admin.empty.patients' | translate }}</p>
+      </ng-template>
+    </div>
+
+    <!-- TAB: ESPECIALISTAS -->
+    <div class="table-card" *ngIf="activeTab === 'specialists'">
+      <div class="section-header">
+        <h2>{{ 'admin.sections.specialistsRegistered' | translate }}</h2>
+        <span class="count-badge">{{ filteredSpecialists.length }}</span>
+      </div>
+
+      <div *ngIf="loadingSpecialists" class="loading-message">
+        {{ 'admin.loading.specialists' | translate }}
+      </div>
+
+      <table *ngIf="!loadingSpecialists && filteredSpecialists.length > 0; else noSpecialists">
+        <thead>
+          <tr>
+            <th>{{ 'admin.table.names' | translate }}</th>
+            <th>{{ 'admin.table.lastnames' | translate }}</th>
+            <th>{{ 'admin.table.email' | translate }}</th>
+            <th>{{ 'admin.table.birthDate' | translate }}</th>
+            <th>{{ 'admin.table.strikes' | translate }}</th>
+            <th>{{ 'admin.table.action' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let specialist of filteredSpecialists">
+            <td>{{ specialist.names }}</td>
+            <td>{{ specialist.firstLastname }} {{ specialist.secondLastname || '' }}</td>
+            <td>{{ specialist.email }}</td>
+            <td>{{ specialist.birthDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ specialist.strikes }}</td>
+            <td>
+              <button type="button" class="delete-button" (click)="deleteSpecialist(specialist.id, specialist.names + ' ' + specialist.firstLastname)">
+                {{ 'admin.actions.suspend' | translate }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noSpecialists>
+        <p class="empty-message" *ngIf="!loadingSpecialists">{{ 'admin.empty.specialists' | translate }}</p>
+      </ng-template>
+    </div>
+
+    <!-- TAB: VALIDACIONES -->
+    <div class="table-card" *ngIf="activeTab === 'validations'">
+      <div class="section-header">
+        <h2>{{ 'admin.sections.identityReviews' | translate }}</h2>
+        <span class="count-badge">{{ filteredValidations.length }} {{ 'admin.sections.pending' | translate }}</span>
+      </div>
+
+      <div *ngIf="loadingValidations" class="loading-message">
+        {{ 'admin.loading.validations' | translate }}
+      </div>
+
+      <div class="list" *ngIf="!loadingValidations && filteredValidations.length > 0; else noValidations">
+        <div class="card-validation" *ngFor="let user of filteredValidations">
+          
+          <div class="user-info">
+            <span class="role-tag" [ngClass]="user.role">
+              {{ user.role === 'specialist' ? ('admin.roles.specialist' | translate) : ('admin.roles.patient' | translate) }}
+            </span>
+            <h3 class="user-name">{{ user.names }} {{ user.firstLastname }}</h3>
+            <p class="user-email">{{ user.email }}</p>
+            <span class="ci-tag">CI: {{ user.ciNumber }}</span>
+          </div>
+
+          <div class="actions">
+            <button class="reject-btn" (click)="processValidation(user.id, 'rejected')">
+              {{ 'admin.actions.reject' | translate }}
+            </button>
+            <button class="approve-btn" (click)="processValidation(user.id, 'approved')">
+              {{ 'admin.actions.approve' | translate }}
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <ng-template #noValidations>
+        <p class="empty-message" *ngIf="!loadingValidations">{{ 'admin.empty.validations' | translate }}</p>
+      </ng-template>
+    </div>
+
+    <!-- MODAL -->
+    <div
+      class="modal-backdrop"
+      *ngIf="showDeleteConfirm"
+      (click)="cancelDelete()">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-confirm-title"
+        (click)="$event.stopPropagation()">
+        <h3 id="delete-confirm-title">{{ 'admin.modal.title' | translate }}</h3>
+        <p>
+          {{ 'admin.modal.text' | translate }}
+          <strong>{{ deleteTarget?.name }}</strong>?
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" (click)="cancelDelete()">
+            {{ 'admin.actions.cancel' | translate }}
+          </button>
+          <button type="button" class="confirm-btn" (click)="confirmDelete()">
+            {{ 'admin.actions.suspend' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast-notification" [class.error]="notification.type === 'error'" *ngIf="notification">
+      <div class="toast-icon">✓</div>
+      <div class="toast-text">{{ notification.message }}</div>
+    </div>
+
+  </section> 
+</div>

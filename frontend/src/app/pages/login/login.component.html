@@ -1,0 +1,73 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="icon">
+        <span class="material-symbols-outlined">lock</span>
+      </div>
+
+      <h1>{{ 'login.title' | translate }}</h1>
+      <p>{{ 'login.subtitle' | translate }}</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>{{ 'login.emailLabel' | translate }}</label>
+        <div class="input-icon">
+          <span class="material-symbols-outlined">mail</span>
+          <input type="email" formControlName="email" />
+        </div>
+        <div
+          *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          class="error"
+        >
+          {{ 'login.errors.invalidEmail' | translate }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'login.passwordLabel' | translate }}</label>
+        <div class="input-icon">
+          <span class="material-symbols-outlined">lock</span>
+          <input
+            type="password"
+            formControlName="password"
+            [placeholder]="'login.passwordPlaceholder' | translate"
+          />
+        </div>
+        <div
+          *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          class="error"
+        >
+          {{ 'login.errors.passwordRequired' | translate }}
+        </div>
+      </div>
+
+      <div class="login-options">
+        <label>
+          <input type="checkbox" />
+          {{ 'login.rememberMe' | translate }}
+        </label>
+
+        <a routerLink="/recover-password">{{ 'login.forgotPassword' | translate }}</a>
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="loading">
+        <span *ngIf="!loading">{{ 'login.submit' | translate }}</span>
+        <span *ngIf="loading" class="loader"></span>
+      </button>
+
+      <p *ngIf="errorMsg" class="error-message">
+        {{ errorMsg }}
+      </p>
+
+      <p *ngIf="loginSuccess" class="success">
+        ✔ {{ 'login.success' | translate }}
+      </p>
+    </form>
+
+    <div class="secure">
+      <span class="material-symbols-outlined">verified_user</span>
+      <p>{{ 'login.secure' | translate }}</p>
+    </div>
+  </div>
+</div>
