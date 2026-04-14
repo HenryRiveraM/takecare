@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.takecare.backend.user.dto.SpecialistDetailResponseDto;
+import com.takecare.backend.user.dto.SpecialistListItemResponseDto;
 import com.takecare.backend.user.dto.SpecialistLocationResponseDto;
 import com.takecare.backend.user.dto.SpecialistProfileDTO;
 import com.takecare.backend.user.dto.SpecialistRegisterDTO;
@@ -44,25 +47,48 @@ public class SpecialistController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Specialist>> getAllSpecialists() {
-        logger.info("GET /api/v1/specialists - Fetching all specialists");
-        List<Specialist> specialists = specialistService.getAllSpecialists();
-        logger.info("GET /api/v1/specialists - Found {} specialists", specialists.size());
-        return ResponseEntity.ok(specialists);
+    public ResponseEntity<List<SpecialistListItemResponseDto>> getAllSpecialists(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String query,
+            @RequestParam(required = false) String q) {
+        try {
+            String searchTerm = resolveSearchTerm(search, query, q);
+            logger.info("GET /api/v1/specialists - Fetching visible specialists with search: {}", searchTerm);
+
+            List<SpecialistListItemResponseDto> specialists = specialistService.getAllSpecialists(searchTerm);
+
+            logger.info("GET /api/v1/specialists - Found {} visible specialists", specialists.size());
+            return ResponseEntity.ok(specialists);
+        } catch (RuntimeException e) {
+            logger.error("GET /api/v1/specialists - Error fetching visible specialists", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("GET /api/v1/specialists - Unexpected error fetching visible specialists", e);
+            throw new RuntimeException("Error al obtener especialistas");
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Specialist> getSpecialistById(@PathVariable Integer id) {
-        logger.info("GET /api/v1/specialists/{} - Fetching specialist by id", id);
-        return specialistService.getSpecialistById(id)
-                .map(specialist -> {
-                    logger.info("GET /api/v1/specialists/{} - Specialist found", id);
-                    return ResponseEntity.ok(specialist);
-                })
-                .orElseGet(() -> {
-                    logger.warn("GET /api/v1/specialists/{} - Specialist not found", id);
-                    return ResponseEntity.notFound().build();
-                });
+    public ResponseEntity<SpecialistDetailResponseDto> getSpecialistById(@PathVariable Integer id) {
+        try {
+            logger.info("GET /api/v1/specialists/{} - Fetching visible specialist detail", id);
+
+            return specialistService.getSpecialistById(id)
+                    .map(specialist -> {
+                        logger.info("GET /api/v1/specialists/{} - Visible specialist detail found", id);
+                        return ResponseEntity.ok(specialist);
+                    })
+                    .orElseGet(() -> {
+                        logger.warn("GET /api/v1/specialists/{} - Visible specialist not found", id);
+                        return ResponseEntity.notFound().build();
+                    });
+        } catch (RuntimeException e) {
+            logger.error("GET /api/v1/specialists/{} - Error fetching visible specialist detail", id, e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("GET /api/v1/specialists/{} - Unexpected error fetching visible specialist detail", id, e);
+            throw new RuntimeException("Error al obtener especialista");
+        }
     }
 
     @GetMapping("/{id}/profile")
@@ -173,5 +199,18 @@ public class SpecialistController {
         }
         logger.warn("DELETE /api/v1/specialists/{} - Specialist not found for deletion", id);
         return ResponseEntity.notFound().build();
+    }
+
+    private String resolveSearchTerm(String search, String query, String q) {
+        if (search != null && !search.isBlank()) {
+            return search.trim();
+        }
+        if (query != null && !query.isBlank()) {
+            return query.trim();
+        }
+        if (q != null && !q.isBlank()) {
+            return q.trim();
+        }
+        return null;
     }
 }
