@@ -2,13 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AdminService, Patient, Specialist, PendingValidationUser, User } from '../../services/admin.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { LocalizedDatePipe } from '../../shared/pipes/localized-date.pipe';
+import {
+  AdminService,
+  Patient,
+  Specialist,
+  PendingValidationUser,
+  User
+} from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './admin.component.html',
+  imports: [CommonModule, FormsModule, TranslatePipe, LocalizedDatePipe],
+  templateUrl:'./admin.component.html',
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
@@ -29,11 +37,12 @@ export class AdminComponent implements OnInit {
   loadingValidations = false;
   errorMsg = '';
 
-  showDeleteConfirm = false;
-  deleteTarget: { type: 'patient' | 'specialist'; id: number; name: string } | null = null;
   notification: { message: string; type: 'success' | 'error' } | null = null;
 
-  constructor(private adminService: AdminService) {}
+  constructor(
+    private adminService: AdminService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -65,7 +74,7 @@ export class AdminComponent implements OnInit {
         this.loadingPatients = false;
       },
       error: (err: HttpErrorResponse) => {
-        this.errorMsg = 'Error cargando pacientes';
+        this.errorMsg = this.translate.instant('admin.errors.loadPatients');
         this.loadingPatients = false;
         console.error(err);
       }
@@ -82,7 +91,7 @@ export class AdminComponent implements OnInit {
         this.loadingSpecialists = false;
       },
       error: (err: HttpErrorResponse) => {
-        this.errorMsg = 'No se pudieron cargar los especialistas';
+        this.errorMsg = this.translate.instant('admin.errors.loadSpecialists');
         this.loadingSpecialists = false;
         console.error(err);
       }
@@ -97,13 +106,12 @@ export class AdminComponent implements OnInit {
         this.pendingValidations = data;
         this.filteredValidations = [...data];
         this.loadingValidations = false;
-        console.log(`✅ ${data.length} validaciones pendientes cargadas`);
       },
       error: (err) => {
         this.pendingValidations = [];
         this.filteredValidations = [];
         this.loadingValidations = false;
-        this.errorMsg = 'No se pudieron cargar las validaciones pendientes';
+        this.errorMsg = this.translate.instant('admin.errors.loadValidations');
         console.error(err);
       }
     });
@@ -143,74 +151,68 @@ export class AdminComponent implements OnInit {
   processValidation(user: PendingValidationUser, status: 'approved' | 'rejected'): void {
     this.adminService.validateUser(user.id, user.role, status).subscribe({
       next: () => {
-        const roleText = user.role === 2 ? 'Especialista' : 'Paciente';
-        this.showNotification(`${roleText} ${status === 'approved' ? 'aprobado' : 'rechazado'} correctamente`);
+        const roleText =
+          user.role === 2
+            ? this.translate.instant('admin.roles.specialist')
+            : this.translate.instant('admin.roles.patient');
+
+        const actionText =
+          status === 'approved'
+            ? this.translate.instant('admin.notifications.validated')
+            : this.translate.instant('admin.notifications.rejected');
+
+        this.showNotification(`${roleText} ${actionText}`);
         this.loadPendingValidations();
         this.loadPatients();
         this.loadSpecialists();
       },
       error: (err) => {
-        this.errorMsg = 'No se pudo completar la operación en el servidor';
+        this.errorMsg = this.translate.instant('admin.errors.processValidation');
         console.error(err);
-        this.showNotification('No se pudo procesar la validación', 'error');
+        this.showNotification(this.translate.instant('admin.errors.processValidation'), 'error');
       }
     });
   }
 
-  deletePatient(id: number, fullName: string): void {
-    this.errorMsg = '';
-    this.deleteTarget = { type: 'patient', id, name: fullName };
-    this.showDeleteConfirm = true;
-  }
+  togglePatientStatus(patient: Patient): void {
+    const newStatus: 0 | 1 = patient.status === 1 ? 0 : 1;
 
-  deleteSpecialist(id: number, fullName: string): void {
-    this.errorMsg = '';
-    this.deleteTarget = { type: 'specialist', id, name: fullName };
-    this.showDeleteConfirm = true;
-  }
-
-  cancelDelete(): void {
-    this.showDeleteConfirm = false;
-    this.deleteTarget = null;
-  }
-
-  confirmDelete(): void {
-  if (!this.deleteTarget) return;
-
-  const { type, id } = this.deleteTarget;
-  
-  const list = type === 'patient' ? this.patients : this.specialists;
-  const user = list.find(u => u.id === id);
-  const isCurrentlyActive = user?.status === 1;
-
-  const service$ = type === 'patient'
-    ? this.adminService.deletePatient(id)
-    : this.adminService.deleteSpecialist(id);
-
-  service$.subscribe({
-    next: () => {
-      const newStatus = isCurrentlyActive ? 0 : 1;
-      const actionLabel = newStatus === 1 ? 'activado' : 'suspendido';
-
-      if (type === 'patient') {
-        this.patients = this.patients.map(u => u.id === id ? { ...u, status: newStatus } : u);
-        this.filteredPatients = this.filteredPatients.map(u => u.id === id ? { ...u, status: newStatus } : u);
-      } else {
-        this.specialists = this.specialists.map(u => u.id === id ? { ...u, status: newStatus } : u);
-        this.filteredSpecialists = this.filteredSpecialists.map(u => u.id === id ? { ...u, status: newStatus } : u);
+    this.adminService.updateUserStatus(patient.id, newStatus).subscribe({
+      next: () => {
+        patient.status = newStatus;
+        this.showNotification(
+          newStatus === 1
+            ? this.translate.instant('admin.notifications.patientActivated')
+            : this.translate.instant('admin.notifications.patientSuspended')
+        );
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMsg = this.translate.instant('admin.errors.suspendUser');
+        this.showNotification(this.translate.instant('admin.errors.suspendUser'), 'error');
       }
+    });
+  }
 
-      this.cancelDelete();
-      this.showNotification(`${type === 'patient' ? 'Paciente' : 'Especialista'} ${actionLabel} correctamente`);
-    },
-    error: (err: HttpErrorResponse) => {
-      this.errorMsg = `No se pudo cambiar el estado del ${type === 'patient' ? 'paciente' : 'especialista'}`;
-      console.error(err);
-      this.cancelDelete();
-      this.showNotification(`Error al procesar la solicitud`, 'error');
-    }
-  });
-}
+  toggleSpecialistStatus(specialist: Specialist): void {
+    const newStatus: 0 | 1 = specialist.status === 1 ? 0 : 1;
+
+    this.adminService.updateUserStatus(specialist.id, newStatus).subscribe({
+      next: () => {
+        specialist.status = newStatus;
+        this.showNotification(
+          newStatus === 1
+            ? this.translate.instant('admin.notifications.specialistActivated')
+            : this.translate.instant('admin.notifications.specialistSuspended')
+        );
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMsg = this.translate.instant('admin.errors.suspendUser');
+        this.showNotification(this.translate.instant('admin.errors.suspendUser'), 'error');
+      }
+    });
+  }
 
   getAge(birthDate: string): number {
     if (!birthDate) return 0;
@@ -229,48 +231,7 @@ export class AdminComponent implements OnInit {
   }
 
   isPdf(url?: string): boolean {
-    if (!url) return false;
-    return url.toLowerCase().includes('.pdf');
-  }
-
-  togglePatientStatus(patient: Patient): void {
-    const newStatus: 0 | 1 = patient.status === 1 ? 0 : 1;
-
-    this.adminService.updateUserStatus(patient.id, newStatus).subscribe({
-      next: () => {
-        patient.status = newStatus;
-        this.showNotification(
-          newStatus === 1
-            ? 'Paciente activado correctamente'
-            : 'Paciente suspendido correctamente'
-        );
-      },
-      error: (err) => {
-        console.error(err);
-        this.errorMsg = 'No se pudo cambiar el estado del paciente';
-        this.showNotification('No se pudo actualizar el estado del paciente', 'error');
-      }
-    });
-  }
-
-  toggleSpecialistStatus(specialist: Specialist): void {
-    const newStatus: 0 | 1 = specialist.status === 1 ? 0 : 1;
-
-    this.adminService.updateUserStatus(specialist.id, newStatus).subscribe({
-      next: () => {
-        specialist.status = newStatus;
-        this.showNotification(
-          newStatus === 1
-            ? 'Especialista activado correctamente'
-            : 'Especialista suspendido correctamente'
-        );
-      },
-      error: (err) => {
-        console.error(err);
-        this.errorMsg = 'No se pudo cambiar el estado del especialista';
-        this.showNotification('No se pudo actualizar el estado del especialista', 'error');
-      }
-    });
+    return !!url && url.toLowerCase().includes('.pdf');
   }
 
   private showNotification(message: string, type: 'success' | 'error' = 'success'): void {

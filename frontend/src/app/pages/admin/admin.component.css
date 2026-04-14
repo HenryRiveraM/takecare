@@ -1,4 +1,3 @@
-
 .admin-page {
   width: 100%;
   min-height: 100vh;
@@ -9,7 +8,7 @@
 .admin-hero,
 .admin-panel {
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .admin-hero {
@@ -37,11 +36,15 @@
 }
 
 .admin-panel {
-  background: white;
+  background: #ffffff;
   border-radius: 24px;
   padding: 30px;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
 }
+
+/* =========================
+   CONTROLES
+========================= */
 
 .top-controls {
   display: flex;
@@ -55,6 +58,7 @@
 .tab-bar {
   display: flex;
   gap: 14px;
+  flex-wrap: wrap;
 }
 
 .tab-button {
@@ -65,7 +69,7 @@
   border-radius: 14px;
   cursor: pointer;
   font-weight: 700;
-  transition: 0.3s;
+  transition: 0.25s ease;
 }
 
 .tab-button:hover {
@@ -87,13 +91,13 @@
 
 .search-input {
   width: 100%;
-  max-width: 380px;
+  max-width: 440px;
   padding: 14px 18px;
   border: 2px solid #e9d7d7;
   border-radius: 14px;
   font-size: 15px;
   outline: none;
-  transition: 0.3s;
+  transition: 0.25s ease;
   background: #fffdfd;
 }
 
@@ -127,17 +131,12 @@
   padding: 25px 0;
 }
 
-.table-card {
-  background: #ffffff;
-  border-radius: 20px;
-}
-
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   gap: 15px;
+  flex-wrap: wrap;
   margin-bottom: 18px;
 }
 
@@ -158,47 +157,110 @@
   font-weight: 700;
 }
 
-table {
+.table-card {
   width: 100%;
-  border-collapse: collapse;
-  overflow: hidden;
-  border-radius: 18px;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-thead {
+.table-card table {
+  width: 100%;
+  min-width: 1020px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.table-card thead {
   background: linear-gradient(135deg, #8ca39c, #a6bab3);
 }
 
-th {
-  color: white;
+.table-card th {
+  color: #ffffff;
   text-align: left;
-  padding: 16px 14px;
-  font-size: 14px;
+  padding: 18px 14px;
+  font-size: 15px;
   font-weight: 700;
+  line-height: 1.35;
+  vertical-align: middle;
+  white-space: normal;
+  word-break: break-word;
 }
 
-td {
-  padding: 15px 14px;
+.table-card td {
+  padding: 18px 14px;
   border-bottom: 1px solid #f1e8e8;
   color: #4b5563;
   font-size: 15px;
+  vertical-align: middle;
+  line-height: 1.4;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
-tbody tr {
-  transition: 0.2s;
+.table-card tbody tr {
+  transition: background 0.2s ease;
 }
 
-tbody tr:hover {
+.table-card tbody tr:hover {
   background: #fff8f8;
 }
 
+/* ===== anchos de columnas ===== */
+.col-name {
+  width: 16%;
+}
+
+.col-lastname {
+  width: 18%;
+}
+
+.col-email {
+  width: 24%;
+}
+
+.col-date {
+  width: 13%;
+}
+
+.col-strikes {
+  width: 7%;
+  text-align: center;
+}
+
+.col-status {
+  width: 12%;
+  text-align: center;
+}
+
+.col-action {
+  width: 10%;
+  text-align: center;
+}
+
+.col-strikes,
+.col-status,
+.col-action {
+  white-space: normal;
+}
+
+/* ===== badge de estado ===== */
 .status {
-  display: inline-block;
-  padding: 7px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 122px;
+  min-height: 42px;
+  padding: 8px 14px;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
   border: 2px solid transparent;
+  white-space: normal;
 }
 
 .status-active {
@@ -213,15 +275,28 @@ tbody tr:hover {
   border-color: #df8f8f;
 }
 
-.delete-button {
-  background: #f5a3a3;
-  color: white;
-  border: none;
-  padding: 10px 16px;
+/* ===== botones ===== */
+.delete-button,
+.activate-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 116px;
+  min-height: 42px;
+  padding: 10px 14px;
   border-radius: 12px;
+  border: none;
   cursor: pointer;
   font-weight: 700;
-  transition: 0.3s;
+  text-align: center;
+  line-height: 1.15;
+  transition: 0.25s ease;
+  white-space: normal;
+}
+
+.delete-button {
+  background: #f5a3a3;
+  color: #ffffff;
   box-shadow: 0 8px 16px rgba(245, 163, 163, 0.25);
 }
 
@@ -232,13 +307,7 @@ tbody tr:hover {
 
 .activate-button {
   background: #8ca39c;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 700;
-  transition: 0.3s;
+  color: #ffffff;
   box-shadow: 0 8px 16px rgba(140, 163, 156, 0.25);
 }
 
@@ -247,29 +316,108 @@ tbody tr:hover {
   transform: translateY(-2px);
 }
 
-table td:last-child,
-table th:last-child {
+/* centra bien el contenido de las columnas finales */
+.table-card td.col-strikes,
+.table-card td.col-status,
+.table-card td.col-action,
+.table-card th.col-strikes,
+.table-card th.col-status,
+.table-card th.col-action {
   text-align: center;
 }
 
-table td:last-child button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 110px;
+/* responsive */
+@media (max-width: 1024px) {
+  .table-card table {
+    min-width: 980px;
+  }
+
+  .col-name {
+    width: 15%;
+  }
+
+  .col-lastname {
+    width: 18%;
+  }
+
+  .col-email {
+    width: 25%;
+  }
+
+  .col-date {
+    width: 13%;
+  }
+
+  .col-strikes {
+    width: 7%;
+  }
+
+  .col-status {
+    width: 12%;
+  }
+
+  .col-action {
+    width: 10%;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-card table {
+    min-width: 940px;
+  }
+
+  .table-card th,
+  .table-card td {
+    padding: 14px 12px;
+    font-size: 14px;
+  }
+
+  .status {
+    min-width: 116px;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .delete-button,
+  .activate-button {
+    min-width: 108px;
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-card th,
+  .table-card td {
+    padding: 12px 10px;
+    font-size: 13px;
+  }
+
+  .status {
+    min-width: 108px;
+    min-height: 40px;
+    font-size: 12.5px;
+  }
+
+  .delete-button,
+  .activate-button {
+    min-width: 100px;
+    min-height: 40px;
+    font-size: 12.5px;
+  }
 }
 
 /* =========================
    VALIDACIONES
 ========================= */
 
-.validation-grid {
+.list {
   display: grid;
   grid-template-columns: 1fr;
   gap: 18px;
 }
 
-.validation-card {
+.card-validation {
   background: linear-gradient(180deg, #fffefe 0%, #fff7f7 100%);
   border: 1px solid #f1e3e3;
   border-radius: 22px;
@@ -278,22 +426,16 @@ table td:last-child button {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.validation-card:hover {
+.card-validation:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
 }
 
-.validation-top {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-bottom: 18px;
-}
-
-.validation-header {
+.user-info {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-bottom: 14px;
 }
 
 .role-tag {
@@ -332,7 +474,7 @@ table td:last-child button {
 
 .validation-info {
   display: grid;
-  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
   gap: 12px;
   margin-bottom: 18px;
 }
@@ -374,7 +516,7 @@ table td:last-child button {
   border: 1px solid #eee2e2;
   border-radius: 16px;
   padding: 14px;
-  min-height: 180px;
+  min-height: 190px;
   display: flex;
   flex-direction: column;
 }
@@ -408,10 +550,6 @@ table td:last-child button {
 }
 
 .selfie-preview img {
-  width: 250px;
-  height: 170px;
-  max-width: none;
-  object-fit: cover;
   border: 2px solid #d9e7e2;
 }
 
@@ -442,16 +580,11 @@ table td:last-child button {
   background: #e5f0eb;
 }
 
-.validation-actions {
+.actions.validation-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .reject-btn,
@@ -475,7 +608,7 @@ table td:last-child button {
 
 .approve-btn {
   background: #8ca39c;
-  color: white;
+  color: #ffffff;
   box-shadow: 0 8px 18px rgba(140, 163, 156, 0.25);
 }
 
@@ -493,7 +626,7 @@ table td:last-child button {
   bottom: 20px;
   right: 20px;
   background-color: #5a7d73;
-  color: white;
+  color: #ffffff;
   padding: 12px 20px;
   border-radius: 10px;
   display: flex;
@@ -501,6 +634,7 @@ table td:last-child button {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   animation: slideUp 0.4s ease-out;
+  max-width: 320px;
 }
 
 .toast-notification.error {
@@ -516,78 +650,7 @@ table td:last-child button {
 .toast-text {
   font-size: 0.9rem;
   font-weight: 500;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  animation: modalIn 0.3s ease-out;
-}
-
-.modal h3 {
-  margin: 0 0 15px 0;
-  color: #1f2937;
-  font-size: 20px;
-}
-
-.modal p {
-  color: #6b7280;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
-
-.modal-actions button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
-}
-
-.cancel-btn {
-  background: #e9d7d7;
-  color: #6b7280;
-}
-
-.cancel-btn:hover {
-  background: #dfc7c7;
-}
-
-.confirm-btn {
-  background: #f5a3a3;
-  color: white;
-  box-shadow: 0 8px 16px rgba(245, 163, 163, 0.25);
-}
-
-.confirm-btn:hover {
-  background: #ec8f8f;
+  word-break: break-word;
 }
 
 /* =========================
@@ -603,11 +666,6 @@ table td:last-child button {
 @keyframes slideUp {
   from { transform: translateY(100%); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.9) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* =========================
@@ -631,10 +689,6 @@ table td:last-child button {
     padding: 25px;
   }
 
-  .search-input {
-    max-width: 100%;
-  }
-
   .top-controls {
     flex-direction: column;
     align-items: stretch;
@@ -647,6 +701,10 @@ table td:last-child button {
   .search-box {
     justify-content: center;
   }
+
+  .search-input {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 900px) {
@@ -658,11 +716,11 @@ table td:last-child button {
     grid-template-columns: 1fr;
   }
 
-  .validation-actions {
+  .actions.validation-actions {
     flex-direction: column;
   }
 
-  .validation-actions button {
+  .actions.validation-actions button {
     width: 100%;
   }
 }
@@ -708,21 +766,8 @@ table td:last-child button {
     align-self: flex-start;
   }
 
-  .actions {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .actions button {
-    width: 100%;
-  }
-
-  table {
-    min-width: 700px;
-  }
-
-  .table-card {
-    overflow-x: auto;
+  .table-card table {
+    min-width: 980px;
   }
 }
 
@@ -740,14 +785,22 @@ table td:last-child button {
     font-size: 14px;
   }
 
-  th,
-  td {
-    padding: 10px;
+  .table-card th,
+  .table-card td {
+    padding: 12px 10px;
     font-size: 13px;
   }
 
-  .delete-button {
-    padding: 8px 12px;
+  .status {
+    min-width: 116px;
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .delete-button,
+  .activate-button {
+    min-width: 108px;
+    padding: 9px 12px;
     font-size: 13px;
   }
 
@@ -756,7 +809,7 @@ table td:last-child button {
     padding: 6px 10px;
   }
 
-  .validation-card {
+  .card-validation {
     padding: 16px;
   }
 
@@ -765,12 +818,7 @@ table td:last-child button {
   }
 
   .document-preview img {
-    max-width: 120px;
-    height: 78px;
-  }
-
-  .selfie-preview img {
-    width: 80px;
-    height: 80px;
+    max-width: 100%;
+    height: 150px;
   }
 }

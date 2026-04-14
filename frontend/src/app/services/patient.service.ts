@@ -35,7 +35,7 @@ export class PatientService {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const userId = user?.id;
     return this.http.get<PatientProfile>(
-      `${this.baseUrl}/profile/${userId}`
+      `${this.baseUrl}/api/v1/users/profile/${userId}`
     );
   }
 
@@ -43,7 +43,7 @@ export class PatientService {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const userId = user?.id;
     return this.http.put<PatientProfile>(
-      `${this.baseUrl}/profile/${userId}`,
+      `${this.baseUrl}/api/v1/users/profile/${userId}`,
       data
     );
   }

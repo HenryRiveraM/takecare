@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api.service';
 import { CloudinaryUploadService } from '../../services/cloudinary-upload.service';
 
 @Component({
   selector: 'app-register-patient',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './register-patient.component.html',
   styleUrls: ['./register-patient.component.css']
 })
@@ -42,7 +43,8 @@ export class RegisterPatientComponent {
     private fb: FormBuilder,
     private router: Router,
     private api: ApiService,
-    private cloudinaryUploadService: CloudinaryUploadService
+    private cloudinaryUploadService: CloudinaryUploadService,
+    private translate: TranslateService
   ) {
     this.form = this.fb.group({
       names: ['', [
@@ -123,13 +125,13 @@ export class RegisterPatientComponent {
     }
   }
 
-  showToast(type: 'error' | 'success' | 'warning', title: string, message: string) {
+  showToast(type: 'error' | 'success' | 'warning', title: string, message: string): void {
     clearTimeout(this.toastTimer);
     this.toast = { visible: true, type, title, message };
     this.toastTimer = setTimeout(() => this.closeToast(), 5000);
   }
 
-  closeToast() {
+  closeToast(): void {
     this.toast.visible = false;
   }
 
@@ -140,59 +142,59 @@ export class RegisterPatientComponent {
     if (status === 400) {
       if (backendMessage.toLowerCase().includes('email')) {
         return {
-          title: 'Correo inválido',
-          message: 'El correo electrónico ingresado no es válido o ya está registrado. Verifica e intenta de nuevo.'
+          title: this.translate.instant('registerPatient.toast.invalidEmailTitle'),
+          message: this.translate.instant('registerPatient.toast.invalidEmailMessage')
         };
       }
       if (backendMessage.toLowerCase().includes('ci') || backendMessage.toLowerCase().includes('document')) {
         return {
-          title: 'CI duplicado',
-          message: 'El número de CI ingresado ya está registrado en el sistema.'
+          title: this.translate.instant('registerPatient.toast.duplicateCiTitle'),
+          message: this.translate.instant('registerPatient.toast.duplicateCiMessage')
         };
       }
       if (backendMessage.toLowerCase().includes('password')) {
         return {
-          title: 'Contraseña inválida',
-          message: 'La contraseña no cumple con los requisitos mínimos de seguridad.'
+          title: this.translate.instant('registerPatient.toast.invalidPasswordTitle'),
+          message: this.translate.instant('registerPatient.toast.invalidPasswordMessage')
         };
       }
       return {
-        title: 'Datos incompletos',
-        message: 'Algunos campos no son válidos. Revisa que toda la información esté correctamente ingresada.'
+        title: this.translate.instant('registerPatient.toast.incompleteDataTitle'),
+        message: this.translate.instant('registerPatient.toast.incompleteDataMessage')
       };
     }
 
     if (status === 409) {
       return {
-        title: 'Cuenta existente',
-        message: 'Ya existe una cuenta con ese correo electrónico o número de CI. ¿Quizás ya tienes una cuenta?'
+        title: this.translate.instant('registerPatient.toast.existingAccountTitle'),
+        message: this.translate.instant('registerPatient.toast.existingAccountMessage')
       };
     }
 
     if (status === 422) {
       return {
-        title: 'Información inválida',
-        message: 'Algunos datos no tienen el formato esperado. Revisa la fecha de nacimiento y el correo.'
+        title: this.translate.instant('registerPatient.toast.invalidInfoTitle'),
+        message: this.translate.instant('registerPatient.toast.invalidInfoMessage')
       };
     }
 
     if (status >= 500) {
       return {
-        title: 'Error del servidor',
-        message: 'Ocurrió un problema en nuestros servidores. Por favor, intenta de nuevo en unos minutos.'
+        title: this.translate.instant('registerPatient.toast.serverErrorTitle'),
+        message: this.translate.instant('registerPatient.toast.serverErrorMessage')
       };
     }
 
     if (status === 0 || status == null) {
       return {
-        title: 'Sin conexión',
-        message: 'No se pudo conectar con el servidor. Verifica tu conexión a internet e intenta de nuevo.'
+        title: this.translate.instant('registerPatient.toast.noConnectionTitle'),
+        message: this.translate.instant('registerPatient.toast.noConnectionMessage')
       };
     }
 
     return {
-      title: 'Error al registrarse',
-      message: 'Ocurrió un error inesperado. Por favor, intenta de nuevo más tarde.'
+      title: this.translate.instant('registerPatient.toast.genericErrorTitle'),
+      message: this.translate.instant('registerPatient.toast.genericErrorMessage')
     };
   }
 

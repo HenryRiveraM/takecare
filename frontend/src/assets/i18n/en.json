@@ -1,0 +1,641 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About us",
+    "login": "Log in",
+    "register": "Sign up",
+    "private": {
+      "common": {
+        "home": "Home",
+        "logout": "Log out"
+      },
+      "patient": {
+        "label": "Patient area",
+        "dashboard": "My dashboard",
+        "profile": "My profile"
+      },
+      "specialist": {
+        "label": "Specialist area",
+        "dashboard": "My dashboard",
+        "profile": "My profile"
+      },
+      "admin": {
+        "label": "Admin panel",
+        "panel": "Administration"
+      }
+    }
+  },
+
+    "footer": {
+    "brandText": "Caring for your mental well-being with love and professionalism.",
+    "platform": "Platform",
+    "home": "Home",
+    "register": "Sign up",
+    "login": "Log in",
+    "support": "Support",
+    "recoverPassword": "Recover password",
+    "copyright": "© 2026 Take Care. All rights reserved."
+  },
+
+  
+  "home": {
+    "hero": {
+      "tag": "Your journey begins here",
+      "title": "You are not alone.",
+      "subtitle": "Find professional support and manage your mental well-being with Take Care. A safe and compassionate space for your path toward healing and peace of mind.",
+      "primaryButton": "Find Help",
+      "secondaryButton": "Watch Video"
+    },
+    "stats": {
+      "specialists": "Verified Specialists",
+      "sessions": "Secure Sessions",
+      "success": "Patient Success"
+    },
+    "features": {
+      "title": "Compassionate Care for Everyone",
+      "card1": {
+        "title": "Clinical Excellence",
+        "text": "Access top-tier psychologists and psychiatrists with verified backgrounds and full licenses."
+      },
+      "card2": {
+        "title": "Radical Privacy",
+        "text": "Your sessions and data are your business. We use military-grade encryption to keep them that way."
+      },
+      "card3": {
+        "title": "Seamless Booking",
+        "text": "Forget the calls. Book, reschedule, or cancel appointments directly through our intuitive calendar."
+      }
+    },
+    "cta": {
+      "title": "Ready to begin your journey?",
+      "text": "Join thousands of people who have taken the first step toward a healthier mind.",
+      "button": "Start Now"
+    }
+  },
+
+
+  "admin": {
+    "hero": {
+      "tag": "Management panel",
+      "title": "User administration",
+      "subtitle": "View, search, and manage registered patients and specialists in Take Care."
+    },
+    "tabs": {
+      "patients": "Patients",
+      "specialists": "Specialists",
+      "validations": "Pending validations"
+    },
+    "searchPlaceholder": "Search by name, surname or email",
+    "sections": {
+      "patientsRegistered": "Registered patients",
+      "specialistsRegistered": "Registered specialists",
+      "identityReviews": "Identity Reviews",
+      "pending": "pending"
+    },
+    "table": {
+      "names": "Names",
+      "lastnames": "Last names",
+      "email": "Email",
+      "birthDate": "Birth date",
+      "strikes": "Strikes",
+      "action": "Action"
+    },
+    "roles": {
+      "patient": "Patient",
+      "specialist": "Specialist"
+    },
+    "actions": {
+      "suspend": "Suspend",
+      "reject": "Reject",
+      "approve": "Approve",
+      "cancel": "Cancel"
+    },
+    "loading": {
+      "patients": "Loading patients...",
+      "specialists": "Loading specialists...",
+      "validations": "Loading validations..."
+    },
+    "empty": {
+      "patients": "There are no registered patients.",
+      "specialists": "There are no registered specialists.",
+      "validations": "There are no pending requests to review."
+    },
+    "modal": {
+      "title": "Confirm suspension",
+      "text": "Are you sure you want to suspend user"
+    },
+    "notifications": {
+      "validated": "validated successfully",
+      "rejected": "rejected successfully",
+      "suspendedSuccessfully": "suspended successfully"
+    },
+    "errors": {
+      "loadPatients": "Error loading patients",
+      "loadSpecialists": "Could not load specialists",
+      "processValidation": "The operation could not be completed on the server",
+      "suspendUser": "Could not suspend user",
+      "couldNotSuspend": "Could not suspend user"
+    }
+  },
+
+
+  "login": {
+    "title": "Your safe space starts here",
+    "subtitle": "Take Care: Your mental well-being is our priority.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "example@email.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot your password?",
+    "submit": "Log In",
+    "success": "Login successful",
+    "secure": "Secure connection",
+    "errors": {
+      "invalidEmail": "Invalid email",
+      "passwordRequired": "Password required (min. 8 characters)",
+      "completeFields": "Complete all fields correctly",
+      "invalidCredentials": "Incorrect email or password",
+      "connection": "Connection error with the server",
+      "unknown": "Unknown error"
+    }
+},
+
+
+  "notFound": {
+    "title": "It looks like you’ve gone off track",
+    "text": "Don’t worry, we’re here to help. The page you’re looking for doesn’t exist or has been moved.",
+    "backHome": "Back to Home",
+    "contactSupport": "Contact support"
+  },
+
+  
+  "patientDashboard": {
+    "menu": {
+      "panel": "My Dashboard",
+      "appointments": "My Appointments",
+      "searchSpecialist": "Find Specialist",
+      "history": "My History",
+      "editProfile": "Edit profile"
+    },
+    "searchPlaceholder": "Search specialists...",
+    "newAppointment": "New Appointment",
+    "tag": "Patient Dashboard",
+    "welcome": "Welcome",
+    "defaultUser": "Patient",
+    "subtitle": "Your mental well-being is our priority today.",
+    "stats": {
+      "nextAppointments": "Upcoming appointments",
+      "newMessages": "New messages",
+      "favoriteSpecialists": "Favorite specialists"
+    },
+    "section": {
+      "title": "Upcoming consultations",
+      "text": "Your scheduled session details will appear here.",
+      "link": "Explore specialists to get started!"
+    }
+  },
+
+  
+  "patientProfile": {
+    "back": "Back",
+    "tag": "Patient profile",
+    "title": "Edit profile",
+    "subtitle": "Update your information and improve your presence on TakeCare.",
+    "fields": {
+      "names": "First names",
+      "firstLastname": "First last name",
+      "secondLastname": "Second last name",
+      "email": "Email"
+    },
+    "placeholders": {
+      "names": "Enter your first names",
+      "firstLastname": "Enter your first last name",
+      "secondLastname": "Enter your second last name",
+      "email": "Email address"
+    },
+    "actions": {
+      "edit": "Edit profile",
+      "cancel": "Cancel",
+      "save": "Save changes",
+      "saving": "Saving..."
+    },
+    "messages": {
+      "loadError": "Error loading profile.",
+      "connectionError": "Connection error. Check your internet and try again.",
+      "updateSuccess": "Profile updated successfully!",
+      "updateError": "Error updating profile.",
+      "updateConnectionError": "Error updating profile. Please try again.",
+      "requiredFields": "Please complete all required fields."
+    }
+  },
+
+  "patientSearch": {
+    "tag": "Specialist search",
+    "title": "Find a specialist",
+    "subtitle": "Browse active and verified specialists to continue your care process.",
+    "searchPlaceholder": "Search by name, specialty or location",
+    "searchButton": "Search",
+    "resetTitle": "Clear filters",
+    "viewAllButton": "View all specialists",
+    "results": "specialists found",
+    "costPrefix": "Session cost:",
+    "cardNote": "Soon you will be able to review more details and request an appointment from here.",
+    "states": {
+      "loading": "Loading specialists...",
+      "emptyTitle": "We couldn't find specialists for that criteria",
+      "emptyText": "Try another name, specialty or location to expand the results."
+    },
+    "fallback": {
+      "speciality": "Specialty pending confirmation",
+      "biography": "This specialist has not added a public biography yet.",
+      "location": "Location to be defined",
+      "cost": "Cost pending"
+    },
+    "filters": {
+      "allCategories": "All categories",
+      "allSchedules": "All schedules",
+      "mentalHealth": "Mental health disorders",
+      "addictions": "Addictions",
+      "familyTherapy": "Family therapy",
+      "childPsychology": "Child psychology",
+      "depressionAnxiety": "Depression and anxiety",
+      "occupationalTherapy": "Occupational therapy",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "night": "Night"
+    },
+    "specialties": {
+      "psychology": "Psychology",
+      "cardiology": "Cardiology",
+      "nutrition": "Nutrition"
+    }
+  },
+
+
+  "recoverPassword": {
+    "title": "Recover password",
+    "subtitle": "Don’t worry, tell us the email associated with your account and we’ll send you the instructions",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "example@email.com",
+    "sending": "Sending...",
+    "sendLink": "Send link",
+    "backToLogin": "Back to login",
+    "successTitle": "Email sent!",
+    "successText1": "We have sent a recovery link to",
+    "successText2": "Please check your inbox.",
+    "tryAnother": "Try another email",
+    "backToSession": "Back to sign in",
+    "alertMessage": "If the email exists, you will receive a link soon."
+  },
+
+  
+  "registerPatient": {
+    "title": "Patient Registration",
+    "subtitle": "Create your account to begin your mental health care process.",
+    "helper": "Fields marked with",
+    "helperRequired": "are required",
+    "sections": {
+      "personalInfo": "Personal Information",
+      "documents": "Verification Documents"
+    },
+    "sectionHelp": "Upload your identity document and a selfie to validate your account.",
+    "fields": {
+      "names": "First names",
+      "firstLastname": "First last name",
+      "secondLastname": "Second last name",
+      "ci": "Identity document",
+      "birthDate": "Birth date",
+      "email": "Email address",
+      "password": "Password",
+      "ciPhoto": "ID photo",
+      "selfie": "Verification selfie"
+    },
+    "placeholders": {
+      "names": "E.g. John Carlos",
+      "firstLastname": "E.g. Perez",
+      "secondLastname": "E.g. Garcia",
+      "ci": "ID number",
+      "email": "Email address",
+      "password": "* * * * * * * *"
+    },
+    "uploads": {
+      "document": "Upload identity document",
+      "selfie": "Take a selfie"
+    },
+    "terms": {
+      "text1": "I accept the",
+      "termsOfService": "Terms of Service",
+      "and": "and the",
+      "privacyPolicy": "Privacy Policy",
+      "text2": "I understand how my health data will be managed."
+    },
+    "actions": {
+      "createAccount": "Create account",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "names": {
+        "required": "First names are required",
+        "minlength": "First names must have at least 3 characters",
+        "maxlength": "First names cannot have more than 30 characters",
+        "pattern": "Only letters and spaces are allowed"
+      },
+      "firstLastname": {
+        "required": "First last name is required",
+        "minlength": "First last name must have at least 3 characters",
+        "maxlength": "First last name cannot have more than 30 characters",
+        "pattern": "Only letters and spaces are allowed"
+      },
+      "secondLastname": {
+        "minlength": "Second last name must have at least 3 characters",
+        "maxlength": "Second last name cannot have more than 30 characters",
+        "pattern": "Only letters and spaces are allowed"
+      },
+      "ci": {
+        "required": "ID number is required",
+        "minlength": "ID number must have at least 6 characters",
+        "maxlength": "ID number cannot have more than 10 characters",
+        "pattern": "Only numbers and suffix are allowed."
+      },
+      "birthDate": {
+        "required": "Birth date is required"
+      },
+      "email": {
+        "required": "Email address is required",
+        "invalid": "Email address is invalid"
+      },
+      "password": {
+        "required": "Password is required",
+        "minlength": "Password must contain between 8 and 50 characters"
+      },
+      "terms": {
+        "required": "You must accept the terms to continue."
+      }
+    },
+    "toast": {
+      "successTitle": "Account created!",
+      "successMessage": "Your registration was successful. Redirecting to login...",
+      "invalidEmailTitle": "Invalid email",
+      "invalidEmailMessage": "The email address entered is invalid or already registered. Please verify and try again.",
+      "duplicateCiTitle": "Duplicate ID",
+      "duplicateCiMessage": "The ID number entered is already registered in the system.",
+      "invalidPasswordTitle": "Invalid password",
+      "invalidPasswordMessage": "The password does not meet the minimum security requirements.",
+      "incompleteDataTitle": "Incomplete data",
+      "incompleteDataMessage": "Some fields are invalid. Please check that all information is entered correctly.",
+      "existingAccountTitle": "Existing account",
+      "existingAccountMessage": "An account with that email or ID number already exists. Maybe you already have an account?",
+      "invalidInfoTitle": "Invalid information",
+      "invalidInfoMessage": "Some data does not have the expected format. Please review the birth date and email.",
+      "serverErrorTitle": "Server error",
+      "serverErrorMessage": "A problem occurred on our servers. Please try again in a few minutes.",
+      "noConnectionTitle": "No connection",
+      "noConnectionMessage": "Could not connect to the server. Check your internet connection and try again.",
+      "genericErrorTitle": "Registration error",
+      "genericErrorMessage": "An unexpected error occurred. Please try again later."
+    }
+  },
+
+  
+  "registerRole": {
+    "titlePart1": "How would you like to use ",
+    "titlePart2": "?",
+    "subtitle": "Select the option that best fits your situation.",
+    "continue": "Continue",
+    "patient": {
+      "alt": "Patient",
+      "title": "I need support",
+      "description": "I am looking for a qualified therapist to help me improve my well-being."
+    },
+    "specialist": {
+      "alt": "Specialist",
+      "title": "I am a specialist",
+      "description": "I am a certified professional who wants to help patients."
+    }
+  },
+
+
+  
+  "registerSpecialist": {
+    "title": "Specialist Registration",
+    "subtitle": "Join our network of mental health professionals and start helping others.",
+    "helper": "Fields marked with",
+    "helperRequired": "are required.",
+    "optional": "Optional.",
+    "readyToUpload": "Ready to upload",
+    "footerNote": "ⓘ Your profile will be reviewed by the administrator",
+    "fields": {
+      "firstName": "First name",
+      "lastName1": "Last name",
+      "lastName2": "Second last name",
+      "birthDate": "Birth date",
+      "email": "Email address",
+      "password": "Password",
+      "document": "Identity document",
+      "idPhoto": "ID photo (front side)",
+      "specialties": "Specialties",
+      "certifications": "Certifications and credentials (PDF)"
+    },
+    "placeholders": {
+      "firstName": "E.g. Jane",
+      "lastName1": "E.g. Smith",
+      "lastName2": "E.g. Johnson",
+      "email": "jane@example.com",
+      "password": "* * * * * * * *",
+      "document": "ID number"
+    },
+    "uploads": {
+      "idPhoto": "📷 Upload ID photo",
+      "certifications": "➕ Drag or click to upload PDFs"
+    },
+    "terms": {
+      "text1": "I accept the",
+      "termsOfService": "Terms of Service",
+      "and": "and the",
+      "privacyPolicy": "Privacy Policy",
+      "text2": "I understand how my health data will be managed."
+    },
+    "actions": {
+      "remove": "Remove",
+      "processing": "Processing registration...",
+      "complete": "Complete registration"
+    },
+    "errors": {
+      "firstName": {
+        "required": "First name is required.",
+        "pattern": "First name must contain letters only.",
+        "maxlength": "First name must have a maximum of 30 characters.",
+        "minlength": "First name must have at least 3 characters."
+      },
+      "lastName1": {
+        "required": "Last name is required.",
+        "pattern": "Last name must contain letters only.",
+        "maxlength": "Last name must have a maximum of 30 characters.",
+        "minlength": "Last name must have at least 3 characters."
+      },
+      "lastName2": {
+        "pattern": "Second last name must contain letters only.",
+        "maxlength": "Second last name must have a maximum of 30 characters.",
+        "minlength": "Second last name must have at least 3 characters."
+      },
+      "birthDate": {
+        "required": "Birth date is required."
+      },
+      "email": {
+        "required": "Email address is required.",
+        "invalid": "Email format is invalid."
+      },
+      "password": {
+        "range": "Minimum 8 characters and maximum 50 characters."
+      },
+      "document": {
+        "required": "Identity document is required.",
+        "minlength": "Identity document must have at least 6 characters.",
+        "maxlength": "Identity document must have a maximum of 10 characters.",
+        "pattern": "Identity document can only contain numbers and letters."
+      },
+      "idPhoto": {
+        "required": "You must upload a photo of your identity card showing the document number."
+      },
+      "specialties": {
+        "required": "You must select at least one specialty."
+      },
+      "certifications": {
+        "required": "You must upload at least one PDF document."
+      },
+      "terms": {
+        "required": "You must accept the terms to continue."
+      }
+    },
+    "toast": {
+      "successTitle": "Registration successful",
+      "successMessage": "Your profile will be reviewed and we will notify you by email.",
+      "invalidEmailTitle": "Invalid email",
+      "invalidEmailMessage": "The entered email is invalid or already in use. Please verify and try again.",
+      "duplicateDocumentTitle": "Duplicate document",
+      "duplicateDocumentMessage": "The entered document number is already registered in the system.",
+      "invalidPasswordTitle": "Invalid password",
+      "invalidPasswordMessage": "The password does not meet the minimum security requirements.",
+      "incompleteDataTitle": "Incomplete data",
+      "incompleteDataMessage": "Please check that all required fields are correctly filled before continuing.",
+      "existingAccountTitle": "Account already exists",
+      "existingAccountMessage": "There is already a specialist registered with that email or identity document.",
+      "invalidInfoTitle": "Invalid information",
+      "invalidInfoMessage": "Some data does not have the expected format. Please check the birth date and email.",
+      "serverErrorTitle": "Server error",
+      "serverErrorMessage": "A problem occurred on our servers. Please try again in a few minutes.",
+      "noConnectionTitle": "No connection",
+      "noConnectionMessage": "Could not connect to the server. Check your internet connection and try again.",
+      "genericErrorTitle": "Registration error",
+      "genericErrorMessage": "An unexpected error occurred. Please try again later.",
+      "specialtyRequiredTitle": "Specialty required",
+      "specialtyRequiredMessage": "Select at least one specialty to continue.",
+      "documentsRequiredTitle": "Documents required",
+      "documentsRequiredMessage": "You must upload at least one certificate or credential in PDF format.",
+      "idPhotoRequiredTitle": "ID photo required",
+      "idPhotoRequiredMessage": "Upload a photo of the front side of your identity card.",
+      "formIncompleteTitle": "Incomplete form",
+      "formIncompleteMessage": "Check that all required fields are correctly filled out."
+    }
+  },
+
+  
+  "specialistDashboard": {
+    "menu": {
+      "dashboard": "Dashboard",
+      "schedule": "Schedule",
+      "patients": "Patients",
+      "messages": "Messages",
+      "editProfile": "Edit profile"
+    },
+    "searchPlaceholder": "Search patients...",
+    "newSession": "New session",
+    "tag": "Specialist dashboard",
+    "welcome": "Welcome",
+    "subtitle": "Your professional space in TakeCare",
+    "stats": {
+      "patients": "Patients",
+      "sessionsToday": "Sessions today",
+      "requests": "Requests"
+    },
+    "section": {
+      "title": "Upcoming appointments",
+      "text": "The specialist's sessions will be displayed here."
+    }
+  },
+
+  
+  "specialistProfile": {
+    "back": "Back",
+    "tag": "Specialist profile",
+    "title": "Edit profile",
+    "subtitle": "Update your information and improve your presence on TakeCare.",
+    "loading": "Loading information...",
+
+    "fields": {
+      "names": "Names",
+      "firstLastname": "First lastname",
+      "secondLastname": "Second lastname",
+      "email": "Email",
+      "biography": "Biography",
+      "office": "Office location",
+      "cost": "Session cost"
+    },
+
+    "placeholders": {
+      "secondLastname": "Ex: Garcia",
+      "biography": "Describe your specialty, experience or therapeutic approach...",
+      "office": "Ex: America Ave #123",
+      "cost": "Ex: 150"
+    },
+
+    "location": {
+      "tag": "In-person care",
+      "title": "Professional location",
+      "subtitle": "Register the place where you provide in-person care and decide how visible it should be to patients.",
+      "fields": {
+        "addressLine": "Main address",
+        "city": "City",
+        "neighborhood": "Neighborhood or area",
+        "reference": "Reference"
+      },
+      "placeholders": {
+        "addressLine": "Ex: America Ave #123, Health Center Building",
+        "city": "Ex: Cochabamba",
+        "neighborhood": "Ex: Queru Queru",
+        "reference": "Ex: In front of the square or office floor"
+      },
+      "visibility": {
+        "title": "Location privacy",
+        "help": "Choose whether the location can be shown publicly or remain private until manual confirmation.",
+        "public": "Public location",
+        "private": "Private location"
+      },
+      "note": "Your professional address will be saved together with this setting so you can better manage in-person care.",
+      "visibilityStatus": "If you choose public location, patients will be able to see it. If you choose private, we will keep it reserved."
+    },
+
+    "validation": {
+      "addressRequired": "Enter the main office address.",
+      "cityRequired": "Enter the city where you provide care."
+    },
+
+    "buttons": {
+      "edit": "Edit profile",
+      "cancel": "Cancel",
+      "save": "Save changes"
+    },
+
+    "success": "Profile updated successfully"
+  }
+
+
+
+
+
+
+
+
+
+}

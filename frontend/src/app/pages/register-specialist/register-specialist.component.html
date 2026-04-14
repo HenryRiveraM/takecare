@@ -1,6 +1,5 @@
 <div class="register-container">
 
-    <!-- ── Toast Notification ── -->
     <div class="toast-wrapper" [class.toast-visible]="toast.visible">
         <div class="toast" [class.toast-error]="toast.type === 'error'"
                            [class.toast-success]="toast.type === 'success'"
@@ -21,123 +20,129 @@
     <div class="profile-page">
         <div class="register-card">
             <div class="header">
-                <h1>Registro de Especialista</h1>
-                <p>Únase a nuestra red de profesionales de salud mental y comience a ayudar a otros.</p>
+                <h1>{{ 'registerSpecialist.title' | translate }}</h1>
+                <p>{{ 'registerSpecialist.subtitle' | translate }}</p>
             </div>
 
             <div class="form-helper">
-                Los campos marcados con <span class="required">*</span> son obligatorios.
+                {{ 'registerSpecialist.helper' | translate }}
+                <span class="required">*</span>
+                {{ 'registerSpecialist.helperRequired' | translate }}
             </div>
 
             <form [formGroup]="registerForm" class="form-grid" (ngSubmit)="onSubmit()">
         
                 <div class="field col-3">
-                    <label>NOMBRE <span class="required">*</span></label>
-                    <input type="text" formControlName="nombre" placeholder="Ej: Jane">
-                    <small class="error-msg" *ngIf="(f['nombre'].touched || submitted)&& f['nombre'].invalid">
-                        <span *ngIf="f['nombre'].errors?.['required']">El nombre es obligatorio.</span>
-                        <span *ngIf="f['nombre'].errors?.['pattern']">El nombre solo debe tener carácteres.</span>
-                        <span *ngIf="f['nombre'].errors?.['maxlength']">El nombre debe tener como máximo 30 caracteres.</span>
-                        <span *ngIf="f['nombre'].errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</span>
+                    <label>{{ 'registerSpecialist.fields.firstName' | translate }} <span class="required">*</span></label>
+                    <input type="text" formControlName="nombre" [placeholder]="'registerSpecialist.placeholders.firstName' | translate">
+                    <small class="error-msg" *ngIf="(f['nombre'].touched || submitted) && f['nombre'].invalid">
+                        <span *ngIf="f['nombre'].errors?.['required']">{{ 'registerSpecialist.errors.firstName.required' | translate }}</span>
+                        <span *ngIf="f['nombre'].errors?.['pattern']">{{ 'registerSpecialist.errors.firstName.pattern' | translate }}</span>
+                        <span *ngIf="f['nombre'].errors?.['maxlength']">{{ 'registerSpecialist.errors.firstName.maxlength' | translate }}</span>
+                        <span *ngIf="f['nombre'].errors?.['minlength']">{{ 'registerSpecialist.errors.firstName.minlength' | translate }}</span>
                     </small>
                 </div>
 
                 <div class="field col-3">
-                    <label>APELLIDO PATERNO <span class="required">*</span></label>
-                    <input type="text" formControlName="apellidoPaterno" placeholder="Ej: Smith">
+                    <label>{{ 'registerSpecialist.fields.lastName1' | translate }} <span class="required">*</span></label>
+                    <input type="text" formControlName="apellidoPaterno" [placeholder]="'registerSpecialist.placeholders.lastName1' | translate">
                     <small class="error-msg" *ngIf="(f['apellidoPaterno'].touched || submitted) && f['apellidoPaterno'].invalid">
-                        <span *ngIf="f['apellidoPaterno'].errors?.['required']">El primer apellido es obligatorio.</span>
-                        <span *ngIf="f['apellidoPaterno'].errors?.['pattern']">El primer apellido solo debe tener carácteres.</span>
-                        <span *ngIf="f['apellidoPaterno'].errors?.['maxlength']">El primer apellido debe tener como máximo 30 caracteres.</span>
-                        <span *ngIf="f['apellidoPaterno'].errors?.['minlength']">El primer apellido debe tener al menos 3 caracteres.</span>
+                        <span *ngIf="f['apellidoPaterno'].errors?.['required']">{{ 'registerSpecialist.errors.lastName1.required' | translate }}</span>
+                        <span *ngIf="f['apellidoPaterno'].errors?.['pattern']">{{ 'registerSpecialist.errors.lastName1.pattern' | translate }}</span>
+                        <span *ngIf="f['apellidoPaterno'].errors?.['maxlength']">{{ 'registerSpecialist.errors.lastName1.maxlength' | translate }}</span>
+                        <span *ngIf="f['apellidoPaterno'].errors?.['minlength']">{{ 'registerSpecialist.errors.lastName1.minlength' | translate }}</span>
                     </small>
                 </div>
 
                 <div class="field col-3">
-                    <label>APELLIDO MATERNO</label>
-                    <input type="text" formControlName="apellidoMaterno" placeholder="Ej: Johnson">
+                    <label>{{ 'registerSpecialist.fields.lastName2' | translate }}</label>
+                    <input type="text" formControlName="apellidoMaterno" [placeholder]="'registerSpecialist.placeholders.lastName2' | translate">
                     <small class="error-msg" *ngIf="(f['apellidoMaterno'].touched || submitted) && f['apellidoMaterno'].invalid">
-                        <span *ngIf="f['apellidoMaterno'].errors?.['pattern']">El segundo apellido solo debe tener carácteres.</span>
-                        <span *ngIf="f['apellidoMaterno'].errors?.['maxlength']">El segundo apellido debe tener como máximo 30 caracteres.</span>
-                        <span *ngIf="f['apellidoMaterno'].errors?.['minlength']">El segundo apellido debe tener al menos 3 caracteres.</span>
+                        <span *ngIf="f['apellidoMaterno'].errors?.['pattern']">{{ 'registerSpecialist.errors.lastName2.pattern' | translate }}</span>
+                        <span *ngIf="f['apellidoMaterno'].errors?.['maxlength']">{{ 'registerSpecialist.errors.lastName2.maxlength' | translate }}</span>
+                        <span *ngIf="f['apellidoMaterno'].errors?.['minlength']">{{ 'registerSpecialist.errors.lastName2.minlength' | translate }}</span>
                     </small>
                     <small class="helper-msg" *ngIf="!f['apellidoMaterno'].touched && f['apellidoMaterno'].valid">
-                        Opcional.
+                        {{ 'registerSpecialist.optional' | translate }}
                     </small>
                 </div>
 
                 <div class="field col-2">
-                    <label>FECHA DE NACIMIENTO <span class="required">*</span></label>
+                    <label>{{ 'registerSpecialist.fields.birthDate' | translate }} <span class="required">*</span></label>
                     <input type="date" formControlName="fechaNacimiento" [max]="maxDateAdult">
                     <small class="error-msg" *ngIf="(f['fechaNacimiento'].touched || submitted) && f['fechaNacimiento'].invalid">
-                        La fecha de nacimiento es obligatoria y debes ser mayor de 18 años.
+                        {{ 'registerSpecialist.errors.birthDate.required' | translate }}
                     </small>
                 </div>
 
                 <div class="field col-2">
-                    <label>CORREO ELECTRÓNICO <span class="required">*</span></label>
-                    <input type="email" formControlName="email" placeholder="jane@example.com">
+                    <label>{{ 'registerSpecialist.fields.email' | translate }} <span class="required">*</span></label>
+                    <input type="email" formControlName="email" [placeholder]="'registerSpecialist.placeholders.email' | translate">
                     <small class="error-msg" *ngIf="(f['email'].touched || submitted) && f['email'].invalid">
-                        <span *ngIf="f['email'].errors?.['required']">El correo electrónico es obligatorio.</span>
-                        <span *ngIf="f['email'].errors?.['email']">El formato del correo electrónico es inválido.</span>
+                        <span *ngIf="f['email'].errors?.['required']">{{ 'registerSpecialist.errors.email.required' | translate }}</span>
+                        <span *ngIf="f['email'].errors?.['email']">{{ 'registerSpecialist.errors.email.invalid' | translate }}</span>
                     </small>
                 </div>
 
                 <div class="field col-2">
-                    <label>CONTRASEÑA <span class="required">*</span></label>
-                    <input type="password" formControlName="password" placeholder="* * * * * * * *">
-                    <small class="error-msg" *ngIf="(f['password'].touched || submitted) && f['password'].invalid">Mínimo 8 caracteres y máximo 50 caracteres.</small>
+                    <label>{{ 'registerSpecialist.fields.password' | translate }} <span class="required">*</span></label>
+                    <input type="password" formControlName="password" [placeholder]="'registerSpecialist.placeholders.password' | translate">
+                    <small class="error-msg" *ngIf="(f['password'].touched || submitted) && f['password'].invalid">
+                      {{ 'registerSpecialist.errors.password.range' | translate }}
+                    </small>
                 </div>
 
                 <div class="field col-2">
-                    <label>DOCUMENTO DE IDENTIDAD <span class="required">*</span></label>
-                    <input type="text" formControlName="documento" placeholder="Número de CI">
-                    <small class="error-msg" *ngIf="!f['documento'].touched || submitted && f['documento'].valid">
-                        <span *ngIf="f['documento'].errors?.['required']">El documento de identidad es obligatorio.</span>
-                        <span *ngIf="f['documento'].errors?.['minlength']">El documento de identidad debe tener al menos 6 caracteres.</span>
-                        <span *ngIf="f['documento'].errors?.['maxlength']">El documento de identidad debe tener como máximo 10 caracteres.</span>
-                        <span *ngIf="f['documento'].errors?.['pattern']">El documento de identidad solo puede contener números y letras.</span>
+                    <label>{{ 'registerSpecialist.fields.document' | translate }} <span class="required">*</span></label>
+                    <input type="text" formControlName="documento" [placeholder]="'registerSpecialist.placeholders.document' | translate">
+                    <small class="error-msg" *ngIf="(f['documento'].touched || submitted) && f['documento'].invalid">
+                        <span *ngIf="f['documento'].errors?.['required']">{{ 'registerSpecialist.errors.document.required' | translate }}</span>
+                        <span *ngIf="f['documento'].errors?.['minlength']">{{ 'registerSpecialist.errors.document.minlength' | translate }}</span>
+                        <span *ngIf="f['documento'].errors?.['maxlength']">{{ 'registerSpecialist.errors.document.maxlength' | translate }}</span>
+                        <span *ngIf="f['documento'].errors?.['pattern']">{{ 'registerSpecialist.errors.document.pattern' | translate }}</span>
                     </small>
                 </div>
 
                 <div class="field full-width">
-                    <label>FOTO DEL CARNET (ANVERSO)</label>
+                    <label>{{ 'registerSpecialist.fields.idPhoto' | translate }}</label>
                     <div class="upload-zone success" *ngIf="carnetFile">
                         <div class="carnet-card">
                             <img [src]="carnetFile.url">
                             <div class="carnet-info">
                                 <span>{{ carnetFile.file.name | slice:0:15 }}...</span>
-                                <button type="button" (click)="removeCarnet()">Eliminar</button>
+                                <button type="button" (click)="removeCarnet()">{{ 'registerSpecialist.actions.remove' | translate }}</button>
                             </div>
                         </div>
                     </div>
                     <div class="upload-zone carnet-zone" *ngIf="!carnetFile">
                         <label class="upload-button">
-                            <span>Subir fotografia de CI</span>
+                            <span>{{ 'registerSpecialist.uploads.idPhoto' | translate }}</span>
                             <input type="file" (change)="onCarnetSelected($event)" accept="image/*" style="display: none;">
                         </label>
                     </div>
                     <small class="error-msg" *ngIf="submitted && !carnetFile">
-                        Debes subir una fotografía del carnet de identidad, donde se vea el numero del documento.
+                        {{ 'registerSpecialist.errors.idPhoto.required' | translate }}
                     </small>
                 </div>
 
                 <div class="full-width">
-                    <label>ESPECIALIDADES</label>
+                    <label>{{ 'registerSpecialist.fields.specialties' | translate }}</label>
                     <div class="checkbox-grid">
                         <label class="check-item" *ngFor="let opt of especialidadesOpciones">
                             <input type="checkbox" [(ngModel)]="opt.seleccionado" [ngModelOptions]="{standalone: true}">
                             {{ opt.nombre }}
                         </label>
                     </div>
-                    <small class="error-msg" *ngIf="submitted && !tieneEspecialidadSeleccionada()"></small>
+                    <small class="error-msg" *ngIf="submitted && !tieneEspecialidadSeleccionada()">
+                      {{ 'registerSpecialist.errors.specialties.required' | translate }}
+                    </small>
                 </div>
 
                 <div class="full-width">
-                    <label>CERTIFICACIONES Y CREDENCIALES (PDF)</label>
+                    <label>{{ 'registerSpecialist.fields.certifications' | translate }}</label>
                     <div class="upload-zone" [class.dragging]="isDragging" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
                         <label class="upload-button">
-                            <span>Arrastra o haz clic para subir PDFs</span>
+                            <span>{{ 'registerSpecialist.uploads.certifications' | translate }}</span>
                             <input type="file" (change)="onFileSelected($event)" accept=".pdf,application/pdf" multiple style="display: none;">
                         </label>
                     </div>
@@ -149,7 +154,7 @@
                                     <span class="check-icon">✓</span>
                                     <div class="file-text">
                                         <p class="file-name">{{ item.file.name }}</p>
-                                        <p class="file-status">{{ item.size }} • Listo para subir</p>
+                                        <p class="file-status">{{ item.size }} • {{ 'registerSpecialist.readyToUpload' | translate }}</p>
                                     </div>
                                 </div>
                                 <button type="button" class="remove-btn" (click)="removeFile(i)">✕</button>
@@ -158,7 +163,7 @@
                     </div>
 
                     <small class="error-msg" *ngIf="submitted && fileList.length === 0">
-                        Debes subir al menos un documento PDF.
+                        {{ 'registerSpecialist.errors.certifications.required' | translate }}
                     </small>
                 </div>
 
@@ -166,12 +171,15 @@
                     <div class="check-item consent-box">
                         <input type="checkbox" id="terminos" formControlName="aceptaTerminos">
                         <label for="terminos" class="consent-label">
-                            Acepto los <strong>Términos de Servicio</strong> y la <strong>Política de Privacidad</strong>. 
-                            Entiendo cómo se gestionarán mis datos de salud.
+                            {{ 'registerSpecialist.terms.text1' | translate }}
+                            <strong>{{ 'registerSpecialist.terms.termsOfService' | translate }}</strong>
+                            {{ 'registerSpecialist.terms.and' | translate }}
+                            <strong>{{ 'registerSpecialist.terms.privacyPolicy' | translate }}</strong>.
+                            {{ 'registerSpecialist.terms.text2' | translate }}
                         </label>
                     </div>
                     <small class="error-msg" *ngIf="submitted && f['aceptaTerminos'].invalid">
-                        Debes aceptar los términos para continuar.
+                        {{ 'registerSpecialist.errors.terms.required' | translate }}
                     </small>
                 </div>
 
@@ -180,10 +188,10 @@
                     [disabled]="registerForm.invalid || fileList.length === 0 || !tieneEspecialidadSeleccionada() || !carnetFile || isLoading">
                     
                     <span *ngIf="isLoading" class="spinner"></span>
-                    <span>{{ isLoading ? 'Procesando registro...' : 'Registro completo' }}</span>
+                    <span>{{ isLoading ? ('registerSpecialist.actions.processing' | translate) : ('registerSpecialist.actions.complete' | translate) }}</span>
                 </button>
 
-                <p class="footer-note">ⓘ Su perfil será revisado por el administrador</p>
+                <p class="footer-note">{{ 'registerSpecialist.footerNote' | translate }}</p>
             </form>
         </div>
     </div>

@@ -2,10 +2,10 @@
   <div class="container">
 
     <button type="button" class="back-btn" (click)="goBackToProfile()">
-        ← Volver
+      ← {{ 'specialistProfile.back' | translate }}
     </button>
 
-    <!-- HEADER VISUAL -->
+    <!-- HEADER -->
     <div class="profile-header">
 
       <div class="avatar">
@@ -13,93 +13,72 @@
       </div>
 
       <div>
-        <span class="tag">Perfil Especialista</span>
-        <h1>Editar perfil</h1>
-        <p>Actualiza tu información y mejora tu presencia en TakeCare.</p>
+        <span class="tag">{{ 'specialistProfile.tag' | translate }}</span>
+        <h1>{{ 'specialistProfile.title' | translate }}</h1>
+        <p>{{ 'specialistProfile.subtitle' | translate }}</p>
       </div>
     </div>
 
     <div *ngIf="loading" class="info-message">
-      Cargando información...
+      {{ 'specialistProfile.loading' | translate }}
     </div>
 
     <div *ngIf="errorMsg" class="error">
       {{ errorMsg }}
     </div>
 
-    <!-- FORM -->
     <form (ngSubmit)="save()" class="form" *ngIf="!loading">
 
       <div class="grid">
 
         <div class="field">
-          <label>Nombres</label>
+          <label>{{ 'specialistProfile.fields.names' | translate }}</label>
+          <div class="input-group">
+            <span class="material-symbols-outlined">person</span>
+            <input [(ngModel)]="profile.names" name="names" [readonly]="!isEditing"/>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>{{ 'specialistProfile.fields.firstLastname' | translate }}</label>
+          <div class="input-group">
+            <span class="material-symbols-outlined">person</span>
+            <input [(ngModel)]="profile.firstLastname" name="firstLastname" [readonly]="!isEditing"/>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>{{ 'specialistProfile.fields.secondLastname' | translate }}</label>
           <div class="input-group">
             <span class="material-symbols-outlined">person</span>
             <input 
-            [(ngModel)]="profile.names" 
-            name="names"
-            [readonly] = "!isEditing"
-            />
+              [(ngModel)]="profile.secondLastname"
+              name="secondLastname"
+              [placeholder]="'specialistProfile.placeholders.secondLastname' | translate"
+              [readonly]="!isEditing"/>
           </div>
         </div>
 
         <div class="field">
-          <label>Primer Apellido</label>
-          <div class="input-group">
-            <span class="material-symbols-outlined">person</span>
-            <input [(ngModel)]="profile.firstLastname" 
-            name="firstLastname"
-            [readonly] = "!isEditing"
-            />
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Segundo Apellido</label>
-          <div class="input-group">
-            <span class="material-symbols-outlined">person</span>
-            <input [(ngModel)]="profile.secondLastname" 
-            name="secondLastname"
-            placeholder="Ej: García"
-            [readonly] = "!isEditing"
-            />
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Correo electrónico</label>
+          <label>{{ 'specialistProfile.fields.email' | translate }}</label>
           <div class="input-group">
             <span class="material-symbols-outlined">mail</span>
-            <input [(ngModel)]="profile.email" 
-            name="email" type="email"
-            readonly/>
+            <input [(ngModel)]="profile.email" name="email" type="email" readonly/>
           </div>
         </div>
 
         <div class="field full">
-          <label>Biografía</label>
-          <textarea [(ngModel)]="profile.biography" name="biography"
-            placeholder="Describe tu especialidad, experiencia o enfoque terapéutico..."
-            [readonly] = "!isEditing">
+          <label>{{ 'specialistProfile.fields.biography' | translate }}</label>
+          <textarea
+            [(ngModel)]="profile.biography"
+            name="biography"
+            [placeholder]="'specialistProfile.placeholders.biography' | translate"
+            [readonly]="!isEditing">
           </textarea>
         </div>
 
         <div class="field">
-          <label>Ubicación del consultorio</label>
-          <div class="input-group">
-            <span class="material-symbols-outlined">location_on</span>
-            <input
-              [(ngModel)]="profile.officeUbi"
-              name="officeUbi"
-              placeholder="Ej: Av. América #123"
-              [readonly]="!isEditing"
-            />
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Costo por sesión</label>
+          <label>{{ 'specialistProfile.fields.cost' | translate }}</label>
           <div class="input-group">
             <span class="material-symbols-outlined">payments</span>
             <input
@@ -107,32 +86,135 @@
               name="sessionCost"
               type="number"
               min="0"
-              placeholder="Ej: 150"
-              [readonly]="!isEditing"
-            />
+              [placeholder]="'specialistProfile.placeholders.cost' | translate"
+              [readonly]="!isEditing"/>
           </div>
+        </div>
+
+        <div class="location-card full">
+          <div class="section-copy">
+            <span class="section-tag">{{ 'specialistProfile.location.tag' | translate }}</span>
+            <h2>{{ 'specialistProfile.location.title' | translate }}</h2>
+            <p>{{ 'specialistProfile.location.subtitle' | translate }}</p>
+          </div>
+
+          <div class="location-grid">
+            <div class="field">
+              <label>{{ 'specialistProfile.location.fields.addressLine' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">home_pin</span>
+                <input
+                  [(ngModel)]="locationDetails.addressLine"
+                  name="addressLine"
+                  maxlength="120"
+                  [placeholder]="'specialistProfile.location.placeholders.addressLine' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.location.fields.city' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">apartment</span>
+                <input
+                  [(ngModel)]="locationDetails.city"
+                  name="city"
+                  maxlength="60"
+                  [placeholder]="'specialistProfile.location.placeholders.city' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.location.fields.neighborhood' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">map</span>
+                <input
+                  [(ngModel)]="locationDetails.neighborhood"
+                  name="neighborhood"
+                  maxlength="60"
+                  [placeholder]="'specialistProfile.location.placeholders.neighborhood' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.location.fields.reference' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">pin_drop</span>
+                <input
+                  [(ngModel)]="locationDetails.reference"
+                  name="reference"
+                  maxlength="120"
+                  [placeholder]="'specialistProfile.location.placeholders.reference' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="visibility-panel">
+            <div>
+              <h3>{{ 'specialistProfile.location.visibility.title' | translate }}</h3>
+              <p>{{ 'specialistProfile.location.visibility.help' | translate }}</p>
+            </div>
+
+            <div class="visibility-options" [class.readonly-options]="!isEditing">
+              <label class="visibility-option" [class.active]="locationDetails.visibility === 'public'">
+                <input
+                  type="radio"
+                  name="visibility"
+                  [(ngModel)]="locationDetails.visibility"
+                  value="public"
+                  [disabled]="!isEditing"/>
+                <span>{{ 'specialistProfile.location.visibility.public' | translate }}</span>
+              </label>
+
+              <label class="visibility-option" [class.active]="locationDetails.visibility === 'private'">
+                <input
+                  type="radio"
+                  name="visibility"
+                  [(ngModel)]="locationDetails.visibility"
+                  value="private"
+                  [disabled]="!isEditing"/>
+                <span>{{ 'specialistProfile.location.visibility.private' | translate }}</span>
+              </label>
+            </div>
+          </div>
+
+          <p class="helper-text">
+            {{ 'specialistProfile.location.note' | translate }}
+          </p>
+
+          <p class="helper-text visibility-note" *ngIf="!loading && locationDetails.visibility">
+            {{ 'specialistProfile.location.visibilityStatus' | translate }}
+          </p>
+
+          <p class="error location-error" *ngIf="locationErrorMsg">
+            {{ locationErrorMsg }}
+          </p>
         </div>
 
       </div>
 
+      <!-- ACTIONS -->
       <div class="actions" *ngIf="!isEditing">
         <button class="btn-primary" type="button" (click)="enableEdit()">
-          Editar perfil
+          {{ 'specialistProfile.buttons.edit' | translate }}
         </button>
       </div>
 
       <div class="actions" *ngIf="isEditing">
         <button class="btn-secondary" type="button" (click)="cancelEdit()">
-          Cancelar
+          {{ 'specialistProfile.buttons.cancel' | translate }}
         </button>
 
         <button class="btn-primary" type="submit" [disabled]="loading">
-          Guardar cambios
+          {{ 'specialistProfile.buttons.save' | translate }}
         </button>
       </div>
 
       <p class="success" *ngIf="successMsg">
-        {{ successMsg }}
+        {{ 'specialistProfile.success' | translate }}
       </p>
 
     </form>
