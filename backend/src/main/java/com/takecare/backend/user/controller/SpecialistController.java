@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import com.takecare.backend.specialities.dto.SpecialistFilterResponseDTO;
+import com.takecare.backend.specialities.service.SpecialistSearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.takecare.backend.user.dto.SpecialistLocationResponseDto;
@@ -36,13 +39,26 @@ public class SpecialistController {
 
     private final SpecialistService specialistService;
     private final SpecialistProfileService specialistProfileService;
+    private final SpecialistSearchService specialistSearchService;
 
     public SpecialistController(SpecialistService specialistService,
-                                SpecialistProfileService specialistProfileService) {
+                                SpecialistProfileService specialistProfileService,
+                                SpecialistSearchService specialistSearchService) {
         this.specialistService = specialistService;
         this.specialistProfileService = specialistProfileService;
+        this.specialistSearchService = specialistSearchService;
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<SpecialistFilterResponseDTO>> searchSpecialists(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String availability) {
+        logger.info("GET /api/v1/specialists/search | category={} | availability={}", category, availability);
+        List<SpecialistFilterResponseDTO> result = specialistSearchService.searchSpecialists(category, availability);
+        logger.info("GET /api/v1/specialists/search | total={}", result.size());
+        return ResponseEntity.ok(result);
+    }
+    
     @GetMapping
     public ResponseEntity<List<Specialist>> getAllSpecialists() {
         logger.info("GET /api/v1/specialists - Fetching all specialists");
