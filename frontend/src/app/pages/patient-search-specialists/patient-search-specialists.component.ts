@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SpecialistDirectoryItem, SpecialistService } from '../../services/specialist.service';
-
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { SidebarService } from '../../services/sidebar.service';
+import { NavbarComponent } from '../../shared/navbar/navbar.component';
 @Component({
   selector: 'app-patient-search-specialists',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe],
+  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent],
   templateUrl: './patient-search-specialists.component.html',
   styleUrl: './patient-search-specialists.component.css'
 })
@@ -22,7 +24,8 @@ export class PatientSearchSpecialistsComponent implements OnInit {
   constructor(
     private specialistService: SpecialistService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public sidebarService: SidebarService,
   ) {}
 
   ngOnInit(): void {

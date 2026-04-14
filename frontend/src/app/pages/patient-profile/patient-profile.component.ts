@@ -4,11 +4,14 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { PatientService, PatientProfile } from '../../services/patient.service';
+import { SidebarService } from '../../services/sidebar.service';
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-patient-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe,SidebarComponent,NavbarComponent],
   templateUrl: './patient-profile.component.html',
   styleUrl: './patient-profile.component.css'
 })
@@ -22,7 +25,8 @@ export class PatientProfileComponent implements OnInit {
     private fb: FormBuilder,
     private patientService: PatientService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    public sidebarService: SidebarService
   ) {}
 
   ngOnInit(): void {

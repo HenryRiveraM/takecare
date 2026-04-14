@@ -7,6 +7,11 @@
   display: flex;
   justify-content: center;
   font-family: 'Manrope', sans-serif;
+  margin-left: 260px;
+}
+
+.profile-page.full-width {
+  margin-left: 0;
 }
 
 .form-container {
@@ -300,6 +305,17 @@
   white-space: nowrap;
 }
 
+.main-content {
+  margin-left: 260px; /* 👈 Este debe ser exactamente el ancho de tu sidebar */
+  padding: 40px;
+  min-height: 100vh;
+  transition: all 0.3s ease; /* Para que si el menú se esconde, se mueva suave */
+}
+
+.main-content.full-width {
+  margin-left: 0;
+}
+
 @media (max-width: 768px) {
   .back-btn {
     font-size: 0.9rem;
@@ -317,5 +333,10 @@
   .btn-secondary {
     width: 100%;
     justify-content: center;
+  }
+
+  .profile-page {
+    margin-left: 0;
+    padding: 20px;
   }
 }

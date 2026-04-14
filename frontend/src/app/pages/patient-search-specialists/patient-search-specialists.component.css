@@ -61,6 +61,8 @@
 .main {
   flex: 1;
   padding: 34px;
+  margin-left: 260px;
+  transition: margin-left 0.3s ease;
 }
 
 .toolbar {
@@ -232,6 +234,9 @@
   margin: 0;
   color: #6b7280;
 }
+.main.full-width {
+  margin-left: 0;
+}
 
 @media (max-width: 1100px) {
   .grid {
@@ -256,6 +261,11 @@
 @media (max-width: 820px) {
   .directory-page {
     flex-direction: column;
+  }
+
+  .main {
+    margin-left: 0;
+    padding: 20px;
   }
 
   .sidebar {

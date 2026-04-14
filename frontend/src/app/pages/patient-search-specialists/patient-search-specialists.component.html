@@ -1,24 +1,5 @@
 <div class="directory-page">
-  <aside class="sidebar">
-    <div class="logo">
-      <img src="assets/images/logo.png" alt="logo">
-      <span>TakeCare</span>
-    </div>
-
-    <div class="menu">
-      <a class="menu-item" routerLink="/patient">
-        {{ 'patientDashboard.menu.panel' | translate }}
-      </a>
-      <div class="menu-item">{{ 'patientDashboard.menu.appointments' | translate }}</div>
-      <a class="menu-item active" routerLink="/patient/search-specialists">
-        {{ 'patientDashboard.menu.searchSpecialist' | translate }}
-      </a>
-      <div class="menu-item">{{ 'patientDashboard.menu.history' | translate }}</div>
-      <a class="menu-item" routerLink="/patient/profile">
-        {{ 'patientDashboard.menu.editProfile' | translate }}
-      </a>
-    </div>
-  </aside>
+  <app-sidebar></app-sidebar>
 
   <div class="main">
     <div class="toolbar">

@@ -1,10 +1,17 @@
 <div class="profile-page animate__fadeIn">
+  
+  <app-sidebar></app-sidebar>
+
+  <div class="sidebar-overlay" 
+       *ngIf="sidebarService.isOpen()" 
+       (click)="sidebarService.close()">
+  </div>
+
   <main class="form-container">
 
     <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="form-shell">
       
       <div class="card">
-
         <button type="button" class="back-btn" (click)="goBackToProfile()">
           ← {{ 'patientProfile.back' | translate }}
         </button>
@@ -88,6 +95,5 @@
 
       </div>
     </form>
-
   </main>
 </div>

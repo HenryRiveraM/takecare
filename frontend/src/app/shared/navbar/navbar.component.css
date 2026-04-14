@@ -190,6 +190,22 @@
   background: white;
 }
 
+.menu-toggle {
+  display: none; /* Oculto en PC */
+  background: none;
+  border: none;
+  color: #F5A3A3;
+  cursor: pointer;
+  padding: 8px;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-toggle .material-symbols-outlined {
+  font-size: 28px;
+}
+
 /* ========================= */
 /* 📱 TABLET (<= 900px) */
 /* ========================= */
@@ -217,6 +233,16 @@
     padding: 0 10px;
   }
 
+}
+
+.menu-toggle {
+  display: flex !important; /* Lo forzamos para ver si aparece */
+  background: none;
+  border: none;
+  color: #F5A3A3;
+  cursor: pointer;
+  z-index: 1200;
+  padding: 10px;
 }
 
 /* ========================= */
@@ -261,7 +287,29 @@
     padding: 0 8px;
   }
 
+  menu-toggle {
+    display: flex; /* Aparece en móvil */
+  }
+
+  .private-navbar {
+    justify-content: flex-start; /* Alinea todo a la izquierda para dejar espacio */
+    gap: 10px;
+  }
+
+  /* Para que el botón de Logout no ocupe tanto espacio */
+  .private-logout {
+    padding: 8px !important;
+    font-size: 0; /* Oculta el texto */
+  }
+
+  .private-logout::before {
+    content: "\e9ba"; /* Icono de logout de Material Symbols */
+    font-family: 'Material Symbols Outlined';
+    font-size: 20px;
+  }
+
 }
+
 
 /* ========================= */
 /* 📱 MÓVIL PEQUEÑO (<= 480px) */
@@ -314,4 +362,9 @@
     height: 34px;
   }
 
+}
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none !important;
+  }
 }
