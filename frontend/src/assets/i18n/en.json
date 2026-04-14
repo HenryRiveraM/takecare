@@ -143,6 +143,7 @@
     "title": "Your safe space starts here",
     "subtitle": "Take Care: Your mental well-being is our priority.",
     "emailLabel": "Email",
+    "emailPlaceholder": "example@email.com",
     "passwordLabel": "Password",
     "passwordPlaceholder": "••••••••",
     "rememberMe": "Remember me",
@@ -235,6 +236,8 @@
     "subtitle": "Browse active and verified specialists to continue your care process.",
     "searchPlaceholder": "Search by name, specialty or location",
     "searchButton": "Search",
+    "resetTitle": "Clear filters",
+    "viewAllButton": "View all specialists",
     "results": "specialists found",
     "costPrefix": "Session cost:",
     "cardNote": "Soon you will be able to review more details and request an appointment from here.",
@@ -248,6 +251,24 @@
       "biography": "This specialist has not added a public biography yet.",
       "location": "Location to be defined",
       "cost": "Cost pending"
+    },
+    "filters": {
+      "allCategories": "All categories",
+      "allSchedules": "All schedules",
+      "mentalHealth": "Mental health disorders",
+      "addictions": "Addictions",
+      "familyTherapy": "Family therapy",
+      "childPsychology": "Child psychology",
+      "depressionAnxiety": "Depression and anxiety",
+      "occupationalTherapy": "Occupational therapy",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "night": "Night"
+    },
+    "specialties": {
+      "psychology": "Psychology",
+      "cardiology": "Cardiology",
+      "nutrition": "Nutrition"
     }
   },
 

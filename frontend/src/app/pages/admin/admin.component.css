@@ -198,7 +198,7 @@ table {
   border-collapse: collapse;
   border-radius: 18px;
   overflow: hidden;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 thead {
@@ -252,7 +252,12 @@ td:nth-child(5) {
 
 th:nth-child(6),
 td:nth-child(6) {
-  width: 10%;
+  width: 140px;
+  min-width: 140px;
+}
+
+td:nth-child(6) {
+  text-align: center;
 }
 
 tbody tr {
@@ -282,10 +287,13 @@ tbody tr:hover {
   background: #F5A3A3;
   color: white;
   border: none;
-  padding: 10px 16px;
+  width: 100%;
+  max-width: 132px;
+  padding: 10px 14px;
   border-radius: 12px;
   cursor: pointer;
   font-weight: 700;
+  white-space: nowrap;
   transition: 0.3s;
   box-shadow: 0 8px 16px rgba(245, 163, 163, 0.25);
 }

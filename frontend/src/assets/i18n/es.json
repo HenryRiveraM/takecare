@@ -144,6 +144,7 @@
     "title": "Tu espacio seguro comienza aquí",
     "subtitle": "Take Care: Tu bienestar mental es nuestra prioridad.",
     "emailLabel": "Email",
+    "emailPlaceholder": "ejemplo@correo.com",
     "passwordLabel": "Contraseña",
     "passwordPlaceholder": "••••••••",
     "rememberMe": "Recordarme",
@@ -236,6 +237,8 @@
     "subtitle": "Explora especialistas activos y verificados para continuar tu proceso de atención.",
     "searchPlaceholder": "Busca por nombre, especialidad o ubicación",
     "searchButton": "Buscar",
+    "resetTitle": "Limpiar filtros",
+    "viewAllButton": "Ver todos los especialistas",
     "results": "especialistas encontrados",
     "costPrefix": "Costo por sesión:",
     "cardNote": "Muy pronto podrás revisar más detalles y agendar una cita desde aquí.",
@@ -257,8 +260,16 @@
       "addictions": "Adicciones",
       "familyTherapy": "Terapia familiar",
       "childPsychology": "Psicología infantil",
-      "depressionAnsiedad": "Depresión y ansiedad",
-      "occupationalTherapy": "Terapia ocupacional"
+      "depressionAnxiety": "Depresión y ansiedad",
+      "occupationalTherapy": "Terapia ocupacional",
+      "morning": "Mañana",
+      "afternoon": "Tarde",
+      "night": "Noche"
+    },
+    "specialties": {
+      "psychology": "Psicología",
+      "cardiology": "Cardiología",
+      "nutrition": "Nutrición"
     }
   },
 

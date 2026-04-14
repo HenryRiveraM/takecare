@@ -180,6 +180,7 @@ public class SpecialistService extends UserService {
         dto.setId(specialist.getId());
         dto.setFullName(buildFullName(specialist));
         dto.setEmail(normalizeNullable(specialist.getEmail()));
+        dto.setBirthDate(specialist.getBirthDate());
         dto.setBiography(normalizeNullable(specialist.getBiography()));
         dto.setOfficeUbi(formatOfficeUbiForPublicView(specialist.getOfficeUbi()));
         dto.setSpecialties(mapSpecialties(specialist));

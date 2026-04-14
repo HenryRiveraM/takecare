@@ -25,22 +25,22 @@
             <option value="Adicciones">{{ 'patientSearch.filters.addictions' | translate }}</option>
             <option value="Terapia familiar">{{ 'patientSearch.filters.familyTherapy' | translate }}</option>
             <option value="Psicología infantil">{{ 'patientSearch.filters.childPsychology' | translate }}</option>
-            <option value="Depresión y ansiedad">{{ 'patientSearch.filters.depressionAnsiedad' | translate }}</option>
+            <option value="Depresión y ansiedad">{{ 'patientSearch.filters.depressionAnxiety' | translate }}</option>
             <option value="Terapia ocupacional">{{ 'patientSearch.filters.occupationalTherapy' | translate }}</option>
           </select>
 
           <select [(ngModel)]="selectedSchedule" (change)="onSearch()" class="filter-select">
             <option value="">{{ 'patientSearch.filters.allSchedules' | translate }}</option>
-            <option value="Mañana">Mañana</option>
-            <option value="Tarde">Tarde</option>
-            <option value="Noche">Noche</option>
+            <option value="Mañana">{{ 'patientSearch.filters.morning' | translate }}</option>
+            <option value="Tarde">{{ 'patientSearch.filters.afternoon' | translate }}</option>
+            <option value="Noche">{{ 'patientSearch.filters.night' | translate }}</option>
           </select>
 
           <button type="button" class="btn-primary" (click)="onSearch()">
             {{ 'patientSearch.searchButton' | translate }}
           </button>
 
-          <button type="button" class="btn-reset" (click)="resetFilters()" title="Limpiar filtros">
+          <button type="button" class="btn-reset" (click)="resetFilters()" [title]="'patientSearch.resetTitle' | translate">
             <i class="fas fa-undo"></i>
           </button>
         </div>
@@ -63,12 +63,12 @@
       <article class="specialist-card" *ngFor="let specialist of filteredSpecialists; trackBy: trackBySpecialistId">
         <div class="card-top">
           <div class="avatar">
-            {{ specialist.names.charAt(0) }}{{ specialist.firstLastname.charAt(0) }}
+            {{ getInitials(specialist) }}
           </div>
           <div class="card-titles">
-            <h2>{{ specialist.names }} {{ specialist.firstLastname }} {{ specialist.secondLastname || '' }}</h2>
+            <h2>{{ getDisplayName(specialist) }}</h2>
             <div class="badge-row">
-              <p class="speciality">{{ specialist.speciality || ('patientSearch.fallback.speciality' | translate) }}</p>
+              <p class="speciality">{{ getSpecialtiesLabel(specialist) || ('patientSearch.fallback.speciality' | translate) }}</p>
               <span class="badge-schedule" *ngIf="specialist.shift">{{ specialist.shift }}</span>
             </div>
           </div>
@@ -106,7 +106,7 @@
       <i class="fas fa-search-minus empty-icon"></i>
       <h2>{{ 'patientSearch.states.emptyTitle' | translate }}</h2>
       <p>{{ 'patientSearch.states.emptyText' | translate }}</p>
-      <button class="btn-outline" (click)="resetFilters()">Ver todos los especialistas</button>
+      <button class="btn-outline" (click)="resetFilters()">{{ 'patientSearch.viewAllButton' | translate }}</button>
     </div>
   </div>
 </div>
