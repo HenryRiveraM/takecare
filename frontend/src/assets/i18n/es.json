@@ -249,6 +249,16 @@
       "biography": "Este especialista todavía no agregó una biografía pública.",
       "location": "Ubicación por definir",
       "cost": "Costo pendiente"
+    },
+    "filters": {
+      "allCategories": "Todas las categorías",
+      "allSchedules": "Todos los horarios",
+      "mentalHealth": "Trastornos mentales",
+      "addictions": "Adicciones",
+      "familyTherapy": "Terapia familiar",
+      "childPsychology": "Psicología infantil",
+      "depressionAnsiedad": "Depresión y ansiedad",
+      "occupationalTherapy": "Terapia ocupacional"
     }
   },
 
