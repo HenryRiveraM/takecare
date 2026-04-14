@@ -1,38 +1,32 @@
-<footer class="footer">
+<footer class="footer" *ngIf="showFooter">
 
-    <div class="footer-content">
+  <div class="footer-content">
 
-        <div class="footer-brand">
-            <img src="assets/images/logo.png" alt="Take Care">
-            <p>Cuidando tu bienestar mental con amor y profesionalismo.</p>
-        </div>
+    <div class="footer-brand">
+      <img src="assets/images/logo.png" alt="Take Care">
+      <p>{{ 'footer.brandText' | translate }}</p>
+    </div>
 
-        <div class="footer-links">
+    <div class="footer-links">
 
-            <div class="column">
-                <h4>Plataforma</h4>
-                <a routerLink="/">Inicio</a>
-                <a routerLink="/register-role">Registrarse</a>
-                <a routerLink="/login">Iniciar sesión</a>
-            </div>
+      <div class="column">
+        <h4>{{ 'footer.platform' | translate }}</h4>
+        <a routerLink="/">{{ 'footer.home' | translate }}</a>
+        <a routerLink="/register-role">{{ 'footer.register' | translate }}</a>
+        <a routerLink="/login">{{ 'footer.login' | translate }}</a>
+      </div>
 
-            <!-- <div class="column">
-                <h4>Usuarios</h4>
-                <a routerLink="/register/patient">Pacientes</a>
-                <a routerLink="/register/specialist">Especialistas</a>
-            </div> -->
-
-            <div class="column">
-                <h4>Soporte</h4>
-                <a routerLink="/recover-password">Recuperar contraseña</a>
-            </div>
-
-        </div>
+      <div class="column">
+        <h4>{{ 'footer.support' | translate }}</h4>
+        <a routerLink="/recover-password">{{ 'footer.recoverPassword' | translate }}</a>
+      </div>
 
     </div>
 
-    <div class="footer-bottom">
-        <p>© 2026 Take Care. Todos los derechos reservados.</p>
-    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>{{ 'footer.copyright' | translate }}</p>
+  </div>
 
 </footer>

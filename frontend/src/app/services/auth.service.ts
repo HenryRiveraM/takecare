@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface LoginRequest {
   email: string;
@@ -12,6 +13,7 @@ export interface LoginResponse {
   names: string;
   email: string;
   role: number;
+  accountVerified?: number;
 }
 
 export interface ApiResponse<T> {
@@ -24,35 +26,30 @@ export interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class AuthService {
-    private apiUrl = "https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/auth";
+  private readonly apiUrl = environment.apiUrl;
     
   constructor(private http: HttpClient) {}
 
-  // 🔐 LOGIN
   login(credentials: LoginRequest): Observable<ApiResponse<LoginResponse>> {
     return this.http.post<ApiResponse<LoginResponse>>(
-      `${this.apiUrl}/login`,
+      `${this.apiUrl}/api/v1/auth/login`,
       credentials
     );
   }
 
-  // 💾 GUARDAR USUARIO EN LOCALSTORAGE
   saveUser(user: LoginResponse): void {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  // 👤 OBTENER USUARIO
   getUser(): LoginResponse | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
 
-  // 🔍 SABER SI ESTÁ LOGUEADO
   isLogged(): boolean {
     return !!this.getUser();
   }
 
-  // 🚪 LOGOUT
   logout(): void {
     localStorage.removeItem('user');
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface PatientProfile {
   id?: number;
@@ -40,10 +41,7 @@ export interface ApiResponse<T> {
 })
 export class ApiService {
 
-  private readonly baseUrl =
-    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:8080'
-      : 'https://tragic-vere-takecare-cebbdb2d.koyeb.app';
+  private readonly baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

@@ -1,0 +1,113 @@
+<div class="directory-page">
+  <app-sidebar></app-sidebar>
+
+  <div class="main">
+    <div class="toolbar">
+      <div class="header-info">
+        <span class="tag">{{ 'patientSearch.tag' | translate }}</span>
+        <h1>{{ 'patientSearch.title' | translate }}</h1>
+        <p>{{ 'patientSearch.subtitle' | translate }}</p>
+      </div>
+      <div class="search-and-filters">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input
+            [(ngModel)]="searchTerm"
+            (keyup.enter)="onSearch()"
+            class="search-input"
+            [placeholder]="'patientSearch.searchPlaceholder' | translate" />
+        </div>
+
+        <div class="filters-group">
+          <select [(ngModel)]="selectedCategory" (change)="onSearch()" class="filter-select">
+            <option value="">{{ 'patientSearch.filters.allCategories' | translate }}</option>
+            <option value="Trastornos mentales">{{ 'patientSearch.filters.mentalHealth' | translate }}</option>
+            <option value="Adicciones">{{ 'patientSearch.filters.addictions' | translate }}</option>
+            <option value="Terapia familiar">{{ 'patientSearch.filters.familyTherapy' | translate }}</option>
+            <option value="Psicología infantil">{{ 'patientSearch.filters.childPsychology' | translate }}</option>
+            <option value="Depresión y ansiedad">{{ 'patientSearch.filters.depressionAnxiety' | translate }}</option>
+            <option value="Terapia ocupacional">{{ 'patientSearch.filters.occupationalTherapy' | translate }}</option>
+          </select>
+
+          <select [(ngModel)]="selectedSchedule" (change)="onSearch()" class="filter-select">
+            <option value="">{{ 'patientSearch.filters.allSchedules' | translate }}</option>
+            
+            <option *ngFor="let day of daysOfWeek" [value]="day.value">
+              {{ day.label | translate }}
+            </option>
+          </select>
+
+          <button type="button" class="btn-primary" (click)="onSearch()">
+            {{ 'patientSearch.searchButton' | translate }}
+          </button>
+
+          <button type="button" class="btn-reset" (click)="resetFilters()" [title]="'patientSearch.resetTitle' | translate">
+            <i class="fas fa-undo"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-card" *ngIf="loading">
+      {{ 'patientSearch.states.loading' | translate }}
+    </div>
+
+    <div class="status-card error" *ngIf="errorMsg">
+      {{ errorMsg }}
+    </div>
+
+    <div class="results-header" *ngIf="!loading && !errorMsg">
+      <span>{{ filteredSpecialists.length }} {{ 'patientSearch.results' | translate }}</span>
+    </div>
+
+    <div class="grid" *ngIf="!loading && !errorMsg && filteredSpecialists.length > 0">
+      <article class="specialist-card" *ngFor="let specialist of filteredSpecialists; trackBy: trackBySpecialistId">
+        <div class="card-top">
+          <div class="avatar">
+            {{ getInitials(specialist) }}
+          </div>
+          <div class="card-titles">
+            <h2>{{ getDisplayName(specialist) }}</h2>
+            <div class="badge-row">
+              <p class="speciality">{{ getSpecialtiesLabel(specialist) || ('patientSearch.fallback.speciality' | translate) }}</p>
+              <span class="badge-schedule" *ngIf="specialist.shift">{{ specialist.shift }}</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="biography">
+          {{ specialist.biography || ('patientSearch.fallback.biography' | translate) }}
+        </p>
+
+        <div class="meta">
+          <div class="meta-item">
+            <span class="material-symbols-outlined">location_on</span>
+            <span>{{ specialist.officeUbi || ('patientSearch.fallback.location' | translate) }}</span>
+          </div>
+
+          <div class="meta-item">
+            <span class="material-symbols-outlined">payments</span>
+            <span>
+              {{
+                specialist.sessionCost != null
+                  ? ('patientSearch.costPrefix' | translate) + ' ' + specialist.sessionCost
+                  : ('patientSearch.fallback.cost' | translate)
+              }}
+            </span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          {{ 'patientSearch.cardNote' | translate }}
+        </div>
+      </article>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && !errorMsg && filteredSpecialists.length === 0">
+      <i class="fas fa-search-minus empty-icon"></i>
+      <h2>{{ 'patientSearch.states.emptyTitle' | translate }}</h2>
+      <p>{{ 'patientSearch.states.emptyText' | translate }}</p>
+      <button class="btn-outline" (click)="resetFilters()">{{ 'patientSearch.viewAllButton' | translate }}</button>
+    </div>
+  </div>
+</div>

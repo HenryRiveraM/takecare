@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,14 @@ public class PatientService extends UserService {
     private static final Logger logger = LoggerFactory.getLogger(PatientService.class);
 
     private final PatientRepository patientRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public PatientService(PatientRepository patientRepository,
-                          BCryptPasswordEncoder passwordEncoder) {
+                          BCryptPasswordEncoder passwordEncoder,
+                          SimpMessagingTemplate messagingTemplate) { 
         super(passwordEncoder);
         this.patientRepository = patientRepository;
+        this.messagingTemplate = messagingTemplate;
     }
 
     public Patient registerPatientFromDTO(PatientRegisterDTO dto) {
@@ -35,6 +39,7 @@ public class PatientService extends UserService {
         patient.setBirthDate(dto.getBirthDate());
         patient.setCiNumber(dto.getCiNumber());
         patient.setEmail(dto.getEmail());
+        patient.setCiDocumentImg(dto.getCiDocumentImg());
         patient.setPasswordHash(dto.getPassword());
         patient.setSelfieVerification(dto.getSelfieVerification());
         patient.setClinicalHistory(dto.getClinicalHistory());
@@ -43,6 +48,9 @@ public class PatientService extends UserService {
 
         Patient saved = patientRepository.save(patient);
         logger.info("Patient registered successfully with id: {}", saved.getId());
+
+        messagingTemplate.convertAndSend("/topic/patients", "NUEVO_PACIENTE_REGISTRADO");
+        
         return saved;
     }
 
@@ -74,10 +82,12 @@ public class PatientService extends UserService {
                 patient.setBirthDate(patientDetails.getBirthDate());
                 patient.setCiNumber(patientDetails.getCiNumber());
                 patient.setEmail(patientDetails.getEmail());
-                patient.setSelfieVerification(patientDetails.getSelfieVerification());
                 patient.setClinicalHistory(patientDetails.getClinicalHistory());
                 Patient updated = patientRepository.save(patient);
                 logger.info("Patient with id: {} updated successfully", id);
+                
+                messagingTemplate.convertAndSend("/topic/patients", "PACIENTE_ACTUALIZADO");
+                
                 return updated;
             });
     }
@@ -90,10 +100,21 @@ public class PatientService extends UserService {
                 patient.setLastUpdate(LocalDateTime.now());
                 patientRepository.save(patient);
                 logger.info("Patient with id: {} marked as inactive successfully", id);
+                
+                messagingTemplate.convertAndSend("/topic/patients", "PACIENTE_ELIMINADO");
+                
                 return true;
             }).orElseGet(() -> {
                 logger.warn("Cannot delete - no patient found with id: {}", id);
                 return false;
             });
     }
+
+    public Optional<Patient> validatePatient(Integer id, boolean approved) {
+    return patientRepository.findById(id).map(patient -> {
+        patient.setAccountVerified(approved ? 1 : 0);
+        patient.setLastUpdate(LocalDateTime.now());
+        return patientRepository.save(patient);
+    });
+}
 }

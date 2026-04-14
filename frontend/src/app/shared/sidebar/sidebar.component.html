@@ -1,0 +1,19 @@
+<aside class="sidebar" [class.open]="sidebarService.isOpen()">
+  <nav class="menu">
+    <a class="menu-item" routerLink="/patient" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <i class="fas fa-home"></i> {{ 'patientDashboard.menu.panel' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/patient/search-specialists" routerLinkActive="active">
+      <i class="fas fa-search"></i> {{ 'patientDashboard.menu.searchSpecialist' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/patient/appointments" routerLinkActive="active">
+      <i class="fas fa-calendar-alt"></i> {{ 'patientDashboard.menu.appointments' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/patient/profile" routerLinkActive="active">
+      <i class="fas fa-user"></i> {{ 'patientDashboard.menu.editProfile' | translate }}
+    </a>
+  </nav>
+</aside>
