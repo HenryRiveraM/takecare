@@ -85,7 +85,7 @@ export const routes: Routes = [
   // PACIENTE (Tu nueva ruta)
   {
     path: 'patient',
-    canActivate: [patientGuard],
+    //canActivate: [patientGuard],
     data: { showNavbar: false },
     children: [
       {
@@ -106,7 +106,7 @@ export const routes: Routes = [
   // ESPECIALISTA 
   {
     path: 'specialist',
-    canActivate: [specialistGuard],
+    //canActivate: [specialistGuard],
     data: { showNavbar: false },
     children: [
       {

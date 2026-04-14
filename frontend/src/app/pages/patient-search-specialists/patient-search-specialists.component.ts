@@ -25,6 +25,15 @@ export class PatientSearchSpecialistsComponent implements OnInit {
   
   specialists: SpecialistDirectoryItem[] = [];
   filteredSpecialists: SpecialistDirectoryItem[] = [];
+  daysOfWeek = [
+    { label: 'patientSearch.filters.monday', value: 'MONDAY' },
+    { label: 'patientSearch.filters.tuesday', value: 'TUESDAY' },
+    { label: 'patientSearch.filters.wednesday', value: 'WEDNESDAY' },
+    { label: 'patientSearch.filters.thursday', value: 'THURSDAY' },
+    { label: 'patientSearch.filters.friday', value: 'FRIDAY' },
+    { label: 'patientSearch.filters.saturday', value: 'SATURDAY' },
+    { label: 'patientSearch.filters.sunday', value: 'SUNDAY' }
+  ];
 
   constructor(
     private specialistService: SpecialistService,
@@ -102,10 +111,11 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     this.loading = true;
     this.errorMsg = '';
 
-    this.specialistService.getAllSpecialists().subscribe({
+    this.specialistService.searchSpecialists(this.selectedCategory, this.selectedSchedule).subscribe({
       next: (apiSpecialists) => {
         this.specialists = apiSpecialists.filter(s => this.isVisibleSpecialist(s));
-        this.applyAllFilters();
+        
+        this.applyAllFilters(); 
         this.loading = false;
       },
       error: (error) => {
@@ -119,6 +129,11 @@ export class PatientSearchSpecialistsComponent implements OnInit {
 
   private applyAllFilters(): void {
     const term = this.searchTerm.toLowerCase().trim();
+
+    if (!term) {
+      this.filteredSpecialists = [...this.specialists];
+      return;
+    }
 
     this.filteredSpecialists = this.specialists.filter(s => {
       const matchesTerm = !term || [
@@ -165,9 +180,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
       'psicologia infantil': 'patientSearch.filters.childPsychology',
       'depresion y ansiedad': 'patientSearch.filters.depressionAnxiety',
       'terapia ocupacional': 'patientSearch.filters.occupationalTherapy',
-      'psicologia': 'patientSearch.specialties.psychology',
-      'cardiologia': 'patientSearch.specialties.cardiology',
-      'nutricion': 'patientSearch.specialties.nutrition'
+
     };
 
     return specialtyMap[normalized] || null;

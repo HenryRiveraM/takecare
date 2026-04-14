@@ -262,14 +262,13 @@
       "childPsychology": "Psicología infantil",
       "depressionAnxiety": "Depresión y ansiedad",
       "occupationalTherapy": "Terapia ocupacional",
-      "morning": "Mañana",
-      "afternoon": "Tarde",
-      "night": "Noche"
-    },
-    "specialties": {
-      "psychology": "Psicología",
-      "cardiology": "Cardiología",
-      "nutrition": "Nutrición"
+      "monday": "Lunes",
+      "tuesday": "Martes",
+      "wednesday": "Miércoles",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado",
+      "sunday": "Domingo"
     }
   },
 
