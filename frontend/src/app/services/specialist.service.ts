@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -75,6 +75,26 @@ export class SpecialistService {
   updateProfile(id: number, data: any): Observable<any> {
     console.log(`Actualizando perfil de especialista: ${this.baseUrl}/${id}/profile`, data);
     return this.http.put(`${this.baseUrl}/${id}/profile`, data);
+  }
+
+  searchSpecialists(category?: string, availability?: string): Observable<SpecialistDirectoryItem[]> {
+    let params = new HttpParams();
+    
+    if (category && category.trim() !== '') {
+      params = params.set('category', category);
+    }
+    
+    if (availability && availability.trim() !== '') {
+      params = params.set('availability', availability);
+    }
+
+    return this.http
+      .get<any[]>(`${this.baseUrl}/search`, { params })
+      .pipe(
+        map((specialists) => 
+          specialists.map((specialist) => this.normalizeSpecialist(specialist))
+        )
+      );
   }
 
   private normalizeSpecialist(

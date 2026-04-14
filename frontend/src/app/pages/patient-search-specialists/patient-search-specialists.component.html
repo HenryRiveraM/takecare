@@ -31,9 +31,10 @@
 
           <select [(ngModel)]="selectedSchedule" (change)="onSearch()" class="filter-select">
             <option value="">{{ 'patientSearch.filters.allSchedules' | translate }}</option>
-            <option value="Mañana">{{ 'patientSearch.filters.morning' | translate }}</option>
-            <option value="Tarde">{{ 'patientSearch.filters.afternoon' | translate }}</option>
-            <option value="Noche">{{ 'patientSearch.filters.night' | translate }}</option>
+            
+            <option *ngFor="let day of daysOfWeek" [value]="day.value">
+              {{ day.label | translate }}
+            </option>
           </select>
 
           <button type="button" class="btn-primary" (click)="onSearch()">
