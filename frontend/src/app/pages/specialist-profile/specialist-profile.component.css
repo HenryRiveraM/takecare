@@ -222,6 +222,10 @@ textarea:focus {
   font-size: 0.95rem;
 }
 
+.visibility-note {
+  color: #965f5f;
+}
+
 .location-error {
   margin-top: 12px;
   text-align: left;
