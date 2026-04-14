@@ -6,7 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { SpecialistDirectoryItem, SpecialistService } from '../../services/specialist.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
-import { NavbarComponent } from '../../shared/navbar/navbar.component';
+
 @Component({
   selector: 'app-patient-search-specialists',
   standalone: true,
@@ -14,10 +14,15 @@ import { NavbarComponent } from '../../shared/navbar/navbar.component';
   templateUrl: './patient-search-specialists.component.html',
   styleUrl: './patient-search-specialists.component.css'
 })
+
 export class PatientSearchSpecialistsComponent implements OnInit {
   searchTerm = '';
+  selectedCategory = '';
+  selectedSchedule = '';
+
   loading = false;
   errorMsg = '';
+  
   specialists: SpecialistDirectoryItem[] = [];
   filteredSpecialists: SpecialistDirectoryItem[] = [];
 
@@ -30,18 +35,30 @@ export class PatientSearchSpecialistsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
-      this.searchTerm = params.get('query')?.trim() ?? '';
+      this.searchTerm = params.get('query') ?? '';
+      this.selectedCategory = params.get('category') ?? '';
+      this.selectedSchedule = params.get('schedule') ?? '';
       this.loadSpecialists();
     });
   }
 
   onSearch(): void {
-    const query = this.searchTerm.trim();
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: query ? { query } : {},
-      queryParamsHandling: ''
+      queryParams: {
+        query: this.searchTerm.trim() || null,
+        category: this.selectedCategory || null,
+        schedule: this.selectedSchedule || null
+      },
+      queryParamsHandling: 'merge'
     });
+  }
+
+  resetFilters(): void {
+    this.searchTerm = '';
+    this.selectedCategory = '';
+    this.selectedSchedule = '';
+    this.onSearch();
   }
 
   trackBySpecialistId(_: number, specialist: SpecialistDirectoryItem): number {
@@ -53,9 +70,9 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     this.errorMsg = '';
 
     this.specialistService.getAllSpecialists().subscribe({
-      next: (specialists) => {
-        this.specialists = specialists.filter(specialist => this.isVisibleSpecialist(specialist));
-        this.filteredSpecialists = this.filterSpecialists(this.searchTerm);
+      next: (apiSpecialists) => {
+        this.specialists = apiSpecialists.filter(s => this.isVisibleSpecialist(s));
+        this.applyAllFilters();
         this.loading = false;
       },
       error: (error) => {
@@ -66,41 +83,30 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     });
   }
 
-  private filterSpecialists(term: string): SpecialistDirectoryItem[] {
-    const normalizedTerm = term.trim().toLowerCase();
 
-    if (!normalizedTerm) {
-      return [...this.specialists];
-    }
+  private applyAllFilters(): void {
+    const term = this.searchTerm.toLowerCase().trim();
 
-    return this.specialists.filter((specialist) => {
-      const searchableFields = [
-        specialist.names,
-        specialist.firstLastname,
-        specialist.secondLastname,
-        specialist.biography,
-        specialist.officeUbi,
-        specialist.speciality
-      ]
-        .filter(Boolean)
-        .join(' ')
-        .toLowerCase();
+    this.filteredSpecialists = this.specialists.filter(s => {
+      const matchesTerm = !term || [
+        s.names, s.firstLastname, s.secondLastname, s.biography, s.speciality
+      ].filter(Boolean).join(' ').toLowerCase().includes(term);
 
-      return searchableFields.includes(normalizedTerm);
+      const matchesCategory = !this.selectedCategory || 
+        s.speciality?.toLowerCase() === this.selectedCategory.toLowerCase();
+      const matchesSchedule = !this.selectedSchedule || 
+        (s as any).shift === this.selectedSchedule;
+
+      return matchesTerm && matchesCategory && matchesSchedule;
     });
   }
 
   private isVisibleSpecialist(specialist: SpecialistDirectoryItem): boolean {
-    const isActive =
-      specialist.status === 1 ||
-      specialist.status === true ||
-      specialist.status === null ||
-      specialist.status === undefined;
-    const isVerified =
-      specialist.accountVerified === 1 ||
-      specialist.accountVerified === undefined ||
-      specialist.accountVerified === null;
-
+    const isActive = specialist.status === 1 || specialist.status === true || 
+                     specialist.status === null || specialist.status === undefined;
+    const isVerified = specialist.accountVerified === 1 || 
+                       specialist.accountVerified === undefined || 
+                       specialist.accountVerified === null;
     return isActive && isVerified;
   }
 }

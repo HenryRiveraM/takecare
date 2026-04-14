@@ -14,6 +14,7 @@ export interface SpecialistDirectoryItem {
   status?: number | boolean | null;
   accountVerified?: number | null;
   speciality?: string;
+  shift?: string;
 }
 
 export interface SpecialistLocationRequest {
