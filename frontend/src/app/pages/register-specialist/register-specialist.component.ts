@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService, SpecialistRegisterRequest } from '../../services/api.service';
+import { CloudinaryUploadService } from '../../services/cloudinary-upload.service';
 
 @Component({
   selector: 'app-register-specialist',
@@ -19,6 +20,12 @@ export class RegisterSpecialistComponent implements OnInit {
 
   fileList: { file: File, size: string }[] = [];
   carnetFile: { file: File, url: string } | null = null;
+
+  maxDateAdult: string = (() => {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - 18); 
+    return date.toISOString().split('T')[0];
+  })();
 
   // Toast notification state
   toast: { visible: boolean; type: 'error' | 'success' | 'warning'; title: string; message: string } = {
@@ -42,7 +49,8 @@ export class RegisterSpecialistComponent implements OnInit {
   private fb: FormBuilder,
   private cd: ChangeDetectorRef,
   private api: ApiService,
-  private router: Router
+  private router: Router,
+  private cloudinaryUploadService: CloudinaryUploadService
   ){}
 
   ngOnInit(): void {
@@ -165,15 +173,21 @@ export class RegisterSpecialistComponent implements OnInit {
   }
 
   addFiles(files: FileList) {
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file.type === 'application/pdf') {
-        const size = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
-        if (!this.fileList.find(f => f.file.name === file.name)) {
-          this.fileList.push({ file, size });
-        }
-      }
+    const file = files[0];
+    if (!file) return;
+
+    if (file.type !== 'application/pdf') {
+      this.showToast('warning', 'Archivo inválido', 'Solo se permite un archivo PDF.');
+      return;
     }
+
+    if (file.size > 8 * 1024 * 1024) {
+      this.showToast('warning', 'Archivo muy grande', 'El PDF no debe superar los 8 MB.');
+      return;
+    }
+
+    const size = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+    this.fileList = [{ file, size }];
   }
 
   removeFile(index: number) {
@@ -182,14 +196,24 @@ export class RegisterSpecialistComponent implements OnInit {
 
   onCarnetSelected(event: any) {
     const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.carnetFile = { file, url: e.target.result };
-        this.cd.detectChanges();
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      this.showToast('warning', 'Archivo inválido', 'El carnet debe ser una imagen.');
+      return;
     }
+
+    if (file.size > 5 * 1024 * 1024) {
+      this.showToast('warning', 'Archivo muy grande', 'La imagen del carnet no debe superar los 5 MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.carnetFile = { file, url: e.target.result };
+      this.cd.detectChanges();
+    };
+    reader.readAsDataURL(file);
   }
 
   removeCarnet() {
@@ -220,8 +244,7 @@ export class RegisterSpecialistComponent implements OnInit {
     }
   }
 
-  // ── Submit ──
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
     this.registerForm.markAllAsTouched();
 
@@ -237,7 +260,7 @@ export class RegisterSpecialistComponent implements OnInit {
       } else {
         this.showToast('warning', 'Formulario incompleto', 'Revisa que todos los campos obligatorios estén correctamente llenados.');
       }
-      
+
       console.log('registerForm.valid:', this.registerForm.valid);
       console.log('Especialidades seleccionadas:', this.especialidadesOpciones.filter(opt => opt.seleccionado).map(opt => opt.nombre));
       console.log('Archivos seleccionados:', this.fileList);
@@ -256,44 +279,65 @@ export class RegisterSpecialistComponent implements OnInit {
 
     this.isLoading = true;
 
-    const selectedSpecialties = this.especialidadesOpciones
-      .filter(opt => opt.seleccionado)
-      .map(opt => opt.nombre);
+    try {
+      const selectedSpecialties = this.especialidadesOpciones
+        .filter(opt => opt.seleccionado)
+        .map(opt => opt.nombre);
 
-    const dataParaBackend: SpecialistRegisterRequest = {
-      names: this.registerForm.value.nombre.trim(),
-      firstLastname: this.registerForm.value.apellidoPaterno.trim(),
-      birthDate: this.registerForm.value.fechaNacimiento,
-      ciNumber: String(this.registerForm.value.documento).trim(),
-      email: this.registerForm.value.email.trim(),
-      password: this.registerForm.value.password.trim(),
-      biography: `Especialista en ${selectedSpecialties.join(', ')}`,
-      certificationImg: this.fileList.map(fileItem => fileItem.file.name).join(', '),
-      ciDocumentImg: this.carnetFile?.file.name || '',
-      officeUbi: 'Por definir',
-      sessionCost: 1
-    };
+      console.log('📤 Iniciando subida de carnet a Cloudinary...');
+      const carnetUpload = await this.cloudinaryUploadService.uploadImage(
+        this.carnetFile!.file,
+        'specialists/ci'
+      );
+      console.log('✅ Carnet subido correctamente:', carnetUpload);
 
-    const secondLastname = this.registerForm.value.apellidoMaterno?.trim();
-    if (secondLastname) {
-      dataParaBackend.secondLastname = secondLastname;
-    }
+      console.log('📤 Iniciando subida de certificación PDF a Cloudinary...');
+      const certificationUpload = await this.cloudinaryUploadService.uploadAuto(
+        this.fileList[0].file,
+        'specialists/certifications'
+      );
+      console.log('✅ Certificación subida correctamente:', certificationUpload);
 
-    console.log('Payload enviado: ',dataParaBackend);
+      const dataParaBackend: SpecialistRegisterRequest = {
+        names: this.registerForm.value.nombre.trim(),
+        firstLastname: this.registerForm.value.apellidoPaterno.trim(),
+        birthDate: this.registerForm.value.fechaNacimiento,
+        ciNumber: String(this.registerForm.value.documento).trim(),
+        email: this.registerForm.value.email.trim(),
+        password: this.registerForm.value.password.trim(),
+        biography: `Especialista en ${selectedSpecialties.join(', ')}`,
+        certificationImg: certificationUpload.secure_url,
+        ciDocumentImg: carnetUpload.secure_url,
+        officeUbi: 'Por definir',
+        sessionCost: 1
+      };
 
-    this.api.registerSpecialist(dataParaBackend).subscribe({
-      next: (res) => {
-        this.isLoading = false;
-        console.log('✅ REGISTRO DE ESPECIALISTA EXITOSO', res);
-        this.showToast('success', 'Registro exitoso', 'Tu perfil será revisado y te notificaremos por correo.');
-        this.router.navigate(['/login']);
-      },
-      error: (err) => {
-        this.isLoading = false;
-        console.error('❌ ERROR BACKEND COMPLETO:', err);
-        const { title, message } = this.getFriendlyErrorMessage(err);
-        this.showToast('error', title, message);
+      const secondLastname = this.registerForm.value.apellidoMaterno?.trim();
+      if (secondLastname) {
+        dataParaBackend.secondLastname = secondLastname;
       }
-    });
+
+      console.log('Payload enviado: ', dataParaBackend);
+
+      this.api.registerSpecialist(dataParaBackend).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          console.log('✅ REGISTRO DE ESPECIALISTA EXITOSO', res);
+          this.showToast('success', 'Registro exitoso', 'Tu perfil será revisado y te notificaremos por correo.');
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          console.error('❌ ERROR BACKEND COMPLETO:', err);
+          const { title, message } = this.getFriendlyErrorMessage(err);
+          this.showToast('error', title, message);
+        }
+      });
+
+    } catch (error) {
+      this.isLoading = false;
+      console.error('❌ ERROR SUBIENDO ARCHIVOS A CLOUDINARY:', error);
+      this.showToast('error', 'Error al subir archivos', 'No se pudo subir el carnet o el PDF de certificación.');
+    }
   }
 }

@@ -1,253 +1,586 @@
-2026-04-09 01:16:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29780 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
-2026-04-09 01:16:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
-2026-04-09 01:17:04 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-09 01:17:04 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+2026-04-14 00:12:48 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 28376 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 00:12:48 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 00:13:04 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 00:13:04 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
 
-Using generated security password: 48ee2c4a-3860-4c5e-9e79-ad7e6f3a7511
+Using generated security password: 70f16f87-3545-40cf-934c-c5c2ce5a30cd
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2026-04-09 01:17:04 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 17.689 seconds (process running for 18.095)
-2026-04-09 01:47:40 [http-nio-8080-exec-3] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Registering specialist with email: angelicaazogue@gmail.com
-2026-04-09 01:47:40 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Registering new specialist with email: angelicaazogue@gmail.com
-2026-04-09 01:47:40 [http-nio-8080-exec-3] INFO  c.t.backend.user.service.UserService - Preparing user with email: angelicaazogue@gmail.com and role: 2
-2026-04-09 01:47:42 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Specialist registered successfully with id: 43
-2026-04-09 01:47:42 [http-nio-8080-exec-3] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Specialist registered successfully
-2026-04-09 01:50:21 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 01:50:21 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 01:50:22 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 01:50:22 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 01:50:57 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Updating specialist profile
-2026-04-09 01:50:57 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Updating profile for specialist id: 43
-2026-04-09 01:50:59 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile updated successfully for specialist id: 43
-2026-04-09 01:50:59 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Specialist profile updated successfully
-2026-04-09 01:53:14 [http-nio-8080-exec-10] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Registering patient with email: lauraortunio@gmail.com
-2026-04-09 01:53:14 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Registering new patient with email: lauraortunio@gmail.com
-2026-04-09 01:53:14 [http-nio-8080-exec-10] INFO  c.t.backend.user.service.UserService - Preparing user with email: lauraortunio@gmail.com and role: 1
-2026-04-09 01:53:16 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Patient registered successfully with id: 44
-2026-04-09 01:53:16 [http-nio-8080-exec-10] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Patient registered successfully
-2026-04-09 01:54:15 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/44 - Fetching patient profile
-2026-04-09 01:54:15 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 44
-2026-04-09 01:54:17 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/44 - Profile found
-2026-04-09 01:54:36 [http-nio-8080-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.PatientProfileDTO> com.takecare.backend.user.controller.UserProfileController.updateProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdatePatientProfileDTO): [Field error in object 'updatePatientProfileDTO' on field 'names': rejected value [Laura Gabriela@#!#!]; codes [Pattern.updatePatientProfileDTO.names,Pattern.names,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updatePatientProfileDTO.names,names]; arguments []; default message [names],[Ljakarta.validation.constraints.Pattern$Flag;@3c412fba,^(?!.*[ ]{2})[a-zA-Z·ÈÌÛ˙¡…Õ”⁄Ò—]+(?: [a-zA-Z·ÈÌÛ˙¡…Õ”⁄Ò—]+)*$]; default message [Names must contain only letters]] ]
-2026-04-09 01:54:43 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/44 - Updating patient profile
-2026-04-09 01:54:43 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Updating profile for patient id: 44
-2026-04-09 01:54:46 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Profile updated successfully for patient id: 44
-2026-04-09 01:54:46 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/44 - Profile updated successfully
-2026-04-09 03:12:57 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:12:57 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:12:58 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:12:58 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:13:56 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:13:56 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:13:58 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:13:58 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:14:47 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:14:47 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:14:48 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:14:48 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:14:51 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:14:51 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:14:53 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:14:53 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:15:10 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:15:10 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:15:11 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:15:11 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:15:58 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:15:58 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:16:00 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:16:00 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:16:21 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:16:21 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:16:22 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:16:22 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:17:04 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:17:04 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:17:06 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:17:06 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:18:42 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:18:42 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:18:44 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:18:44 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:19:27 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:19:27 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:19:28 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:19:28 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:19:46 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:19:46 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:19:47 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:19:47 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:20:42 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:20:42 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:20:43 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:20:43 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:21:01 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:21:01 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:21:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:21:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:21:20 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:21:20 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:21:21 [http-nio-8080-exec-1] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:21:21 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:23:19 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:23:19 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:23:20 [http-nio-8080-exec-3] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:23:20 [http-nio-8080-exec-3] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:23:34 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:23:34 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:23:35 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:24:03 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:24:03 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:24:05 [http-nio-8080-exec-7] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:24:05 [http-nio-8080-exec-7] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:24:16 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:24:16 [http-nio-8080-exec-8] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:24:17 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:24:17 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:24:18 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:24:18 [http-nio-8080-exec-5] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:24:18 [http-nio-8080-exec-5] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:24:44 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:24:44 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:24:45 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:24:48 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:24:48 [http-nio-8080-exec-9] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:24:50 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:25:17 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:25:17 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:25:18 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:25:29 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:25:29 [http-nio-8080-exec-2] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:25:30 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:25:38 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:25:38 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:25:39 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:25:45 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:25:45 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:25:46 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:38:01 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:38:01 [http-nio-8080-exec-8] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:38:03 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:38:12 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:38:12 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:38:14 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:38:50 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:38:50 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:38:52 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:39:59 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:39:59 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:40:00 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:40:02 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:40:02 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:40:03 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:41:16 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:41:16 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:41:18 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:41:30 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:41:30 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:41:31 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:41:36 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:41:36 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:41:37 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:41:43 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:41:43 [http-nio-8080-exec-8] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:41:45 [http-nio-8080-exec-8] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:41:50 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:41:50 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:41:52 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:42:28 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:42:28 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:42:29 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:43:14 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:43:14 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:43:15 [http-nio-8080-exec-9] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:43:15 [http-nio-8080-exec-9] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:43:16 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:43:16 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:43:17 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:43:22 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:43:22 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:43:23 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:45:56 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:45:56 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:45:58 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:46:53 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:46:53 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:46:55 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:47:16 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:47:16 [http-nio-8080-exec-7] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:47:17 [http-nio-8080-exec-7] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:51:02 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:51:02 [http-nio-8080-exec-5] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:51:03 [http-nio-8080-exec-5] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:51:35 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/5 - Updating patient profile
-2026-04-09 03:51:35 [http-nio-8080-exec-9] INFO  c.t.b.u.s.PatientProfileService - Updating profile for patient id: 5
-2026-04-09 03:51:37 [http-nio-8080-exec-9] INFO  c.t.b.u.s.PatientProfileService - Profile updated successfully for patient id: 5
-2026-04-09 03:51:37 [http-nio-8080-exec-9] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/5 - Profile updated successfully
-2026-04-09 03:52:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:52:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:52:03 [http-nio-8080-exec-10] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:53:14 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:53:14 [http-nio-8080-exec-2] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:53:15 [http-nio-8080-exec-2] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:53:29 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:53:29 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:53:30 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:53:48 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:53:48 [http-nio-8080-exec-4] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:53:49 [http-nio-8080-exec-4] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:55:09 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:55:09 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:55:11 [http-nio-8080-exec-8] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:55:11 [http-nio-8080-exec-8] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:55:28 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:55:28 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:55:30 [http-nio-8080-exec-5] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:55:30 [http-nio-8080-exec-5] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:55:31 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:55:31 [http-nio-8080-exec-6] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:55:32 [http-nio-8080-exec-6] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:55:44 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:55:44 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:55:45 [http-nio-8080-exec-9] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:55:45 [http-nio-8080-exec-9] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:56:02 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:56:02 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:56:03 [http-nio-8080-exec-10] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:56:03 [http-nio-8080-exec-10] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:56:21 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
-2026-04-09 03:56:21 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
-2026-04-09 03:56:23 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
-2026-04-09 03:56:24 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:56:24 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:56:25 [http-nio-8080-exec-2] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:56:25 [http-nio-8080-exec-2] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:56:35 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:56:35 [http-nio-8080-exec-3] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:56:36 [http-nio-8080-exec-3] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:56:36 [http-nio-8080-exec-3] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:56:40 [http-nio-8080-exec-4] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:56:40 [http-nio-8080-exec-4] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:56:42 [http-nio-8080-exec-4] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:56:42 [http-nio-8080-exec-4] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:56:46 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Fetching specialist profile
-2026-04-09 03:56:46 [http-nio-8080-exec-7] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 5
-2026-04-09 03:56:47 [http-nio-8080-exec-7] WARN  c.t.b.u.s.SpecialistProfileService - Specialist not found with id: 5
-2026-04-09 03:56:47 [http-nio-8080-exec-7] WARN  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/5/profile - Specialist profile not found
-2026-04-09 03:57:19 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:57:19 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:57:20 [http-nio-8080-exec-8] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:57:20 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:57:31 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Updating specialist profile
-2026-04-09 03:57:31 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Updating profile for specialist id: 43
-2026-04-09 03:57:33 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile updated successfully for specialist id: 43
-2026-04-09 03:57:33 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - PUT /api/v1/specialists/43/profile - Specialist profile updated successfully
-2026-04-09 03:58:07 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:58:07 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:58:09 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:58:09 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
-2026-04-09 03:58:13 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Fetching specialist profile
-2026-04-09 03:58:13 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 43
-2026-04-09 03:58:15 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 43
-2026-04-09 03:58:15 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/43/profile - Specialist profile found
+2026-04-14 00:13:05 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 17.549 seconds (process running for 17.978)
+2026-04-14 00:23:08 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6d1bd034 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 01:26:37 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6b5063fa (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 02:21:02 [http-nio-8080-exec-2] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Registering specialist with email: cuarzo@gmail.com
+2026-04-14 02:21:02 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Registering new specialist with email: cuarzo@gmail.com
+2026-04-14 02:21:02 [http-nio-8080-exec-2] INFO  c.t.backend.user.service.UserService - Preparing user with email: cuarzo@gmail.com and role: 2
+2026-04-14 02:21:04 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Specialist registered successfully with id: 58
+2026-04-14 02:21:04 [http-nio-8080-exec-2] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Specialist registered successfully
+2026-04-14 02:21:33 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 02:21:35 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 02:21:35 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 02:21:36 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 02:21:36 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 02:21:37 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 02:21:37 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 02:21:38 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 02:21:38 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 02:21:40 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 02:21:40 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 02:21:40 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 02:21:43 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 02:21:45 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 02:21:46 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 02:21:46 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 02:21:48 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 02:21:50 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 02:22:46 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 02:22:47 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 02:22:48 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 02:22:48 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 02:25:02 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 02:25:03 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 02:25:10 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 02:25:11 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 02:25:12 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 02:25:12 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 02:26:27 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 02:26:28 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 02:26:28 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 02:26:29 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 02:26:32 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 02:26:33 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 02:26:34 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 02:26:34 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 02:27:31 [http-nio-8080-exec-4] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 02:27:31 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 02:27:33 [http-nio-8080-exec-4] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 02:27:33 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 02:27:33 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 02:27:33 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 02:35:29 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 28376 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 02:35:29 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 02:35:42 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 02:35:42 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: d6aa9f5f-7288-465e-88d4-b72629f0a463
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 02:35:42 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 13.032 seconds (process running for 8575.034)
+2026-04-14 02:39:50 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 28376 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 02:39:50 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 02:40:02 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 02:40:02 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 05fb32eb-af85-4869-9398-11b046100e26
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 02:40:02 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 12.701 seconds (process running for 8835.62)
+2026-04-14 02:43:15 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29984 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 02:43:15 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 02:43:32 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 02:43:32 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 1573de92-f152-4577-affd-c172dc8a961f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 02:43:33 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 17.584 seconds (process running for 17.935)
+2026-04-14 02:43:40 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 02:43:42 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 02:43:44 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 02:43:45 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 02:43:46 [http-nio-8080-exec-6] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 02:43:46 [http-nio-8080-exec-6] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 02:43:50 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 02:43:50 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 02:43:51 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 02:43:51 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 02:43:51 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 02:43:51 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 05:34:14 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@53a0ac66 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 05:34:14 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5a9b552a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 05:34:14 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h30m51s889ms421µs500ns).
+2026-04-14 05:34:14 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@32d15fe3 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 05:34:14 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@64c40643 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 05:34:14 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@64445d56 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 05:34:14 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@647666f1 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 05:34:14 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5ce003db (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 05:34:14 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@18d2f01a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:09:08 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3h34m54s650ms553µs900ns).
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m19s302ms671µs).
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5e3ab0bb (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@558e2056 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5a5358dd (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@51679444 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@38819d07 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1c2996d1 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@58910de (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7b137fe5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@36518fb9 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:22:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@57fb4342 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 09:38:42 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 09:38:43 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 09:38:44 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 09:38:45 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 09:38:46 [http-nio-8080-exec-6] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 09:38:46 [http-nio-8080-exec-6] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 09:38:50 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 09:38:50 [http-nio-8080-exec-9] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 09:38:51 [http-nio-8080-exec-9] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 09:38:51 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 09:38:52 [http-nio-8080-exec-9] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 09:38:52 [http-nio-8080-exec-9] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 09:38:54 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 09:38:55 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 09:39:06 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 09:39:07 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 09:39:08 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 09:39:08 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 09:52:08 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29984 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 09:52:08 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 09:52:21 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 09:52:21 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 0077427c-5f18-4e4f-bcd9-f0a34c354e53
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 09:52:21 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 13.09 seconds (process running for 25746.328)
+2026-04-14 10:07:25 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29984 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 10:07:25 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 10:07:37 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 10:07:37 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: e3d25b3d-5d2f-4a23-83c5-39eabe517522
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 10:07:37 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 12.462 seconds (process running for 26662.789)
+2026-04-14 10:08:54 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29984 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 10:08:54 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 10:09:06 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 10:09:06 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: ed3dcd26-d30b-42ac-bf64-32393d53bede
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 10:09:06 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 12.241 seconds (process running for 26751.718)
+2026-04-14 10:09:09 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29984 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 10:09:09 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 10:09:21 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 10:09:21 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: aadb7926-a08c-4d5c-bad0-c4718d2427c8
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 10:09:21 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 12.422 seconds (process running for 26766.289)
+2026-04-14 10:12:55 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29984 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 10:12:55 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 10:13:07 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 10:13:07 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: fac35b07-aa2b-47b4-aadc-ec178dea3026
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 10:13:07 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 12.295 seconds (process running for 26992.871)
+2026-04-14 10:16:58 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29984 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 10:16:58 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 10:17:09 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 10:17:09 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 403cc6e9-9545-43d3-8d05-29582e336830
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 10:17:09 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 11.687 seconds (process running for 27234.583)
+2026-04-14 10:18:15 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:18:16 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:18:19 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 10:18:20 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 10:18:32 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:18:32 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 10:18:33 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:18:33 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 10:20:41 [http-nio-8080-exec-6] INFO  c.t.b.u.controller.AdminController - PUT /api/v1/admin/specialists/58/validate/approve - approving specialist
+2026-04-14 10:20:46 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:20:46 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 10:20:47 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:20:47 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 10:20:48 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:20:49 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 10:20:50 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:20:50 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 10:21:32 [http-nio-8080-exec-2] INFO  c.t.b.u.controller.AdminController - PUT /api/v1/admin/specialists/51/validate/reject - rejecting specialist
+2026-04-14 10:21:37 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:21:37 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 10:21:38 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:21:38 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 10:21:39 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:21:40 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 10:21:40 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:21:41 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 10:34:07 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:34:08 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:39:03 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:39:04 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:47:09 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:47:10 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:49:50 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:49:51 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:51:26 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Attempting logical delete for patient with id: 7
+2026-04-14 10:51:28 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Patient with id: 7 marked as inactive successfully
+2026-04-14 10:52:37 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 10:52:38 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 10:52:54 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Attempting logical delete for specialist with id: 58
+2026-04-14 10:52:56 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Specialist with id: 58 marked as inactive successfully
+2026-04-14 10:53:40 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Attempting logical delete for specialist with id: 58
+2026-04-14 10:53:42 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Specialist with id: 58 marked as inactive successfully
+2026-04-14 11:06:34 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:06:35 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:15:35 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:15:36 [http-nio-8080-exec-10] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:16:16 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29984 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 11:16:16 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 11:16:28 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 11:16:28 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: fb687ea9-54b2-41bb-9a11-9e75faf62e96
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 11:16:28 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 12.103 seconds (process running for 30793.804)
+2026-04-14 11:17:22 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:17:24 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:17:29 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:17:30 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 11:17:34 [http-nio-8080-exec-6] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.http.converter.HttpMessageConversionException: Type definition error: [simple type, class com.takecare.backend.user.controller.AdminController$UpdateUserStatusRequest]] with root cause
+com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Cannot construct instance of `com.takecare.backend.user.controller.AdminController$UpdateUserStatusRequest`: non-static inner classes like this can only by instantiated using default, no-argument constructor
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 2]
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:67)
+	at com.fasterxml.jackson.databind.DeserializationContext.reportBadDefinition(DeserializationContext.java:1915)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:415)
+	at com.fasterxml.jackson.databind.DeserializationContext.handleMissingInstantiator(DeserializationContext.java:1397)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1506)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:340)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:177)
+	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:342)
+	at com.fasterxml.jackson.databind.ObjectReader._bindAndClose(ObjectReader.java:2130)
+	at com.fasterxml.jackson.databind.ObjectReader.readValue(ObjectReader.java:1500)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:397)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:356)
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodArgumentResolver.readWithMessageConverters(AbstractMessageConverterMethodArgumentResolver.java:204)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.readWithMessageConverters(RequestResponseBodyMethodProcessor.java:176)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.resolveArgument(RequestResponseBodyMethodProcessor.java:150)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:227)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:181)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:925)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:593)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1775)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2026-04-14 11:17:54 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:17:56 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:17:57 [http-nio-8080-exec-10] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.http.converter.HttpMessageConversionException: Type definition error: [simple type, class com.takecare.backend.user.controller.AdminController$UpdateUserStatusRequest]] with root cause
+com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Cannot construct instance of `com.takecare.backend.user.controller.AdminController$UpdateUserStatusRequest`: non-static inner classes like this can only by instantiated using default, no-argument constructor
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 2]
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:67)
+	at com.fasterxml.jackson.databind.DeserializationContext.reportBadDefinition(DeserializationContext.java:1915)
+	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:415)
+	at com.fasterxml.jackson.databind.DeserializationContext.handleMissingInstantiator(DeserializationContext.java:1397)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromObjectUsingNonDefault(BeanDeserializerBase.java:1506)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:340)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:177)
+	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:342)
+	at com.fasterxml.jackson.databind.ObjectReader._bindAndClose(ObjectReader.java:2130)
+	at com.fasterxml.jackson.databind.ObjectReader.readValue(ObjectReader.java:1500)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:397)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:356)
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodArgumentResolver.readWithMessageConverters(AbstractMessageConverterMethodArgumentResolver.java:204)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.readWithMessageConverters(RequestResponseBodyMethodProcessor.java:176)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.resolveArgument(RequestResponseBodyMethodProcessor.java:150)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:227)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:181)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:925)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:593)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1775)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2026-04-14 11:19:59 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 29984 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-14 11:19:59 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 11:20:12 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 11:20:12 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 2179404e-a56f-4985-9284-b95e72bd4c62
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 11:20:12 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 12.803 seconds (process running for 31017.187)
+2026-04-14 11:20:13 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:20:14 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:21:22 [http-nio-8080-exec-6] INFO  c.t.b.u.controller.AdminController - PUT /api/v1/admin/users/7/status - updating user status to 1
+2026-04-14 11:22:07 [http-nio-8080-exec-8] INFO  c.t.b.u.controller.AdminController - PUT /api/v1/admin/users/49/status - updating user status to 0
+2026-04-14 11:22:18 [http-nio-8080-exec-10] INFO  c.t.b.u.controller.AdminController - PUT /api/v1/admin/users/49/status - updating user status to 1
+2026-04-14 11:22:36 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:22:37 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 11:22:38 [http-nio-8080-exec-5] INFO  c.t.b.u.controller.AdminController - PUT /api/v1/admin/users/58/status - updating user status to 1
+2026-04-14 11:32:18 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:32:19 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:33:02 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:33:03 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:33:18 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:33:20 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:34:59 [http-nio-8080-exec-5] INFO  c.t.b.u.controller.AdminController - PUT /api/v1/admin/users/49/status - updating user status to 0
+2026-04-14 11:35:44 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:35:45 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:40:52 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:40:53 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:41:39 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:41:40 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:41:53 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:41:53 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:41:54 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 11:41:54 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:41:55 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:41:57 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 11:42:08 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:42:08 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:42:09 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:42:10 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 11:42:31 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:42:32 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:42:32 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:42:33 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:42:33 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 11:42:34 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:43:17 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:43:18 [http-nio-8080-exec-1] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 11:45:58 [http-nio-8080-exec-6] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Registering patient with email: isis@gmail.com
+2026-04-14 11:45:58 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Registering new patient with email: isis@gmail.com
+2026-04-14 11:45:58 [http-nio-8080-exec-6] INFO  c.t.backend.user.service.UserService - Preparing user with email: isis@gmail.com and role: 1
+2026-04-14 11:45:59 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Patient registered successfully with id: 59
+2026-04-14 11:45:59 [http-nio-8080-exec-6] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/patient - Patient registered successfully
+2026-04-14 11:46:44 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:46:44 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:46:45 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:46:46 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 11:46:46 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:46:47 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:47:55 [http-nio-8080-exec-4] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:47:56 [http-nio-8080-exec-4] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:55:25 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:55:26 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:57:38 [http-nio-8080-exec-10] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Registering specialist with email: tomas@gmail.com
+2026-04-14 11:57:38 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Registering new specialist with email: tomas@gmail.com
+2026-04-14 11:57:38 [http-nio-8080-exec-10] INFO  c.t.backend.user.service.UserService - Preparing user with email: tomas@gmail.com and role: 2
+2026-04-14 11:57:39 [http-nio-8080-exec-10] INFO  c.t.b.user.service.SpecialistService - Specialist registered successfully with id: 60
+2026-04-14 11:57:39 [http-nio-8080-exec-10] INFO  c.t.b.user.controller.UserController - POST /api/v1/users/register/specialist - Specialist registered successfully
+2026-04-14 11:58:19 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:58:20 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:58:23 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:58:23 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:58:24 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 11:58:24 [http-nio-8080-exec-8] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:58:26 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:58:28 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 11:58:31 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:58:32 [http-nio-8080-exec-5] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:58:36 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:58:36 [http-nio-8080-exec-9] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:58:37 [http-nio-8080-exec-7] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:58:37 [http-nio-8080-exec-9] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 11:59:05 [http-nio-8080-exec-1] INFO  c.t.b.u.controller.AdminController - PUT /api/v1/admin/patients/59/validate/approve - approving patient
+2026-04-14 11:59:09 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:59:09 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:59:10 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 11:59:11 [http-nio-8080-exec-3] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:59:12 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 11:59:12 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:59:13 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Found 6 specialists
+2026-04-14 11:59:13 [http-nio-8080-exec-6] INFO  c.t.b.user.service.PatientService - Found 5 patients
+2026-04-14 11:59:15 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 11:59:17 [http-nio-8080-exec-9] INFO  c.t.b.user.service.PatientService - Found 5 patients

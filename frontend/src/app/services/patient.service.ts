@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // ===== INTERFACES =====
 export interface PatientProfile {
@@ -27,11 +28,7 @@ export interface UpdatePatientProfile {
 })
 export class PatientService {
 
-  private readonly baseUrl =
-    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:8080/api/v1/users'
-      : 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/users';
-
+  private readonly baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
   getProfile(): Observable<PatientProfile> {

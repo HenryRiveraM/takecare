@@ -37,6 +37,7 @@ public class SpecialistService extends UserService {
         specialist.setEmail(dto.getEmail());
         specialist.setPasswordHash(dto.getPassword());
         specialist.setBiography(dto.getBiography());
+        specialist.setCiDocumentImg(dto.getCiDocumentImg());
         specialist.setCertificationImg(dto.getCertificationImg());
         specialist.setSessionCost(dto.getSessionCost());
 

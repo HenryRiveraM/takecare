@@ -79,9 +79,9 @@
 
           <div class="field">
             <label>FECHA DE NACIMIENTO<span class="required">*</span></label>
-            <input type="date" formControlName="birth_date">
+            <input type="date" formControlName="birth_date" [max] = "maxDateAdult">
             <small class="error-msg" *ngIf="form.get('birth_date')?.touched && form.get('birth_date')?.invalid">
-              La fecha de nacimiento es obligatoria
+              La fecha de nacimiento es obligatoria y debes ser mayor de 18 años.
             </small>
           </div>
 
@@ -113,7 +113,7 @@
           <div class="field">
             <label>FOTOGRAFIA DE CI<span class="required">*</span></label>
             <div class="upload" [class.active]="documentoNombre" (click)="fileInput.click()">
-              <input type="file" hidden #fileInput (change)="onFileSelected($event, 'documento')">
+              <input type="file" hidden #fileInput accept="image/*" (change)="onFileSelected($event, 'documento')">
               <img src="assets/icons/upload.svg" alt="Subir documento">
               <p>{{ documentoNombre || 'Subir documento de identidad' }}</p>
             </div>
@@ -127,7 +127,7 @@
           <div class="field">
             <label>SELFIE DE VERIFICACIÓN<span class="required">*</span></label>
             <div class="upload" [class.active]="selfieNombre" (click)="selfieInput.click()">
-            <input type="file" hidden #selfieInput (change)="onFileSelected($event, 'selfie')">
+            <input type="file" hidden #selfieInput accept="image/*" (change)="onFileSelected($event, 'selfie')">
             <img src="assets/icons/user.svg" alt="Tomar selfie">
             <p>{{ selfieNombre || 'Tomar una selfie' }}</p>
             </div>  
@@ -151,10 +151,15 @@
         </div>
 
         <div class="actions">
-          <button class="primary" type="submit" [disabled]="form.invalid">
-            Crear cuenta
+          <button class="primary" type="submit" [disabled]="form.invalid || loading">
+            
+            <span *ngIf="!loading">Crear cuenta</span>
+            
+            <span *ngIf="loading" class="loader"></span>
+            
           </button>
-          <button class="cancel" type="button" (click)="cancel()">
+
+          <button class="cancel" type="button" (click)="cancel()" [disabled]="loading">
             Cancelar
           </button>
         </div>

@@ -12,7 +12,6 @@ import { RegisterSpecialistComponent } from './pages/register-specialist/registe
 
 // ADMIN
 import { AdminComponent } from './pages/admin/admin.component';
-import { adminGuard } from './guards/admin.guard';
 
 // ESPECIALISTA
 import { SpecialistDashboardComponent } from './pages/specialist-dashboard/specialist-dashboard.component';
