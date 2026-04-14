@@ -55,8 +55,17 @@ export class LoginComponent {
 
           console.log('LOGIN RESPONSE:', response);
 
-          localStorage.setItem('user', JSON.stringify(response.data));
+          if (response.data.accountVerified === 2) {
+            this.errorMsg = 'Tu cuenta aún está en revisión. Debes esperar la aprobación del administrador.';
+            return;
+          }
 
+          if (response.data.accountVerified === 0) {
+            this.errorMsg = 'Tu cuenta fue rechazada. Comunícate con soporte o vuelve a registrarte.';
+            return;
+          }
+
+          localStorage.setItem('user', JSON.stringify(response.data));
           this.loginSuccess = true;
 
           setTimeout(() => {
@@ -79,7 +88,6 @@ export class LoginComponent {
 
         console.error('Login error:', err);
       }
-
     });
   }
 

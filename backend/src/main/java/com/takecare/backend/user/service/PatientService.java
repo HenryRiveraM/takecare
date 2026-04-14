@@ -39,6 +39,7 @@ public class PatientService extends UserService {
         patient.setBirthDate(dto.getBirthDate());
         patient.setCiNumber(dto.getCiNumber());
         patient.setEmail(dto.getEmail());
+        patient.setCiDocumentImg(dto.getCiDocumentImg());
         patient.setPasswordHash(dto.getPassword());
         patient.setSelfieVerification(dto.getSelfieVerification());
         patient.setClinicalHistory(dto.getClinicalHistory());
@@ -81,7 +82,6 @@ public class PatientService extends UserService {
                 patient.setBirthDate(patientDetails.getBirthDate());
                 patient.setCiNumber(patientDetails.getCiNumber());
                 patient.setEmail(patientDetails.getEmail());
-                patient.setSelfieVerification(patientDetails.getSelfieVerification());
                 patient.setClinicalHistory(patientDetails.getClinicalHistory());
                 Patient updated = patientRepository.save(patient);
                 logger.info("Patient with id: {} updated successfully", id);
@@ -109,4 +109,12 @@ public class PatientService extends UserService {
                 return false;
             });
     }
+
+    public Optional<Patient> validatePatient(Integer id, boolean approved) {
+    return patientRepository.findById(id).map(patient -> {
+        patient.setAccountVerified(approved ? 1 : 0);
+        patient.setLastUpdate(LocalDateTime.now());
+        return patientRepository.save(patient);
+    });
+}
 }

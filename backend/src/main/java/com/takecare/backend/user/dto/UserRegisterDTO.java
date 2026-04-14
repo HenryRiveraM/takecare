@@ -36,9 +36,12 @@ public class UserRegisterDTO {
     private LocalDate birthDate;
 
     @NotBlank(message = "CI number cannot be blank")
-    @Pattern(regexp = "^[0-9]+$", message = "CI number must contain only digits")
+    @Pattern(regexp = "^(?!.* {2,})[a-zA-Z0-9 ]+$", message = "CI number must contain only digits, letters, and hyphens")
     @Size(max = 10, message = "CI number must be at most 10 characters long")
     private String ciNumber;
+
+    @NotBlank
+    private String ciDocumentImg;
 
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Email should be valid")

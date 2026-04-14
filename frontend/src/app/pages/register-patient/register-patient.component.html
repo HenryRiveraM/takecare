@@ -81,7 +81,7 @@
 
           <div class="field">
             <label>{{ 'registerPatient.fields.birthDate' | translate }}<span class="required">*</span></label>
-            <input type="date" formControlName="birth_date">
+            <input type="date" formControlName="birth_date" [max]="maxDateAdult">
             <small class="error-msg" *ngIf="form.get('birth_date')?.touched && form.get('birth_date')?.invalid">
               {{ 'registerPatient.errors.birthDate.required' | translate }}
             </small>
@@ -115,7 +115,7 @@
           <div class="field">
             <label>{{ 'registerPatient.fields.ciPhoto' | translate }}<span class="required">*</span></label>
             <div class="upload" [class.active]="documentoNombre" (click)="fileInput.click()">
-              <input type="file" hidden #fileInput (change)="onFileSelected($event, 'documento')">
+              <input type="file" hidden #fileInput accept="image/*" (change)="onFileSelected($event, 'documento')">
               <img src="assets/icons/upload.svg" alt="Subir documento">
               <p>{{ documentoNombre || ('registerPatient.uploads.document' | translate) }}</p>
             </div>
@@ -124,7 +124,7 @@
           <div class="field">
             <label>{{ 'registerPatient.fields.selfie' | translate }}<span class="required">*</span></label>
             <div class="upload" [class.active]="selfieNombre" (click)="selfieInput.click()">
-              <input type="file" hidden #selfieInput (change)="onFileSelected($event, 'selfie')">
+              <input type="file" hidden #selfieInput accept="image/*" (change)="onFileSelected($event, 'selfie')">
               <img src="assets/icons/user.svg" alt="Tomar selfie">
               <p>{{ selfieNombre || ('registerPatient.uploads.selfie' | translate) }}</p>
             </div>
@@ -148,10 +148,11 @@
         </div>
 
         <div class="actions">
-          <button class="primary" type="submit" [disabled]="form.invalid">
-            {{ 'registerPatient.actions.createAccount' | translate }}
+          <button class="primary" type="submit" [disabled]="form.invalid || loading">
+            <span *ngIf="!loading">{{ 'registerPatient.actions.createAccount' | translate }}</span>
+            <span *ngIf="loading" class="loader"></span>
           </button>
-          <button class="cancel" type="button" (click)="cancel()">
+          <button class="cancel" type="button" (click)="cancel()" [disabled]="loading">
             {{ 'registerPatient.actions.cancel' | translate }}
           </button>
         </div>

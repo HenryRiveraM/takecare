@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, forkJoin, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+import { Observable, forkJoin, of, map } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 export interface User {
   id: number;
@@ -10,9 +11,18 @@ export interface User {
   secondLastname?: string;
   email: string;
   birthDate: string;
-  status: number | boolean | null; // 1 = activo, 0 = suspendido
+  ciNumber: string;
+  ciDocumentImg?: string;
+  status: number | boolean | null;
   strikes: number;
-  accountVerified?: number; // 2 = pendiente, 1 = verificado, 0 = rechazado
+  accountVerified?: number;
+  role?: number; // 1 = paciente, 2 = especialista, 3 = admin
+}
+
+export interface Patient extends User {
+  clinicalHistory?: string;
+  selfieVerification?: string;
+  role: 1;
 }
 
 export interface Specialist extends User {
@@ -21,6 +31,13 @@ export interface Specialist extends User {
   officeUbi?: string;
   sessionCost?: number;
   reputationAverage?: number;
+  role: 2;
+}
+
+export interface PendingValidationUser extends User {
+  role: 1 | 2;
+  certificationImg?: string;
+  selfieVerification?: string;
 }
 
 interface SpecialistProfileResponse {
@@ -39,21 +56,12 @@ interface SpecialistDetailsResponse {
   birthDate?: string;
   birth_date?: string;
 }
+
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-
-  private readonly apiUrl =
-    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:8080/api/v1/admin'
-      : 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/admin';
-
-  private readonly specialistsFallbackUrl =
-    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:8080/api/v1/specialists'
-      : 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/specialists';
-
+  private readonly apiUrl = environment.apiUrl;
   private readonly specialistProfilesBaseUrl =
     window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://localhost:8080/api/v1/specialists'
@@ -61,34 +69,43 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
-  private normalizeUser(rawUser: any): User {
-    const source = rawUser?.user ?? rawUser ?? {};
+  private normalizeUser(raw: any): User {
+  return {
+    id: raw.id,
+    names: raw.names ?? '',
+    firstLastname: raw.firstLastname ?? '',
+    secondLastname: raw.secondLastname ?? '',
+    email: raw.email ?? '',
+    birthDate: raw.birthDate ?? '',
+    ciNumber: raw.ciNumber ?? '',
+    ciDocumentImg: raw.ciDocumentImg ?? '',
+    status: raw.status ?? 1,
+    strikes: raw.strikes ?? 0,
+    accountVerified: raw.accountVerified ?? 2,
+    role: raw.role
+  };
+}
 
-    return {
-      id: source.id ?? rawUser?.id ?? 0,
-      names: source.names ?? source.name ?? source.fullName ?? '',
-      firstLastname: source.firstLastname ?? source.first_lastname ?? source.lastname ?? '',
-      secondLastname: source.secondLastname ?? source.second_lastname ?? '',
-      email: source.email ?? '',
-      birthDate: source.birthDate ?? source.birth_date ?? '',
-      status: source.status ?? rawUser?.status ?? null,
-      strikes: source.strikes ?? rawUser?.strikes ?? 0,
-      accountVerified: source.accountVerified ?? source.account_verified ?? rawUser?.accountVerified
-    };
-  }
+private normalizePatient(raw: any): Patient {
+  return {
+    ...this.normalizeUser(raw),
+    clinicalHistory: raw.clinicalHistory ?? '',
+    selfieVerification: raw.selfieVerification ?? '',
+    role: 1 as const
+  };
+}
 
-  private normalizeSpecialist(rawSpecialist: any): Specialist {
-    const normalizedUser = this.normalizeUser(rawSpecialist);
-
-    return {
-      ...normalizedUser,
-      biography: rawSpecialist?.biography ?? rawSpecialist?.user?.biography ?? '',
-      certificationImg: rawSpecialist?.certificationImg ?? rawSpecialist?.certification_img,
-      officeUbi: rawSpecialist?.officeUbi ?? rawSpecialist?.office_ubi ?? '',
-      sessionCost: rawSpecialist?.sessionCost ?? rawSpecialist?.session_cost,
-      reputationAverage: rawSpecialist?.reputationAverage ?? rawSpecialist?.reputation_average
-    };
-  }
+private normalizeSpecialist(raw: any): Specialist {
+  return {
+    ...this.normalizeUser(raw),
+    biography: raw.biography ?? '',
+    certificationImg: raw.certificationImg ?? '',
+    officeUbi: raw.officeUbi ?? '',
+    sessionCost: raw.sessionCost ?? 0,
+    reputationAverage: raw.reputationAverage ?? 0,
+    role: 2 as const
+  };
+}
 
   private enrichSpecialistsWithProfiles(specialists: Specialist[]): Observable<Specialist[]> {
     if (specialists.length === 0) {
@@ -121,14 +138,6 @@ export class AdminService {
     return forkJoin(requests);
   }
 
-  private suspendResource(id: number): Observable<any> {
-    return this.http.put(
-      `${this.apiUrl}/users/${id}/suspend`,
-      {},
-      { headers: this.getHeaders() }
-    );
-  }
-
   private getHeaders(): HttpHeaders {
     const storedUser = localStorage.getItem('user');
     if (!storedUser) {
@@ -143,84 +152,102 @@ export class AdminService {
       : new HttpHeaders();
   }
 
-  // 🔹 PACIENTES
-  getPatients(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/patients`, {
+  getPatients(): Observable<Patient[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/api/v1/admin/patients`, {
       headers: this.getHeaders()
     }).pipe(
-      map((patients) => patients.map((patient) => this.normalizeUser(patient)))
+      map(users => users.map(u => ({ ...u, role: 1 as const })))
     );
   }
 
-  // 🔹 ESPECIALISTAS
   getSpecialists(): Observable<Specialist[]> {
-    return this.http.get<Specialist[]>(`${this.apiUrl}/specialists`, {
+    return this.http.get<Specialist[]>(`${this.apiUrl}/api/v1/admin/specialists`, {
       headers: this.getHeaders()
     }).pipe(
-      map((specialists) => specialists.map((specialist) => this.normalizeSpecialist(specialist))),
-      switchMap((specialists) => this.enrichSpecialistsWithProfiles(specialists)),
-      catchError((error) => {
-        console.warn('Fallo el endpoint admin de especialistas, usando endpoint público como respaldo.', error);
-        return this.http.get<Specialist[]>(this.specialistsFallbackUrl).pipe(
-          map((specialists) => specialists.map((specialist) => this.normalizeSpecialist(specialist))),
-          switchMap((specialists) => this.enrichSpecialistsWithProfiles(specialists))
-        );
+      map(users => users.map(u => ({ ...u, role: 2 as const })))
+    );
+  }
+
+  getPendingValidations(): Observable<PendingValidationUser[]> {
+    return forkJoin({
+      patients: this.getPatients(),
+      specialists: this.getSpecialists()
+    }).pipe(
+      map(({ patients, specialists }) => {
+        const pendingPatients: PendingValidationUser[] = patients
+          .filter(user => user.accountVerified === 2)
+          .map(user => ({ ...user, role: 1 as const }));
+
+        const pendingSpecialists: PendingValidationUser[] = specialists
+          .filter(user => user.accountVerified === 2)
+          .map(user => ({ ...user, role: 2 as const }));
+
+        return [...pendingPatients, ...pendingSpecialists];
       })
     );
   }
 
-  // 🔹 VALIDACIONES - Obtiene especialistas PENDIENTES de validación
-  getPendingValidations(): Observable<Specialist[]> {
-    // El backend no tiene endpoint específico para pending, así que obtenemos todos los especialistas
-    // y filtramos en el frontend aquellos con accountVerified === 2 (pendiente)
-    return this.getSpecialists();
+  updateUserStatus(id: number, status: 0 | 1): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/v1/admin/users/${id}/status`,
+      { status },
+      { headers: this.getHeaders() }
+    );
   }
 
-  // 🔥 SUSPENDER USUARIO
-  suspendUser(id: number): Observable<any> {
-    return this.suspendResource(id);
-  }
-
-  suspendPatient(id: number): Observable<any> {
-    return this.suspendResource(id);
-  }
-
-  suspendSpecialist(id: number): Observable<any> {
-    return this.suspendResource(id);
-  }
-
-  // 🔥 ELIMINAR PACIENTE
   deletePatient(id: number): Observable<void> {
-    return this.suspendPatient(id);
+    return this.http.delete<void>(`${this.apiUrl}/api/v1/admin/patients/${id}`, {
+      headers: this.getHeaders()
+    });
   }
 
-  // 🔥 ELIMINAR ESPECIALISTA
   deleteSpecialist(id: number): Observable<void> {
-    return this.suspendSpecialist(id);
+    return this.http.delete<void>(`${this.apiUrl}/api/v1/admin/specialists/${id}`, {
+      headers: this.getHeaders()
+    });
   }
 
-  // 🔥 VALIDAR ESPECIALISTA - Aprobar
+  approvePatient(id: number): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/v1/admin/patients/${id}/validate/approve`,
+      {},
+      { headers: this.getHeaders() }
+    );
+  }
+
+  rejectPatient(id: number): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/api/v1/admin/patients/${id}/validate/reject`,
+      {},
+      { headers: this.getHeaders() }
+    );
+  }
+
   approveSpecialist(id: number): Observable<any> {
-    console.log(`✅ Aprobando especialista ${id}`);
-    return this.http.put(`${this.apiUrl}/specialists/${id}/validate/approve`, {}, {
-      headers: this.getHeaders()
-    });
+    return this.http.put(
+      `${this.apiUrl}/api/v1/admin/specialists/${id}/validate/approve`,
+      {},
+      { headers: this.getHeaders() }
+    );
   }
 
-  // 🔥 VALIDAR ESPECIALISTA - Rechazar
   rejectSpecialist(id: number): Observable<any> {
-    console.log(`❌ Rechazando especialista ${id}`);
-    return this.http.put(`${this.apiUrl}/specialists/${id}/validate/reject`, {}, {
-      headers: this.getHeaders()
-    });
+    return this.http.put(
+      `${this.apiUrl}/api/v1/admin/specialists/${id}/validate/reject`,
+      {},
+      { headers: this.getHeaders() }
+    );
   }
 
-  // 🔥 VALIDAR USUARIO (método genérico para compatibilidad)
-  validateUser(id: number, status: 'approved' | 'rejected'): Observable<any> {
-    if (status === 'approved') {
-      return this.approveSpecialist(id);
-    } else {
-      return this.rejectSpecialist(id);
+  validateUser(id: number, role: 1 | 2, status: 'approved' | 'rejected'): Observable<any> {
+    if (role === 1) {
+      return status === 'approved'
+        ? this.approvePatient(id)
+        : this.rejectPatient(id);
     }
+
+    return status === 'approved'
+      ? this.approveSpecialist(id)
+      : this.rejectSpecialist(id);
   }
 }
