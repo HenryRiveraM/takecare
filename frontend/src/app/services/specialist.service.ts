@@ -87,7 +87,7 @@ export class SpecialistService {
     }
 
     return this.http
-      .get<any[]>(`${this.baseUrl}/search`, { params })
+      .get<any[]>(`${this.baseUrl}/api/v1/specialists/search`, { params })
       .pipe(
         map((specialists) => 
           specialists.map((specialist) => this.normalizeSpecialist(specialist))
