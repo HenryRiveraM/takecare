@@ -28,6 +28,10 @@ Para mantener el orden, el equipo utiliza el nombre de las Historias de Usuario 
 * main: Rama estable.
 * HUXX-Nombre-Historia: Ramas de desarrollo.
 
+## Documentacion util
+
+* Guia de traducciones del frontend: [docs/README-traducciones-frontend.md](/Users/henryriveramendez/Documents/taller/takecare/docs/README-traducciones-frontend.md)
+
 
 README BACKEND
 
@@ -182,4 +186,3 @@ model
 * MySQL
 
 -------------------------------------------------------------------------------------------------------
-

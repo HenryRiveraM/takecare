@@ -1586,3 +1586,942 @@ This generated password is for development use only. Your security configuration
 2026-04-14 10:20:25 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
 2026-04-14 10:20:25 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistProfileDTO@60f94907]
 2026-04-14 10:20:25 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:38:16 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 11593 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-14 10:38:16 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 10:38:24 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Patterns [/ws-takecare/**] in 'stompWebSocketHandlerMapping'
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 38 mappings in 'requestMappingHandlerMapping'
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-04-14 10:38:24 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: d0750c30-276e-4896-9f7d-d75a9bf15c83
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.a.c.AuthController:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.TestController:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.SpecialistScheduleController:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.AdminController:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.PatientController:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.SpecialistController:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserController:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserProfileController:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.a.OpenApiWebMvcResource:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerConfigResource:
+	
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-04-14 10:38:24 [restartedMain] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-04-14 10:38:24 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-14 10:38:24 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-14 10:38:24 [restartedMain] INFO  org.springframework.web.SimpLogging - Starting...
+2026-04-14 10:38:24 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1a43766e]
+2026-04-14 10:38:24 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1a43766e]
+2026-04-14 10:38:24 [restartedMain] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1a43766e]]
+2026-04-14 10:38:24 [restartedMain] INFO  org.springframework.web.SimpLogging - Started.
+2026-04-14 10:38:24 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 10:38:24 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 10:38:24 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 8.262 seconds (process running for 143.553)
+2026-04-14 10:38:26 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-14 10:38:26 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-14 10:38:26 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopping...
+2026-04-14 10:38:26 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1a43766e]]
+2026-04-14 10:38:26 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1a43766e]
+2026-04-14 10:38:26 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1a43766e]
+2026-04-14 10:38:26 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopped.
+2026-04-14 10:38:26 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 10:38:26 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 10:38:33 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 14126 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-14 10:38:33 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 10:38:43 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 10:38:43 [restartedMain] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Patterns [/ws-takecare/**] in 'stompWebSocketHandlerMapping'
+2026-04-14 10:38:43 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 38 mappings in 'requestMappingHandlerMapping'
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-04-14 10:38:44 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 170338ec-5935-444f-9d2f-0989f40d3bcf
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.a.c.AuthController:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.TestController:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.SpecialistScheduleController:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.AdminController:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.PatientController:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.SpecialistController:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserController:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserProfileController:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.a.OpenApiWebMvcResource:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerConfigResource:
+	
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-04-14 10:38:44 [restartedMain] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-04-14 10:38:44 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-14 10:38:44 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-14 10:38:44 [restartedMain] INFO  org.springframework.web.SimpLogging - Starting...
+2026-04-14 10:38:44 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2a079b70]
+2026-04-14 10:38:44 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2a079b70]
+2026-04-14 10:38:44 [restartedMain] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2a079b70]]
+2026-04-14 10:38:44 [restartedMain] INFO  org.springframework.web.SimpLogging - Started.
+2026-04-14 10:38:44 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 10:38:44 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 10:38:44 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 11.033 seconds (process running for 11.188)
+2026-04-14 10:39:26 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-14 10:39:26 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-04-14 10:39:26 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-04-14 10:39:26 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-04-14 10:39:26 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@32dc7225
+2026-04-14 10:39:26 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@76d6b967
+2026-04-14 10:39:26 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-04-14 10:39:26 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-04-14 10:39:26 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/admin/patients", parameters={}
+2026-04-14 10:39:26 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.AdminController#getAllPatients(Integer)
+2026-04-14 10:39:28 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Fetching all patients from repository
+2026-04-14 10:39:29 [http-nio-8080-exec-2] INFO  c.t.b.user.service.PatientService - Found 4 patients
+2026-04-14 10:39:29 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:29 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.user.model.Patient@4a200abe, com.takecare.backend.user.model.Patient@3bb5907a, (truncated)...]
+2026-04-14 10:39:29 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:41 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/admin/specialists", parameters={}
+2026-04-14 10:39:41 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.AdminController#getAllSpecialists(Integer)
+2026-04-14 10:39:42 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Fetching all specialists from repository
+2026-04-14 10:39:44 [http-nio-8080-exec-4] INFO  c.t.b.user.service.SpecialistService - Found 5 specialists
+2026-04-14 10:39:44 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:44 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.user.model.Specialist@1acd5da9, com.takecare.backend.user.model.Specialist@439 (truncated)...]
+2026-04-14 10:39:44 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2026-04-14 10:39:44 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Ignoring exception, response committed already: org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2026-04-14 10:39:44 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)]
+2026-04-14 10:39:44 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:44 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists", parameters={}
+2026-04-14 10:39:44 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getAllSpecialists(String, String, String)
+2026-04-14 10:39:44 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching visible specialists with search: null
+2026-04-14 10:39:44 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Fetching visible specialists with search: null
+2026-04-14 10:39:45 [http-nio-8080-exec-5] INFO  c.t.b.user.service.SpecialistService - Found 4 visible specialists
+2026-04-14 10:39:45 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 4 visible specialists
+2026-04-14 10:39:45 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:45 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.user.dto.SpecialistListItemResponseDto@31370cf0, com.takecare.backend.user.dto (truncated)...]
+2026-04-14 10:39:45 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:45 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/53/profile", parameters={}
+2026-04-14 10:39:45 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistProfile(Integer)
+2026-04-14 10:39:45 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/53/profile - Fetching specialist profile
+2026-04-14 10:39:45 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 53
+2026-04-14 10:39:45 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/52", parameters={}
+2026-04-14 10:39:45 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistById(Integer)
+2026-04-14 10:39:45 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/52 - Fetching visible specialist detail
+2026-04-14 10:39:45 [http-nio-8080-exec-7] INFO  c.t.b.user.service.SpecialistService - Fetching visible specialist detail with id: 52
+2026-04-14 10:39:45 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/52/profile", parameters={}
+2026-04-14 10:39:45 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/53", parameters={}
+2026-04-14 10:39:45 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistProfile(Integer)
+2026-04-14 10:39:45 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/58/profile", parameters={}
+2026-04-14 10:39:45 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistById(Integer)
+2026-04-14 10:39:45 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/58", parameters={}
+2026-04-14 10:39:45 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/53 - Fetching visible specialist detail
+2026-04-14 10:39:45 [http-nio-8080-exec-8] INFO  c.t.b.user.service.SpecialistService - Fetching visible specialist detail with id: 53
+2026-04-14 10:39:45 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/52/profile - Fetching specialist profile
+2026-04-14 10:39:45 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistProfile(Integer)
+2026-04-14 10:39:45 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 52
+2026-04-14 10:39:45 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistById(Integer)
+2026-04-14 10:39:45 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/58/profile - Fetching specialist profile
+2026-04-14 10:39:45 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 58
+2026-04-14 10:39:45 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/58 - Fetching visible specialist detail
+2026-04-14 10:39:45 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Fetching visible specialist detail with id: 58
+2026-04-14 10:39:45 [http-nio-8080-exec-8] INFO  c.t.b.user.service.SpecialistService - Visible specialist detail found with id: 53
+2026-04-14 10:39:45 [http-nio-8080-exec-8] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/53 - Visible specialist detail found
+2026-04-14 10:39:45 [http-nio-8080-exec-1] INFO  c.t.b.user.service.SpecialistService - Visible specialist detail found with id: 58
+2026-04-14 10:39:45 [http-nio-8080-exec-1] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/58 - Visible specialist detail found
+2026-04-14 10:39:45 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:45 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:45 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistDetailResponseDto@58e7b330]
+2026-04-14 10:39:45 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistDetailResponseDto@27beab88]
+2026-04-14 10:39:45 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:45 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:45 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/54/profile", parameters={}
+2026-04-14 10:39:45 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/54", parameters={}
+2026-04-14 10:39:45 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistProfile(Integer)
+2026-04-14 10:39:45 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistById(Integer)
+2026-04-14 10:39:45 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/54 - Fetching visible specialist detail
+2026-04-14 10:39:45 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/54/profile - Fetching specialist profile
+2026-04-14 10:39:45 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Fetching visible specialist detail with id: 54
+2026-04-14 10:39:45 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 54
+2026-04-14 10:39:45 [http-nio-8080-exec-7] INFO  c.t.b.user.service.SpecialistService - Visible specialist detail found with id: 52
+2026-04-14 10:39:45 [http-nio-8080-exec-7] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/52 - Visible specialist detail found
+2026-04-14 10:39:45 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:45 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistDetailResponseDto@55276cbf]
+2026-04-14 10:39:45 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:45 [http-nio-8080-exec-3] INFO  c.t.b.user.service.SpecialistService - Visible specialist detail found with id: 54
+2026-04-14 10:39:45 [http-nio-8080-exec-3] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/54 - Visible specialist detail found
+2026-04-14 10:39:45 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:45 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistDetailResponseDto@8362863]
+2026-04-14 10:39:45 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:46 [http-nio-8080-exec-6] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 53
+2026-04-14 10:39:46 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/53/profile - Specialist profile found
+2026-04-14 10:39:46 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:46 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistProfileDTO@5b9ac025]
+2026-04-14 10:39:46 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:46 [http-nio-8080-exec-10] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 58
+2026-04-14 10:39:46 [http-nio-8080-exec-10] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/58/profile - Specialist profile found
+2026-04-14 10:39:46 [http-nio-8080-exec-9] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 52
+2026-04-14 10:39:46 [http-nio-8080-exec-9] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/52/profile - Specialist profile found
+2026-04-14 10:39:46 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:46 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:46 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistProfileDTO@7eaef4c1]
+2026-04-14 10:39:46 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistProfileDTO@483f9af0]
+2026-04-14 10:39:46 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:46 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:39:46 [http-nio-8080-exec-2] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 54
+2026-04-14 10:39:46 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/54/profile - Specialist profile found
+2026-04-14 10:39:46 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:39:46 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistProfileDTO@43f7cbcd]
+2026-04-14 10:39:46 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:40:19 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists", parameters={}
+2026-04-14 10:40:19 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getAllSpecialists(String, String, String)
+2026-04-14 10:40:19 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching visible specialists with search: null
+2026-04-14 10:40:19 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Fetching visible specialists with search: null
+2026-04-14 10:40:19 [http-nio-8080-exec-6] INFO  c.t.b.user.service.SpecialistService - Found 4 visible specialists
+2026-04-14 10:40:19 [http-nio-8080-exec-6] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 4 visible specialists
+2026-04-14 10:40:19 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 10:40:19 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.user.dto.SpecialistListItemResponseDto@7d6c1bc, com.takecare.backend.user.dto. (truncated)...]
+2026-04-14 10:40:19 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 10:42:45 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-14 10:42:45 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-14 10:42:45 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopping...
+2026-04-14 10:42:45 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2a079b70]]
+2026-04-14 10:42:45 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2a079b70]
+2026-04-14 10:42:45 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2a079b70]
+2026-04-14 10:42:45 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopped.
+2026-04-14 10:42:45 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 10:42:45 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 17:57:06 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 30124 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-14 17:57:06 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-14 17:57:22 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Patterns [/ws-takecare/**] in 'stompWebSocketHandlerMapping'
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 38 mappings in 'requestMappingHandlerMapping'
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-04-14 17:57:22 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 224b6cd5-03c5-4b55-a85a-aa34a5958a20
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.a.c.AuthController:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.TestController:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.SpecialistScheduleController:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.AdminController:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.PatientController:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.SpecialistController:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserController:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserProfileController:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.a.OpenApiWebMvcResource:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerConfigResource:
+	
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-04-14 17:57:22 [restartedMain] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-04-14 17:57:22 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-14 17:57:22 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-14 17:57:22 [restartedMain] INFO  org.springframework.web.SimpLogging - Starting...
+2026-04-14 17:57:22 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@308c36de]
+2026-04-14 17:57:22 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@308c36de]
+2026-04-14 17:57:22 [restartedMain] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@308c36de]]
+2026-04-14 17:57:22 [restartedMain] INFO  org.springframework.web.SimpLogging - Started.
+2026-04-14 17:57:22 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 17:57:22 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 17:57:22 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 16.221 seconds (process running for 16.397)
+2026-04-14 17:58:22 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2026-04-14 17:59:39 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-14 17:59:39 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-04-14 17:59:39 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-04-14 17:59:39 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-04-14 17:59:39 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@1a928918
+2026-04-14 17:59:39 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@2a81846f
+2026-04-14 17:59:39 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-04-14 17:59:39 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-04-14 17:59:39 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/users/profile/5", parameters={}
+2026-04-14 17:59:39 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.UserProfileController#getProfile(Integer)
+2026-04-14 17:59:39 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-14 17:59:39 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-14 17:59:41 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-14 17:59:41 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 17:59:41 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.PatientProfileDTO@69a4948f]
+2026-04-14 17:59:41 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists", parameters={}
+2026-04-14 17:59:41 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getAllSpecialists(String, String, String)
+2026-04-14 17:59:41 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Fetching visible specialists with search: null
+2026-04-14 17:59:41 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Fetching visible specialists with search: null
+2026-04-14 17:59:41 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 17:59:41 [http-nio-8080-exec-2] INFO  c.t.b.user.service.SpecialistService - Found 5 visible specialists
+2026-04-14 17:59:41 [http-nio-8080-exec-2] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists - Found 5 visible specialists
+2026-04-14 17:59:41 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 17:59:41 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.user.dto.SpecialistListItemResponseDto@2c2ec8b9, com.takecare.backend.user.dto (truncated)...]
+2026-04-14 17:59:41 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 18:00:12 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/51/profile", parameters={}
+2026-04-14 18:00:12 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistProfile(Integer)
+2026-04-14 18:00:12 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/51/profile - Fetching specialist profile
+2026-04-14 18:00:12 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 51
+2026-04-14 18:00:14 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 51
+2026-04-14 18:00:14 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/51/profile - Specialist profile found
+2026-04-14 18:00:14 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:00:14 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistProfileDTO@547389ab]
+2026-04-14 18:00:14 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 18:00:19 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/v1/specialists/51/profile", parameters={}
+2026-04-14 18:00:19 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#updateSpecialistProfile(Integer, UpdateSpecialistProfileDTO)
+2026-04-14 18:00:19 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.user.dto.UpdateSpecialistProfileDTO@e03d066]
+2026-04-14 18:00:19 [http-nio-8080-exec-7] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.SpecialistProfileDTO> com.takecare.backend.user.controller.SpecialistController.updateSpecialistProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdateSpecialistProfileDTO): [Field error in object 'updateSpecialistProfileDTO' on field 'secondLastname': rejected value []; codes [Pattern.updateSpecialistProfileDTO.secondLastname,Pattern.secondLastname,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updateSpecialistProfileDTO.secondLastname,secondLastname]; arguments []; default message [secondLastname],[Ljakarta.validation.constraints.Pattern$Flag;@22893f78,^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$]; default message [Second lastname must contain only letters]] ]
+2026-04-14 18:00:19 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2026-04-14 18:00:19 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for PUT "/error", parameters={}
+2026-04-14 18:00:19 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2026-04-14 18:00:19 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:00:19 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Tue Apr 14 18:00:19 BOT 2026, status=400, error=Bad Request, trace=org.springframework.we (truncated)...]
+2026-04-14 18:00:19 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 400
+2026-04-14 18:00:21 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/v1/specialists/51/profile", parameters={}
+2026-04-14 18:00:21 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#updateSpecialistProfile(Integer, UpdateSpecialistProfileDTO)
+2026-04-14 18:00:21 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.user.dto.UpdateSpecialistProfileDTO@6dc4703f]
+2026-04-14 18:00:21 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.SpecialistProfileDTO> com.takecare.backend.user.controller.SpecialistController.updateSpecialistProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdateSpecialistProfileDTO): [Field error in object 'updateSpecialistProfileDTO' on field 'secondLastname': rejected value []; codes [Pattern.updateSpecialistProfileDTO.secondLastname,Pattern.secondLastname,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updateSpecialistProfileDTO.secondLastname,secondLastname]; arguments []; default message [secondLastname],[Ljakarta.validation.constraints.Pattern$Flag;@22893f78,^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$]; default message [Second lastname must contain only letters]] ]
+2026-04-14 18:00:21 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2026-04-14 18:00:21 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for PUT "/error", parameters={}
+2026-04-14 18:00:21 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2026-04-14 18:00:21 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:00:21 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Tue Apr 14 18:00:21 BOT 2026, status=400, error=Bad Request, trace=org.springframework.we (truncated)...]
+2026-04-14 18:00:21 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 400
+2026-04-14 18:00:26 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/v1/specialists/51/profile", parameters={}
+2026-04-14 18:00:26 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#updateSpecialistProfile(Integer, UpdateSpecialistProfileDTO)
+2026-04-14 18:00:26 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.user.dto.UpdateSpecialistProfileDTO@6413cf09]
+2026-04-14 18:00:26 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.SpecialistProfileDTO> com.takecare.backend.user.controller.SpecialistController.updateSpecialistProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdateSpecialistProfileDTO): [Field error in object 'updateSpecialistProfileDTO' on field 'secondLastname': rejected value []; codes [Pattern.updateSpecialistProfileDTO.secondLastname,Pattern.secondLastname,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updateSpecialistProfileDTO.secondLastname,secondLastname]; arguments []; default message [secondLastname],[Ljakarta.validation.constraints.Pattern$Flag;@22893f78,^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$]; default message [Second lastname must contain only letters]] ]
+2026-04-14 18:00:26 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2026-04-14 18:00:26 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for PUT "/error", parameters={}
+2026-04-14 18:00:26 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2026-04-14 18:00:26 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:00:26 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Tue Apr 14 18:00:26 BOT 2026, status=400, error=Bad Request, trace=org.springframework.we (truncated)...]
+2026-04-14 18:00:26 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 400
+2026-04-14 18:01:52 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1f8e6721 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:07 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@699582ae (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:12 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7c1ff132 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:17 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@197d50da (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:22 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6efa64f0 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:27 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6def8e7c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@70824261 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m50s683ms).
+2026-04-14 18:02:37 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@30a372b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:42 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2f67fb91 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:47 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4d942556 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:02:53 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (325e27a7-d371-4e5e-a1be-15761b1babf5)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52)
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:03:58 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (37da47bd-cd85-49fe-9df7-6b58ce826899)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:06:06 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (f9cb041a-bc24-4a44-9fd3-d47d4bb0c395)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:06:30 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m58s385ms).
+2026-04-14 18:07:11 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (a4301d70-ed49-4888-821e-9ed049ad7334)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52)
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:08:16 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (d5b596f6-f6d9-4572-8c11-91a8b883dd78)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:09:21 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (4ba7d9d4-fa65-4b98-bfbc-729b032e9c24)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52)
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:10:26 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (56a279c6-80d2-4a5f-b5bd-9c1b603df7ae)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:12:48 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (a9962c14-4f24-4e0b-90a7-106bb1e3c9e1)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:13:17 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m46s645ms).
+2026-04-14 18:15:56 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (46d65ba8-ae5e-4841-923d-cb5450d9eaf9)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52)
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:20:57 [HikariPool-1:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Pool is empty, failed to create/setup connection (dbc1c939-d3ae-4462-8172-e1a6974c9573)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: caboose.proxy.rlwy.net
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-14 18:21:01 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m43s663ms).
+2026-04-14 18:28:02 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m31s37ms).
+2026-04-14 18:30:01 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m59s545ms).
+2026-04-14 18:34:43 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6128533c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:34:45 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3d3a6525 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:34:51 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m49s333ms).
+2026-04-14 18:34:54 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@507bab89 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:34:59 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2d6bd50a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:35:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@43968ecf (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:35:32 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4e3c52d7 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:35:36 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@70f341f2 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:35:37 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3430963 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:35:38 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@74d41f32 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:36:48 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@32c467ac (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:37:04 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m13s187ms).
+2026-04-14 18:46:39 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m35s102ms).
+2026-04-14 18:47:45 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m6s36ms).
+2026-04-14 18:47:54 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@29d77886 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:47:55 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/users/profile/5", parameters={}
+2026-04-14 18:47:55 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.UserProfileController#getProfile(Integer)
+2026-04-14 18:47:55 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Fetching patient profile
+2026-04-14 18:47:55 [http-nio-8080-exec-1] INFO  c.t.b.u.s.PatientProfileService - Fetching profile for patient id: 5
+2026-04-14 18:47:55 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@376f0c43 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:47:55 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5bfe0da (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:47:55 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@41eca98f (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:47:55 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4fc35cf6 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:47:55 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@14c59 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:47:55 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7ac2d5b3 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 18:47:57 [http-nio-8080-exec-1] INFO  c.t.b.u.c.UserProfileController - GET /api/v1/users/profile/5 - Profile found
+2026-04-14 18:47:57 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:47:57 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.PatientProfileDTO@6ada914]
+2026-04-14 18:47:57 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 18:48:12 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/v1/users/profile/5", parameters={}
+2026-04-14 18:48:12 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.UserProfileController#updateProfile(Integer, UpdatePatientProfileDTO)
+2026-04-14 18:48:12 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.user.dto.UpdatePatientProfileDTO@34e22d1a]
+2026-04-14 18:48:12 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/5 - Updating patient profile
+2026-04-14 18:48:12 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Updating profile for patient id: 5
+2026-04-14 18:48:14 [http-nio-8080-exec-3] INFO  c.t.b.u.s.PatientProfileService - Profile updated successfully for patient id: 5
+2026-04-14 18:48:14 [http-nio-8080-exec-3] INFO  c.t.b.u.c.UserProfileController - PUT /api/v1/users/profile/5 - Profile updated successfully
+2026-04-14 18:48:14 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:48:14 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.PatientProfileDTO@40537a52]
+2026-04-14 18:48:14 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 18:49:00 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/specialists/51/profile", parameters={}
+2026-04-14 18:49:00 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#getSpecialistProfile(Integer)
+2026-04-14 18:49:00 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/51/profile - Fetching specialist profile
+2026-04-14 18:49:00 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Fetching profile for specialist id: 51
+2026-04-14 18:49:01 [http-nio-8080-exec-5] INFO  c.t.b.u.s.SpecialistProfileService - Profile found for specialist id: 51
+2026-04-14 18:49:01 [http-nio-8080-exec-5] INFO  c.t.b.u.c.SpecialistController - GET /api/v1/specialists/51/profile - Specialist profile found
+2026-04-14 18:49:01 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:49:01 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.user.dto.SpecialistProfileDTO@63105ba1]
+2026-04-14 18:49:01 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-14 18:49:26 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/v1/specialists/51/profile", parameters={}
+2026-04-14 18:49:26 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#updateSpecialistProfile(Integer, UpdateSpecialistProfileDTO)
+2026-04-14 18:49:26 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.user.dto.UpdateSpecialistProfileDTO@24c0cf33]
+2026-04-14 18:49:26 [http-nio-8080-exec-7] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.SpecialistProfileDTO> com.takecare.backend.user.controller.SpecialistController.updateSpecialistProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdateSpecialistProfileDTO): [Field error in object 'updateSpecialistProfileDTO' on field 'secondLastname': rejected value []; codes [Pattern.updateSpecialistProfileDTO.secondLastname,Pattern.secondLastname,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updateSpecialistProfileDTO.secondLastname,secondLastname]; arguments []; default message [secondLastname],[Ljakarta.validation.constraints.Pattern$Flag;@22893f78,^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$]; default message [Second lastname must contain only letters]] ]
+2026-04-14 18:49:26 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2026-04-14 18:49:26 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for PUT "/error", parameters={}
+2026-04-14 18:49:26 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2026-04-14 18:49:26 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:49:26 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Tue Apr 14 18:49:26 BOT 2026, status=400, error=Bad Request, trace=org.springframework.we (truncated)...]
+2026-04-14 18:49:26 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 400
+2026-04-14 18:49:32 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/v1/specialists/51/profile", parameters={}
+2026-04-14 18:49:32 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#updateSpecialistProfile(Integer, UpdateSpecialistProfileDTO)
+2026-04-14 18:49:32 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.user.dto.UpdateSpecialistProfileDTO@b30c062]
+2026-04-14 18:49:32 [http-nio-8080-exec-9] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.SpecialistProfileDTO> com.takecare.backend.user.controller.SpecialistController.updateSpecialistProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdateSpecialistProfileDTO): [Field error in object 'updateSpecialistProfileDTO' on field 'secondLastname': rejected value []; codes [Pattern.updateSpecialistProfileDTO.secondLastname,Pattern.secondLastname,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updateSpecialistProfileDTO.secondLastname,secondLastname]; arguments []; default message [secondLastname],[Ljakarta.validation.constraints.Pattern$Flag;@22893f78,^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$]; default message [Second lastname must contain only letters]] ]
+2026-04-14 18:49:32 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2026-04-14 18:49:32 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for PUT "/error", parameters={}
+2026-04-14 18:49:32 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2026-04-14 18:49:32 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:49:32 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Tue Apr 14 18:49:32 BOT 2026, status=400, error=Bad Request, trace=org.springframework.we (truncated)...]
+2026-04-14 18:49:32 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 400
+2026-04-14 18:49:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - PUT "/api/v1/specialists/51/profile", parameters={}
+2026-04-14 18:49:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.user.controller.SpecialistController#updateSpecialistProfile(Integer, UpdateSpecialistProfileDTO)
+2026-04-14 18:49:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.user.dto.UpdateSpecialistProfileDTO@36691d76]
+2026-04-14 18:49:47 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.takecare.backend.user.dto.SpecialistProfileDTO> com.takecare.backend.user.controller.SpecialistController.updateSpecialistProfile(java.lang.Integer,com.takecare.backend.user.dto.UpdateSpecialistProfileDTO): [Field error in object 'updateSpecialistProfileDTO' on field 'secondLastname': rejected value []; codes [Pattern.updateSpecialistProfileDTO.secondLastname,Pattern.secondLastname,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [updateSpecialistProfileDTO.secondLastname,secondLastname]; arguments []; default message [secondLastname],[Ljakarta.validation.constraints.Pattern$Flag;@22893f78,^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$]; default message [Second lastname must contain only letters]] ]
+2026-04-14 18:49:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 400 BAD_REQUEST
+2026-04-14 18:49:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for PUT "/error", parameters={}
+2026-04-14 18:49:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2026-04-14 18:49:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-14 18:49:47 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Tue Apr 14 18:49:47 BOT 2026, status=400, error=Bad Request, trace=org.springframework.we (truncated)...]
+2026-04-14 18:49:47 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 400
+2026-04-14 19:03:25 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m37s976ms).
+2026-04-14 19:08:24 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@373a67c8 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 19:09:44 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m19s251ms).
+2026-04-14 19:09:47 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3453c090 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 19:09:48 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5b6ef3c2 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 19:12:16 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@69f2e984 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 19:14:01 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m16s873ms).
+2026-04-14 19:14:11 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@af67c60 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 19:47:29 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@586a0d87 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 19:47:35 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5d6ec4c7 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 19:47:36 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=33m34s976ms).
+2026-04-14 19:47:36 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@204f2549 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 20:12:35 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5176502a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 20:12:36 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5aebb405 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 20:46:49 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=59m12s647ms).
+2026-04-14 20:53:35 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3d7b77c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 21:13:00 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@35722e1d (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 21:13:08 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=26m18s677ms).
+2026-04-14 21:22:39 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@cecc246 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 21:39:25 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5272fbd6 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14 21:39:25 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=26m17s131ms).
+2026-04-14 21:41:55 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m48s926ms).
+2026-04-14 21:42:12 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-14 21:42:12 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-14 21:42:12 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopping...
+2026-04-14 21:42:12 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@308c36de]]
+2026-04-14 21:42:12 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@308c36de]
+2026-04-14 21:42:12 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@308c36de]
+2026-04-14 21:42:12 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopped.
+2026-04-14 21:42:12 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-14 21:42:12 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
