@@ -1,18 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-  SpecialistLocationResponse,
-  SpecialistService
-} from '../../services/specialist.service';
+import { SpecialistLocationResponse, SpecialistService } from '../../services/specialist.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import {
-  LocationVisibility,
-  SpecialistLocationPreferences,
-  SpecialistLocationPreferencesService
-} from '../../services/specialist-location-preferences.service';
+import { LocationVisibility, SpecialistLocationPreferences, SpecialistLocationPreferencesService } from '../../services/specialist-location-preferences.service';
 
 interface SpecialistProfileForm {
   names: string;
@@ -204,12 +197,12 @@ export class SpecialistProfileComponent implements OnInit {
 
   private updateProfileData(): void {
     const payload = {
-      names: this.profile.names,
-      firstLastname: this.profile.firstLastname,
-      secondLastname: this.profile.secondLastname,
-      email: this.profile.email,
-      biography: this.profile.biography,
-      officeUbi: this.profile.officeUbi,
+      names: this.profile.names.trim(),
+      firstLastname: this.profile.firstLastname.trim(),
+      secondLastname: this.profile.secondLastname?.trim() ? this.profile.secondLastname.trim() : null,
+      email: this.profile.email.trim(),
+      biography: this.profile.biography?.trim() || '',
+      officeUbi: this.profile.officeUbi?.trim() || '',
       sessionCost: this.profile.sessionCost
     };
 

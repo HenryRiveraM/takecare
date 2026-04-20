@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 
 export interface SpecialistDirectoryItem {
@@ -46,10 +47,7 @@ export interface SpecialistLocationResponse {
 })
 export class SpecialistService {
 
-  private readonly baseUrl =
-    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-      ? 'http://localhost:8080/api/v1/specialists'
-      : 'https://tragic-vere-takecare-cebbdb2d.koyeb.app/api/v1/specialists';
+  private readonly baseUrl = environment.apiUrl;  
 
   constructor(private http: HttpClient) {}
 
@@ -59,22 +57,42 @@ export class SpecialistService {
         fullName?: string;
         specialties?: string[];
         specialty?: string;
-      }>>(this.baseUrl)
+      }>>(`${this.baseUrl}/api/v1/specialists`)
       .pipe(map((specialists) => specialists.map((specialist) => this.normalizeSpecialist(specialist))));
   }
 
   updateLocation(id: number, data: SpecialistLocationRequest): Observable<SpecialistLocationResponse> {
-    return this.http.put<SpecialistLocationResponse>(`${this.baseUrl}/${id}/location`, data);
+    return this.http.put<SpecialistLocationResponse>(`${this.baseUrl}/api/v1/specialists/${id}/location`, data);
   }
 
   getProfile(id: number): Observable<any> {
-    console.log(`Obteniendo perfil de especialista: ${this.baseUrl}/${id}/profile`);
-    return this.http.get(`${this.baseUrl}/${id}/profile`);
+    console.log(`Obteniendo perfil de especialista: ${this.baseUrl}/api/v1/specialists/${id}/profile`);
+    return this.http.get(`${this.baseUrl}/api/v1/specialists/${id}/profile`);
+  }
+  
+  updateProfile(id: number, data: any): Observable<any> {
+    console.log(`Actualizando perfil de especialista: ${this.baseUrl}/api/v1/specialists/${id}/profile`, data);
+    return this.http.put(`${this.baseUrl}/api/v1/specialists/${id}/profile`, data);
   }
 
-  updateProfile(id: number, data: any): Observable<any> {
-    console.log(`Actualizando perfil de especialista: ${this.baseUrl}/${id}/profile`, data);
-    return this.http.put(`${this.baseUrl}/${id}/profile`, data);
+  searchSpecialists(category?: string, availability?: string): Observable<SpecialistDirectoryItem[]> {
+    let params = new HttpParams();
+    
+    if (category && category.trim() !== '') {
+      params = params.set('category', category);
+    }
+    
+    if (availability && availability.trim() !== '') {
+      params = params.set('availability', availability);
+    }
+
+    return this.http
+      .get<any[]>(`${this.baseUrl}/api/v1/specialists/search`, { params })
+      .pipe(
+        map((specialists) => 
+          specialists.map((specialist) => this.normalizeSpecialist(specialist))
+        )
+      );
   }
 
   private normalizeSpecialist(

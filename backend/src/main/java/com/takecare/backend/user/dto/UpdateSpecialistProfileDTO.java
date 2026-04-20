@@ -28,8 +28,9 @@ public class UpdateSpecialistProfileDTO {
     private String firstLastname;
 
     @Nullable
-    @Pattern(regexp = "^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$",
-             message = "Second lastname must contain only letters")
+    @Pattern(regexp = "^$|^(?!.*[ ]{2})[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$",
+            message = "Second lastname must contain only letters"
+    )
     @Size(max = 30, message = "Second lastname must be at most 30 characters long")
     private String secondLastname;
 
