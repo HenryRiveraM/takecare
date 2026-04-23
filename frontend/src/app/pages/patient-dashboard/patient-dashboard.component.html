@@ -1,22 +1,26 @@
 <div class="dashboard">
-    <app-sidebar><div class="sidebar-overlay" 
-      *ngIf="sidebarService.isOpen()" 
-      (click)="sidebarService.close()">
-  </div>  </app-sidebar>
 
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Overlay (fuera del sidebar, al mismo nivel) -->
+  <div class="sidebar-overlay"
+    *ngIf="sidebarService.isOpen()"
+    (click)="sidebarService.close()">
+  </div>
 
   <div class="main">
     <header class="top-bar">
       <div class="search-container">
         <i class="fas fa-search search-icon"></i>
-        <input 
-          type="text" 
+        <input
+          type="text"
           [(ngModel)]="searchTerm"
           (keyup.enter)="goToSpecialistSearch()"
-          [placeholder]="'patientDashboard.searchPlaceholder' | translate" 
+          [placeholder]="'patientDashboard.searchPlaceholder' | translate"
           class="search-input">
       </div>
-      
+
       <button class="btn-dashboard-action">
         <i class="fas fa-plus"></i> {{ 'patientDashboard.newAppointment' | translate }}
       </button>
@@ -37,12 +41,10 @@
           <h3>0</h3>
           <p>{{ 'patientDashboard.stats.nextAppointments' | translate }}</p>
         </div>
-
         <div class="card">
           <h3>0</h3>
           <p>{{ 'patientDashboard.stats.newMessages' | translate }}</p>
         </div>
-
         <div class="card">
           <h3>0</h3>
           <p>{{ 'patientDashboard.stats.favoriteSpecialists' | translate }}</p>
@@ -50,4 +52,5 @@
       </div>
     </div>
   </div>
+
 </div>

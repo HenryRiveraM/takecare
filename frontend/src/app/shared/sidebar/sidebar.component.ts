@@ -18,6 +18,7 @@ const ROL_MAP: { [key: number]: 'patient' | 'specialist' | 'admin' } = {
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
+
 export class SidebarComponent implements OnInit {
   role: 'patient' | 'specialist' | 'admin' | null = null;
 
