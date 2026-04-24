@@ -96,7 +96,7 @@ public class PatientService extends UserService {
         logger.info("Attempting logical delete for patient with id: {}", id);
         return patientRepository.findById(id)
             .map(patient -> {
-                patient.setStatus(0);
+                patient.setStatus((byte) 0);
                 patient.setLastUpdate(LocalDateTime.now());
                 patientRepository.save(patient);
                 logger.info("Patient with id: {} marked as inactive successfully", id);
@@ -112,7 +112,7 @@ public class PatientService extends UserService {
 
     public Optional<Patient> validatePatient(Integer id, boolean approved) {
     return patientRepository.findById(id).map(patient -> {
-        patient.setAccountVerified(approved ? 1 : 0);
+        patient.setAccountVerified(approved ? (byte) 1 : (byte) 0);
         patient.setLastUpdate(LocalDateTime.now());
         return patientRepository.save(patient);
     });

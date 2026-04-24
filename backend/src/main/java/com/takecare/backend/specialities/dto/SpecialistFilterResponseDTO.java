@@ -30,7 +30,7 @@ public class SpecialistFilterResponseDTO {
     @Setter
     @Builder
     public static class ScheduleDTO {
-        private DayOfWeek dayOfWeek;
+        private byte dayOfWeek;
         private LocalTime startTime;
         private LocalTime endTime;
     }

@@ -26,7 +26,7 @@ public class SpecialistScheduleController {
     }
 
     @PostMapping("/{id}/book")
-    public ResponseEntity<SpecialistSchedule> book(@PathVariable Long id) {
+    public ResponseEntity<SpecialistSchedule> book(@PathVariable Integer id) {
         return ResponseEntity.ok(scheduleService.bookSchedule(id));
     }
 }

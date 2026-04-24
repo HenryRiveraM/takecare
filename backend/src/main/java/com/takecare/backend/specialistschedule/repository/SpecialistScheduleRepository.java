@@ -4,16 +4,16 @@ import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.DayOfWeek;
 import java.util.List;
 
 @Repository
-public interface SpecialistScheduleRepository extends JpaRepository<SpecialistSchedule, Long> {
+public interface SpecialistScheduleRepository extends JpaRepository<SpecialistSchedule, Integer> {
 
-    List<SpecialistSchedule> findBySpecialistIdAndAvailableTrue(Integer specialistId);
+    List<SpecialistSchedule> findBySpecialistIdAndStatus(Integer specialistId, Byte status);
 
-    List<SpecialistSchedule> findBySpecialistIdAndDayOfWeekAndAvailableTrue(
+    List<SpecialistSchedule> findBySpecialistIdAndDayOfWeekAndStatus(
             Integer specialistId,
-            DayOfWeek dayOfWeek
+            Byte dayOfWeek,
+            Byte status
     );
 }

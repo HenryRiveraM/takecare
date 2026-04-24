@@ -17,8 +17,8 @@ public class AdminSpecialistDTO {
     private String ciNumber;
     private String ciDocumentImg;
     private String certificationImg;
-    private Integer role;
-    private Integer status;
-    private Integer strikes;
-    private Integer accountVerified;
+    private Byte role;
+    private Byte status;
+    private Byte strikes;
+    private Byte accountVerified;
 }

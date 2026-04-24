@@ -12,6 +12,9 @@ import com.takecare.backend.specialistschedule.repository.SpecialistScheduleRepo
 @Service
 public class SpecialistScheduleService {
 
+    private static final Byte STATUS_AVAILABLE = 0;
+    private static final Byte STATUS_BOOKED = 1;
+
     @Autowired
     private SpecialistScheduleRepository repository;
 
@@ -19,22 +22,23 @@ public class SpecialistScheduleService {
     private SimpMessagingTemplate messagingTemplate;
 
     public List<SpecialistSchedule> getAvailableSchedules(Integer specialistId) {
-        return repository.findBySpecialistIdAndAvailableTrue(specialistId);
+        return repository.findBySpecialistIdAndStatus(specialistId, STATUS_AVAILABLE);
     }
-    
-    public SpecialistSchedule bookSchedule(Long scheduleId) {
+
+    public SpecialistSchedule bookSchedule(Integer scheduleId) {
         SpecialistSchedule schedule = repository.findById(scheduleId)
-            .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
-        
-        if (!schedule.isAvailable()) {
+                .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
+
+        if (!STATUS_AVAILABLE.equals(schedule.getStatus())) {
             throw new RuntimeException("El horario ya no está disponible");
         }
 
-        schedule.setAvailable(false);
+        schedule.setStatus(STATUS_BOOKED);
+
         SpecialistSchedule saved = repository.save(schedule);
 
         messagingTemplate.convertAndSend("/topic/horarios", "ACTUALIZAR_LISTA");
-        
+
         return saved;
     }
 }
