@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { LocationVisibility, SpecialistLocationPreferences, SpecialistLocationPreferencesService } from '../../services/specialist-location-preferences.service';
+import { SidebarService } from '../../services/sidebar.service';
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 
 interface SpecialistProfileForm {
   names: string;
@@ -20,7 +22,7 @@ interface SpecialistProfileForm {
 @Component({
   selector: 'app-specialist-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe],
+  imports: [CommonModule, FormsModule, TranslatePipe, SidebarComponent],
   templateUrl: './specialist-profile.component.html',
   styleUrls: ['./specialist-profile.component.css']
 })
@@ -54,7 +56,8 @@ export class SpecialistProfileComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private translate: TranslateService,
-    private specialistLocationPreferencesService: SpecialistLocationPreferencesService
+    private specialistLocationPreferencesService: SpecialistLocationPreferencesService,
+    public sidebarService: SidebarService
   ) {}
 
   ngOnInit(): void {

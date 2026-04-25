@@ -3,7 +3,6 @@
   <!-- Sidebar -->
   <app-sidebar></app-sidebar>
 
-  <!-- Overlay (fuera del sidebar, al mismo nivel) -->
   <div class="sidebar-overlay"
     *ngIf="sidebarService.isOpen()"
     (click)="sidebarService.close()">
@@ -50,7 +49,9 @@
           <p>{{ 'patientDashboard.stats.favoriteSpecialists' | translate }}</p>
         </div>
       </div>
+      
     </div>
+    
   </div>
 
 </div>

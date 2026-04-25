@@ -1,7 +1,6 @@
 <aside class="sidebar" [class.open]="sidebarService.isOpen()">
   <nav class="menu">
 
-    <!-- ───────── PACIENTE ───────── -->
     <ng-container *ngIf="role === 'patient'">
       <a class="menu-item" routerLink="/patient" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <i class="fas fa-home"></i> {{ 'patientDashboard.menu.panel' | translate }}
@@ -20,16 +19,27 @@
       </a>
     </ng-container>
 
-    <!-- ───────── ESPECIALISTA ───────── -->
     <ng-container *ngIf="role === 'specialist'">
-      <a class="menu-item" routerLink="/specialist" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <i class="fas fa-home"></i> {{ 'specialistDashboard.menu.panel' | translate }}
-      </a>
+    <a class="menu-item" routerLink="/specialist" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <i class="fas fa-home"></i> {{ 'specialistDashboard.menu.dashboard' | translate }}
+    </a>
 
-      <a class="menu-item" routerLink="/specialist/profile" routerLinkActive="active">
-        <i class="fas fa-user"></i> {{ 'specialistDashboard.menu.editProfile' | translate }}
-      </a>
-    </ng-container>
+    <a class="menu-item" routerLink="/specialist/schedule" routerLinkActive="active">
+      <i class="fas fa-calendar-alt"></i> {{ 'specialistDashboard.menu.schedule' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/specialist/patients" routerLinkActive="active">
+      <i class="fas fa-users"></i> {{ 'specialistDashboard.menu.patients' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/specialist/messages" routerLinkActive="active">
+      <i class="fas fa-envelope"></i> {{ 'specialistDashboard.menu.messages' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/specialist/profile" routerLinkActive="active">
+      <i class="fas fa-user"></i> {{ 'specialistDashboard.menu.editProfile' | translate }}
+    </a>
+  </ng-container>
 
   </nav>
 </aside>

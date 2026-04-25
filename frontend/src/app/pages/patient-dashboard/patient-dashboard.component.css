@@ -3,7 +3,8 @@
   display: flex;
   width: 100%;
   background-color: #f8faf9;
-  min-height: calc(100vh - 80px); /* Asegura que ocupe el resto de la pantalla */
+  height: calc(100vh - 80px); 
+  overflow: hidden;           
 }
 
 /* --- HEADER GLOBAL (IDIOMA + LOGOUT) --- */
@@ -24,14 +25,14 @@
 
 /* --- MAIN --- */
 .main {
-  margin-left: 260px;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: calc(100% - 260px);
+  flex: 1;       
+  min-width: 0;                 
+  height: 100vh;
+  overflow: hidden;
 
 }
-
 
 /* --- TOP BAR DASHBOARD (NO FIXED) --- */
 .top-bar {
@@ -94,9 +95,11 @@
 .content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 40px;
   background-color: #f8faf9;
 }
+
 /* --- HERO --- */
 .hero-dashboard {
   background-color: #72a092;
@@ -165,19 +168,34 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4); /* Oscurece el fondo */
-  z-index: 1500; /* Por debajo del sidebar pero sobre el contenido */
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1500;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+app-root {
+  display: block;
+  height: 100%;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
   .main {
-    margin-left: 0; /* Ya no hay espacio reservado a la izquierda */
+    margin-left: 0; 
     width: 100%;
+    height: 100%;
   }
 
   .top-bar {
-    padding: 0 15px;
-    flex-direction: column; /* Apila el buscador y el botón */
+    padding: 15px 15px 15px 15px;
+    flex-direction: column; 
     height: auto;
     padding-bottom: 15px;
   }
@@ -199,7 +217,9 @@
   }
 
   .dashboard {
-    margin-top: 70px; /* Ajusta según la altura de tu navbar en móvil */
+    height: calc(100vh - 75px); 
+    margin-top: 75px;            
+    overflow: hidden;
   }
 
   .sidebar-overlay {
@@ -208,8 +228,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.4); /* Un color oscuro suave */
-    z-index: 1050; /* Entre el contenido y el sidebar */
-    display: block;
+    background: rgba(0, 0, 0, 0.4); 
+    z-index: 1050; 
   }
 }
