@@ -25,6 +25,8 @@ import { PatientDashboardComponent } from './pages/patient-dashboard/patient-das
 import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
 import { patientGuard } from './guards/patient.guard';
 import { PatientSearchSpecialistsComponent } from './pages/patient-search-specialists/patient-search-specialists.component';
+import { PatientDocumentsComponent } from './pages/patient-documents/patient-documents.component';
+
 
 // OTROS
 import { NotFoundComponent } from './pages/not-found/not-found.component';
