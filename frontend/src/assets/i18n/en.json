@@ -547,7 +547,8 @@
       "schedule": "Schedule",
       "patients": "Patients",
       "messages": "Messages",
-      "editProfile": "Edit profile"
+      "editProfile": "Edit profile",
+      "appointments": "Appointments"
     },
     "searchPlaceholder": "Search patients...",
     "newSession": "New session",
@@ -665,6 +666,48 @@
       "description": "Upload your clinical files to share them with your specialists.",
       "action": "Upload my first document"
     }
-  }
+  },
 
+  "appointments": {
+    "title": "Appointments Panel",
+    "subtitle": "Manage your patients' requests",
+    "loading": "Loading appointments...",
+
+    "filters": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+
+    "actions": {
+      "accept": "Accept",
+      "reject": "Reject"
+    },
+
+    "confirm": {
+      "acceptTitle": "Accept this appointment?",
+      "rejectTitle": "Reject this appointment?",
+      "acceptMessage": "You are about to accept the appointment of",
+      "rejectMessage": "You are about to reject the appointment of",
+      "cancel": "Cancel",
+      "confirmAccept": "Yes, accept",
+      "confirmReject": "Yes, reject"
+    },
+
+    "toast": {
+      "accepted": "✅ Appointment accepted successfully",
+      "rejected": "❌ Appointment rejected"
+    },
+
+    "empty": {
+      "title": "No appointments in this status",
+      "description": "You have no appointments in this category at the moment."
+    }
+  }
 }
