@@ -12,6 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SpecialistScheduleGroupDTO {
 
-    private DayOfWeek dayOfWeek;
+    private Byte dayOfWeek;
     private List<SpecialistScheduleResponseDTO> schedules;
 }

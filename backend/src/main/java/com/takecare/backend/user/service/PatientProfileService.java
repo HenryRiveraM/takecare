@@ -69,7 +69,7 @@ public class PatientProfileService {
         dto.setCiNumber(patient.getCiNumber());
         dto.setEmail(patient.getEmail());
         dto.setClinicalHistory(patient.getClinicalHistory());
-        dto.setAccountVerified(patient.getAccountVerified());
+        dto.setAccountVerified(patient.getAccountVerified().byteValue());
         return dto;
     }
 }

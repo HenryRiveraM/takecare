@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.takecare.backend.specialistschedule.repository.SpecialistScheduleRepository;
 import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 
-import java.time.DayOfWeek;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +16,8 @@ import java.util.stream.Collectors;
 public class SpecialistSearchService {
 
     private static final Logger logger = LoggerFactory.getLogger(SpecialistSearchService.class);
+
+    private static final Byte STATUS_AVAILABLE = 0;
 
     private final SpecialistRepository specialistRepository;
     private final SpecialistScheduleRepository scheduleRepository;
@@ -30,7 +31,8 @@ public class SpecialistSearchService {
     public List<SpecialistFilterResponseDTO> searchSpecialists(String category, String availability) {
         logger.info("Buscando especialistas | category={} | availability={}", category, availability);
 
-        DayOfWeek dayOfWeek = parseDay(availability);
+        Byte dayOfWeek = parseDay(availability);
+
         List<Specialist> specialists;
 
         boolean hasCategory = category != null && !category.isBlank();
@@ -55,20 +57,39 @@ public class SpecialistSearchService {
                 .collect(Collectors.toList());
     }
 
-    private DayOfWeek parseDay(String availability) {
-        if (availability == null || availability.isBlank()) return null;
-        try {
-            return DayOfWeek.valueOf(availability.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            logger.warn("Valor de availability inválido: {}", availability);
+    private Byte parseDay(String availability) {
+        if (availability == null || availability.isBlank()) {
             return null;
         }
+
+        String value = availability.trim().toUpperCase();
+
+        return switch (value) {
+            case "MONDAY", "LUNES", "1" -> 1;
+            case "TUESDAY", "MARTES", "2" -> 2;
+            case "WEDNESDAY", "MIERCOLES", "MIÉRCOLES", "3" -> 3;
+            case "THURSDAY", "JUEVES", "4" -> 4;
+            case "FRIDAY", "VIERNES", "5" -> 5;
+            case "SATURDAY", "SABADO", "SÁBADO", "6" -> 6;
+            case "SUNDAY", "DOMINGO", "7" -> 7;
+            default -> {
+                logger.warn("Valor de availability inválido: {}", availability);
+                yield null;
+            }
+        };
     }
 
-    private SpecialistFilterResponseDTO toDTO(Specialist s, DayOfWeek dayOfWeek) {
+    private SpecialistFilterResponseDTO toDTO(Specialist s, Byte dayOfWeek) {
         List<SpecialistSchedule> schedules = dayOfWeek != null
-                ? scheduleRepository.findBySpecialistIdAndDayOfWeekAndAvailableTrue(s.getId(), dayOfWeek)
-                : scheduleRepository.findBySpecialistIdAndAvailableTrue(s.getId());
+                ? scheduleRepository.findBySpecialistIdAndDayOfWeekAndStatus(
+                        s.getId(),
+                        dayOfWeek,
+                        STATUS_AVAILABLE
+                )
+                : scheduleRepository.findBySpecialistIdAndStatus(
+                        s.getId(),
+                        STATUS_AVAILABLE
+                );
 
         List<SpecialistFilterResponseDTO.ScheduleDTO> scheduleDTOs = schedules.stream()
                 .map(sc -> SpecialistFilterResponseDTO.ScheduleDTO.builder()
@@ -78,8 +99,8 @@ public class SpecialistSearchService {
                         .build())
                 .collect(Collectors.toList());
 
-        List<String> specialityNames = s.getSpecialities() == null ? List.of() :
-                s.getSpecialities().stream()
+        List<String> specialityNames = s.getSpecialties() == null ? List.of() :
+                s.getSpecialties().stream()
                         .map(sp -> sp.getName())
                         .collect(Collectors.toList());
 

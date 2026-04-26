@@ -1,6 +1,5 @@
 package com.takecare.backend.specialistschedule.service;
 
-import java.time.DayOfWeek;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +16,12 @@ import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 import com.takecare.backend.specialistschedule.repository.SpecialistScheduleRepository;
 import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.repository.SpecialistRepository;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-
 
 @Service
 public class SpecialistScheduleService {
+
+    private static final Byte STATUS_AVAILABLE = 0;
+    private static final Byte STATUS_BOOKED = 1;
 
     @Autowired
     private SpecialistScheduleRepository scheduleRepository;
@@ -29,15 +29,18 @@ public class SpecialistScheduleService {
     @Autowired
     private SpecialistRepository specialistRepository;
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-
     public List<SpecialistSchedule> getAvailableSchedules(Integer specialistId) {
-        return scheduleRepository.findBySpecialistIdAndAvailableTrue(specialistId);
+        return scheduleRepository.findBySpecialistIdAndStatus(specialistId, STATUS_AVAILABLE);
     }
 
-    public List<SpecialistSchedule> getSchedulesBySpecialistId(Integer specialistId) {
-        return scheduleRepository.findBySpecialistId(specialistId);
+    @Transactional
+    public SpecialistSchedule bookSchedule(Integer id) {
+        SpecialistSchedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
+
+        schedule.setStatus(STATUS_BOOKED);
+
+        return scheduleRepository.save(schedule);
     }
 
     @Transactional
@@ -55,7 +58,7 @@ public class SpecialistScheduleService {
         schedule.setDayOfWeek(dto.getDayOfWeek());
         schedule.setStartTime(dto.getStartTime());
         schedule.setEndTime(dto.getEndTime());
-        schedule.setAvailable(true);
+        schedule.setStatus(STATUS_AVAILABLE);
 
         SpecialistSchedule savedSchedule = scheduleRepository.save(schedule);
 
@@ -75,7 +78,7 @@ public class SpecialistScheduleService {
 
         List<SpecialistSchedule> schedules = scheduleRepository.findBySpecialistId(specialistId);
 
-        Map<DayOfWeek, List<SpecialistScheduleResponseDTO>> groupedSchedules = schedules.stream()
+        Map<Byte, List<SpecialistScheduleResponseDTO>> groupedSchedules = schedules.stream()
                 .sorted(Comparator.comparing(SpecialistSchedule::getDayOfWeek)
                         .thenComparing(SpecialistSchedule::getStartTime))
                 .map(this::toResponseDTO)
@@ -89,7 +92,7 @@ public class SpecialistScheduleService {
     }
 
     @Transactional
-    public SpecialistScheduleResponseDTO updateSchedule(Long scheduleId, SpecialistScheduleDTO dto) {
+    public SpecialistScheduleResponseDTO updateSchedule(Integer scheduleId, SpecialistScheduleDTO dto) {
 
         SpecialistSchedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
@@ -110,7 +113,7 @@ public class SpecialistScheduleService {
     }
 
     @Transactional
-    public void deleteSchedule(Long scheduleId) {
+    public void deleteSchedule(Integer scheduleId) {
 
         SpecialistSchedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
@@ -140,7 +143,7 @@ public class SpecialistScheduleService {
 
     private void validateDuplicatedScheduleOnUpdate(
             Integer specialistId,
-            Long scheduleId,
+            Integer scheduleId,
             SpecialistScheduleDTO dto
     ) {
 
@@ -163,23 +166,7 @@ public class SpecialistScheduleService {
                 schedule.getDayOfWeek(),
                 schedule.getStartTime(),
                 schedule.getEndTime(),
-                schedule.isAvailable()
+                schedule.getStatus()
         );
-    }
-    
-    public SpecialistSchedule bookSchedule(Long scheduleId) {
-        SpecialistSchedule schedule = scheduleRepository.findById(scheduleId)
-            .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
-        
-        if (!schedule.isAvailable()) {
-            throw new RuntimeException("El horario ya no está disponible");
-        }
-
-        schedule.setAvailable(false);
-        SpecialistSchedule saved = scheduleRepository.save(schedule);
-
-        messagingTemplate.convertAndSend("/topic/horarios", "ACTUALIZAR_LISTA");
-        
-        return saved;
     }
 }

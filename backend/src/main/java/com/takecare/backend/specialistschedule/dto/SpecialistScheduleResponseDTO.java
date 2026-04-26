@@ -12,9 +12,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SpecialistScheduleResponseDTO {
 
-    private Long id;
-    private DayOfWeek dayOfWeek;
+    private Integer id;
+    private Byte dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
-    private boolean available;
+    private Byte status;
 }

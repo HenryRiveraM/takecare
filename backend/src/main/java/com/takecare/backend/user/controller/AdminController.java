@@ -182,7 +182,7 @@ public class AdminController {
 
         return userRepository.findById(id)
                 .map(user -> {
-                    user.setStatus(request.getStatus());
+                    user.setStatus(request.getStatus().byteValue());
                     user.setLastUpdate(LocalDateTime.now());
                     return ResponseEntity.ok(userRepository.save(user));
                 })
@@ -214,10 +214,10 @@ public class AdminController {
         dto.setCiNumber(patient.getCiNumber());
         dto.setCiDocumentImg(patient.getCiDocumentImg());
         dto.setSelfieVerification(patient.getSelfieVerification());
-        dto.setStatus(patient.getStatus());
-        dto.setStrikes(patient.getStrikes());
-        dto.setAccountVerified(patient.getAccountVerified());
-        dto.setRole(patient.getRole());
+        dto.setStatus(patient.getStatus().byteValue());
+        dto.setStrikes(patient.getStrikes().byteValue());
+        dto.setAccountVerified(patient.getAccountVerified().byteValue());
+        dto.setRole(patient.getRole().byteValue());
         return dto;
     }
 
@@ -232,10 +232,10 @@ public class AdminController {
         dto.setCiNumber(specialist.getCiNumber());
         dto.setCiDocumentImg(specialist.getCiDocumentImg());
         dto.setCertificationImg(specialist.getCertificationImg());
-        dto.setStatus(specialist.getStatus());
-        dto.setStrikes(specialist.getStrikes());
-        dto.setAccountVerified(specialist.getAccountVerified());
-        dto.setRole(specialist.getRole());
+        dto.setStatus(specialist.getStatus().byteValue());
+        dto.setStrikes(specialist.getStrikes().byteValue());
+        dto.setAccountVerified(specialist.getAccountVerified().byteValue());
+        dto.setRole(specialist.getRole().byteValue());
         return dto;
     }
 }

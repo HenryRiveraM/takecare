@@ -42,5 +42,5 @@ public class Specialist extends User {
             joinColumns = @JoinColumn(name = "specialist_id"),
             inverseJoinColumns = @JoinColumn(name = "specialty_id")
     )
-    private Set<Speciality> specialities;
+    private Set<Speciality> specialties;
 }

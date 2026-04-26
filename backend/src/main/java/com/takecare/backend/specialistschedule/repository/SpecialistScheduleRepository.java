@@ -4,34 +4,36 @@ import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.List;
 
 @Repository
-public interface SpecialistScheduleRepository extends JpaRepository<SpecialistSchedule, Long> {
+public interface SpecialistScheduleRepository extends JpaRepository<SpecialistSchedule, Integer> {
 
     List<SpecialistSchedule> findBySpecialistId(Integer specialistId);
 
-    List<SpecialistSchedule> findBySpecialistIdAndAvailableTrue(Integer specialistId);
+    List<SpecialistSchedule> findBySpecialistIdAndStatus(Integer specialistId, Byte status);
 
-    List<SpecialistSchedule> findBySpecialistIdAndDayOfWeek(Integer specialistId, DayOfWeek dayOfWeek);
+    List<SpecialistSchedule> findBySpecialistIdAndDayOfWeek(Integer specialistId, Byte dayOfWeek);
 
-    List<SpecialistSchedule> findBySpecialistIdAndDayOfWeekAndAvailableTrue(Integer specialistId, DayOfWeek dayOfWeek);
-    
+    List<SpecialistSchedule> findBySpecialistIdAndDayOfWeekAndStatus(
+            Integer specialistId,
+            Byte dayOfWeek,
+            Byte status
+    );
+
     boolean existsBySpecialistIdAndDayOfWeekAndStartTimeAndEndTime(
             Integer specialistId,
-            DayOfWeek dayOfWeek,
+            Byte dayOfWeek,
             LocalTime startTime,
             LocalTime endTime
     );
 
     boolean existsBySpecialistIdAndDayOfWeekAndStartTimeAndEndTimeAndIdNot(
             Integer specialistId,
-            DayOfWeek dayOfWeek,
+            Byte dayOfWeek,
             LocalTime startTime,
             LocalTime endTime,
-            Long id
+            Integer id
     );
-
 }

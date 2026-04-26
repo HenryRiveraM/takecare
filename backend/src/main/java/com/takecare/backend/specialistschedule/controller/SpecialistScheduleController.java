@@ -12,7 +12,6 @@ import com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO
 import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 import com.takecare.backend.specialistschedule.service.SpecialistScheduleService;
 
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -21,7 +20,7 @@ public class SpecialistScheduleController {
 
     @Autowired
     private SpecialistScheduleService scheduleService;
-
+    
     @PostMapping("/specialist/{specialistId}/create")
     public ResponseEntity<SpecialistScheduleResponseDTO> createSchedule(
             @PathVariable Integer specialistId,
@@ -46,14 +45,14 @@ public class SpecialistScheduleController {
 
     @PutMapping("/{scheduleId}")
     public ResponseEntity<SpecialistScheduleResponseDTO> updateSchedule(
-            @PathVariable Long scheduleId,
+            @PathVariable Integer scheduleId,
             @Valid @RequestBody SpecialistScheduleDTO dto
     ) {
         return ResponseEntity.ok(scheduleService.updateSchedule(scheduleId, dto));
     }
 
     @DeleteMapping("/{scheduleId}")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long scheduleId) {
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Integer scheduleId) {
         scheduleService.deleteSchedule(scheduleId);
         return ResponseEntity.noContent().build();
     }
@@ -64,7 +63,7 @@ public class SpecialistScheduleController {
     }
 
     @PostMapping("/{id}/book")
-    public ResponseEntity<SpecialistSchedule> book(@PathVariable Long id) {
+    public ResponseEntity<SpecialistSchedule> book(@PathVariable Integer id) {
         return ResponseEntity.ok(scheduleService.bookSchedule(id));
     }
 }

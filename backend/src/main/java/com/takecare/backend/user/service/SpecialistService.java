@@ -141,7 +141,7 @@ public class SpecialistService extends UserService {
         logger.info("Attempting logical delete for specialist with id: {}", id);
         return specialistRepository.findById(id)
             .map(specialist -> {
-                specialist.setStatus(0);
+                specialist.setStatus((byte) 0);
                 specialist.setLastUpdate(LocalDateTime.now());
                 specialistRepository.save(specialist);
                 logger.info("Specialist with id: {} marked as inactive successfully", id);
@@ -153,7 +153,7 @@ public class SpecialistService extends UserService {
     }
 
     public Optional<Specialist> validateSpecialist(Integer id, boolean approved) {
-        int verificationStatus = approved ? ACCOUNT_VERIFIED_APPROVED : ACCOUNT_VERIFIED_REJECTED;
+        byte verificationStatus = approved ? ACCOUNT_VERIFIED_APPROVED : ACCOUNT_VERIFIED_REJECTED;
 
         return specialistRepository.findById(id)
             .map(specialist -> {
@@ -192,11 +192,11 @@ public class SpecialistService extends UserService {
     }
 
     private List<String> mapSpecialties(Specialist specialist) {
-        if (specialist.getSpecialities() == null || specialist.getSpecialities().isEmpty()) {
+        if (specialist.getSpecialties() == null || specialist.getSpecialties().isEmpty()) {
             return List.of();
         }
 
-        return specialist.getSpecialities().stream()
+        return specialist.getSpecialties().stream()
                 .map(Speciality::getName)
                 .filter(Objects::nonNull)
                 .map(this::normalizeOptional)

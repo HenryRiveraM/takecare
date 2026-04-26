@@ -1,8 +1,9 @@
 package com.takecare.backend.specialistschedule.dto;
 
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,9 @@ import lombok.Setter;
 public class SpecialistScheduleDTO {
 
     @NotNull(message = "El día de la semana es obligatorio")
-    private DayOfWeek dayOfWeek;
+    @Min(value = 1, message = "El día de la semana debe estar entre 1 y 7")
+    @Max(value = 7, message = "El día de la semana debe estar entre 1 y 7")
+    private Byte dayOfWeek;
 
     @NotNull(message = "La hora de inicio es obligatoria")
     private LocalTime startTime;
