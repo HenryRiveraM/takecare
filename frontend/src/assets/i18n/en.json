@@ -176,7 +176,8 @@
       "appointments": "My Appointments",
       "searchSpecialist": "Find Specialist",
       "history": "My History",
-      "editProfile": "Edit profile"
+      "editProfile": "Edit profile",
+      "documents": "My Documents"
     },
     "searchPlaceholder": "Search specialists...",
     "newAppointment": "New Appointment",
@@ -627,14 +628,43 @@
     },
 
     "success": "Profile updated successfully"
+  },
+
+  "documents": {
+    "title": "My Documents",
+    "subtitle": "Manage your clinical files securely",
+    "uploadBtn": "Upload document",
+
+    "upload": {
+      "title": "Upload new document",
+      "description": "Select or drag a file from your device",
+      "dropZone": "Drag your file here or click to select",
+      "formats": "Allowed formats: PDF, Word, JPG · Maximum 5MB",
+      "cancel": "Cancel",
+      "confirm": "Upload document"
+    },
+
+    "privacy": {
+      "title": "Protected file",
+      "description": "Only specialists with a scheduled appointment with you will be able to view these documents.",
+      "badge": "Only specialists with appointment"
+    },
+
+    "actions": {
+      "preview": "Preview",
+      "delete": "Delete"
+    },
+
+    "preview": {
+      "wordUnsupported": "Word files cannot be previewed directly. You can download it instead.",
+      "download": "Download file"
+    },
+
+    "empty": {
+      "title": "No documents yet",
+      "description": "Upload your clinical files to share them with your specialists.",
+      "action": "Upload my first document"
+    }
   }
-
-
-
-
-
-
-
-
 
 }

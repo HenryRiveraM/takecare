@@ -101,7 +101,11 @@ export const routes: Routes = [
       {
         path: 'search-specialists',
         component: PatientSearchSpecialistsComponent
-      }
+      },
+      { 
+        path: 'documents', 
+        component: PatientDocumentsComponent 
+      },
     ]
   },
 
