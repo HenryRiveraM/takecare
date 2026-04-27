@@ -51,11 +51,11 @@ public class NotificationService {
     }
 
     @Transactional
-    public NotificationResponseDto createForSession(
+    public NotificationResponseDto createForSession(Session session,
                                                     String description,
                                                     Byte type) {
         Notification notification = new Notification();
-        // notification.setSession(session);
+        notification.setSession(session);
         notification.setDescription(normalizeDescription(description));
         notification.setType(type == null ? TYPE_NEW_SESSION : type);
         notification.setStatus(STATUS_UNREAD);
