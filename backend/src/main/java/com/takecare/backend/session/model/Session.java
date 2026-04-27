@@ -26,7 +26,7 @@ public class Session {
     private SpecialistSchedule schedule;
 
     @Column(columnDefinition = "tinyint")
-    private Integer status;
+    private Integer status; //
 
     @Column(name = "type_of_session", columnDefinition = "tinyint")
     private Integer typeOfSession;
