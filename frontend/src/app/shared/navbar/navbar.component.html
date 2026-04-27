@@ -59,6 +59,18 @@
       <option value="en">EN</option>
     </select>
 
+    <button
+      *ngIf="privateArea === 'specialist'"
+      type="button"
+      class="notification-bell"
+      (click)="toggleNotifications()"
+      [attr.aria-label]="'specialistNotifications.open' | translate">
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="notification-badge" *ngIf="specialistNotificationCount > 0">
+        {{ specialistNotificationCount > 99 ? '99+' : specialistNotificationCount }}
+      </span>
+    </button>
+
     <div class="user-pill" *ngIf="user">
       <span class="material-symbols-outlined">account_circle</span>
       <span>{{ user.names }}</span>
@@ -69,3 +81,10 @@
     </button>
   </div>
 </header>
+
+<app-specialist-notifications-sidebar
+  *ngIf="privateArea === 'specialist'"
+  [specialistId]="user?.id ?? null"
+  [isOpen]="notificationsOpen"
+  (closePanel)="closeNotifications()">
+</app-specialist-notifications-sidebar>

@@ -1,0 +1,64 @@
+<div class="notifications-overlay" *ngIf="isOpen" (click)="close()"></div>
+
+<aside class="notifications-sidebar" [class.open]="isOpen" [attr.aria-hidden]="!isOpen">
+  <div class="sidebar-header">
+    <div>
+      <span class="sidebar-tag">{{ 'specialistNotifications.tag' | translate }}</span>
+      <h2>{{ 'specialistNotifications.title' | translate }}</h2>
+    </div>
+
+    <button type="button" class="close-button" (click)="close()" [attr.aria-label]="'specialistNotifications.close' | translate">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+
+  <p class="sidebar-subtitle">{{ 'specialistNotifications.subtitle' | translate }}</p>
+
+  <div class="state-card" *ngIf="loading">
+    {{ 'specialistNotifications.states.loading' | translate }}
+  </div>
+
+  <div class="empty-card" *ngIf="!loading && notifications.length === 0">
+    <span class="material-symbols-outlined empty-icon">notifications_off</span>
+    <h3>{{ 'specialistNotifications.states.emptyTitle' | translate }}</h3>
+    <p>{{ 'specialistNotifications.states.emptyText' | translate }}</p>
+  </div>
+
+  <div class="notifications-list" *ngIf="!loading && notifications.length > 0">
+    <article
+      class="notification-card"
+      [class.unread]="notification.status === 0"
+      *ngFor="let notification of notifications; trackBy: trackByNotificationId">
+      <div class="notification-head">
+        <div class="notification-icon">
+          <span class="material-symbols-outlined">
+            {{ notification.status === 0 ? 'notifications_active' : 'notifications' }}
+          </span>
+        </div>
+
+        <div class="notification-meta">
+          <p class="notification-date">{{ formatDate(notification.createdDate) }}</p>
+          <span class="notification-status" [class.read]="notification.status === 1">
+            {{
+              notification.status === 0
+                ? ('specialistNotifications.status.unread' | translate)
+                : ('specialistNotifications.status.read' | translate)
+            }}
+          </span>
+        </div>
+      </div>
+
+      <p class="notification-description">{{ notification.description }}</p>
+
+      <div class="notification-actions">
+        <button type="button" class="action-button" (click)="toggleReadStatus(notification)">
+          {{
+            notification.status === 0
+              ? ('specialistNotifications.actions.markRead' | translate)
+              : ('specialistNotifications.actions.markUnread' | translate)
+          }}
+        </button>
+      </div>
+    </article>
+  </div>
+</aside>

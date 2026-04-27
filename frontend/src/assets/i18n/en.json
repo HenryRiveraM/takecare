@@ -565,6 +565,27 @@
     }
   },
 
+  "specialistNotifications": {
+    "tag": "Real-time alerts",
+    "title": "Notifications",
+    "subtitle": "Review new appointments and important changes in your professional activity.",
+    "open": "Open notifications",
+    "close": "Close notifications",
+    "status": {
+      "unread": "Unread",
+      "read": "Read"
+    },
+    "actions": {
+      "markRead": "Mark as read",
+      "markUnread": "Mark as unread"
+    },
+    "states": {
+      "loading": "Loading notifications...",
+      "emptyTitle": "You have no notifications yet",
+      "emptyText": "When a new appointment is scheduled or an important status changes, it will appear here."
+    }
+  },
+
   
   "specialistProfile": {
     "back": "Back",
