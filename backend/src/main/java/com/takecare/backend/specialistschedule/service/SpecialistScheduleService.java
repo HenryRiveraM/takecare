@@ -1,5 +1,6 @@
 package com.takecare.backend.specialistschedule.service;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +50,13 @@ public class SpecialistScheduleService {
         Specialist specialist = specialistRepository.findById(specialistId)
                 .orElseThrow(() -> new RuntimeException("Especialista no encontrado"));
 
-        validateScheduleTime(dto);
+        validateSchedule(dto);
 
         validateDuplicatedSchedule(specialistId, dto);
 
         SpecialistSchedule schedule = new SpecialistSchedule();
         schedule.setSpecialist(specialist);
+        schedule.setScheduleDate(dto.getScheduleDate());
         schedule.setDayOfWeek(dto.getDayOfWeek());
         schedule.setStartTime(dto.getStartTime());
         schedule.setEndTime(dto.getEndTime());
@@ -68,8 +70,28 @@ public class SpecialistScheduleService {
     public List<SpecialistScheduleResponseDTO> getAllSchedulesBySpecialist(Integer specialistId) {
         return scheduleRepository.findBySpecialistId(specialistId)
                 .stream()
-                .sorted(Comparator.comparing(SpecialistSchedule::getDayOfWeek)
-                        .thenComparing(SpecialistSchedule::getStartTime))
+                .sorted(Comparator.comparing(SpecialistSchedule::getScheduleDate)
+                            .thenComparing(SpecialistSchedule::getStartTime)
+                )
+                .map(this::toResponseDTO)
+                .toList();
+    }
+
+    public List<SpecialistScheduleResponseDTO> getSchedulesByDateRange(
+            Integer specialistId,
+            LocalDate startDate,
+            LocalDate endDate
+    ) {
+        return scheduleRepository.findBySpecialistIdAndScheduleDateBetween(
+                        specialistId,
+                        startDate,
+                        endDate
+                )
+                .stream()
+                .sorted(
+                        Comparator.comparing(SpecialistSchedule::getScheduleDate)
+                                .thenComparing(SpecialistSchedule::getStartTime)
+                )
                 .map(this::toResponseDTO)
                 .toList();
     }
@@ -79,7 +101,7 @@ public class SpecialistScheduleService {
         List<SpecialistSchedule> schedules = scheduleRepository.findBySpecialistId(specialistId);
 
         Map<Byte, List<SpecialistScheduleResponseDTO>> groupedSchedules = schedules.stream()
-                .sorted(Comparator.comparing(SpecialistSchedule::getDayOfWeek)
+                .sorted(Comparator.comparing(SpecialistSchedule::getScheduleDate)
                         .thenComparing(SpecialistSchedule::getStartTime))
                 .map(this::toResponseDTO)
                 .collect(Collectors.groupingBy(SpecialistScheduleResponseDTO::getDayOfWeek));
@@ -97,12 +119,13 @@ public class SpecialistScheduleService {
         SpecialistSchedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
 
-        validateScheduleTime(dto);
+        validateSchedule(dto);
 
         Integer specialistId = schedule.getSpecialist().getId();
 
         validateDuplicatedScheduleOnUpdate(specialistId, scheduleId, dto);
 
+        schedule.setScheduleDate(dto.getScheduleDate());
         schedule.setDayOfWeek(dto.getDayOfWeek());
         schedule.setStartTime(dto.getStartTime());
         schedule.setEndTime(dto.getEndTime());
@@ -121,23 +144,42 @@ public class SpecialistScheduleService {
         scheduleRepository.delete(schedule);
     }
 
-    private void validateScheduleTime(SpecialistScheduleDTO dto) {
+    private void validateSchedule(SpecialistScheduleDTO dto) {
+
+        if (dto.getScheduleDate() == null) {
+            throw new RuntimeException("La fecha del horario es obligatoria");
+        }
+
+        if (dto.getDayOfWeek() == null) {
+            throw new RuntimeException("El día de la semana es obligatorio");
+        }
+
+        if (dto.getStartTime() == null || dto.getEndTime() == null) {
+            throw new RuntimeException("La hora de inicio y fin son obligatorias");
+        }
+
         if (!dto.getStartTime().isBefore(dto.getEndTime())) {
             throw new RuntimeException("La hora de inicio debe ser menor que la hora de fin");
+        }
+
+        Byte calculatedDayOfWeek = calculateDayOfWeek(dto.getScheduleDate());
+
+        if (!calculatedDayOfWeek.equals(dto.getDayOfWeek())) {
+            throw new RuntimeException("El día de la semana no coincide con la fecha seleccionada");
         }
     }
 
     private void validateDuplicatedSchedule(Integer specialistId, SpecialistScheduleDTO dto) {
 
-        boolean exists = scheduleRepository.existsBySpecialistIdAndDayOfWeekAndStartTimeAndEndTime(
+        boolean exists = scheduleRepository.existsBySpecialistIdAndScheduleDateAndStartTimeAndEndTime(
                 specialistId,
-                dto.getDayOfWeek(),
+                dto.getScheduleDate(),
                 dto.getStartTime(),
                 dto.getEndTime()
         );
 
         if (exists) {
-            throw new RuntimeException("Este horario ya existe para el especialista");
+            throw new RuntimeException("Este horario ya existe para esta fecha");
         }
     }
 
@@ -147,23 +189,28 @@ public class SpecialistScheduleService {
             SpecialistScheduleDTO dto
     ) {
 
-        boolean exists = scheduleRepository.existsBySpecialistIdAndDayOfWeekAndStartTimeAndEndTimeAndIdNot(
+    boolean exists = scheduleRepository.existsBySpecialistIdAndScheduleDateAndStartTimeAndEndTimeAndIdNot(
                 specialistId,
-                dto.getDayOfWeek(),
+                dto.getScheduleDate(),
                 dto.getStartTime(),
                 dto.getEndTime(),
                 scheduleId
         );
 
         if (exists) {
-            throw new RuntimeException("Ya existe otro horario igual para este especialista");
+            throw new RuntimeException("Ya existe otro horario igual para esta fecha");
         }
+    }
+
+    private Byte calculateDayOfWeek(LocalDate date) {
+        return (byte) date.getDayOfWeek().getValue();
     }
 
     private SpecialistScheduleResponseDTO toResponseDTO(SpecialistSchedule schedule) {
         return new SpecialistScheduleResponseDTO(
                 schedule.getId(),
                 schedule.getDayOfWeek(),
+                schedule.getScheduleDate(),
                 schedule.getStartTime(),
                 schedule.getEndTime(),
                 schedule.getStatus()

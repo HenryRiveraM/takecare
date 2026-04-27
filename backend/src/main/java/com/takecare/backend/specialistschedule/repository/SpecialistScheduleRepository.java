@@ -4,6 +4,7 @@ import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -22,16 +23,31 @@ public interface SpecialistScheduleRepository extends JpaRepository<SpecialistSc
             Byte status
     );
 
-    boolean existsBySpecialistIdAndDayOfWeekAndStartTimeAndEndTime(
+    // Nuevo: buscar horarios por rango de fechas
+    List<SpecialistSchedule> findBySpecialistIdAndScheduleDateBetween(
             Integer specialistId,
-            Byte dayOfWeek,
+            LocalDate startDate,
+            LocalDate endDate
+    );
+
+    List<SpecialistSchedule> findBySpecialistIdAndScheduleDateBetweenAndStatus(
+            Integer specialistId,
+            LocalDate startDate,
+            LocalDate endDate,
+            Byte status
+    );
+
+    // Nuevo: validar duplicados por fecha exacta
+    boolean existsBySpecialistIdAndScheduleDateAndStartTimeAndEndTime(
+            Integer specialistId,
+            LocalDate scheduleDate,
             LocalTime startTime,
             LocalTime endTime
     );
 
-    boolean existsBySpecialistIdAndDayOfWeekAndStartTimeAndEndTimeAndIdNot(
+    boolean existsBySpecialistIdAndScheduleDateAndStartTimeAndEndTimeAndIdNot(
             Integer specialistId,
-            Byte dayOfWeek,
+            LocalDate scheduleDate,
             LocalTime startTime,
             LocalTime endTime,
             Integer id

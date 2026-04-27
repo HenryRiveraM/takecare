@@ -1,8 +1,10 @@
 package com.takecare.backend.specialistschedule.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +36,17 @@ public class SpecialistScheduleController {
             @PathVariable Integer specialistId
     ) {
         return ResponseEntity.ok(scheduleService.getAllSchedulesBySpecialist(specialistId));
+    }
+
+    @GetMapping("/specialist/{specialistId}/range")
+    public ResponseEntity<List<SpecialistScheduleResponseDTO>> getSchedulesByDateRange(
+            @PathVariable Integer specialistId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+    ) {
+        return ResponseEntity.ok(
+                scheduleService.getSchedulesByDateRange(specialistId, startDate, endDate)
+        );
     }
 
     @GetMapping("/specialist/{specialistId}/grouped")

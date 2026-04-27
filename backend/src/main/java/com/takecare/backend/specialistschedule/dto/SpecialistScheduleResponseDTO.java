@@ -1,6 +1,6 @@
 package com.takecare.backend.specialistschedule.dto;
 
-import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
@@ -14,6 +14,7 @@ public class SpecialistScheduleResponseDTO {
 
     private Integer id;
     private Byte dayOfWeek;
+    private LocalDate scheduleDate;
     private LocalTime startTime;
     private LocalTime endTime;
     private Byte status;

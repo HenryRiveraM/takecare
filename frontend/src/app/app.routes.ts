@@ -19,6 +19,7 @@ import { guestGuard } from './guards/guest.guard';
 import { SpecialistDashboardComponent } from './pages/specialist-dashboard/specialist-dashboard.component';
 import { SpecialistProfileComponent } from './pages/specialist-profile/specialist-profile.component';
 import { specialistGuard } from './guards/specialist.guard';
+import { SpecialistScheduleManagementComponent } from './pages/specialist-schedule-management/specialist-schedule-management.component';
 
 // PACIENTE
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
@@ -112,6 +113,10 @@ export const routes: Routes = [
       {
         path: '',
         component: SpecialistDashboardComponent
+      },
+      {
+        path: 'schedule',
+        component: SpecialistScheduleManagementComponent
       },
       {
         path: 'profile',
