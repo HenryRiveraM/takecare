@@ -566,6 +566,27 @@
     }
   },
 
+  "specialistNotifications": {
+    "tag": "Alertas en tiempo real",
+    "title": "Notificaciones",
+    "subtitle": "Revisa nuevas citas y cambios importantes de tu actividad profesional.",
+    "open": "Abrir notificaciones",
+    "close": "Cerrar notificaciones",
+    "status": {
+      "unread": "No leída",
+      "read": "Leída"
+    },
+    "actions": {
+      "markRead": "Marcar como leída",
+      "markUnread": "Marcar como no leída"
+    },
+    "states": {
+      "loading": "Cargando notificaciones...",
+      "emptyTitle": "No tienes notificaciones todavía",
+      "emptyText": "Cuando se agende una nueva cita o cambie un estado importante, aparecerá aquí."
+    }
+  },
+
   
   "specialistProfile": {
     "back": "Volver",
