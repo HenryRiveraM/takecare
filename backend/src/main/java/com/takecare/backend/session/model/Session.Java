@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "sessions")
 public class Session {
