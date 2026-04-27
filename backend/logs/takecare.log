@@ -518,3 +518,312 @@ This generated password is for development use only. Your security configuration
 2026-04-24 04:14:01 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopped.
 2026-04-24 04:14:01 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
 2026-04-24 04:14:01 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 07:47:45 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 61934 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-27 07:47:45 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 07:47:54 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-27 07:47:54 [restartedMain] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Patterns [/ws-takecare/**] in 'stompWebSocketHandlerMapping'
+2026-04-27 07:47:54 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 43 mappings in 'requestMappingHandlerMapping'
+2026-04-27 07:47:54 [restartedMain] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-04-27 07:47:54 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 779e604b-b779-482d-a34b-35bb960ae3b6
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.a.c.AuthController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.n.c.NotificationController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.TestController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.SpecialistScheduleController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.AdminController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.PatientController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.SpecialistController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserProfileController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.a.OpenApiWebMvcResource:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerConfigResource:
+	
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-04-27 07:47:55 [restartedMain] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-04-27 07:47:55 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-27 07:47:55 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-27 07:47:55 [restartedMain] INFO  org.springframework.web.SimpLogging - Starting...
+2026-04-27 07:47:55 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3f80d321]
+2026-04-27 07:47:55 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3f80d321]
+2026-04-27 07:47:55 [restartedMain] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3f80d321]]
+2026-04-27 07:47:55 [restartedMain] INFO  org.springframework.web.SimpLogging - Started.
+2026-04-27 07:47:55 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 07:47:55 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 07:47:55 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 10.188 seconds (process running for 10.35)
+2026-04-27 07:48:55 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2026-04-27 07:58:41 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-27 07:58:41 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-27 07:58:41 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopping...
+2026-04-27 07:58:41 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3f80d321]]
+2026-04-27 07:58:41 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3f80d321]
+2026-04-27 07:58:41 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3f80d321]
+2026-04-27 07:58:41 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopped.
+2026-04-27 07:58:41 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 07:58:41 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 07:58:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 74348 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-27 07:58:47 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 07:58:56 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Patterns [/ws-takecare/**] in 'stompWebSocketHandlerMapping'
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 43 mappings in 'requestMappingHandlerMapping'
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-04-27 07:58:56 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: ab3e7d78-c97c-40cd-be5e-863c5276f1b4
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.a.c.AuthController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.n.c.NotificationController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.TestController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.SpecialistScheduleController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.AdminController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.PatientController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.SpecialistController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserProfileController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.a.OpenApiWebMvcResource:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerConfigResource:
+	
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-04-27 07:58:56 [restartedMain] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-04-27 07:58:56 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-27 07:58:56 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-27 07:58:56 [restartedMain] INFO  org.springframework.web.SimpLogging - Starting...
+2026-04-27 07:58:56 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@108bd09]
+2026-04-27 07:58:56 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@108bd09]
+2026-04-27 07:58:56 [restartedMain] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@108bd09]]
+2026-04-27 07:58:56 [restartedMain] INFO  org.springframework.web.SimpLogging - Started.
+2026-04-27 07:58:56 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 07:58:56 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 07:58:56 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 9.41 seconds (process running for 9.575)
+2026-04-27 07:59:56 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2026-04-27 08:00:44 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-27 08:00:44 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-27 08:00:44 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopping...
+2026-04-27 08:00:44 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@108bd09]]
+2026-04-27 08:00:44 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@108bd09]
+2026-04-27 08:00:44 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@108bd09]
+2026-04-27 08:00:44 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopped.
+2026-04-27 08:00:44 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 08:00:44 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 08:01:34 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 21.0.2 with PID 77626 (/Users/henryriveramendez/Documents/taller/takecare/backend/target/classes started by henryriveramendez in /Users/henryriveramendez/Documents/taller/takecare/backend)
+2026-04-27 08:01:34 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-27 08:01:43 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Patterns [/ws-takecare/**] in 'stompWebSocketHandlerMapping'
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 43 mappings in 'requestMappingHandlerMapping'
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-04-27 08:01:43 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 66aa4b63-d27e-41fe-8823-4dcb9e202183
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.a.c.AuthController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.n.c.NotificationController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.TestController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.SpecialistScheduleController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.AdminController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.PatientController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.SpecialistController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserProfileController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.a.OpenApiWebMvcResource:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerConfigResource:
+	
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-04-27 08:01:43 [restartedMain] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-04-27 08:01:43 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-27 08:01:43 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-27 08:01:43 [restartedMain] INFO  org.springframework.web.SimpLogging - Starting...
+2026-04-27 08:01:43 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@194e4025]
+2026-04-27 08:01:43 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@194e4025]
+2026-04-27 08:01:43 [restartedMain] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@194e4025]]
+2026-04-27 08:01:43 [restartedMain] INFO  org.springframework.web.SimpLogging - Started.
+2026-04-27 08:01:43 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 08:01:43 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-27 08:01:43 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 9.345 seconds (process running for 9.511)
+2026-04-27 08:02:43 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2026-04-27 08:07:45 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m5s724ms).
+2026-04-27 08:18:09 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m24s603ms).
+2026-04-27 08:18:18 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6c77ae2c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:19 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@2cf9c2c2 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:30 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7d2e1fbf (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:32 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-27 08:18:32 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-04-27 08:18:32 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-04-27 08:18:32 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-04-27 08:18:32 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@73bc5ee6
+2026-04-27 08:18:32 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@33858a75
+2026-04-27 08:18:32 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-04-27 08:18:32 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-04-27 08:18:32 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/notifications/specialist/51/unread-count", parameters={}
+2026-04-27 08:18:32 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.notification.controller.NotificationController#unreadCount(Integer)
+2026-04-27 08:18:32 [http-nio-8080-exec-1] INFO  c.t.b.n.c.NotificationController - GET /api/v1/notifications/specialist/51/unread-count
+2026-04-27 08:18:33 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7fbedd00 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:33 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3af9b04e (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:33 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3deccb6a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:33 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5533f0e5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:33 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@23ca4ad4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:34 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@41b077e7 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:34 [http-nio-8080-exec-1] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@31f1eb2b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-27 08:18:37 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:18:37 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.notification.dto.UnreadNotificationCountDto@535909f1]
+2026-04-27 08:18:37 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-27 08:18:57 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/v1/auth/login", parameters={}
+2026-04-27 08:18:57 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.auth.controller.AuthController#login(LoginRequestDTO)
+2026-04-27 08:18:57 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.auth.DTO.LoginRequestDTO@50cb77ff]
+2026-04-27 08:18:58 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:18:58 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.auth.DTO.ApiResponseDTO@443c6960]
+2026-04-27 08:18:58 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 401 UNAUTHORIZED
+2026-04-27 08:19:00 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/v1/auth/login", parameters={}
+2026-04-27 08:19:00 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.auth.controller.AuthController#login(LoginRequestDTO)
+2026-04-27 08:19:00 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.auth.DTO.LoginRequestDTO@640d1875]
+2026-04-27 08:19:00 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:19:00 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.auth.DTO.ApiResponseDTO@4f96b099]
+2026-04-27 08:19:00 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 401 UNAUTHORIZED
+2026-04-27 08:19:30 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/v1/auth/login", parameters={}
+2026-04-27 08:19:30 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.auth.controller.AuthController#login(LoginRequestDTO)
+2026-04-27 08:19:30 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.auth.DTO.LoginRequestDTO@4caac196]
+2026-04-27 08:19:31 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:19:31 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.auth.DTO.ApiResponseDTO@6731dcc1]
+2026-04-27 08:19:31 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 401 UNAUTHORIZED
+2026-04-27 08:19:33 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/v1/auth/login", parameters={}
+2026-04-27 08:19:33 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.auth.controller.AuthController#login(LoginRequestDTO)
+2026-04-27 08:19:33 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.auth.DTO.LoginRequestDTO@18650cb2]
+2026-04-27 08:19:34 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:19:34 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.auth.DTO.ApiResponseDTO@33fe5fab]
+2026-04-27 08:19:34 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 401 UNAUTHORIZED
+2026-04-27 08:24:13 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/v1/auth/login", parameters={}
+2026-04-27 08:24:13 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.auth.controller.AuthController#login(LoginRequestDTO)
+2026-04-27 08:24:13 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.auth.DTO.LoginRequestDTO@14cecd3d]
+2026-04-27 08:24:13 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:24:13 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.auth.DTO.ApiResponseDTO@19f65384]
+2026-04-27 08:24:14 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-27 08:24:14 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/notifications/specialist/2/unread-count", parameters={}
+2026-04-27 08:24:14 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.notification.controller.NotificationController#unreadCount(Integer)
+2026-04-27 08:24:14 [http-nio-8080-exec-2] INFO  c.t.b.n.c.NotificationController - GET /api/v1/notifications/specialist/2/unread-count
+2026-04-27 08:24:17 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:24:17 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.notification.dto.UnreadNotificationCountDto@2c7fa4ac]
+2026-04-27 08:24:17 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-27 08:24:18 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/notifications/specialist/2", parameters={}
+2026-04-27 08:24:18 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.notification.controller.NotificationController#listBySpecialist(Integer)
+2026-04-27 08:24:18 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/notifications/specialist/2/unread-count", parameters={}
+2026-04-27 08:24:18 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.notification.controller.NotificationController#unreadCount(Integer)
+2026-04-27 08:24:18 [http-nio-8080-exec-4] INFO  c.t.b.n.c.NotificationController - GET /api/v1/notifications/specialist/2/unread-count
+2026-04-27 08:24:18 [http-nio-8080-exec-3] INFO  c.t.b.n.c.NotificationController - GET /api/v1/notifications/specialist/2 - listing notifications
+2026-04-27 08:24:19 [http-nio-8080-exec-3] INFO  c.t.b.n.service.NotificationService - Listing notifications for specialist id: 2
+2026-04-27 08:24:21 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:24:21 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.notification.dto.UnreadNotificationCountDto@164320ad]
+2026-04-27 08:24:21 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-27 08:24:21 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:24:21 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.notification.dto.NotificationResponseDto@66cd18c1]]
+2026-04-27 08:24:21 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-27 08:24:29 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/notifications/specialist/2/unread-count", parameters={}
+2026-04-27 08:24:29 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.notification.controller.NotificationController#unreadCount(Integer)
+2026-04-27 08:24:29 [http-nio-8080-exec-5] INFO  c.t.b.n.c.NotificationController - GET /api/v1/notifications/specialist/2/unread-count
+2026-04-27 08:24:32 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:24:32 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.notification.dto.UnreadNotificationCountDto@4d82ca08]
+2026-04-27 08:24:32 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-27 08:24:36 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/notifications/specialist/2/unread-count", parameters={}
+2026-04-27 08:24:36 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.notification.controller.NotificationController#unreadCount(Integer)
+2026-04-27 08:24:36 [http-nio-8080-exec-6] INFO  c.t.b.n.c.NotificationController - GET /api/v1/notifications/specialist/2/unread-count
+2026-04-27 08:24:39 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:24:39 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.notification.dto.UnreadNotificationCountDto@39f60151]
+2026-04-27 08:24:39 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-27 08:24:43 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/notifications/specialist/2/unread-count", parameters={}
+2026-04-27 08:24:43 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.notification.controller.NotificationController#unreadCount(Integer)
+2026-04-27 08:24:43 [http-nio-8080-exec-7] INFO  c.t.b.n.c.NotificationController - GET /api/v1/notifications/specialist/2/unread-count
+2026-04-27 08:24:46 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:24:46 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.notification.dto.UnreadNotificationCountDto@67a99895]
+2026-04-27 08:24:46 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-27 08:24:47 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/notifications/specialist/2/unread-count", parameters={}
+2026-04-27 08:24:47 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.notification.controller.NotificationController#unreadCount(Integer)
+2026-04-27 08:24:47 [http-nio-8080-exec-8] INFO  c.t.b.n.c.NotificationController - GET /api/v1/notifications/specialist/2/unread-count
+2026-04-27 08:24:50 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2026-04-27 08:24:50 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.notification.dto.UnreadNotificationCountDto@57dcc4b1]
+2026-04-27 08:24:50 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
