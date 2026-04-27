@@ -54,7 +54,8 @@ export class SpecialistAppointmentsComponent implements OnInit {
   constructor(public sidebarService: SidebarService) {}
 
   ngOnInit(): void {
-    this.loadMockAppointments();
+    //mocks de prueba
+    //this.loadMockAppointments();
   }
 
   get filteredAppointments(): Appointment[] {

@@ -44,7 +44,8 @@ export class PatientDocumentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadMockDocuments(); // quitar cuando el backend esté listo
+    //mocks de prueba
+    //this.loadMockDocuments();
   }
 
   openUploadPanel(): void {
