@@ -21,6 +21,8 @@ public class ClinicalDocAccessInterceptor implements HandlerInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(ClinicalDocAccessInterceptor.class);
 
+    private static final boolean TESTING_MODE = true;
+
     private static final byte ROLE_PATIENT    = 1;
     private static final byte ROLE_SPECIALIST = 2;
 
@@ -34,6 +36,11 @@ public class ClinicalDocAccessInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
+
+        if (TESTING_MODE) {
+            logger.warn("[TESTING_MODE] Interceptor bypassed — cambiar TESTING_MODE=false al integrar JWT");
+            return true;
+        }
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated() || !(auth.getPrincipal() instanceof User requestingUser)) {
@@ -87,6 +94,7 @@ public class ClinicalDocAccessInterceptor implements HandlerInterceptor {
     }
 
     private boolean hasConfirmedAppointment(Integer specialistId, Integer patientId) {
+
         logger.warn("[STUB] hasConfirmedAppointment called for specialist={} patient={} " +
                     "— returning false until Appointment module is integrated", specialistId, patientId);
         return false;
