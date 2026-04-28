@@ -20,7 +20,7 @@ public class Speciality implements Serializable {
  
     private String name;
  
-    @ManyToMany(mappedBy = "specialities")
+    @ManyToMany(mappedBy = "specialties")
     private Set<com.takecare.backend.user.model.Specialist> specialists;
  
     public Integer getId() { return id; }

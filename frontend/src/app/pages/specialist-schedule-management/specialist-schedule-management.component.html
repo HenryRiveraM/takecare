@@ -1,0 +1,157 @@
+<div class="schedule-page">
+
+  <div class="page-header">
+    <div>
+      <h1>Gestión de horarios</h1>
+      <p>Configura los horarios disponibles para tus sesiones.</p>
+    </div>
+  </div>
+
+  <div class="schedule-layout">
+
+    <section class="form-card">
+        <h2>{{ selectedScheduleId ? 'Editar horario' : 'Crear horario' }}</h2>
+
+        <form (ngSubmit)="saveSchedule()">
+
+            <label for="scheduleDate">Fecha</label>
+            <input
+            id="scheduleDate"
+            name="scheduleDate"
+            type="date"
+            [(ngModel)]="form.scheduleDate"
+            (ngModelChange)="onScheduleDateChange($event)"
+            [min]="currentRangeStart"
+            [max]="currentRangeEnd"
+            required
+            />
+
+            <label>Día de la semana</label>
+            <input
+            type="text"
+            class="readonly-input"
+            [value]="getDayLabel(form.dayOfWeek)"
+            readonly
+            />
+
+            <label for="startTime">Hora de inicio</label>
+            <input
+            id="startTime"
+            name="startTime"
+            type="time"
+            [(ngModel)]="form.startTime"
+            required
+            />
+
+            <label for="endTime">Hora de fin</label>
+            <input
+            id="endTime"
+            name="endTime"
+            type="time"
+            [(ngModel)]="form.endTime"
+            required
+            />
+
+            <button type="submit" class="primary-btn">
+            {{ selectedScheduleId ? 'Guardar cambios' : 'Crear horario' }}
+            </button>
+
+            <button
+            type="button"
+            class="secondary-btn"
+            *ngIf="selectedScheduleId"
+            (click)="resetForm()"
+            >
+            Cancelar edición
+            </button>
+
+            <button
+            type="button"
+            class="danger-btn"
+            *ngIf="selectedScheduleId"
+            [disabled]="!isSelectedScheduleEditable()"
+            (click)="deleteSelectedSchedule()"
+            >
+            Eliminar horario
+            </button>
+
+            <p
+            class="warning-message"
+            *ngIf="selectedScheduleId && !isSelectedScheduleEditable()"
+            >
+            Este horario no puede modificarse porque ya fue reservado o ya empezó.
+            </p>
+
+        </form>
+    </section>
+
+    <section class="calendar-card">
+      <div class="calendar-header">
+        <div>
+          <h2>Agenda</h2>
+          <p>
+            Del {{ currentRangeStart }} al {{ currentRangeEnd }}.
+            Selecciona un rango en el calendario para crear un horario.
+          </p>
+        </div>
+
+        <div class="week-actions">
+          <button
+            type="button"
+            class="secondary-btn"
+            (click)="goToPreviousRange()"
+          >
+            7 días anteriores
+          </button>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            (click)="goToNextRange()"
+          >
+            7 días siguientes
+          </button>
+        </div>
+      </div>
+
+      <daypilot-calendar
+        [config]="config"
+        [events]="events">
+      </daypilot-calendar>
+    </section>
+
+  </div>
+
+  <section class="list-card">
+    <h2>Horarios registrados</h2>
+
+    <p class="range-text">
+      Mostrando horarios del {{ currentRangeStart }} al {{ currentRangeEnd }}.
+    </p>
+
+    <div *ngIf="schedules.length === 0" class="empty-message">
+      No hay horarios registrados en este rango de fechas.
+    </div>
+
+    <div
+      class="schedule-item"
+      *ngFor="let schedule of schedules"
+      (click)="selectSchedule(schedule)"
+      [class.selected]="selectedScheduleId === schedule.id"
+      [class.not-editable]="!canModifySchedule(schedule)"
+    >
+      <div class="schedule-info">
+        <strong>{{ schedule.scheduleDate }} - {{ getDayLabel(schedule.dayOfWeek) }}</strong>
+        <span>
+          {{ schedule.startTime.substring(0, 5) }} -
+          {{ schedule.endTime.substring(0, 5) }}
+        </span>
+      </div>
+
+      <span class="status" [class.booked]="schedule.status !== 0">
+        {{ schedule.status === 0 ? 'Disponible' : 'Reservado' }}
+      </span>
+    </div>
+  </section>
+
+</div>

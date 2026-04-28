@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "sessions")
 public class Session {
@@ -22,7 +26,7 @@ public class Session {
     private SpecialistSchedule schedule;
 
     @Column(columnDefinition = "tinyint")
-    private Integer status;
+    private Integer status; //1 pendiente, 2 aceptada, 3 rechazada, 4 cancelada, 5 finalizada
 
     @Column(name = "type_of_session", columnDefinition = "tinyint")
     private Integer typeOfSession;

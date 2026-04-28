@@ -1,6 +1,5 @@
 package com.takecare.backend.user.repository;
 
-import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,39 +15,39 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
 
     @Query("""
         SELECT DISTINCT s FROM Specialist s
-        JOIN s.specialities sp
+        JOIN s.specialties sp
         WHERE LOWER(sp.name) = LOWER(:category)
     """)
     List<Specialist> findBySpecialityName(@Param("category") String category);
 
     @Query("""
         SELECT DISTINCT s FROM Specialist s
-        JOIN s.specialities sp
+        JOIN s.specialties sp
         JOIN com.takecare.backend.specialistschedule.model.SpecialistSchedule sc
           ON sc.specialist.id = s.id
-        WHERE sc.available = true
+        WHERE sc.status = 0
           AND sc.dayOfWeek = :dayOfWeek
     """)
-    List<Specialist> findByAvailability(@Param("dayOfWeek") DayOfWeek dayOfWeek);
+    List<Specialist> findByAvailability(@Param("dayOfWeek") Byte dayOfWeek);
 
     @Query("""
         SELECT DISTINCT s FROM Specialist s
-        JOIN s.specialities sp
+        JOIN s.specialties sp
         JOIN com.takecare.backend.specialistschedule.model.SpecialistSchedule sc
           ON sc.specialist.id = s.id
         WHERE LOWER(sp.name) = LOWER(:category)
-          AND sc.available = true
+          AND sc.status = 0
           AND sc.dayOfWeek = :dayOfWeek
     """)
     List<Specialist> findBySpecialityNameAndAvailability(
             @Param("category") String category,
-            @Param("dayOfWeek") DayOfWeek dayOfWeek
+            @Param("dayOfWeek") Byte dayOfWeek
     );
 
     @Query("""
         SELECT DISTINCT s
         FROM Specialist s
-        LEFT JOIN FETCH s.specialities sp
+        LEFT JOIN FETCH s.specialties sp
         WHERE s.status = 1
           AND s.accountVerified = 1
           AND s.role = 2
@@ -59,7 +58,7 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
     @Query("""
         SELECT DISTINCT s
         FROM Specialist s
-        LEFT JOIN FETCH s.specialities sp
+        LEFT JOIN FETCH s.specialties sp
         WHERE s.status = 1
           AND s.accountVerified = 1
           AND s.role = 2
@@ -79,7 +78,7 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
     @Query("""
         SELECT DISTINCT s
         FROM Specialist s
-        LEFT JOIN FETCH s.specialities sp
+        LEFT JOIN FETCH s.specialties sp
         WHERE s.id = :id
           AND s.status = 1
           AND s.accountVerified = 1

@@ -16,8 +16,8 @@ public class AdminPatientDTO {
     private String ciNumber;
     private String ciDocumentImg;
     private String selfieVerification;
-    private Integer role;
-    private Integer status;
-    private Integer strikes;
-    private Integer accountVerified;
+    private Byte role;
+    private Byte status;
+    private Byte strikes;
+    private Byte accountVerified;
 }

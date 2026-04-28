@@ -12,5 +12,5 @@ public class LoginResponseDTO {
     private Integer id;
     private String names;
     private String email;
-    private Integer role;
+    private Byte role;
 }
