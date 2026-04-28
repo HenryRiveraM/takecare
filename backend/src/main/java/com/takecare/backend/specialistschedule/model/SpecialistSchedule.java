@@ -35,5 +35,5 @@ public class SpecialistSchedule {
     private LocalTime endTime;
 
     @Column(name = "status")
-    private Byte status = 0;
+    private Byte status = 0; //0 disponible, 1 no disponible
 }

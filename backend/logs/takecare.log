@@ -1,90 +1,290 @@
-2026-04-27 00:22:04 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 2, active threads = 1, queued tasks = 0, completed tasks = 1]
-2026-04-27 00:52:04 [MessageBroker-2] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 3, active threads = 1, queued tasks = 0, completed tasks = 2]
-2026-04-27 00:54:52 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-27&endDate=2026-05-03", parameters={masked}
-2026-04-27 00:54:52 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 00:54:52 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/test", parameters={}
-2026-04-27 00:54:52 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.shared.controller.TestController#test()
-2026-04-27 00:54:52 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'text/html', given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7] and supported [text/plain, */*, application/json, application/*+json, application/yaml]
-2026-04-27 00:54:52 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing ["Backend funcionando"]
-2026-04-27 00:54:52 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 00:54:52 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 00:54:52 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@2a95c4c3]]
-2026-04-27 00:54:52 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 00:55:05 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-27&endDate=2026-05-03", parameters={masked}
-2026-04-27 00:55:05 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 00:55:06 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 00:55:06 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@7ee63379]]
-2026-04-27 00:55:06 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 00:55:09 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-20&endDate=2026-04-26", parameters={masked}
-2026-04-27 00:55:09 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 00:55:10 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 00:55:10 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
-2026-04-27 00:55:10 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 00:55:10 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-27&endDate=2026-05-03", parameters={masked}
-2026-04-27 00:55:10 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 00:55:11 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 00:55:11 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@35b79d47]]
-2026-04-27 00:55:11 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 00:55:11 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-20&endDate=2026-04-26", parameters={masked}
-2026-04-27 00:55:11 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 00:55:12 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 00:55:12 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
-2026-04-27 00:55:12 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 00:56:16 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/v1/schedules/specialist/8/create", parameters={}
-2026-04-27 00:56:16 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#createSchedule(Integer, SpecialistScheduleDTO)
-2026-04-27 00:56:16 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.specialistschedule.dto.SpecialistScheduleDTO@61253737]
-2026-04-27 00:56:19 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 00:56:19 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@79409770]
-2026-04-27 00:56:19 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 00:56:19 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-20&endDate=2026-04-26", parameters={masked}
-2026-04-27 00:56:19 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 00:56:20 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 00:56:20 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
-2026-04-27 00:56:20 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 01:03:41 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-27&endDate=2026-05-03", parameters={masked}
-2026-04-27 01:03:41 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 01:03:42 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 01:03:42 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@12e7ce40, com.takecare.ba (truncated)...]
-2026-04-27 01:03:42 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 01:07:09 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-27&endDate=2026-05-03", parameters={masked}
-2026-04-27 01:07:09 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 01:07:10 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 01:07:10 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@13df5bc0, com.takecare.ba (truncated)...]
-2026-04-27 01:07:10 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 01:12:16 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-27&endDate=2026-05-03", parameters={masked}
-2026-04-27 01:12:16 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 01:12:17 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 01:12:17 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@5fcdb634, com.takecare.ba (truncated)...]
-2026-04-27 01:12:17 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 01:13:22 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/v1/schedules/specialist/8/create", parameters={}
-2026-04-27 01:13:22 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#createSchedule(Integer, SpecialistScheduleDTO)
-2026-04-27 01:13:22 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.specialistschedule.dto.SpecialistScheduleDTO@20f59ecf]
-2026-04-27 01:13:25 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 01:13:25 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@54066c7c]
-2026-04-27 01:13:25 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 01:13:25 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-27&endDate=2026-05-03", parameters={masked}
-2026-04-27 01:13:25 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 01:13:25 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 01:13:25 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@71c57dfd, com.takecare.ba (truncated)...]
-2026-04-27 01:13:25 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 01:17:24 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-05-04&endDate=2026-05-10", parameters={masked}
-2026-04-27 01:17:24 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 01:17:25 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 01:17:25 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[]]
-2026-04-27 01:17:25 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 01:17:25 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/schedules/specialist/8/range?startDate=2026-04-27&endDate=2026-05-03", parameters={masked}
-2026-04-27 01:17:25 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.specialistschedule.controller.SpecialistScheduleController#getSchedulesByDateRange(Integer, LocalDate, LocalDate)
-2026-04-27 01:17:26 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
-2026-04-27 01:17:26 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[com.takecare.backend.specialistschedule.dto.SpecialistScheduleResponseDTO@310d392c, com.takecare.ba (truncated)...]
-2026-04-27 01:17:26 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
-2026-04-27 01:22:04 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 4, active threads = 1, queued tasks = 0, completed tasks = 3]
-2026-04-27 01:52:04 [MessageBroker-3] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 5, active threads = 1, queued tasks = 0, completed tasks = 4]
-2026-04-27 02:21:04 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
-2026-04-27 02:21:04 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
-2026-04-27 02:21:04 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopping...
-2026-04-27 02:21:04 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7c3ad2ab]]
-2026-04-27 02:21:04 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7c3ad2ab]
-2026-04-27 02:21:04 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7c3ad2ab]
-2026-04-27 02:21:04 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopped.
-2026-04-27 02:21:04 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
-2026-04-27 02:21:04 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-28 00:05:13 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 2, active threads = 1, queued tasks = 0, completed tasks = 1]
+2026-04-28 00:35:13 [MessageBroker-2] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 3, active threads = 1, queued tasks = 0, completed tasks = 2]
+2026-04-28 00:44:24 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@537f139d (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 00:44:24 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@57a857e4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 00:44:24 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4eb4bfbd (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 00:44:24 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Thread starvation or clock leap detected (housekeeper delta=4m58s728ms312탎500ns).
+2026-04-28 00:44:24 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@657cbe0d (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 00:44:24 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@129c592 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 00:44:24 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@142ba524 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 00:44:24 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7f09b94b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 00:44:25 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7f85ec71 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 00:44:25 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@30cfb346 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 00:44:25 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@798432fe (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 04:57:27 [HikariPool-6:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Pool is empty, failed to create/setup connection (79937e8a-696d-4f89-b25a-c57f969cf635)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at jdk.internal.reflect.GeneratedConstructorAccessor142.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: No such host is known (takecarebd-takecarebd.g.aivencloud.com)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-28 07:41:23 [HikariPool-6:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Pool is empty, failed to create/setup connection (f6668d54-2106-4ddf-b324-405c89faf4bc)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at jdk.internal.reflect.GeneratedConstructorAccessor142.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: No such host is known (takecarebd-takecarebd.g.aivencloud.com)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-28 07:41:38 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Thread starvation or clock leap detected (housekeeper delta=6h57m18s325ms166탎200ns).
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4b751f64 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Thread starvation or clock leap detected (housekeeper delta=16m27s994ms526탎100ns).
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@e909a45 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6dfd2acc (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6a993800 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@66c3a2a0 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4bdedea4 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3073b3dd (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@63a7c7a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4b472ed7 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:01:36 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@7651e2e5 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5b914aa9 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Thread starvation or clock leap detected (housekeeper delta=1m34s349ms511탎500ns).
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@561113b (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@54f4c73c (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@33ae2ce3 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@3bec1a73 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@36893cfc (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@4436c036 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@6bd2567 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@5dd98841 (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:06:11 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@224821da (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-28 08:13:45 [HikariPool-6:connection-adder] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-6 - Pool is empty, failed to create/setup connection (0e7edb00-3aa0-4bf7-998a-50a9fb524d23)
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:165)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:55)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:840)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:416)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:180)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at jdk.internal.reflect.GeneratedConstructorAccessor142.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:52)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:95)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:140)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:156)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:79)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:142)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:964)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:828)
+	... 13 common frames omitted
+Caused by: java.net.UnknownHostException: No such host is known (takecarebd-takecarebd.g.aivencloud.com)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:121)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
+	... 16 common frames omitted
+2026-04-28 08:14:13 [HikariPool-6:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Thread starvation or clock leap detected (housekeeper delta=8m2s116ms350탎400ns).
+2026-04-28 08:22:41 [Thread-23] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-28 08:22:41 [Thread-23] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-28 08:22:41 [Thread-23] INFO  org.springframework.web.SimpLogging - Stopping...
+2026-04-28 08:22:41 [Thread-23] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@4a372038]]
+2026-04-28 08:22:41 [Thread-23] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@4a372038]
+2026-04-28 08:22:41 [Thread-23] DEBUG org.springframework.web.SimpLogging - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@4a372038]
+2026-04-28 08:22:41 [Thread-23] INFO  org.springframework.web.SimpLogging - Stopped.
+2026-04-28 08:22:41 [Thread-23] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-28 08:22:41 [Thread-23] DEBUG org.springframework.web.SimpLogging - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-28 08:22:43 [restartedMain] INFO  c.t.backend.TakeCareApplication - Starting TakeCareApplication using Java 17.0.18 with PID 35676 (C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend\target\classes started by usser in C:\Users\usser\Desktop\Uni\TallerSISINFO\takecare\backend)
+2026-04-28 08:22:43 [restartedMain] INFO  c.t.backend.TakeCareApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-28 08:22:50 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Patterns [/ws-takecare/**] in 'stompWebSocketHandlerMapping'
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 51 mappings in 'requestMappingHandlerMapping'
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2026-04-28 08:22:50 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 461b4da2-3ead-491e-8612-fbda270c7f27
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.a.c.AuthController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.n.c.NotificationController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.SessionController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.TestController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.s.c.SpecialistScheduleController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.AdminController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.PatientController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.SpecialistController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	c.t.b.u.c.UserProfileController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.a.OpenApiWebMvcResource:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerWelcomeWebMvc:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.w.u.SwaggerConfigResource:
+	
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-04-28 08:22:50 [restartedMain] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-04-28 08:22:51 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-28 08:22:51 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-28 08:22:51 [restartedMain] INFO  org.springframework.web.SimpLogging - Starting...
+2026-04-28 08:22:51 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@79f89224]
+2026-04-28 08:22:51 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@79f89224]
+2026-04-28 08:22:51 [restartedMain] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@79f89224]]
+2026-04-28 08:22:51 [restartedMain] INFO  org.springframework.web.SimpLogging - Started.
+2026-04-28 08:22:51 [restartedMain] DEBUG org.springframework.web.SimpLogging - clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-28 08:22:51 [restartedMain] DEBUG org.springframework.web.SimpLogging - brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-28 08:22:51 [restartedMain] INFO  c.t.backend.TakeCareApplication - Started TakeCareApplication in 7.972 seconds (process running for 50921.595)
+2026-04-28 08:23:51 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2026-04-28 08:25:21 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-28 08:25:21 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-04-28 08:25:21 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-04-28 08:25:21 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-04-28 08:25:21 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@5bc6054d
+2026-04-28 08:25:21 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@16a5bb3c
+2026-04-28 08:25:21 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-04-28 08:25:21 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2026-04-28 08:25:21 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/v1/sessions", parameters={}
+2026-04-28 08:25:21 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.takecare.backend.session.controller.SessionController#createSession(CreateSessionRequestDTO)
+2026-04-28 08:25:22 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [com.takecare.backend.session.dto.CreateSessionRequestDTO@7ef88fe5]
+2026-04-28 08:25:25 [http-nio-8080-exec-2] INFO  c.t.b.n.service.NotificationService - Notification created successfully with id: 4 for specialist id: 8
+2026-04-28 08:25:25 [http-nio-8080-exec-2] DEBUG org.springframework.web.SimpLogging - Processing MESSAGE destination=/topic/notifications/specialist/8 session=null payload={"eventType":"NOTIFICATION_CREATED","unreadCount":2,"notification":{"id":4,"sess...(truncated)
+2026-04-28 08:25:25 [http-nio-8080-exec-2] INFO  c.t.b.n.service.NotificationService - Notification event NOTIFICATION_CREATED sent to topic /topic/notifications/specialist/8
+2026-04-28 08:25:27 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2026-04-28 08:25:27 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.takecare.backend.session.dto.SessionResponseDTO@49e7b322]
+2026-04-28 08:25:27 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/v1/sessions/specialist/8", parameters={}
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.w.s.r.ResourceHttpRequestHandler - Resource not found
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource api/v1/sessions/specialist/8.]
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 404 NOT_FOUND
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - "ERROR" dispatch for GET "/error", parameters={}
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/yaml]
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{timestamp=Tue Apr 28 08:42:50 BOT 2026, status=404, error=Not Found, trace=org.springframework.web. (truncated)...]
+2026-04-28 08:42:50 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Exiting from "ERROR" dispatch, status 404
+2026-04-28 08:43:46 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2026-04-28 08:43:46 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2026-04-28 08:43:46 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopping...
+2026-04-28 08:43:46 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@79f89224]]
+2026-04-28 08:43:46 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@79f89224]
+2026-04-28 08:43:46 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@79f89224]
+2026-04-28 08:43:46 [SpringApplicationShutdownHook] INFO  org.springframework.web.SimpLogging - Stopped.
+2026-04-28 08:43:46 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2026-04-28 08:43:46 [SpringApplicationShutdownHook] DEBUG org.springframework.web.SimpLogging - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
