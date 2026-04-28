@@ -18,14 +18,14 @@ import com.takecare.backend.specialistschedule.repository.SpecialistScheduleRepo
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.repository.PatientRepository;
 
-@Service
+//@Service
 public class SessionService {
 
     private static final Integer SESSION_PENDING = 1;
     private static final Integer SESSION_ACCEPTED = 2;
     private static final Integer SESSION_REJECTED = 3;
-    private static final Integer SESSION_CANCELLED = 4;
-    private static final Integer SESSION_FINISHED = 5;
+    private static final Integer SESSION_FINISHED = 4;
+    private static final Integer SESSION_CANCELLED = 5;
 
     private static final Byte SCHEDULE_AVAILABLE = 0;
     private static final Byte SCHEDULE_UNAVAILABLE = 1;
@@ -139,27 +139,21 @@ public class SessionService {
             throw new RuntimeException("Acción inválida. Use accept o reject");
         }
 
-        String message;
+        String notificationDescription;
 
         if (isAccepted) {
             session.setStatus(SESSION_ACCEPTED);
             schedule.setStatus(SCHEDULE_UNAVAILABLE);
-            message = "Cita aceptada correctamente";
+            notificationDescription = "Cita aceptada correctamente";
         } else {
             session.setStatus(SESSION_REJECTED);
             schedule.setStatus(SCHEDULE_AVAILABLE);
-            message = "Cita rechazada correctamente";
+            notificationDescription = "Cita rechazada correctamente";
         }
 
         Session saved = sessionRepository.save(session);
         scheduleRepository.save(schedule);
 
-        /*
-         * IMPORTANTE:
-         * Este NotificationService actualmente notifica al especialista,
-         * porque obtiene el specialistId desde Session -> Schedule -> Specialist.
-         * Para notificar al paciente, habría que crear un flujo separado.
-         */
         notificationService.createForSession(
                 saved,
                 isAccepted
@@ -168,7 +162,7 @@ public class SessionService {
                 NOTIFICATION_TYPE_SESSION_RESPONSE
         );
 
-        return buildAppointmentStatusResponse(saved, message);
+        return buildAppointmentStatusResponse(saved, notificationDescription);
     }
 
     private void validateScheduleForSession(SpecialistSchedule schedule) {
@@ -242,7 +236,7 @@ public class SessionService {
 
     private AppointmentStatusResponseDto buildAppointmentStatusResponse(
             Session session,
-            String message
+            String notificationDescription
     ) {
         AppointmentStatusResponseDto dto = new AppointmentStatusResponseDto();
 
@@ -252,7 +246,6 @@ public class SessionService {
         dto.setSpecialistId(session.getSchedule().getSpecialist().getId());
 
         dto.setStatus(session.getStatus());
-        dto.setStatusLabel(getSessionStatusLabel(session.getStatus()));
 
         dto.setScheduleStatus(
                 session.getSchedule().getStatus() != null
@@ -261,33 +254,9 @@ public class SessionService {
         );
 
         dto.setUpdatedAt(LocalDateTime.now());
-        dto.setMessage(message);
+        dto.setNotificationDescription(notificationDescription);
 
         return dto;
-    }
-
-    private String getSessionStatusLabel(Integer status) {
-        if (SESSION_PENDING.equals(status)) {
-            return "PENDING";
-        }
-
-        if (SESSION_ACCEPTED.equals(status)) {
-            return "ACCEPTED";
-        }
-
-        if (SESSION_REJECTED.equals(status)) {
-            return "REJECTED";
-        }
-
-        if (SESSION_CANCELLED.equals(status)) {
-            return "CANCELLED";
-        }
-
-        if (SESSION_FINISHED.equals(status)) {
-            return "FINISHED";
-        }
-
-        return "UNKNOWN";
     }
 
     private String buildFullName(String names, String firstLastname, String secondLastname) {

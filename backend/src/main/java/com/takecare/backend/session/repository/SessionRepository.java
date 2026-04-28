@@ -41,4 +41,18 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
     List<Session> findBySpecialistIdOrderByCreatedDateDesc(
             @Param("specialistId") Integer specialistId
     );
+
+    @Query("""
+            select s
+            from Session s
+            join fetch s.schedule sc
+            join fetch sc.specialist sp
+            join fetch s.patient p
+            where s.id = :sessionId
+            and p.id = :patientId
+            """)
+    Optional<Session> findByIdAndPatientId(
+            @Param("sessionId") Integer sessionId,
+            @Param("patientId") Integer patientId
+ );
 }

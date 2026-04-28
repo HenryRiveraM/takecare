@@ -6,6 +6,11 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SpecialistDirectoryItem, SpecialistService } from '../../services/specialist.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
+import { SpecialistScheduleGroup, SpecialistScheduleResponse } from '../../models/specialist-schedule.model';
+import { SpecialistScheduleService } from '../../services/specialist-schedule.service';
+import { AppointmentService } from '../../services/appointment.service';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-patient-search-specialists',
@@ -23,6 +28,19 @@ export class PatientSearchSpecialistsComponent implements OnInit {
   loading = false;
   errorMsg = '';
   
+  selectedSpecialistId: number | null = null;
+  scheduleGroups: SpecialistScheduleGroup[] = [];
+  selectedScheduleId: number | null = null;
+
+  loadingSchedules = false;
+  creatingAppointment = false;
+
+  typeOfSession = 1;
+
+  scheduleErrorMsg = '';
+  appointmentSuccessMsg = '';
+  appointmentErrorMsg = '';
+
   specialists: SpecialistDirectoryItem[] = [];
   filteredSpecialists: SpecialistDirectoryItem[] = [];
   daysOfWeek = [
@@ -41,7 +59,97 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     private router: Router,
     public sidebarService: SidebarService,
     private translateService: TranslateService,
+    private specialistScheduleService: SpecialistScheduleService,
+    private appointmentService: AppointmentService,
+    private authService: AuthService
   ) {}
+
+  private getCurrentPatientId(): number | null {
+    const user = this.authService.getUser();
+
+    if (!user || !user.id) {
+      return null;
+    }
+
+    return user.id;
+  }
+
+  getDayName(dayOfWeek: number): string {
+    const days: Record<number, string> = {
+      1: 'Lunes',
+      2: 'Martes',
+      3: 'Miércoles',
+      4: 'Jueves',
+      5: 'Viernes',
+      6: 'Sábado',
+      7: 'Domingo'
+    };
+
+    return days[dayOfWeek] || 'Día no definido';
+  }
+
+  formatTime(time: string): string {
+    if (!time) {
+      return '';
+    }
+
+    return time.substring(0, 5);
+  }
+
+  formatDate(date: string): string {
+    if (!date) {
+      return '';
+    }
+
+    const [year, month, day] = date.split('-');
+    return `${day}/${month}/${year}`;
+  }
+
+  openSchedules(specialist: any): void {
+    this.selectedSpecialistId = specialist.id;
+    this.selectedScheduleId = null;
+    this.scheduleGroups = [];
+    this.scheduleErrorMsg = '';
+    this.appointmentSuccessMsg = '';
+    this.appointmentErrorMsg = '';
+
+    this.loadSchedulesBySpecialist(specialist.id);
+  }
+
+  closeSchedules(): void {
+    this.selectedSpecialistId = null;
+    this.selectedScheduleId = null;
+    this.scheduleGroups = [];
+    this.scheduleErrorMsg = '';
+    this.appointmentSuccessMsg = '';
+    this.appointmentErrorMsg = '';
+  }
+
+  loadSchedulesBySpecialist(specialistId: number): void {
+    this.loadingSchedules = true;
+    this.scheduleErrorMsg = '';
+
+    this.specialistScheduleService.getSchedulesGroupedByDay(specialistId).subscribe({
+      next: (groups) => {
+        this.scheduleGroups = groups;
+        this.loadingSchedules = false;
+      },
+      error: (error) => {
+        this.scheduleErrorMsg = error.error?.message || 'No se pudieron cargar los horarios.';
+        this.loadingSchedules = false;
+      }
+    });
+  }
+
+  selectSchedule(schedule: SpecialistScheduleResponse): void {
+    if (schedule.status !== 0) {
+      return;
+    }
+
+    this.selectedScheduleId = schedule.id;
+    this.appointmentSuccessMsg = '';
+    this.appointmentErrorMsg = '';
+  }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
@@ -49,6 +157,50 @@ export class PatientSearchSpecialistsComponent implements OnInit {
       this.selectedCategory = params.get('category') ?? '';
       this.selectedSchedule = params.get('schedule') ?? '';
       this.loadSpecialists();
+    });
+  }
+
+  createAppointment(): void {
+    if (!this.selectedScheduleId) {
+      this.appointmentErrorMsg = 'Selecciona un horario disponible.';
+      return;
+    }
+
+    const patientId = this.getCurrentPatientId();
+
+    if (!patientId) {
+      this.appointmentErrorMsg = 'No se pudo identificar al paciente actual. Vuelve a iniciar sesión.';
+      return;
+    }
+
+    this.creatingAppointment = true;
+    this.appointmentSuccessMsg = '';
+    this.appointmentErrorMsg = '';
+
+    this.appointmentService.createAppointment({
+      patientId,
+      scheduleId: this.selectedScheduleId,
+      typeOfSession: this.typeOfSession
+    }).subscribe({
+      next: () => {
+        this.creatingAppointment = false;
+        this.appointmentSuccessMsg = 'Cita solicitada correctamente. El especialista recibirá una notificación.';
+        this.appointmentErrorMsg = '';
+        this.selectedScheduleId = null;
+        this.typeOfSession = 1;
+
+        if (this.selectedSpecialistId) {
+          this.loadSchedulesBySpecialist(this.selectedSpecialistId);
+        }
+      },
+      error: (error) => {
+        this.creatingAppointment = false;
+        this.appointmentSuccessMsg = '';
+        this.appointmentErrorMsg =
+          error.error?.message ||
+          error.error?.error ||
+          'No se pudo solicitar la cita. Intenta nuevamente.';
+      }
     });
   }
 
@@ -124,6 +276,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
         this.loading = false;
       }
     });
+
   }
 
 

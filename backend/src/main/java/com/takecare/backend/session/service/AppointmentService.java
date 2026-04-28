@@ -1,101 +1,158 @@
 package com.takecare.backend.session.service;
 
-import com.takecare.backend.notification.service.NotificationService;
-import com.takecare.backend.session.dto.AppointmentStatusResponseDto;
-import com.takecare.backend.session.model.Session;
-import com.takecare.backend.session.repository.SessionRepository;
-import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
-
-import java.util.Optional;
+import com.takecare.backend.notification.service.NotificationService;
+import com.takecare.backend.session.dto.AppointmentStatusResponseDto;
+import com.takecare.backend.session.dto.CreateSessionRequestDTO;
+import com.takecare.backend.session.dto.SessionResponseDTO;
+import com.takecare.backend.session.model.Session;
+import com.takecare.backend.session.repository.SessionRepository;
+import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
+import com.takecare.backend.specialistschedule.repository.SpecialistScheduleRepository;
+import com.takecare.backend.user.model.Patient;
+import com.takecare.backend.user.repository.PatientRepository;
 
 @Service
 public class AppointmentService {
 
     private static final Logger logger = LoggerFactory.getLogger(AppointmentService.class);
 
-    private static final int SESSION_STATUS_PENDING   = 0;
-    private static final int SESSION_STATUS_CONFIRMED = 1;
-    private static final int SESSION_STATUS_REJECTED  = 2;
+    private static final Integer SESSION_PENDING = 1;
+    private static final Integer SESSION_ACCEPTED = 2;
+    private static final Integer SESSION_REJECTED = 3;
+    private static final Integer SESSION_FINISHED = 4;
+    private static final Integer SESSION_CANCELLED = 5;
 
-    private static final byte SCHEDULE_STATUS_AVAILABLE = 0;
-    private static final byte SCHEDULE_STATUS_OCCUPIED  = 1;
+    private static final Byte SCHEDULE_AVAILABLE = 0;
+    private static final Byte SCHEDULE_UNAVAILABLE = 1;
 
-    private static final byte NOTIFICATION_TYPE_SESSION_RESPONSE = 2;
+    private static final Byte NOTIFICATION_TYPE_NEW_SESSION = 1;
+    private static final Byte NOTIFICATION_TYPE_SESSION_RESPONSE = 2;
 
     private final SessionRepository sessionRepository;
+    private final PatientRepository patientRepository;
+    private final SpecialistScheduleRepository scheduleRepository;
     private final NotificationService notificationService;
 
-    public AppointmentService(SessionRepository sessionRepository,
-                              NotificationService notificationService) {
+    public AppointmentService(
+            SessionRepository sessionRepository,
+            PatientRepository patientRepository,
+            SpecialistScheduleRepository scheduleRepository,
+            NotificationService notificationService
+    ) {
         this.sessionRepository = sessionRepository;
+        this.patientRepository = patientRepository;
+        this.scheduleRepository = scheduleRepository;
         this.notificationService = notificationService;
     }
 
-    /**
-     * @param sessionId
-     * @param specialistId 
-     * @param action      
-     * @return 
-     */
     @Transactional
-    public AppointmentStatusResponseDto updateAppointmentStatus(Integer sessionId,
-                                                                Integer specialistId,
-                                                                String action) {
+    public SessionResponseDTO createAppointment(CreateSessionRequestDTO request) {
 
-        logger.info("PATCH /appointments/{}/status - specialist={} action={}", sessionId, specialistId, action);
+        if (request.getPatientId() == null || request.getScheduleId() == null) {
+            throw new RuntimeException("El paciente y el horario son obligatorios");
+        }
 
-        Optional<Session> debug = sessionRepository.findByIdAndSpecialistId(sessionId, specialistId);
-            logger.info("DEBUG findByIdAndSpecialistId({}, {}) -> present={}", sessionId, specialistId, debug.isPresent());
-            if (debug.isEmpty()) {
-                // Probar buscar solo por ID para descartar problema de mapeo
-                sessionRepository.findById(sessionId).ifPresent(s ->
-                    logger.info("DEBUG findById encontró session, schedule.specialist.id={}",
-                        s.getSchedule().getSpecialist().getId())
-                );
-            }
+        validateTypeOfSession(request.getTypeOfSession());
 
-        Session session = sessionRepository.findByIdAndSpecialistId(sessionId, specialistId)
-                .orElseThrow(() -> {
-                    logger.warn("Session id={} not found for specialist id={}", sessionId, specialistId);
-                    return new NoSuchElementException(
-                            "Cita no encontrada o no pertenece al especialista indicado"
-                    );
+        Patient patient = patientRepository.findById(request.getPatientId())
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        SpecialistSchedule schedule = scheduleRepository.findById(request.getScheduleId())
+                .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
+
+        sessionRepository.findByScheduleId(schedule.getId())
+                .ifPresent(existingSession -> {
+                    throw new RuntimeException("Este horario ya tiene una cita registrada");
                 });
 
-        // 2. Validar que la cita esté pendiente
-        if (session.getStatus() == null || session.getStatus() != SESSION_STATUS_PENDING) {
-            logger.warn("Session id={} is not in PENDING state, current status={}", sessionId, session.getStatus());
-            throw new IllegalStateException(
-                    "Solo se pueden aprobar o rechazar citas en estado pendiente"
-            );
+        validateScheduleForAppointment(schedule);
+
+        Session session = new Session();
+        session.setPatient(patient);
+        session.setSchedule(schedule);
+        session.setStatus(SESSION_PENDING);
+        session.setTypeOfSession(request.getTypeOfSession());
+        session.setCreatedDate(LocalDateTime.now());
+
+        Session savedSession = sessionRepository.save(session);
+
+        schedule.setStatus(SCHEDULE_UNAVAILABLE);
+        scheduleRepository.save(schedule);
+
+        String patientName = buildFullName(
+                patient.getNames(),
+                patient.getFirstLastname(),
+                patient.getSecondLastname()
+        );
+
+        notificationService.createForSession(
+                savedSession,
+                "Nueva cita solicitada por " + patientName,
+                NOTIFICATION_TYPE_NEW_SESSION
+        );
+
+        logger.info("Appointment created successfully. sessionId={}, patientId={}, scheduleId={}",
+                savedSession.getId(), patient.getId(), schedule.getId());
+
+        return toResponseDto(savedSession);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SessionResponseDTO> listByPatient(Integer patientId) {
+        return sessionRepository.findByPatientIdOrderByCreatedDateDesc(patientId)
+                .stream()
+                .map(this::toResponseDto)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<SessionResponseDTO> listBySpecialist(Integer specialistId) {
+        return sessionRepository.findBySpecialistIdOrderByCreatedDateDesc(specialistId)
+                .stream()
+                .map(this::toResponseDto)
+                .toList();
+    }
+
+    @Transactional
+    public AppointmentStatusResponseDto cancelAppointment(
+            Integer sessionId,
+            Integer patientId
+    ) {
+        Session session = sessionRepository.findByIdAndPatientId(sessionId, patientId)
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Cita no encontrada o no pertenece al paciente indicado"
+                ));
+
+        if (SESSION_FINISHED.equals(session.getStatus())) {
+            throw new IllegalStateException("No se puede cancelar una cita finalizada");
+        }
+
+        if (SESSION_CANCELLED.equals(session.getStatus())) {
+            throw new IllegalStateException("La cita ya se encuentra cancelada");
+        }
+
+        if (SESSION_REJECTED.equals(session.getStatus())) {
+            throw new IllegalStateException("No se puede cancelar una cita rechazada");
         }
 
         SpecialistSchedule schedule = session.getSchedule();
-        boolean isAccepted = "accept".equalsIgnoreCase(action);
 
-        if (isAccepted) {
-            session.setStatus(SESSION_STATUS_CONFIRMED);
-            logger.info("Session id={} CONFIRMED - schedule id={} remains OCCUPIED", sessionId, schedule.getId());
-        } else {
-            session.setStatus(SESSION_STATUS_REJECTED);
-            schedule.setStatus(SCHEDULE_STATUS_AVAILABLE);
-            logger.info("Session id={} REJECTED - schedule id={} released to AVAILABLE", sessionId, schedule.getId());
-        }
+        session.setStatus(SESSION_CANCELLED);
+        schedule.setStatus(SCHEDULE_AVAILABLE);
 
         Session saved = sessionRepository.save(session);
+        scheduleRepository.save(schedule);
 
-        // 5. Generar notificación para el paciente
-        String patientName = buildPatientFullName(session);
-        String notificationDescription = isAccepted
-                ? "Tu cita fue aceptada por el especialista"
-                : "Tu cita fue rechazada por el especialista";
+        String notificationDescription = "El paciente canceló la cita";
 
         notificationService.createForSession(
                 saved,
@@ -103,34 +160,170 @@ public class AppointmentService {
                 NOTIFICATION_TYPE_SESSION_RESPONSE
         );
 
-        logger.info("Notification created for session id={} patient={}", sessionId, patientName);
-
-        // 6. Construir y retornar respuesta
-        return buildResponse(saved, isAccepted, notificationDescription);
+        return buildAppointmentStatusResponse(saved, notificationDescription);
     }
 
-    private AppointmentStatusResponseDto buildResponse(Session session,
-                                                        boolean accepted,
-                                                        String notificationDescription) {
-        AppointmentStatusResponseDto dto = new AppointmentStatusResponseDto();
-        dto.setSessionId(session.getId());
-        dto.setSpecialistId(session.getSchedule().getSpecialist().getId());
-        dto.setPatientId(session.getPatient().getId());
-        dto.setScheduleId(session.getSchedule().getId());
-        dto.setStatus(accepted ? 2 : 3);
-        dto.setScheduleStatus(session.getSchedule().getStatus() != null
-                ? session.getSchedule().getStatus().intValue()
-                : null);
-        dto.setUpdatedAt(LocalDateTime.now());
-        dto.setNotificationDescription(notificationDescription);
+    @Transactional
+    public AppointmentStatusResponseDto updateAppointmentStatus(
+            Integer sessionId,
+            Integer specialistId,
+            String action
+    ) {
+        logger.info("PATCH appointment status. sessionId={}, specialistId={}, action={}",
+                sessionId, specialistId, action);
+
+        Session session = sessionRepository.findByIdAndSpecialistId(sessionId, specialistId)
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Cita no encontrada o no pertenece al especialista indicado"
+                ));
+
+        if (!SESSION_PENDING.equals(session.getStatus())) {
+            throw new IllegalStateException("Solo se pueden aprobar o rechazar citas en estado pendiente");
+        }
+
+        boolean isAccepted = "accept".equalsIgnoreCase(action);
+        boolean isRejected = "reject".equalsIgnoreCase(action);
+
+        if (!isAccepted && !isRejected) {
+            throw new RuntimeException("Acción inválida. Use accept o reject");
+        }
+
+        SpecialistSchedule schedule = session.getSchedule();
+        String notificationDescription;
+
+        if (isAccepted) {
+            session.setStatus(SESSION_ACCEPTED);
+            schedule.setStatus(SCHEDULE_UNAVAILABLE);
+            notificationDescription = "Cita aceptada correctamente";
+        } else {
+            session.setStatus(SESSION_REJECTED);
+            schedule.setStatus(SCHEDULE_AVAILABLE);
+            notificationDescription = "Cita rechazada correctamente";
+        }
+
+        Session saved = sessionRepository.save(session);
+        scheduleRepository.save(schedule);
+
+        notificationService.createForSession(
+                saved,
+                notificationDescription,
+                NOTIFICATION_TYPE_SESSION_RESPONSE
+        );
+
+        logger.info("Appointment status updated. sessionId={}, newStatus={}, scheduleStatus={}",
+                saved.getId(), saved.getStatus(), schedule.getStatus());
+
+        return buildAppointmentStatusResponse(saved, notificationDescription);
+    }
+
+    private void validateScheduleForAppointment(SpecialistSchedule schedule) {
+
+        if (!SCHEDULE_AVAILABLE.equals(schedule.getStatus())) {
+            throw new RuntimeException("Este horario no está disponible");
+        }
+
+        if (schedule.getScheduleDate() == null) {
+            throw new RuntimeException("El horario no tiene fecha configurada");
+        }
+
+        if (schedule.getStartTime() == null) {
+            throw new RuntimeException("El horario no tiene hora de inicio configurada");
+        }
+
+        LocalDateTime scheduleStartDateTime = LocalDateTime.of(
+                schedule.getScheduleDate(),
+                schedule.getStartTime()
+        );
+
+        LocalDateTime minimumAllowedStartDateTime = LocalDateTime.now().plusHours(1);
+
+        if (scheduleStartDateTime.isBefore(minimumAllowedStartDateTime)) {
+            throw new RuntimeException("La cita debe solicitarse con al menos una hora de anticipación");
+        }
+    }
+
+    private void validateTypeOfSession(Integer typeOfSession) {
+        if (typeOfSession == null || (typeOfSession != 1 && typeOfSession != 2)) {
+            throw new RuntimeException("El tipo de sesión no es válido");
+        }
+    }
+
+    private SessionResponseDTO toResponseDto(Session session) {
+        SessionResponseDTO dto = new SessionResponseDTO();
+
+        dto.setId(session.getId());
+        dto.setStatus(session.getStatus());
+        dto.setTypeOfSession(session.getTypeOfSession());
+        dto.setCreatedDate(session.getCreatedDate());
+
+        if (session.getPatient() != null) {
+            Patient patient = session.getPatient();
+
+            dto.setPatientId(patient.getId());
+            dto.setPatientName(buildFullName(
+                    patient.getNames(),
+                    patient.getFirstLastname(),
+                    patient.getSecondLastname()
+            ));
+        }
+
+        if (session.getSchedule() != null) {
+            SpecialistSchedule schedule = session.getSchedule();
+
+            dto.setScheduleId(schedule.getId());
+
+            if (schedule.getSpecialist() != null) {
+                dto.setSpecialistId(schedule.getSpecialist().getId());
+                dto.setSpecialistName(buildFullName(
+                        schedule.getSpecialist().getNames(),
+                        schedule.getSpecialist().getFirstLastname(),
+                        schedule.getSpecialist().getSecondLastname()
+                ));
+            }
+        }
+
         return dto;
     }
 
-    private String buildPatientFullName(Session session) {
-        if (session.getPatient() == null) return "unknown";
-        String names = session.getPatient().getNames();
-        String last  = session.getPatient().getFirstLastname();
-        if (names == null && last == null) return "unknown";
-        return ((names != null ? names : "") + " " + (last != null ? last : "")).trim();
+    private AppointmentStatusResponseDto buildAppointmentStatusResponse(
+            Session session,
+            String notificationDescription
+    ) {
+        AppointmentStatusResponseDto dto = new AppointmentStatusResponseDto();
+
+        dto.setSessionId(session.getId());
+        dto.setPatientId(session.getPatient().getId());
+        dto.setScheduleId(session.getSchedule().getId());
+        dto.setSpecialistId(session.getSchedule().getSpecialist().getId());
+        dto.setStatus(session.getStatus());
+
+        dto.setScheduleStatus(
+                session.getSchedule().getStatus() != null
+                        ? session.getSchedule().getStatus().intValue()
+                        : null
+        );
+
+        dto.setUpdatedAt(LocalDateTime.now());
+        dto.setNotificationDescription(notificationDescription);
+
+        return dto;
+    }
+
+    private String buildFullName(String names, String firstLastname, String secondLastname) {
+        StringBuilder fullName = new StringBuilder();
+
+        if (names != null && !names.isBlank()) {
+            fullName.append(names.trim());
+        }
+
+        if (firstLastname != null && !firstLastname.isBlank()) {
+            fullName.append(" ").append(firstLastname.trim());
+        }
+
+        if (secondLastname != null && !secondLastname.isBlank()) {
+            fullName.append(" ").append(secondLastname.trim());
+        }
+
+        return fullName.toString().trim();
     }
 }

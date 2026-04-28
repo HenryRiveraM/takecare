@@ -32,6 +32,7 @@ import { PatientDocumentsComponent } from './pages/patient-documents/patient-doc
 
 // OTROS
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { PatientAppointmentsComponent } from './pages/patient-appointments/patient-appointments.component';
 
 export const routes: Routes = [
 
@@ -108,6 +109,10 @@ export const routes: Routes = [
         path: 'documents', 
         component: PatientDocumentsComponent 
       },
+      {
+        path: 'appointments',
+        component: PatientAppointmentsComponent
+      }
     ]
   },
 

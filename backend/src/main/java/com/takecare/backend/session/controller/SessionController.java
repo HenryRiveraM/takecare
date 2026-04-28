@@ -16,7 +16,7 @@ import com.takecare.backend.session.service.SessionService;
 
 import jakarta.validation.Valid;
 
-@RestController
+//@RestController
 @RequestMapping("/api/v1/sessions")
 public class SessionController {
 
