@@ -1,0 +1,548 @@
+/* --- LAYOUT GENERAL --- */
+.appointments-page {
+  display: flex;
+  width: 100%;
+  background-color: #f8faf9;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+}
+
+/* --- MAIN --- */
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* --- TOP BAR --- */
+.top-bar {
+  background: white;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #edf2f1;
+  flex-shrink: 0;
+  min-height: 80px;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.top-bar-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 0.85rem;
+  color: #72a092;
+  margin: 0;
+}
+
+/* --- FILTROS --- */
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 12px;
+  border: 1.5px solid #edf2f1;
+  background: white;
+  color: #6b7280;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  border-color: #72a092;
+  color: #3a5c53;
+}
+
+.filter-btn.active {
+  background: #72a092;
+  color: white;
+  border-color: #72a092;
+}
+
+.badge {
+  background: #F5A3A3;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* --- CONTENIDO --- */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px;
+  background-color: #f8faf9;
+  position: relative;
+}
+
+/* --- LOADING / ERROR --- */
+.status-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  color: #6b7280;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.status-card.error {
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+/* --- TOAST --- */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: white;
+  border-radius: 14px;
+  padding: 16px 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  z-index: 3000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-success {
+  border-left: 4px solid #72a092;
+  color: #1f2937;
+}
+
+.toast-success i {
+  color: #72a092;
+}
+
+.toast-error {
+  border-left: 4px solid #F5A3A3;
+  color: #1f2937;
+}
+
+.toast-error i {
+  color: #F5A3A3;
+}
+
+/* --- EMPTY STATE --- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  border: 1px solid #edf2f1;
+  gap: 12px;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  color: #d1d5db;
+}
+
+.empty-state h3 {
+  color: #1f2937;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.empty-state p {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* --- GRID DE CITAS --- */
+.appointments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+/* --- CARD DE CITA --- */
+.appointment-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  border: 1px solid #edf2f1;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* --- BARRA DE ESTADO --- */
+.card-status-bar {
+  height: 5px;
+  width: 100%;
+}
+
+.status-pending  { background: #f59e0b; }
+.status-accepted { background: #72a092; }
+.status-rejected { background: #F5A3A3; }
+
+/* --- CUERPO DE LA CARD --- */
+.card-body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* --- INFO PACIENTE --- */
+.patient-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.patient-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f8caca, #f5a3a3);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.patient-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.patient-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.patient-email {
+  font-size: 0.82rem;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- BADGE DE ESTADO --- */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.badge-pending  { background: #fef3c7; color: #d97706; }
+.badge-accepted { background: #f0f9f5; color: #72a092; }
+.badge-rejected { background: #fff0f0; color: #F5A3A3; }
+
+/* --- DETALLES DE LA CITA --- */
+.appointment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  background: #f8faf9;
+  border-radius: 14px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+.detail-item i {
+  color: #72a092;
+  width: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* --- ACCIONES DE LA CARD --- */
+.card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-accept,
+.btn-reject {
+  flex: 1;
+  padding: 11px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.btn-accept {
+  background: #72a092;
+  color: white;
+  box-shadow: 0 4px 10px rgba(114, 160, 146, 0.25);
+}
+
+.btn-accept:hover:not(:disabled) {
+  background: #5d8a7a;
+  transform: translateY(-1px);
+}
+
+.btn-reject {
+  background: #fff0f0;
+  color: #F5A3A3;
+  border: 1.5px solid #F5A3A3;
+}
+
+.btn-reject:hover:not(:disabled) {
+  background: #F5A3A3;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.btn-accept:disabled,
+.btn-reject:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  background: #f0f4f3;
+  color: #3a5c53;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  background: #e2ebe7;
+}
+
+/* --- OVERLAY MÓVIL --- */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1500;
+}
+
+/* --- DIÁLOGO DE CONFIRMACIÓN --- */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.confirm-dialog {
+  background: white;
+  border-radius: 24px;
+  padding: 36px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.confirm-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.icon-accept {
+  background: #f0f9f5;
+  color: #72a092;
+}
+
+.icon-reject {
+  background: #fff0f0;
+  color: #F5A3A3;
+}
+
+.confirm-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.confirm-message {
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.confirm-actions .btn-accept,
+.confirm-actions .btn-reject,
+.confirm-actions .btn-secondary {
+  flex: 1;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .appointments-page {
+    height: calc(100vh - 75px);
+    margin-top: 75px;
+    overflow: hidden;
+  }
+
+  .top-bar {
+    padding: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: auto;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  .filter-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .appointments-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .confirm-dialog {
+    padding: 24px;
+  }
+
+  .toast {
+    bottom: 15px;
+    right: 15px;
+    left: 15px;
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1050;
+  }
+}

@@ -1,0 +1,155 @@
+<div class="appointments-page">
+  <app-sidebar></app-sidebar>
+
+  <div class="sidebar-overlay"
+    *ngIf="sidebarService.isOpen()"
+    (click)="sidebarService.close()">
+  </div>
+
+  <div class="main">
+
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <h1 class="page-title">{{ 'appointments.title' | translate }}</h1>
+        <p class="page-subtitle">{{ 'appointments.subtitle' | translate }}</p>
+      </div>
+
+      <div class="filters">
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter === 'pending'"
+          (click)="setFilter('pending')">
+          <i class="fas fa-clock"></i> {{ 'appointments.filters.pending' | translate }}
+          <span class="badge" *ngIf="pendingCount > 0">{{ pendingCount }}</span>
+        </button>
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter === 'accepted'"
+          (click)="setFilter('accepted')">
+          <i class="fas fa-check-circle"></i> {{ 'appointments.filters.accepted' | translate }}
+        </button>
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter === 'rejected'"
+          (click)="setFilter('rejected')">
+          <i class="fas fa-times-circle"></i> {{ 'appointments.filters.rejected' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="status-card" *ngIf="loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        {{ 'appointments.loading' | translate }}
+      </div>
+
+      <div class="status-card error" *ngIf="errorMsg && !loading">
+        <i class="fas fa-exclamation-circle"></i> {{ errorMsg }}
+      </div>
+
+      <div class="toast" [class.show]="showToast" [class.toast-success]="toastType === 'success'" [class.toast-error]="toastType === 'error'">
+        <i [class]="toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+        {{ toastMessage | translate }} 
+      </div>
+
+      <div class="empty-state" *ngIf="!loading && !errorMsg && filteredAppointments.length === 0">
+        <i class="fas fa-calendar-times empty-icon"></i>
+        <h3>{{ 'appointments.empty.title' | translate }}</h3>
+        <p>{{ 'appointments.empty.description' | translate }}</p>
+      </div>
+
+      <div class="appointments-grid" *ngIf="!loading && !errorMsg && filteredAppointments.length > 0">
+
+        <div class="appointment-card" *ngFor="let apt of filteredAppointments">
+
+          <div class="card-status-bar" [class]="'status-' + apt.status"></div>
+
+          <div class="card-body">
+
+            <div class="patient-info">
+              <div class="patient-avatar">
+                {{ getInitials(apt.patientName) }}
+              </div>
+              <div class="patient-details">
+                <h3 class="patient-name">{{ apt.patientName }}</h3>
+                <span class="patient-email">{{ apt.patientEmail }}</span>
+              </div>
+              <span class="status-badge" [class]="'badge-' + apt.status">
+                <i [class]="getStatusIcon(apt.status)"></i>
+                {{ getStatusLabel(apt.status) | translate }}
+              </span>
+            </div>
+
+            <div class="appointment-details">
+              <div class="detail-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>{{ apt.date | date:'EEEE dd/MM/yyyy' }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-clock"></i>
+                <span>{{ apt.time }}</span>
+              </div>
+              <div class="detail-item" *ngIf="apt.reason">
+                <i class="fas fa-comment-medical"></i>
+                <span>{{ apt.reason }}</span>
+              </div>
+            </div>
+
+            <div class="card-actions" *ngIf="apt.status === 'pending'">
+              <button
+                class="btn-reject"
+                (click)="openConfirmDialog(apt, 'reject')"
+                [disabled]="apt.loading">
+                <i class="fas fa-times"></i> {{ 'appointments.actions.reject' | translate }}
+              </button>
+              <button
+                class="btn-accept"
+                (click)="openConfirmDialog(apt, 'accept')"
+                [disabled]="apt.loading">
+                <i class="fas fa-check"></i> {{ 'appointments.actions.accept' | translate }}
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="confirm-overlay" *ngIf="confirmDialog.visible" (click)="closeConfirmDialog()">
+  <div class="confirm-dialog" (click)="$event.stopPropagation()">
+
+    <div class="confirm-icon" [class]="confirmDialog.action === 'accept' ? 'icon-accept' : 'icon-reject'">
+      <i [class]="confirmDialog.action === 'accept' ? 'fas fa-check' : 'fas fa-times'"></i>
+    </div>
+
+    <h3 class="confirm-title">
+      {{ confirmDialog.action === 'accept'
+        ? ('appointments.confirm.acceptTitle' | translate)
+        : ('appointments.confirm.rejectTitle' | translate) }}
+    </h3>
+
+    <p class="confirm-message">
+      {{ confirmDialog.action === 'accept'
+        ? ('appointments.confirm.acceptMessage' | translate)
+        : ('appointments.confirm.rejectMessage' | translate) }}
+      <strong>{{ confirmDialog.appointment?.patientName }}</strong>
+    </p>
+
+    <div class="confirm-actions">
+      <button class="btn-secondary" (click)="closeConfirmDialog()">
+        {{ 'appointments.confirm.cancel' | translate }}
+      </button>
+      <button
+        [class]="confirmDialog.action === 'accept' ? 'btn-accept' : 'btn-reject'"
+        (click)="confirmAction()">
+        {{ confirmDialog.action === 'accept'
+          ? ('appointments.confirm.confirmAccept' | translate)
+          : ('appointments.confirm.confirmReject' | translate) }}
+      </button>
+    </div>
+
+  </div>
+</div>

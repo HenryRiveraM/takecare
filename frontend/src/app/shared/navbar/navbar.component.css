@@ -168,6 +168,48 @@
   gap: 10px;
 }
 
+.notification-bell {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1.5px solid #f3c1c1;
+  background: white;
+  color: #f5a3a3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.notification-bell:hover {
+  background: #fff0f0;
+  transform: translateY(-2px);
+}
+
+.notification-bell .material-symbols-outlined {
+  font-size: 22px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #ef7f7f;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(239, 127, 127, 0.35);
+}
+
 .user-pill {
   display: inline-flex;
   align-items: center;
@@ -271,7 +313,8 @@
     gap: 8px;
   }
 
-  .actions a {
+  .actions a,
+  .actions button {
     padding: 8px 12px;
     font-size: 13px;
     height: auto;
@@ -294,6 +337,11 @@
   .private-navbar {
     justify-content: flex-start; /* Alinea todo a la izquierda para dejar espacio */
     gap: 10px;
+  }
+
+  .notification-bell {
+    width: 38px;
+    height: 38px;
   }
 
   /* Para que el botón de Logout no ocupe tanto espacio */
