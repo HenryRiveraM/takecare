@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +18,8 @@ import com.takecare.backend.specialistschedule.repository.SpecialistScheduleRepo
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.repository.PatientRepository;
 
-@Service
-public class AppointmentService {
-
-    private static final Logger logger = LoggerFactory.getLogger(AppointmentService.class);
+//@Service
+public class SessionService {
 
     private static final Integer SESSION_PENDING = 1;
     private static final Integer SESSION_ACCEPTED = 2;
@@ -42,7 +38,7 @@ public class AppointmentService {
     private final SpecialistScheduleRepository scheduleRepository;
     private final NotificationService notificationService;
 
-    public AppointmentService(
+    public SessionService(
             SessionRepository sessionRepository,
             PatientRepository patientRepository,
             SpecialistScheduleRepository scheduleRepository,
@@ -55,7 +51,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public SessionResponseDTO createAppointment(CreateSessionRequestDTO request) {
+    public SessionResponseDTO createSession(CreateSessionRequestDTO request) {
 
         if (request.getPatientId() == null || request.getScheduleId() == null) {
             throw new RuntimeException("El paciente y el horario son obligatorios");
@@ -74,7 +70,7 @@ public class AppointmentService {
                     throw new RuntimeException("Este horario ya tiene una cita registrada");
                 });
 
-        validateScheduleForAppointment(schedule);
+        validateScheduleForSession(schedule);
 
         Session session = new Session();
         session.setPatient(patient);
@@ -100,9 +96,6 @@ public class AppointmentService {
                 NOTIFICATION_TYPE_NEW_SESSION
         );
 
-        logger.info("Appointment created successfully. sessionId={}, patientId={}, scheduleId={}",
-                savedSession.getId(), patient.getId(), schedule.getId());
-
         return toResponseDto(savedSession);
     }
 
@@ -123,55 +116,11 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentStatusResponseDto cancelAppointment(
-            Integer sessionId,
-            Integer patientId
-    ) {
-        Session session = sessionRepository.findByIdAndPatientId(sessionId, patientId)
-                .orElseThrow(() -> new NoSuchElementException(
-                        "Cita no encontrada o no pertenece al paciente indicado"
-                ));
-
-        if (SESSION_FINISHED.equals(session.getStatus())) {
-            throw new IllegalStateException("No se puede cancelar una cita finalizada");
-        }
-
-        if (SESSION_CANCELLED.equals(session.getStatus())) {
-            throw new IllegalStateException("La cita ya se encuentra cancelada");
-        }
-
-        if (SESSION_REJECTED.equals(session.getStatus())) {
-            throw new IllegalStateException("No se puede cancelar una cita rechazada");
-        }
-
-        SpecialistSchedule schedule = session.getSchedule();
-
-        session.setStatus(SESSION_CANCELLED);
-        schedule.setStatus(SCHEDULE_AVAILABLE);
-
-        Session saved = sessionRepository.save(session);
-        scheduleRepository.save(schedule);
-
-        String notificationDescription = "El paciente canceló la cita";
-
-        notificationService.createForSession(
-                saved,
-                notificationDescription,
-                NOTIFICATION_TYPE_SESSION_RESPONSE
-        );
-
-        return buildAppointmentStatusResponse(saved, notificationDescription);
-    }
-
-    @Transactional
     public AppointmentStatusResponseDto updateAppointmentStatus(
             Integer sessionId,
             Integer specialistId,
             String action
     ) {
-        logger.info("PATCH appointment status. sessionId={}, specialistId={}, action={}",
-                sessionId, specialistId, action);
-
         Session session = sessionRepository.findByIdAndSpecialistId(sessionId, specialistId)
                 .orElseThrow(() -> new NoSuchElementException(
                         "Cita no encontrada o no pertenece al especialista indicado"
@@ -181,6 +130,8 @@ public class AppointmentService {
             throw new IllegalStateException("Solo se pueden aprobar o rechazar citas en estado pendiente");
         }
 
+        SpecialistSchedule schedule = session.getSchedule();
+
         boolean isAccepted = "accept".equalsIgnoreCase(action);
         boolean isRejected = "reject".equalsIgnoreCase(action);
 
@@ -188,7 +139,6 @@ public class AppointmentService {
             throw new RuntimeException("Acción inválida. Use accept o reject");
         }
 
-        SpecialistSchedule schedule = session.getSchedule();
         String notificationDescription;
 
         if (isAccepted) {
@@ -206,17 +156,16 @@ public class AppointmentService {
 
         notificationService.createForSession(
                 saved,
-                notificationDescription,
+                isAccepted
+                        ? "La cita fue aceptada por el especialista"
+                        : "La cita fue rechazada por el especialista",
                 NOTIFICATION_TYPE_SESSION_RESPONSE
         );
-
-        logger.info("Appointment status updated. sessionId={}, newStatus={}, scheduleStatus={}",
-                saved.getId(), saved.getStatus(), schedule.getStatus());
 
         return buildAppointmentStatusResponse(saved, notificationDescription);
     }
 
-    private void validateScheduleForAppointment(SpecialistSchedule schedule) {
+    private void validateScheduleForSession(SpecialistSchedule schedule) {
 
         if (!SCHEDULE_AVAILABLE.equals(schedule.getStatus())) {
             throw new RuntimeException("Este horario no está disponible");
@@ -295,6 +244,7 @@ public class AppointmentService {
         dto.setPatientId(session.getPatient().getId());
         dto.setScheduleId(session.getSchedule().getId());
         dto.setSpecialistId(session.getSchedule().getSpecialist().getId());
+
         dto.setStatus(session.getStatus());
 
         dto.setScheduleStatus(

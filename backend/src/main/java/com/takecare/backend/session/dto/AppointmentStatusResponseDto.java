@@ -13,7 +13,7 @@ public class AppointmentStatusResponseDto {
     private Integer specialistId;
     private Integer patientId;
     private Integer scheduleId;
-    private String status;   
+    private Integer status;   
     private Integer scheduleStatus; 
     private LocalDateTime updatedAt;
     private String notificationDescription;

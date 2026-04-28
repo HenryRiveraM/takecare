@@ -97,9 +97,101 @@
           </div>
         </div>
 
-        <div class="card-footer">
-          {{ 'patientSearch.cardNote' | translate }}
+        <div class="card-footer appointments-footer">
+          <span>{{ 'patientSearch.cardNote' | translate }}</span>
+
+          <button
+            type="button"
+            class="btn-schedule"
+            (click)="openSchedules(specialist)">
+            Ver horarios
+          </button>
         </div>
+
+        <div class="schedule-panel" *ngIf="selectedSpecialistId === specialist.id">
+          <div class="schedule-panel-header">
+            <div>
+              <h3>Horarios disponibles</h3>
+              <p>Selecciona un horario para solicitar una cita.</p>
+            </div>
+
+            <button type="button" class="btn-close-panel" (click)="closeSchedules()">
+              ×
+            </button>
+          </div>
+
+          <div class="status-card compact" *ngIf="loadingSchedules">
+            Cargando horarios...
+          </div>
+
+          <div class="status-card error compact" *ngIf="scheduleErrorMsg">
+            {{ scheduleErrorMsg }}
+          </div>
+
+          <div
+            class="schedule-groups"
+            *ngIf="!loadingSchedules && !scheduleErrorMsg && scheduleGroups.length > 0">
+
+            <div class="schedule-day" *ngFor="let group of scheduleGroups">
+              <h4>{{ getDayName(group.dayOfWeek) }}</h4>
+
+              <div class="schedule-slots">
+                <button
+                  type="button"
+                  class="schedule-slot"
+                  *ngFor="let schedule of group.schedules"
+                  [class.selected]="selectedScheduleId === schedule.id"
+                  [disabled]="schedule.status !== 0"
+                  (click)="selectSchedule(schedule)">
+
+                  <span class="slot-date">
+                    {{ formatDate(schedule.scheduleDate) }}
+                  </span>
+
+                  <span class="slot-time">
+                    {{ formatTime(schedule.startTime) }} - {{ formatTime(schedule.endTime) }}
+                  </span>
+
+                  <small>
+                    {{ schedule.status === 0 ? 'Disponible' : 'No disponible' }}
+                  </small>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="empty-schedules"
+            *ngIf="!loadingSchedules && !scheduleErrorMsg && scheduleGroups.length === 0">
+            No hay horarios disponibles para este especialista.
+          </div>
+
+          <div class="appointment-box" *ngIf="selectedScheduleId">
+            <label>Tipo de sesión</label>
+
+            <select [(ngModel)]="typeOfSession" class="filter-select">
+              <option [ngValue]="1">Virtual</option>
+              <option [ngValue]="2">Presencial</option>
+            </select>
+
+            <button
+              type="button"
+              class="btn-primary"
+              [disabled]="creatingAppointment"
+              (click)="createAppointment()">
+              {{ creatingAppointment ? 'Solicitando...' : 'Solicitar cita' }}
+            </button>
+          </div>
+
+          <div class="success-message" *ngIf="appointmentSuccessMsg">
+            {{ appointmentSuccessMsg }}
+          </div>
+
+          <div class="status-card error compact" *ngIf="appointmentErrorMsg">
+            {{ appointmentErrorMsg }}
+          </div>
+        </div>
+
       </article>
     </div>
 

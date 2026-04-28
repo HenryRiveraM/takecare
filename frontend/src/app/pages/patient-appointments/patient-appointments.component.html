@@ -1,0 +1,113 @@
+<div class="appointments-page">
+  <app-sidebar></app-sidebar>
+
+  <main class="main">
+    <section class="header">
+      <span class="tag">Mis citas</span>
+      <h1>Solicitudes de cita</h1>
+      <p>Revisa el estado de tus citas solicitadas y cancela aquellas que aún correspondan.</p>
+    </section>
+
+    <div class="status-card" *ngIf="loading">
+      Cargando tus citas...
+    </div>
+
+    <div class="status-card error" *ngIf="errorMsg">
+      {{ errorMsg }}
+    </div>
+
+    <div class="success-message" *ngIf="successMsg">
+      {{ successMsg }}
+    </div>
+
+    <section class="appointments-list" *ngIf="!loading && !errorMsg && appointments.length > 0">
+      <article class="appointment-card" *ngFor="let appointment of appointments">
+        <div class="card-header">
+          <div>
+            <h2>{{ appointment.specialistName }}</h2>
+            <p>Cita solicitada por {{ appointment.patientName }}</p>
+          </div>
+
+          <span class="status-badge" [ngClass]="getStatusClass(appointment.status)">
+            {{ getStatusLabel(appointment.status) }}
+          </span>
+        </div>
+
+        <div class="appointment-meta">
+          <div class="meta-item">
+            <span class="material-symbols-outlined">event</span>
+            <span>Solicitud registrada: {{ appointment.createdDate | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+
+          <div class="meta-item">
+            <span class="material-symbols-outlined">schedule</span>
+            <span>Tipo de sesión: {{ appointment.typeOfSession === 1 ? 'Virtual' : 'Presencial' }}</span>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button
+            type="button"
+            class="btn-cancel"
+            *ngIf="canCancel(appointment)"
+            [disabled]="cancellingId === appointment.id"
+            (click)="openCancelConfirm(appointment)">
+            {{ cancellingId === appointment.id ? 'Cancelando...' : 'Cancelar cita' }}
+           </button>
+        </div>
+      </article>
+    </section>
+
+    <section class="empty-state" *ngIf="!loading && !errorMsg && appointments.length === 0">
+      <h2>Aún no tienes citas solicitadas</h2>
+      <p>Cuando solicites una cita con un especialista, aparecerá en esta sección.</p>
+    </section>
+
+    <div class="modal-backdrop" *ngIf="showCancelConfirm">
+        <div class="confirm-card">
+            <div class="confirm-icon">
+            <span class="material-symbols-outlined">event_busy</span>
+            </div>
+
+            <h2>Cancelar cita</h2>
+
+            <p>
+            ¿Estás seguro de que deseas cancelar esta cita?
+            </p>
+
+            <div class="confirm-details" *ngIf="appointmentToCancel">
+            <span>
+                Especialista:
+                <strong>{{ appointmentToCancel.specialistName }}</strong>
+            </span>
+
+            <span>
+                Estado actual:
+                <strong>{{ getStatusLabel(appointmentToCancel.status) }}</strong>
+            </span>
+            </div>
+
+            <div class="confirm-actions">
+            <button
+                type="button"
+                class="btn-keep"
+                (click)="closeCancelConfirm()">
+                No, mantener cita
+            </button>
+
+            <button
+                type="button"
+                class="btn-confirm-cancel"
+                [disabled]="cancellingId === appointmentToCancel?.id"
+                (click)="confirmCancelAppointment()">
+                {{
+                cancellingId === appointmentToCancel?.id
+                    ? 'Cancelando...'
+                    : 'Sí, cancelar'
+                }}
+            </button>
+            </div>
+        </div>
+    </div>
+  </main>
+</div>

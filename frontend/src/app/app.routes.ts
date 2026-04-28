@@ -19,6 +19,7 @@ import { guestGuard } from './guards/guest.guard';
 import { SpecialistDashboardComponent } from './pages/specialist-dashboard/specialist-dashboard.component';
 import { SpecialistProfileComponent } from './pages/specialist-profile/specialist-profile.component';
 import { specialistGuard } from './guards/specialist.guard';
+import { SpecialistScheduleManagementComponent } from './pages/specialist-schedule-management/specialist-schedule-management.component';
 import { SpecialistAppointmentsComponent } from './pages/specialist-appointments/specialist-appointments.component';
 
 // PACIENTE
@@ -31,6 +32,7 @@ import { PatientDocumentsComponent } from './pages/patient-documents/patient-doc
 
 // OTROS
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { PatientAppointmentsComponent } from './pages/patient-appointments/patient-appointments.component';
 
 export const routes: Routes = [
 
@@ -107,6 +109,10 @@ export const routes: Routes = [
         path: 'documents', 
         component: PatientDocumentsComponent 
       },
+      {
+        path: 'appointments',
+        component: PatientAppointmentsComponent
+      }
     ]
   },
 
@@ -119,6 +125,10 @@ export const routes: Routes = [
       {
         path: '',
         component: SpecialistDashboardComponent
+      },
+      {
+        path: 'schedule',
+        component: SpecialistScheduleManagementComponent
       },
       {
         path: 'profile',

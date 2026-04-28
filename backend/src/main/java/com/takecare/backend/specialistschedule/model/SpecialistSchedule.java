@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -21,6 +22,9 @@ public class SpecialistSchedule {
     @JoinColumn(name = "specialist_id", nullable = false)
     private Specialist specialist;
 
+    @Column(name = "schedule_date", nullable = false)
+    private LocalDate scheduleDate;
+
     @Column(name = "day_of_week", nullable = false)
     private Byte dayOfWeek;
 
@@ -31,5 +35,5 @@ public class SpecialistSchedule {
     private LocalTime endTime;
 
     @Column(name = "status")
-    private Byte status = 0;
+    private Byte status = 0; //0 disponible, 1 no disponible
 }
