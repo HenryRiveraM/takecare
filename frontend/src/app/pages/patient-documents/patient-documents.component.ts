@@ -5,13 +5,15 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth.service';
+import { ClinicalDocumentService } from '../../services/clinical-document.service';
 
 const ALLOWED_TYPES = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/jpg'];
 const ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg'];
 const MAX_SIZE_MB = 5;
 
 export interface Document {
-  id: string;
+  id: number;
   name: string;
   size: string;
   type: string;
@@ -33,19 +35,30 @@ export class PatientDocumentsComponent implements OnInit {
 
   selectedFile: File | null = null;
   uploadError = '';
-
-  documents: Document[] = [];
-
-  previewDoc: Document | null = null;
+  documents: any[] = [];
+  previewDoc: any | null = null;
 
   constructor(
     public sidebarService: SidebarService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private docService: ClinicalDocumentService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     //mocks de prueba
     //this.loadMockDocuments();
+    this.loadDocuments();
+  }
+
+  loadDocuments(): void {
+    const user = this.authService.getUser();
+    if (user) {
+      this.docService.getDocuments(user.id).subscribe({
+        next: (data) => this.documents = data,
+        error: (err) => console.error("Error cargando archivos", err)
+      });
+    }
   }
 
   openUploadPanel(): void {
@@ -110,32 +123,47 @@ export class PatientDocumentsComponent implements OnInit {
   }
 
   uploadDocument(): void {
-    if (!this.selectedFile) return;
+    const user = this.authService.getUser();
+    if (!this.selectedFile || !user) return;
 
-    const url = URL.createObjectURL(this.selectedFile);
-    const safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-
-    const newDoc: Document = {
-      id: Date.now().toString(),
-      name: this.selectedFile.name,
-      size: this.formatFileSize(this.selectedFile.size),
-      type: this.selectedFile.type,
-      uploadedAt: new Date(),
-      url: safeUrl
-    };
-
-    this.documents.unshift(newDoc); 
-    this.closeUploadPanel();
-
+    this.docService.uploadDocument(user.id, this.selectedFile).subscribe({
+      next: () => {
+        this.loadDocuments();
+        this.closeUploadPanel();
+        this.selectedFile = null;
+      },
+      error: (err) => this.uploadError = "Error al subir a Railway"
+    });
   }
 
 
   deleteDocument(doc: Document): void {
-    this.documents = this.documents.filter(d => d.id !== doc.id);
+    const user = this.authService.getUser();
+    if (!user) return;
+    if (confirm(`¿Eliminar ${doc.name}?`)) {
+      this.docService.deleteDocument(user.id, doc.id).subscribe(() => {
+        this.loadDocuments();
+      });
+    }
   }
-
+  
   previewDocument(doc: Document): void {
-    this.previewDoc = doc;
+    const user = this.authService.getUser();
+    if (!user || !doc.id) return;
+
+    this.docService.downloadDocument(user.id, doc.id).subscribe({
+      next: (archivoRecibido: Blob) => {
+        const objectUrl = URL.createObjectURL(archivoRecibido);
+
+        this.previewDoc = {
+          ...doc,
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(objectUrl)
+        };
+      },
+      error: (err) => {
+        console.error("No se pudo obtener el archivo del servidor", err);
+      }
+    });
   }
 
   closePreview(): void {
