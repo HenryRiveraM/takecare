@@ -177,7 +177,8 @@
       "appointments": "Mis Citas",
       "searchSpecialist": "Buscar Especialista",
       "history": "Mi Historial",
-      "editProfile": "Editar perfil"
+      "editProfile": "Editar perfil",
+      "documents": "Mis Documentos"
     },
     "searchPlaceholder": "Buscar especialistas...",
     "newAppointment": "Nueva Cita",
@@ -548,7 +549,8 @@
       "schedule": "Agenda",
       "patients": "Pacientes",
       "messages": "Mensajes",
-      "editProfile": "Editar perfil"
+      "editProfile": "Editar perfil",
+      "appointments": "Citas"
     },
     "searchPlaceholder": "Buscar pacientes...",
     "newSession": "Nueva sesión",
@@ -650,12 +652,86 @@
     },
 
     "success": "Perfil actualizado correctamente"
+  },
+
+  "documents": {
+    "title": "Mis Documentos",
+    "subtitle": "Gestiona tus archivos clínicos de forma segura",
+    "uploadBtn": "Subir documento",
+
+    "upload": {
+      "title": "Subir nuevo documento",
+      "description": "Selecciona o arrastra un archivo desde tu dispositivo",
+      "dropZone": "Arrastra tu archivo aquí o haz clic para seleccionar",
+      "formats": "Formatos permitidos: PDF, Word, JPG · Máximo 5MB",
+      "cancel": "Cancelar",
+      "confirm": "Subir documento"
+    },
+
+    "privacy": {
+      "title": "Archivo protegido",
+      "description": "Solo los especialistas con una cita agendada contigo podrán visualizar estos documentos.",
+      "badge": "Solo especialistas con cita"
+    },
+
+    "actions": {
+      "preview": "Previsualizar",
+      "delete": "Eliminar"
+    },
+
+    "preview": {
+      "wordUnsupported": "Los archivos Word no se pueden previsualizar directamente. Puedes descargarlo.",
+      "download": "Descargar archivo"
+    },
+
+    "empty": {
+      "title": "Aún no tienes documentos",
+      "description": "Sube tus archivos clínicos para compartirlos con tus especialistas.",
+      "action": "Subir mi primer documento"
+    }
+  },
+
+  "appointments": {
+    "title": "Panel de Citas",
+    "subtitle": "Gestiona las solicitudes de tus pacientes",
+    "loading": "Cargando citas...",
+
+    "filters": {
+      "pending": "Pendientes",
+      "accepted": "Aceptadas",
+      "rejected": "Rechazadas"
+    },
+
+    "status": {
+      "pending": "Pendiente",
+      "accepted": "Aceptada",
+      "rejected": "Rechazada"
+    },
+
+    "actions": {
+      "accept": "Aceptar",
+      "reject": "Rechazar"
+    },
+
+    "confirm": {
+      "acceptTitle": "¿Aceptar esta cita?",
+      "rejectTitle": "¿Rechazar esta cita?",
+      "acceptMessage": "Confirmas que deseas aceptar la cita de",
+      "rejectMessage": "Confirmas que deseas rechazar la cita de",
+      "cancel": "Cancelar",
+      "confirmAccept": "Sí, aceptar",
+      "confirmReject": "Sí, rechazar"
+    },
+
+    "toast": {
+      "accepted": "✅ Cita aceptada correctamente",
+      "rejected": "❌ Cita rechazada"
+    },
+
+    "empty": {
+      "title": "Sin citas en este estado",
+      "description": "No tienes citas en esta categoría por el momento."
+    }
   }
-
-
-
-
-
-
 
 }

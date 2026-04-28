@@ -14,6 +14,10 @@
         <i class="fas fa-calendar-alt"></i> {{ 'patientDashboard.menu.appointments' | translate }}
       </a>
 
+      <a class="menu-item" routerLink="/patient/documents" routerLinkActive="active"> <!-- 👈 -->
+        <i class="fas fa-file-medical"></i> {{ 'patientDashboard.menu.documents' | translate }}
+      </a>
+      
       <a class="menu-item" routerLink="/patient/profile" routerLinkActive="active">
         <i class="fas fa-user"></i> {{ 'patientDashboard.menu.editProfile' | translate }}
       </a>
@@ -28,6 +32,10 @@
       <i class="fas fa-calendar-alt"></i> {{ 'specialistDashboard.menu.schedule' | translate }}
     </a>
 
+    <a class="menu-item" routerLink="/specialist/appointments" routerLinkActive="active"> <!-- 👈 -->
+      <i class="fas fa-calendar-check"></i> {{ 'specialistDashboard.menu.appointments' | translate }}
+    </a>
+    
     <a class="menu-item" routerLink="/specialist/patients" routerLinkActive="active">
       <i class="fas fa-users"></i> {{ 'specialistDashboard.menu.patients' | translate }}
     </a>

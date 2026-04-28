@@ -176,7 +176,8 @@
       "appointments": "My Appointments",
       "searchSpecialist": "Find Specialist",
       "history": "My History",
-      "editProfile": "Edit profile"
+      "editProfile": "Edit profile",
+      "documents": "My Documents"
     },
     "searchPlaceholder": "Search specialists...",
     "newAppointment": "New Appointment",
@@ -546,7 +547,8 @@
       "schedule": "Schedule",
       "patients": "Patients",
       "messages": "Messages",
-      "editProfile": "Edit profile"
+      "editProfile": "Edit profile",
+      "appointments": "Appointments"
     },
     "searchPlaceholder": "Search patients...",
     "newSession": "New session",
@@ -648,14 +650,85 @@
     },
 
     "success": "Profile updated successfully"
+  },
+
+  "documents": {
+    "title": "My Documents",
+    "subtitle": "Manage your clinical files securely",
+    "uploadBtn": "Upload document",
+
+    "upload": {
+      "title": "Upload new document",
+      "description": "Select or drag a file from your device",
+      "dropZone": "Drag your file here or click to select",
+      "formats": "Allowed formats: PDF, Word, JPG · Maximum 5MB",
+      "cancel": "Cancel",
+      "confirm": "Upload document"
+    },
+
+    "privacy": {
+      "title": "Protected file",
+      "description": "Only specialists with a scheduled appointment with you will be able to view these documents.",
+      "badge": "Only specialists with appointment"
+    },
+
+    "actions": {
+      "preview": "Preview",
+      "delete": "Delete"
+    },
+
+    "preview": {
+      "wordUnsupported": "Word files cannot be previewed directly. You can download it instead.",
+      "download": "Download file"
+    },
+
+    "empty": {
+      "title": "No documents yet",
+      "description": "Upload your clinical files to share them with your specialists.",
+      "action": "Upload my first document"
+    }
+  },
+
+  "appointments": {
+    "title": "Appointments Panel",
+    "subtitle": "Manage your patients' requests",
+    "loading": "Loading appointments...",
+
+    "filters": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+
+    "actions": {
+      "accept": "Accept",
+      "reject": "Reject"
+    },
+
+    "confirm": {
+      "acceptTitle": "Accept this appointment?",
+      "rejectTitle": "Reject this appointment?",
+      "acceptMessage": "You are about to accept the appointment of",
+      "rejectMessage": "You are about to reject the appointment of",
+      "cancel": "Cancel",
+      "confirmAccept": "Yes, accept",
+      "confirmReject": "Yes, reject"
+    },
+
+    "toast": {
+      "accepted": "✅ Appointment accepted successfully",
+      "rejected": "❌ Appointment rejected"
+    },
+
+    "empty": {
+      "title": "No appointments in this status",
+      "description": "You have no appointments in this category at the moment."
+    }
   }
-
-
-
-
-
-
-
-
-
 }
