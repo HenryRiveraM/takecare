@@ -14,5 +14,5 @@ public class PatientProfileDTO {
     private String ciNumber;
     private String email;
     private String clinicalHistory;
-    private Integer accountVerified;
+    private Byte accountVerified;
 }

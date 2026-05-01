@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^6.0.0"
+  }
+}

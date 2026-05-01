@@ -1,54 +1,66 @@
 <div class="login-page">
+  <a routerLink="/" class="back-link">
+    <span class="material-symbols-outlined">arrow_back</span>
+    <span>{{ 'notFound.backHome' | translate }}</span>
+  </a>
+
   <div class="login-card">
     <div class="login-header">
       <div class="icon">
         <span class="material-symbols-outlined">lock</span>
       </div>
 
-      <h1>Tu espacio seguro comienza aquí</h1>
-      <p>Take Care: Tu bienestar mental es nuestra prioridad.</p>
+      <h1>{{ 'login.title' | translate }}</h1>
+      <p>{{ 'login.subtitle' | translate }}</p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label>Email</label>
+        <label>{{ 'login.emailLabel' | translate }}</label>
         <div class="input-icon">
           <span class="material-symbols-outlined">mail</span>
-          <input type="email" formControlName="email" />
+          <input
+            type="email"
+            formControlName="email"
+            [placeholder]="'login.emailPlaceholder' | translate" />
         </div>
         <div
           *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
           class="error"
         >
-          Email inválido
+          {{ 'login.errors.invalidEmail' | translate }}
         </div>
       </div>
 
       <div class="form-group">
-        <label>Contraseña</label>
+        <label>{{ 'login.passwordLabel' | translate }}</label>
         <div class="input-icon">
           <span class="material-symbols-outlined">lock</span>
-          <input type="password" formControlName="password" placeholder="••••••••" />
+          <input
+            type="password"
+            formControlName="password"
+            [placeholder]="'login.passwordPlaceholder' | translate"
+          />
         </div>
         <div
           *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
           class="error"
         >
-          Contraseña requerida (mín. 8 caracteres)
+          {{ 'login.errors.passwordRequired' | translate }}
         </div>
       </div>
 
       <div class="login-options">
         <label>
           <input type="checkbox" />
-          Recordarme
+          {{ 'login.rememberMe' | translate }}
         </label>
 
-        <a routerLink="/recover-password">¿Olvidaste tu contraseña?</a>
+        <a routerLink="/recover-password">{{ 'login.forgotPassword' | translate }}</a>
       </div>
 
       <button type="submit" class="login-btn" [disabled]="loading">
-        <span *ngIf="!loading">Iniciar Sesión</span>
+        <span *ngIf="!loading">{{ 'login.submit' | translate }}</span>
         <span *ngIf="loading" class="loader"></span>
       </button>
 
@@ -57,13 +69,13 @@
       </p>
 
       <p *ngIf="loginSuccess" class="success">
-        ✔ Inicio de sesión exitoso
+        ✔ {{ 'login.success' | translate }}
       </p>
     </form>
 
     <div class="secure">
       <span class="material-symbols-outlined">verified_user</span>
-      <p>Conexión segura</p>
+      <p>{{ 'login.secure' | translate }}</p>
     </div>
   </div>
 </div>

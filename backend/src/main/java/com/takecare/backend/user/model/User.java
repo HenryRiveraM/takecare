@@ -54,14 +54,14 @@ public class User {
     private LocalDateTime lastUpdate;
 
     @Column(columnDefinition = "tinyint")
-    private Integer role;
+    private Byte role;
 
     @Column(columnDefinition = "tinyint")
-    private Integer strikes;
+    private Byte strikes;
 
     @Column(columnDefinition = "tinyint")
-    private Integer status;
+    private Byte status;
 
     @Column(name = "account_verified", columnDefinition = "tinyint default 2")
-    private Integer accountVerified;
+    private Byte accountVerified = 0;
 }

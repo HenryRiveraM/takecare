@@ -60,3 +60,19 @@
 body{
     font-family: 'Manrope', sans-serif;
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+app-root {
+  display: block;
+  height: 100%;
+}
+
+body.dashboard-active {
+  overflow: hidden;
+}

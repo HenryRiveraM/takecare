@@ -1,0 +1,53 @@
+<aside class="sidebar" [class.open]="sidebarService.isOpen()">
+  <nav class="menu">
+
+    <ng-container *ngIf="role === 'patient'">
+      <a class="menu-item" routerLink="/patient" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-home"></i> {{ 'patientDashboard.menu.panel' | translate }}
+      </a>
+
+      <a class="menu-item" routerLink="/patient/search-specialists" routerLinkActive="active">
+        <i class="fas fa-search"></i> {{ 'patientDashboard.menu.searchSpecialist' | translate }}
+      </a>
+
+      <a class="menu-item" routerLink="/patient/appointments" routerLinkActive="active">
+        <i class="fas fa-calendar-alt"></i> {{ 'patientDashboard.menu.appointments' | translate }}
+      </a>
+
+      <a class="menu-item" routerLink="/patient/documents" routerLinkActive="active"> <!-- 👈 -->
+        <i class="fas fa-file-medical"></i> {{ 'patientDashboard.menu.documents' | translate }}
+      </a>
+      
+      <a class="menu-item" routerLink="/patient/profile" routerLinkActive="active">
+        <i class="fas fa-user"></i> {{ 'patientDashboard.menu.editProfile' | translate }}
+      </a>
+    </ng-container>
+
+    <ng-container *ngIf="role === 'specialist'">
+    <a class="menu-item" routerLink="/specialist" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <i class="fas fa-home"></i> {{ 'specialistDashboard.menu.dashboard' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/specialist/schedule" routerLinkActive="active">
+      <i class="fas fa-calendar-alt"></i> {{ 'specialistDashboard.menu.schedule' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/specialist/appointments" routerLinkActive="active"> <!-- 👈 -->
+      <i class="fas fa-calendar-check"></i> {{ 'specialistDashboard.menu.appointments' | translate }}
+    </a>
+    
+    <a class="menu-item" routerLink="/specialist/patients" routerLinkActive="active">
+      <i class="fas fa-users"></i> {{ 'specialistDashboard.menu.patients' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/specialist/messages" routerLinkActive="active">
+      <i class="fas fa-envelope"></i> {{ 'specialistDashboard.menu.messages' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/specialist/profile" routerLinkActive="active">
+      <i class="fas fa-user"></i> {{ 'specialistDashboard.menu.editProfile' | translate }}
+    </a>
+  </ng-container>
+
+  </nav>
+</aside>

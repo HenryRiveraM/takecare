@@ -1,0 +1,156 @@
+<div class="documents-page">
+  <app-sidebar></app-sidebar>
+
+  <div class="sidebar-overlay"
+    *ngIf="sidebarService.isOpen()"
+    (click)="sidebarService.close()">
+  </div>
+
+  <div class="main">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <h1 class="page-title">{{ 'documents.title' | translate }}</h1>
+        <p class="page-subtitle">{{ 'documents.subtitle' | translate }}</p>
+      </div>
+      <button class="btn-upload" (click)="openUploadPanel()">
+        <i class="fas fa-plus"></i> {{ 'documents.uploadBtn' | translate }}
+      </button>
+    </div>
+
+    <div class="content">
+      <div class="upload-panel" *ngIf="showUploadPanel">
+
+        <div class="upload-card">
+          <h2><i class="fas fa-cloud-upload-alt"></i> {{ 'documents.upload.title' | translate }}</h2>
+          <p class="upload-desc">{{ 'documents.upload.description' | translate }}</p>
+          <div
+            class="drop-zone"
+            [class.drag-over]="isDragging"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave()"
+            (drop)="onDrop($event)"
+            (click)="fileInput.click()">
+            <i class="fas fa-file-upload drop-icon"></i>
+            <p>{{ 'documents.upload.dropZone' | translate }}</p>
+            <span class="drop-hint">{{ 'documents.upload.formats' | translate }}</span>
+            <input
+              #fileInput
+              type="file"
+              hidden
+              accept=".pdf,.doc,.docx,.jpg,.jpeg"
+              (change)="onFileSelected($event)"/>
+          </div>
+
+          <div class="selected-file" *ngIf="selectedFile">
+            <div class="file-preview">
+              <i [class]="getFileIcon(selectedFile.name)"></i>
+              <div class="file-info">
+                <span class="file-name">{{ selectedFile.name }}</span>
+                <span class="file-size">{{ formatFileSize(selectedFile.size) }}</span>
+              </div>
+              <button class="btn-remove-file" (click)="clearSelectedFile()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="upload-error" *ngIf="uploadError">
+            <i class="fas fa-exclamation-circle"></i> {{ uploadError }}
+          </div>
+
+          <div class="privacy-notice">
+            <div class="privacy-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="privacy-text">
+              <strong>{{ 'documents.privacy.title' | translate }}</strong>
+              <p>{{ 'documents.privacy.description' | translate }}</p>
+            </div>
+          </div>
+
+          <div class="upload-actions">
+            <button class="btn-secondary" (click)="closeUploadPanel()">
+              {{ 'documents.upload.cancel' | translate }}
+            </button>
+            <button
+              class="btn-primary"
+              [disabled]="!selectedFile || !!uploadError"
+              (click)="uploadDocument()">
+              <i class="fas fa-upload"></i> {{ 'documents.upload.confirm' | translate }}
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="documents-section">
+
+        <div class="empty-state" *ngIf="documents.length === 0 && !showUploadPanel">
+          <i class="fas fa-folder-open empty-icon"></i>
+          <h3>{{ 'documents.empty.title' | translate }}</h3>
+          <p>{{ 'documents.empty.description' | translate }}</p>
+          <button class="btn-primary" (click)="openUploadPanel()">
+            <i class="fas fa-plus"></i> {{ 'documents.empty.action' | translate }}
+          </button>
+        </div>
+
+
+        <div class="documents-grid" *ngIf="documents.length > 0">
+
+          <div class="doc-card" *ngFor="let doc of documents">
+
+            <div class="doc-icon-wrap">
+              <i [class]="getFileIcon(doc.name)"></i>
+            </div>
+
+            <div class="doc-info">
+              <span class="doc-name">{{ doc.name }}</span>
+              <span class="doc-meta">{{ doc.size }} · {{ doc.uploadedAt | date:'dd/MM/yyyy' }}</span>
+            </div>
+
+            <div class="doc-badge">
+              <i class="fas fa-lock"></i>
+              {{ 'documents.privacy.badge' | translate }}
+            </div>
+
+            <div class="doc-actions">
+              <button class="btn-icon btn-preview" (click)="previewDocument(doc)" [title]="'documents.actions.preview' | translate">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn-icon btn-delete" (click)="deleteDocument(doc)" [title]="'documents.actions.delete' | translate">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="preview-modal" *ngIf="previewDoc" (click)="closePreview()">
+  <div class="preview-content" (click)="$event.stopPropagation()">
+    <div class="preview-header">
+      <span class="preview-title">{{ previewDoc.name }}</span>
+      <button class="btn-close-preview" (click)="closePreview()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="preview-body">
+      <img *ngIf="isImage(previewDoc.name)" [src]="previewDoc.url" [alt]="previewDoc.name" class="preview-img"/>
+      <iframe *ngIf="isPdf(previewDoc.name)" [src]="previewDoc.url" class="preview-iframe"></iframe>
+      <div *ngIf="isWord(previewDoc.name)" class="preview-unsupported">
+        <i class="fas fa-file-word"></i>
+        <p>{{ 'documents.preview.wordUnsupported' | translate }}</p>
+        <a [href]="previewDoc.url" download class="btn-primary">
+          <i class="fas fa-download"></i> {{ 'documents.preview.download' | translate }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

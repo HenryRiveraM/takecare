@@ -13,17 +13,26 @@ import { RegisterSpecialistComponent } from './pages/register-specialist/registe
 // ADMIN
 import { AdminComponent } from './pages/admin/admin.component';
 import { adminGuard } from './guards/admin.guard';
+import { guestGuard } from './guards/guest.guard';
 
 // ESPECIALISTA
 import { SpecialistDashboardComponent } from './pages/specialist-dashboard/specialist-dashboard.component';
 import { SpecialistProfileComponent } from './pages/specialist-profile/specialist-profile.component';
+import { specialistGuard } from './guards/specialist.guard';
+import { SpecialistScheduleManagementComponent } from './pages/specialist-schedule-management/specialist-schedule-management.component';
+import { SpecialistAppointmentsComponent } from './pages/specialist-appointments/specialist-appointments.component';
 
 // PACIENTE
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
 import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
+import { patientGuard } from './guards/patient.guard';
+import { PatientSearchSpecialistsComponent } from './pages/patient-search-specialists/patient-search-specialists.component';
+import { PatientDocumentsComponent } from './pages/patient-documents/patient-documents.component';
+
 
 // OTROS
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { PatientAppointmentsComponent } from './pages/patient-appointments/patient-appointments.component';
 
 export const routes: Routes = [
 
@@ -38,11 +47,13 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: false }
   },
   {
     path: 'recover-password',
     component: RecoverPasswordComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: false }
   },
 
@@ -50,16 +61,19 @@ export const routes: Routes = [
   {
     path: 'register-role',
     component: RegisterRoleComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: true }
   },
   {
     path: 'register/patient',
     component: RegisterPatientComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: true }
   },
   {
     path: 'register/specialist',
     component: RegisterSpecialistComponent,
+    canActivate: [guestGuard],
     data: { showNavbar: true }
   },
 
@@ -69,13 +83,14 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    //canActivate: [adminGuard], // comentar 
+    canActivate: [adminGuard],
     data: { showNavbar: true }
   },
 
   // PACIENTE (Tu nueva ruta)
   {
     path: 'patient',
+    //canActivate: [patientGuard],
     data: { showNavbar: false },
     children: [
       {
@@ -85,6 +100,18 @@ export const routes: Routes = [
       {
         path: 'profile',
         component: PatientProfileComponent
+      },
+      {
+        path: 'search-specialists',
+        component: PatientSearchSpecialistsComponent
+      },
+      { 
+        path: 'documents', 
+        component: PatientDocumentsComponent 
+      },
+      {
+        path: 'appointments',
+        component: PatientAppointmentsComponent
       }
     ]
   },
@@ -92,6 +119,7 @@ export const routes: Routes = [
   // ESPECIALISTA 
   {
     path: 'specialist',
+    //canActivate: [specialistGuard],
     data: { showNavbar: false },
     children: [
       {
@@ -99,9 +127,17 @@ export const routes: Routes = [
         component: SpecialistDashboardComponent
       },
       {
+        path: 'schedule',
+        component: SpecialistScheduleManagementComponent
+      },
+      {
         path: 'profile',
         component: SpecialistProfileComponent
-      }
+      },
+      { 
+        path: 'appointments', 
+        component: SpecialistAppointmentsComponent 
+      },
     ]
   },
 

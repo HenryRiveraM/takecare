@@ -9,11 +9,13 @@ on:
       - release
     paths:
       - 'backend/**'
+      - 'frontend/**'
       - '.github/workflows/build.yml'
   pull_request:
     branches: [ main, develop, release ]
     paths:
       - 'backend/**'
+      - 'frontend/**'
       - '.github/workflows/build.yml'
 
 jobs:
@@ -48,4 +50,37 @@ jobs:
       if: failure()
       run: |
         echo "Build compilation failed! Please fix the errors before pushing."
-        exit 1    
+        exit 1
+
+  frontend-build:
+    runs-on: ubuntu-latest
+    name: Compile Frontend
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install frontend dependencies
+      working-directory: ./frontend
+      run: npm ci
+
+    - name: Build frontend
+      working-directory: ./frontend
+      run: npm run build
+
+    - name: ✅ Frontend build successful
+      if: success()
+      run: echo "Frontend compiled successfully!"
+
+    - name: ❌ Frontend build failed
+      if: failure()
+      run: |
+        echo "Frontend compilation failed! Please fix the errors before pushing."
+        exit 1

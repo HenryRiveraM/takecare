@@ -1,26 +1,90 @@
-<header *ngIf="showNavbar" class="navbar">
-
-<div class="logo" routerLink="/">
+<header *ngIf="navbarMode === 'public'" class="navbar">
+  <div class="logo" routerLink="/">
     <img src="assets/images/logo.png" alt="Take Care" />
-</div>
+  </div>
 
-<nav class="links">
-    <a routerLink="/">Inicio</a>
-    <a routerLink="/">Nosotros</a>
-</nav>
+  <nav class="links">
+    <a routerLink="/">{{ 'navbar.home' | translate }}</a>
+    <a routerLink="/">{{ 'navbar.about' | translate }}</a>
+  </nav>
 
-<div class="actions">
+  <div class="actions">
+    <select
+      class="lang-select"
+      [value]="languageService.getCurrentLanguage()"
+      (change)="changeLanguage($event)">
+      <option value="es">ES</option>
+      <option value="en">EN</option>
+    </select>
 
-    <!-- BOTÓN SECUNDARIO -->
     <a routerLink="/login" class="btn-outline">
-        Iniciar sesión
+      {{ 'navbar.login' | translate }}
     </a>
 
-    <!-- BOTÓN PRINCIPAL -->
     <a routerLink="/register-role" class="btn-primary">
-        Registrarse
+      {{ 'navbar.register' | translate }}
     </a>
-
-</div>
-
+  </div>
 </header>
+
+<header *ngIf="navbarMode === 'private'" class="navbar private-navbar">
+
+  <button class="menu-toggle" (click)="toggleSidebar()" *ngIf="isDashboard">
+    <span class="material-symbols-outlined">
+      {{ sidebarService.isOpen() ? 'close' : 'menu' }}
+    </span>
+  </button>
+  
+  <div class="logo" routerLink="/">
+    <img src="assets/images/logo.png" alt="Take Care" />
+    <div class="brand-copy">
+      <span *ngIf="!isDashboard">{{ ('navbar.private.' + privateArea + '.label') | translate }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="isDashboard" style="flex: 1;"></div>
+
+  <nav class="links private-links" *ngIf="privateArea === 'patient' && !isDashboard">
+    <a routerLink="/patient" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      {{ 'navbar.private.patient.dashboard' | translate }}
+    </a>
+    <a routerLink="/patient/profile" routerLinkActive="active-link">
+      {{ 'navbar.private.patient.profile' | translate }}
+    </a>
+  </nav>
+
+  <div class="actions private-actions">
+    <select class="lang-select" [value]="languageService.getCurrentLanguage()" (change)="changeLanguage($event)">
+      <option value="es">ES</option>
+      <option value="en">EN</option>
+    </select>
+
+    <button
+      *ngIf="privateArea === 'specialist'"
+      type="button"
+      class="notification-bell"
+      (click)="toggleNotifications()"
+      [attr.aria-label]="'specialistNotifications.open' | translate">
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="notification-badge" *ngIf="specialistNotificationCount > 0">
+        {{ specialistNotificationCount > 99 ? '99+' : specialistNotificationCount }}
+      </span>
+    </button>
+
+    <div class="user-pill" *ngIf="user">
+      <span class="material-symbols-outlined">account_circle</span>
+      <span>{{ user.names }}</span>
+    </div>
+
+    <button type="button" class="btn-outline private-logout" (click)="logout()">
+      {{ 'navbar.private.common.logout' | translate }}
+    </button>
+  </div>
+</header>
+
+<app-specialist-notifications-sidebar
+  *ngIf="privateArea === 'specialist'"
+  [specialistId]="user?.id ?? null"
+  [isOpen]="notificationsOpen"
+  (closePanel)="closeNotifications()">
+</app-specialist-notifications-sidebar>
