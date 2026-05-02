@@ -729,6 +729,59 @@
     "empty": {
       "title": "No appointments in this status",
       "description": "You have no appointments in this category at the moment."
+    },
+
+    "rating": {
+      "title": "Rate the user",
+      "subtitle": "Share your professional experience after the session with",
+      "placeholder": "Write a short comment about the user's punctuality, attitude, or collaboration...",
+      "labels": {
+        "saved": "Rating saved",
+        "scorePrefix": "Score"
+      },
+      "actions": {
+        "create": "Rate user",
+        "edit": "Edit rating",
+        "save": "Save rating",
+        "saving": "Saving..."
+      },
+      "errors": {
+        "starsRequired": "Select a star rating.",
+        "commentRequired": "Write a comment with at least 5 characters."
+      },
+      "toast": {
+        "saved": "⭐ Rating saved successfully"
+      }
+    },
+
+    "report": {
+      "title": "Report user",
+      "subtitle": "Describe the inappropriate attitude or behavior observed during the session with",
+      "reasonPlaceholder": "Select a report reason",
+      "placeholder": "Briefly explain what happened so there is a record of the report...",
+      "labels": {
+        "saved": "Report saved"
+      },
+      "actions": {
+        "create": "Report user",
+        "edit": "Edit report",
+        "save": "Save report",
+        "saving": "Saving..."
+      },
+      "errors": {
+        "reasonRequired": "Select a reason for the report.",
+        "detailsRequired": "Write a description with at least 10 characters."
+      },
+      "reasons": {
+        "disrespect": "Disrespect",
+        "aggression": "Aggressive attitude",
+        "absence": "Unjustified absence",
+        "inappropriateLanguage": "Inappropriate language",
+        "other": "Other"
+      },
+      "toast": {
+        "saved": "🚩 Report saved successfully"
+      }
     }
   }
 }
