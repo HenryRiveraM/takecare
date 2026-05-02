@@ -10,6 +10,7 @@ import { SpecialistScheduleGroup, SpecialistScheduleResponse } from '../../model
 import { SpecialistScheduleService } from '../../services/specialist-schedule.service';
 import { AppointmentService } from '../../services/appointment.service';
 import { AuthService } from '../../services/auth.service';
+import { SupportMaterialItem, SupportMaterialService } from '../../services/support-material.service';
 
 
 @Component({
@@ -40,6 +41,8 @@ export class PatientSearchSpecialistsComponent implements OnInit {
   scheduleErrorMsg = '';
   appointmentSuccessMsg = '';
   appointmentErrorMsg = '';
+  selectedMaterialsSpecialistId: number | null = null;
+  visibleMaterials: SupportMaterialItem[] = [];
 
   specialists: SpecialistDirectoryItem[] = [];
   filteredSpecialists: SpecialistDirectoryItem[] = [];
@@ -61,7 +64,8 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     private translateService: TranslateService,
     private specialistScheduleService: SpecialistScheduleService,
     private appointmentService: AppointmentService,
-    private authService: AuthService
+    private authService: AuthService,
+    private supportMaterialService: SupportMaterialService
   ) {}
 
   private getCurrentPatientId(): number | null {
@@ -123,6 +127,17 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     this.scheduleErrorMsg = '';
     this.appointmentSuccessMsg = '';
     this.appointmentErrorMsg = '';
+  }
+
+  toggleMaterials(specialist: SpecialistDirectoryItem): void {
+    if (this.selectedMaterialsSpecialistId === specialist.id) {
+      this.selectedMaterialsSpecialistId = null;
+      this.visibleMaterials = [];
+      return;
+    }
+
+    this.selectedMaterialsSpecialistId = specialist.id;
+    this.visibleMaterials = this.supportMaterialService.getBySpecialistId(specialist.id);
   }
 
   loadSchedulesBySpecialist(specialistId: number): void {

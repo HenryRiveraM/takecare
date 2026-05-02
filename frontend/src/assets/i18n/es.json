@@ -240,6 +240,7 @@
     "searchButton": "Buscar",
     "resetTitle": "Limpiar filtros",
     "viewAllButton": "Ver todos los especialistas",
+    "scheduleButton": "Ver horarios",
     "results": "especialistas encontrados",
     "costPrefix": "Costo por sesión:",
     "cardNote": "Muy pronto podrás revisar más detalles y agendar una cita desde aquí.",
@@ -270,6 +271,29 @@
       "friday": "Viernes",
       "saturday": "Sábado",
       "sunday": "Domingo"
+    },
+    "materials": {
+      "title": "Material de ayuda",
+      "subtitle": "Documentos publicados por este especialista para la comunidad.",
+      "showButton": "Ver material",
+      "hideButton": "Ocultar material",
+      "openDocument": "Abrir documento",
+      "empty": "Este especialista aún no publicó material de apoyo."
+    },
+    "schedules": {
+      "title": "Horarios disponibles",
+      "subtitle": "Selecciona un horario para solicitar una cita.",
+      "loading": "Cargando horarios...",
+      "available": "Disponible",
+      "unavailable": "No disponible",
+      "empty": "No hay horarios disponibles para este especialista."
+    },
+    "appointment": {
+      "sessionType": "Tipo de sesión",
+      "virtual": "Virtual",
+      "presential": "Presencial",
+      "requesting": "Solicitando...",
+      "requestButton": "Solicitar cita"
     }
   },
 
@@ -638,6 +662,35 @@
       },
       "note": "Tu dirección profesional se guardará junto con esta configuración para que puedas gestionar mejor tu atención presencial.",
       "visibilityStatus": "Si eliges ubicación pública, los pacientes podrán verla. Si eliges privada, la mantendremos reservada."
+    },
+
+    "materials": {
+      "tag": "Apoyo a la comunidad",
+      "title": "Material publicado",
+      "subtitle": "Comparte documentos, guías o recursos útiles para que los usuarios puedan consultarlos.",
+      "fields": {
+        "title": "Título del documento",
+        "description": "Descripción breve",
+        "fileUrl": "Enlace del documento"
+      },
+      "placeholders": {
+        "title": "Ej: Guía de respiración consciente",
+        "description": "Explica de qué trata el material y para quién puede ser útil.",
+        "fileUrl": "Ej: https://.../documento.pdf"
+      },
+      "add": "Agregar material",
+      "save": "Guardar material",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "viewDocument": "Ver documento",
+      "empty": "Todavía no publicaste material de ayuda.",
+      "success": "Material guardado correctamente.",
+      "deleted": "Material eliminado correctamente.",
+      "validation": {
+        "titleRequired": "Ingresa un título para el material.",
+        "descriptionRequired": "Ingresa una descripción para el material.",
+        "fileUrlRequired": "Ingresa un enlace para el documento."
+      }
     },
 
     "validation": {

@@ -239,6 +239,7 @@
     "searchButton": "Search",
     "resetTitle": "Clear filters",
     "viewAllButton": "View all specialists",
+    "scheduleButton": "View schedules",
     "results": "specialists found",
     "costPrefix": "Session cost:",
     "cardNote": "Soon you will be able to review more details and request an appointment from here.",
@@ -269,6 +270,29 @@
       "friday": "Friday",
       "saturday": "Saturday",
       "sunday": "Sunday"
+    },
+    "materials": {
+      "title": "Support material",
+      "subtitle": "Documents published by this specialist for the community.",
+      "showButton": "View material",
+      "hideButton": "Hide material",
+      "openDocument": "Open document",
+      "empty": "This specialist has not published support material yet."
+    },
+    "schedules": {
+      "title": "Available schedules",
+      "subtitle": "Select a time slot to request an appointment.",
+      "loading": "Loading schedules...",
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "empty": "There are no available schedules for this specialist."
+    },
+    "appointment": {
+      "sessionType": "Session type",
+      "virtual": "Virtual",
+      "presential": "In person",
+      "requesting": "Requesting...",
+      "requestButton": "Request appointment"
     }
   },
 
@@ -636,6 +660,35 @@
       },
       "note": "Your professional address will be saved together with this setting so you can better manage in-person care.",
       "visibilityStatus": "If you choose public location, patients will be able to see it. If you choose private, we will keep it reserved."
+    },
+
+    "materials": {
+      "tag": "Community support",
+      "title": "Published material",
+      "subtitle": "Share documents, guides, or useful resources so users can consult them.",
+      "fields": {
+        "title": "Document title",
+        "description": "Short description",
+        "fileUrl": "Document link"
+      },
+      "placeholders": {
+        "title": "Ex: Conscious breathing guide",
+        "description": "Explain what the material is about and who it may help.",
+        "fileUrl": "Ex: https://.../document.pdf"
+      },
+      "add": "Add material",
+      "save": "Save material",
+      "edit": "Edit",
+      "delete": "Delete",
+      "viewDocument": "View document",
+      "empty": "You have not published support material yet.",
+      "success": "Material saved successfully.",
+      "deleted": "Material deleted successfully.",
+      "validation": {
+        "titleRequired": "Enter a title for the material.",
+        "descriptionRequired": "Enter a description for the material.",
+        "fileUrlRequired": "Enter a link for the document."
+      }
     },
 
     "validation": {

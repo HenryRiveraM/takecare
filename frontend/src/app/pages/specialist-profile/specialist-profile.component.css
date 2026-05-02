@@ -338,6 +338,85 @@ textarea:focus {
   font-weight: 500;
 }
 
+.materials-card {
+  gap: 18px;
+}
+
+.materials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.material-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px;
+  border-radius: 18px;
+  background: #fffafa;
+  border: 1px solid #f5e2e2;
+}
+
+.material-copy h3 {
+  margin: 0 0 8px;
+  color: #24313f;
+  font-size: 1rem;
+}
+
+.material-copy p {
+  margin: 0 0 10px;
+  color: #6b7280;
+  line-height: 1.55;
+}
+
+.material-link {
+  color: #f08f8f;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.material-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 150px;
+}
+
+.btn-small {
+  padding: 10px 14px;
+}
+
+.btn-danger-outline {
+  border: 1.5px solid #ef9d9d;
+  background: #fff4f4;
+  color: #d56d6d;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-danger-outline:hover {
+  background: #ffeaea;
+}
+
+.empty-materials {
+  padding: 18px;
+  border-radius: 16px;
+  background: #fffdfd;
+  border: 1px dashed #efc6c6;
+  color: #7b808a;
+}
+
+.material-editor {
+  padding-top: 8px;
+}
+
+.inline-actions {
+  justify-content: flex-start;
+}
+
 /* --- OVERLAY MÓVIL --- */
 .sidebar-overlay {
   position: fixed;
@@ -411,6 +490,15 @@ textarea:focus {
   .btn-primary,
   .btn-secondary {
     width: 100%;
+  }
+
+  .material-item {
+    flex-direction: column;
+  }
+
+  .material-actions {
+    flex-direction: row;
+    min-width: 0;
   }
 
   .sidebar-overlay {
