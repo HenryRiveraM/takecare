@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CancelAppointmentRequestDTO {
+public class CancelSessionRequestDTO {
 
     @NotNull(message = "patientId es obligatorio")
     private Integer patientId;

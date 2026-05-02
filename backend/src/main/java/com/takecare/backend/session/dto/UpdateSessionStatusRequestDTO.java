@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UpdateAppointmentStatusRequestDto {
+public class UpdateSessionStatusRequestDTO {
 
     @NotNull(message = "specialistId es obligatorio")
     private Integer specialistId;

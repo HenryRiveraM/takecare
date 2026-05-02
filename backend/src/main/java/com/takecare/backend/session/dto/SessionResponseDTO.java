@@ -1,6 +1,8 @@
 package com.takecare.backend.session.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,4 +22,8 @@ public class SessionResponseDTO {
 
     private String patientName;
     private String specialistName;
+
+    private LocalDate scheduleDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
 }

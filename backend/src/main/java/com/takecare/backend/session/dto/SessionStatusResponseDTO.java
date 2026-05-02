@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AppointmentStatusResponseDto {
+public class SessionStatusResponseDTO {
 
     private Integer sessionId;
     private Integer specialistId;
