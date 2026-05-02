@@ -100,19 +100,60 @@
         <div class="card-footer appointments-footer">
           <span>{{ 'patientSearch.cardNote' | translate }}</span>
 
-          <button
-            type="button"
-            class="btn-schedule"
-            (click)="openSchedules(specialist)">
-            Ver horarios
-          </button>
+          <div class="card-footer-actions">
+            <button
+              type="button"
+              class="btn-material"
+              (click)="toggleMaterials(specialist)">
+              {{
+                selectedMaterialsSpecialistId === specialist.id
+                  ? ('patientSearch.materials.hideButton' | translate)
+                  : ('patientSearch.materials.showButton' | translate)
+              }}
+            </button>
+
+            <button
+              type="button"
+              class="btn-schedule"
+              (click)="openSchedules(specialist)">
+              {{ 'patientSearch.scheduleButton' | translate }}
+            </button>
+          </div>
+        </div>
+
+        <div class="materials-panel" *ngIf="selectedMaterialsSpecialistId === specialist.id">
+          <div class="schedule-panel-header">
+            <div>
+              <h3>{{ 'patientSearch.materials.title' | translate }}</h3>
+              <p>{{ 'patientSearch.materials.subtitle' | translate }}</p>
+            </div>
+          </div>
+
+          <div class="empty-schedules" *ngIf="visibleMaterials.length === 0">
+            {{ 'patientSearch.materials.empty' | translate }}
+          </div>
+
+          <div class="materials-grid" *ngIf="visibleMaterials.length > 0">
+            <article class="material-card" *ngFor="let material of visibleMaterials">
+              <h4>{{ material.title }}</h4>
+              <p>{{ material.description }}</p>
+
+              <a
+                class="btn-outline material-open-link"
+                [href]="material.fileUrl"
+                target="_blank"
+                rel="noopener noreferrer">
+                {{ 'patientSearch.materials.openDocument' | translate }}
+              </a>
+            </article>
+          </div>
         </div>
 
         <div class="schedule-panel" *ngIf="selectedSpecialistId === specialist.id">
           <div class="schedule-panel-header">
             <div>
-              <h3>Horarios disponibles</h3>
-              <p>Selecciona un horario para solicitar una cita.</p>
+              <h3>{{ 'patientSearch.schedules.title' | translate }}</h3>
+              <p>{{ 'patientSearch.schedules.subtitle' | translate }}</p>
             </div>
 
             <button type="button" class="btn-close-panel" (click)="closeSchedules()">
@@ -121,7 +162,7 @@
           </div>
 
           <div class="status-card compact" *ngIf="loadingSchedules">
-            Cargando horarios...
+            {{ 'patientSearch.schedules.loading' | translate }}
           </div>
 
           <div class="status-card error compact" *ngIf="scheduleErrorMsg">
@@ -153,7 +194,11 @@
                   </span>
 
                   <small>
-                    {{ schedule.status === 0 ? 'Disponible' : 'No disponible' }}
+                    {{
+                      schedule.status === 0
+                        ? ('patientSearch.schedules.available' | translate)
+                        : ('patientSearch.schedules.unavailable' | translate)
+                    }}
                   </small>
                 </button>
               </div>
@@ -163,15 +208,15 @@
           <div
             class="empty-schedules"
             *ngIf="!loadingSchedules && !scheduleErrorMsg && scheduleGroups.length === 0">
-            No hay horarios disponibles para este especialista.
+            {{ 'patientSearch.schedules.empty' | translate }}
           </div>
 
           <div class="appointment-box" *ngIf="selectedScheduleId">
-            <label>Tipo de sesión</label>
+            <label>{{ 'patientSearch.appointment.sessionType' | translate }}</label>
 
             <select [(ngModel)]="typeOfSession" class="filter-select">
-              <option [ngValue]="1">Virtual</option>
-              <option [ngValue]="2">Presencial</option>
+              <option [ngValue]="1">{{ 'patientSearch.appointment.virtual' | translate }}</option>
+              <option [ngValue]="2">{{ 'patientSearch.appointment.presential' | translate }}</option>
             </select>
 
             <button
@@ -179,7 +224,11 @@
               class="btn-primary"
               [disabled]="creatingAppointment"
               (click)="createAppointment()">
-              {{ creatingAppointment ? 'Solicitando...' : 'Solicitar cita' }}
+              {{
+                creatingAppointment
+                  ? ('patientSearch.appointment.requesting' | translate)
+                  : ('patientSearch.appointment.requestButton' | translate)
+              }}
             </button>
           </div>
 
