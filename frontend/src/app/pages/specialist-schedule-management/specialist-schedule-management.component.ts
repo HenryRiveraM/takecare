@@ -56,7 +56,7 @@ export class SpecialistScheduleManagementComponent implements OnInit {
     eventResizeHandling: 'Disabled',
     eventClickHandling: 'Enabled',
 
-    onTimeRangeSelected: async (args) => {
+    onTimeRangeSelected: async (args: any) => {
       const startAsString = args.start.toString();
       const endAsString = args.end.toString();
 
@@ -76,7 +76,7 @@ export class SpecialistScheduleManagementComponent implements OnInit {
       args.control.clearSelection();
     },
 
-    onEventClick: async (args) => {
+    onEventClick: async (args: any) => {
       const scheduleId = Number(args.e.id());
       const schedule = this.schedules.find(item => item.id === scheduleId);
 
