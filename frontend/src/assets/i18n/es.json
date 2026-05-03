@@ -754,6 +754,36 @@
       "toast": {
         "saved": "⭐ Calificación guardada correctamente"
       }
+    },
+
+    "report": {
+      "title": "Reportar usuario",
+      "subtitle": "Describe la conducta o actitud incorrecta observada durante la sesión con",
+      "reasonPlaceholder": "Selecciona un motivo del reporte",
+      "placeholder": "Explica brevemente lo ocurrido para dejar constancia del reporte...",
+      "labels": {
+        "saved": "Reporte guardado"
+      },
+      "actions": {
+        "create": "Reportar usuario",
+        "edit": "Editar reporte",
+        "save": "Guardar reporte",
+        "saving": "Guardando..."
+      },
+      "errors": {
+        "reasonRequired": "Selecciona un motivo para el reporte.",
+        "detailsRequired": "Escribe una descripción de al menos 10 caracteres."
+      },
+      "reasons": {
+        "disrespect": "Falta de respeto",
+        "aggression": "Actitud agresiva",
+        "absence": "Ausencia injustificada",
+        "inappropriateLanguage": "Lenguaje inapropiado",
+        "other": "Otro"
+      },
+      "toast": {
+        "saved": "🚩 Reporte guardado correctamente"
+      }
     }
   }
 

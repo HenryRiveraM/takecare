@@ -9,6 +9,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { AuthService } from '../../services/auth.service';
 import {
   SessionResponse,
+  SessionReport,
   SessionRating,
   SessionService
 } from '../../services/session.service';
@@ -43,6 +44,15 @@ interface RatingDialog {
   error: string;
 }
 
+interface ReportDialog {
+  visible: boolean;
+  appointment: Appointment | null;
+  reason: string;
+  details: string;
+  saving: boolean;
+  error: string;
+}
+
 @Component({
   selector: 'app-specialist-appointments',
   standalone: true,
@@ -63,6 +73,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
 
   specialistId!: number;
   ratingsBySession: Record<number, SessionRating> = {};
+  reportsBySession: Record<number, SessionReport> = {};
 
   confirmDialog: ConfirmDialog = {
     visible: false,
@@ -75,6 +86,15 @@ export class SpecialistAppointmentsComponent implements OnInit {
     appointment: null,
     stars: 0,
     comment: '',
+    saving: false,
+    error: ''
+  };
+
+  reportDialog: ReportDialog = {
+    visible: false,
+    appointment: null,
+    reason: '',
+    details: '',
     saving: false,
     error: ''
   };
@@ -96,6 +116,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
     }
 
     this.loadRatings();
+    this.loadReports();
     this.loadAppointments();
   }
 
@@ -151,6 +172,30 @@ export class SpecialistAppointmentsComponent implements OnInit {
     };
   }
 
+  openReportDialog(appointment: Appointment): void {
+    const existingReport = this.reportsBySession[appointment.id];
+
+    this.reportDialog = {
+      visible: true,
+      appointment,
+      reason: existingReport?.reason ?? '',
+      details: existingReport?.details ?? '',
+      saving: false,
+      error: ''
+    };
+  }
+
+  closeReportDialog(): void {
+    this.reportDialog = {
+      visible: false,
+      appointment: null,
+      reason: '',
+      details: '',
+      saving: false,
+      error: ''
+    };
+  }
+
   setRatingStars(stars: number): void {
     this.ratingDialog.stars = stars;
     this.ratingDialog.error = '';
@@ -186,6 +231,38 @@ export class SpecialistAppointmentsComponent implements OnInit {
     this.ratingDialog.saving = false;
     this.closeRatingDialog();
     this.showToastMessage('appointments.rating.toast.saved', 'success');
+  }
+
+  saveReport(): void {
+    if (!this.reportDialog.appointment) {
+      return;
+    }
+
+    if (!this.reportDialog.reason) {
+      this.reportDialog.error = 'appointments.report.errors.reasonRequired';
+      return;
+    }
+
+    if (this.reportDialog.details.trim().length < 10) {
+      this.reportDialog.error = 'appointments.report.errors.detailsRequired';
+      return;
+    }
+
+    this.reportDialog.saving = true;
+
+    const appointment = this.reportDialog.appointment;
+    const savedReport = this.sessionService.saveReport({
+      sessionId: appointment.id,
+      specialistId: this.specialistId,
+      patientName: appointment.patientName,
+      reason: this.reportDialog.reason,
+      details: this.reportDialog.details.trim()
+    });
+
+    this.reportsBySession[appointment.id] = savedReport;
+    this.reportDialog.saving = false;
+    this.closeReportDialog();
+    this.showToastMessage('appointments.report.toast.saved', 'error');
   }
 
   confirmAction(): void {
@@ -334,6 +411,14 @@ export class SpecialistAppointmentsComponent implements OnInit {
     return this.ratingsBySession[sessionId] ?? null;
   }
 
+  hasReport(sessionId: number): boolean {
+    return !!this.reportsBySession[sessionId];
+  }
+
+  getReport(sessionId: number): SessionReport | null {
+    return this.reportsBySession[sessionId] ?? null;
+  }
+
   getStarArray(stars: number): number[] {
     return Array.from({ length: 5 }, (_, index) => index + 1).map((value) => (value <= stars ? 1 : 0));
   }
@@ -389,6 +474,14 @@ export class SpecialistAppointmentsComponent implements OnInit {
     const ratings = this.sessionService.getRatingsBySpecialist(this.specialistId);
     this.ratingsBySession = ratings.reduce<Record<number, SessionRating>>((acc, rating) => {
       acc[rating.sessionId] = rating;
+      return acc;
+    }, {});
+  }
+
+  private loadReports(): void {
+    const reports = this.sessionService.getReportsBySpecialist(this.specialistId);
+    this.reportsBySession = reports.reduce<Record<number, SessionReport>>((acc, report) => {
+      acc[report.sessionId] = report;
       return acc;
     }, {});
   }
