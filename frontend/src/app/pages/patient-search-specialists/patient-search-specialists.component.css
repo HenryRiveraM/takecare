@@ -301,6 +301,12 @@
     margin-left: 0;
     padding: 20px;
   }
+
+  .appointments-footer,
+  .card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 .appointments-footer {
@@ -310,15 +316,36 @@
   gap: 12px;
 }
 
+.card-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-profile,
 .btn-schedule {
   padding: 9px 16px;
-  border: none;
   border-radius: 12px;
-  background: #f0f4f3;
-  color: #72a092;
   font-weight: 700;
   cursor: pointer;
   transition: 0.3s;
+}
+
+.btn-profile {
+  border: 1.5px solid #f7d1d1;
+  background: white;
+  color: #f5a3a3;
+}
+
+.btn-profile:hover {
+  background: #fff5f5;
+  transform: translateY(-1px);
+}
+
+.btn-schedule {
+  border: none;
+  background: #f0f4f3;
+  color: #72a092;
 }
 
 .btn-schedule:hover {

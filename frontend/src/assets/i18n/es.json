@@ -178,7 +178,7 @@
       "searchSpecialist": "Buscar Especialista",
       "history": "Mi Historial",
       "editProfile": "Editar perfil",
-      "documents": "Mis Documentos"
+      "documents": "Biblioteca"
     },
     "searchPlaceholder": "Buscar especialistas...",
     "newAppointment": "Nueva Cita",
@@ -240,6 +240,8 @@
     "searchButton": "Buscar",
     "resetTitle": "Limpiar filtros",
     "viewAllButton": "Ver todos los especialistas",
+    "profileButton": "Ver perfil",
+    "scheduleButton": "Ver horarios",
     "results": "especialistas encontrados",
     "costPrefix": "Costo por sesión:",
     "cardNote": "Muy pronto podrás revisar más detalles y agendar una cita desde aquí.",
@@ -270,6 +272,52 @@
       "friday": "Viernes",
       "saturday": "Sábado",
       "sunday": "Domingo"
+    }
+  },
+
+  "patientSpecialistProfile": {
+    "back": "Volver a especialistas",
+    "tag": "Perfil del especialista",
+    "breadcrumb": {
+      "specialists": "Especialistas",
+      "profile": "Perfil"
+    },
+    "tabs": {
+      "about": "Sobre",
+      "specialties": "Especialidades",
+      "documents": "Documentos"
+    },
+    "sections": {
+      "about": "Sobre este especialista",
+      "professionalInfo": "Información profesional",
+      "specialties": "Especialidades",
+      "materials": "Material publicado"
+    },
+    "labels": {
+      "location": "Ubicación",
+      "cost": "Costo por sesión",
+      "contact": "Contacto",
+      "verified": "Verificado"
+    },
+    "materials": {
+      "description": "Consulta aquí los documentos y recursos que este especialista comparte para la comunidad.",
+      "publishedAt": "Publicado el",
+      "emptyTitle": "Este especialista aún no publicó documentos",
+      "emptyText": "Cuando comparta material de apoyo para la comunidad, aparecerá en esta sección."
+    },
+    "sidebar": {
+      "feeTag": "Tarifa de sesión",
+      "cta": "Volver para reservar",
+      "helper": "Puedes regresar al listado para revisar horarios y solicitar una cita.",
+      "officeTitle": "Ubicación de atención",
+      "points": {
+        "verified": "Perfil verificado dentro de la plataforma.",
+        "resources": "Comparte documentos de apoyo para la comunidad.",
+        "contact": "Información profesional visible para el paciente."
+      }
+    },
+    "states": {
+      "loading": "Cargando perfil del especialista..."
     }
   },
 
@@ -655,40 +703,42 @@
   },
 
   "documents": {
-    "title": "Mis Documentos",
-    "subtitle": "Gestiona tus archivos clínicos de forma segura",
-    "uploadBtn": "Subir documento",
+    "title": "Biblioteca de recursos",
+    "subtitle": "Consulta documentos publicados por especialistas para complementar tu proceso de ayuda.",
+    "searchPlaceholder": "Busca por título, especialista o tipo de archivo",
 
-    "upload": {
-      "title": "Subir nuevo documento",
-      "description": "Selecciona o arrastra un archivo desde tu dispositivo",
-      "dropZone": "Arrastra tu archivo aquí o haz clic para seleccionar",
-      "formats": "Formatos permitidos: PDF, Word, JPG · Máximo 5MB",
-      "cancel": "Cancelar",
-      "confirm": "Subir documento"
+    "filters": {
+      "allTypes": "Todos los tipos",
+      "reset": "Limpiar filtros"
     },
 
-    "privacy": {
-      "title": "Archivo protegido",
-      "description": "Solo los especialistas con una cita agendada contigo podrán visualizar estos documentos.",
-      "badge": "Solo especialistas con cita"
+    "banner": {
+      "title": "Material compartido por la comunidad profesional",
+      "description": "Aquí encontrarás guías y documentos de apoyo publicados por especialistas para informar y acompañar a los usuarios."
     },
 
     "actions": {
-      "preview": "Previsualizar",
-      "delete": "Eliminar"
+      "open": "Abrir documento",
+      "download": "Descargar"
     },
 
-    "preview": {
-      "wordUnsupported": "Los archivos Word no se pueden previsualizar directamente. Puedes descargarlo.",
-      "download": "Descargar archivo"
+    "card": {
+      "publishedBy": "Publicado por",
+      "fileType": "Tipo de archivo",
+      "publishedAt": "Fecha de publicación"
     },
 
     "empty": {
-      "title": "Aún no tienes documentos",
-      "description": "Sube tus archivos clínicos para compartirlos con tus especialistas.",
-      "action": "Subir mi primer documento"
-    }
+      "title": "No hay documentos disponibles",
+      "description": "Todavía no se han publicado materiales que coincidan con tu búsqueda o con los filtros seleccionados.",
+      "action": "Ver todos los recursos"
+    },
+
+    "states": {
+      "loading": "Cargando biblioteca..."
+    },
+
+    "results": "documentos disponibles"
   },
 
   "appointments": {

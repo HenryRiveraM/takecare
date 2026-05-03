@@ -1,0 +1,183 @@
+<div class="profile-page">
+  <app-sidebar></app-sidebar>
+
+  <div class="sidebar-overlay" *ngIf="sidebarService.isOpen()" (click)="sidebarService.close()"></div>
+
+  <div class="main">
+    <div class="breadcrumb-row">
+      <button type="button" class="back-link" (click)="goBack()">
+        {{ 'patientSpecialistProfile.breadcrumb.specialists' | translate }}
+      </button>
+      <span class="crumb-separator">›</span>
+      <span class="crumb-current">{{ getDisplayName() || ('patientSpecialistProfile.breadcrumb.profile' | translate) }}</span>
+    </div>
+
+    <div class="status-card" *ngIf="loading">
+      {{ 'patientSpecialistProfile.states.loading' | translate }}
+    </div>
+
+    <div class="status-card error" *ngIf="errorMsg">
+      {{ errorMsg }}
+    </div>
+
+    <ng-container *ngIf="!loading && !errorMsg && specialist">
+      <section class="layout-grid">
+        <div class="content-column">
+          <section class="hero-card">
+            <div class="avatar-shell">
+              <div class="avatar">{{ getInitials() }}</div>
+              <span class="online-dot"></span>
+            </div>
+
+            <div class="hero-copy">
+              <span class="tag">{{ 'patientSpecialistProfile.tag' | translate }}</span>
+
+              <div class="title-row">
+                <h1>{{ getDisplayName() }}</h1>
+                <span class="verified-badge" *ngIf="hasVerifiedBadge()">
+                  <i class="fas fa-badge-check"></i> {{ 'patientSpecialistProfile.labels.verified' | translate }}
+                </span>
+              </div>
+
+              <p class="specialty-line">
+                {{ getSpecialtiesLabel() || ('patientSearch.fallback.speciality' | translate) }}
+              </p>
+
+              <div class="hero-stats">
+                <span class="stat-pill" *ngIf="specialist.reputationAverage != null">
+                  <i class="fas fa-star"></i> {{ specialist.reputationAverage | number:'1.1-1' }}
+                </span>
+                <span class="stat-pill" *ngIf="specialist.officeUbi">
+                  <i class="fas fa-location-dot"></i> {{ specialist.officeUbi }}
+                </span>
+                <span class="stat-pill" *ngIf="specialist.email">
+                  <i class="fas fa-envelope"></i> {{ specialist.email }}
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <nav class="section-tabs">
+            <button type="button" class="tab-link" (click)="scrollToSection('about')">
+              {{ 'patientSpecialistProfile.tabs.about' | translate }}
+            </button>
+            <button type="button" class="tab-link" (click)="scrollToSection('specialties')">
+              {{ 'patientSpecialistProfile.tabs.specialties' | translate }}
+            </button>
+            <button type="button" class="tab-link" (click)="scrollToSection('documents')">
+              {{ 'patientSpecialistProfile.tabs.documents' | translate }}
+            </button>
+          </nav>
+
+          <section class="section-card" id="about">
+            <h2>{{ 'patientSpecialistProfile.sections.about' | translate }}</h2>
+            <p class="long-copy">
+              {{ specialist.biography || ('patientSearch.fallback.biography' | translate) }}
+            </p>
+          </section>
+
+          <section class="section-card" id="specialties">
+            <h2>{{ 'patientSpecialistProfile.sections.specialties' | translate }}</h2>
+
+            <div class="specialties-wrap" *ngIf="getSpecialtyItems().length > 0; else noSpecialties">
+              <span class="specialty-chip" *ngFor="let specialty of getSpecialtyItems()">
+                {{ specialty }}
+              </span>
+            </div>
+
+            <ng-template #noSpecialties>
+              <p class="muted-text">{{ 'patientSearch.fallback.speciality' | translate }}</p>
+            </ng-template>
+          </section>
+
+          <section class="section-card" id="documents">
+            <div class="section-heading">
+              <div>
+                <h2>{{ 'patientSpecialistProfile.sections.materials' | translate }}</h2>
+                <p class="section-description">{{ 'patientSpecialistProfile.materials.description' | translate }}</p>
+              </div>
+            </div>
+
+            <div class="materials-list" *ngIf="materials.length > 0">
+              <article class="material-card" *ngFor="let material of materials; trackBy: trackByMaterialId">
+                <div class="material-header">
+                  <div class="doc-icon-wrap" [ngClass]="getFileToneClass(material.fileType)">
+                    <i [class]="getFileIcon(material.fileType)"></i>
+                  </div>
+
+                  <div class="material-copy">
+                    <div class="material-topline">
+                      <span class="doc-type">{{ material.fileType }}</span>
+                      <span class="published-date">
+                        {{ 'patientSpecialistProfile.materials.publishedAt' | translate }} {{ material.createdDate | date:'mediumDate' }}
+                      </span>
+                    </div>
+                    <h3>{{ material.title }}</h3>
+                    <p>{{ material.description }}</p>
+                  </div>
+                </div>
+
+                <div class="material-actions">
+                  <a
+                    class="btn-primary"
+                    [href]="material.fileUrl"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fas fa-up-right-from-square"></i> {{ 'documents.actions.open' | translate }}
+                  </a>
+
+                  <a
+                    class="btn-outline"
+                    [href]="material.fileUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download>
+                    <i class="fas fa-download"></i> {{ 'documents.actions.download' | translate }}
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <div class="empty-materials" *ngIf="materials.length === 0">
+              <i class="fas fa-folder-open empty-icon"></i>
+              <h3>{{ 'patientSpecialistProfile.materials.emptyTitle' | translate }}</h3>
+              <p>{{ 'patientSpecialistProfile.materials.emptyText' | translate }}</p>
+            </div>
+          </section>
+        </div>
+
+        <aside class="sidebar-column">
+          <section class="summary-card">
+            <span class="summary-tag">{{ 'patientSpecialistProfile.sidebar.feeTag' | translate }}</span>
+            <div class="price-line">
+              <strong>
+                {{
+                  specialist.sessionCost != null
+                    ? 'Bs.' + specialist.sessionCost
+                    : ('patientSearch.fallback.cost' | translate)
+                }}
+              </strong>
+            </div>
+
+            <ul class="benefits-list">
+              <li>{{ 'patientSpecialistProfile.sidebar.points.verified' | translate }}</li>
+              <li>{{ 'patientSpecialistProfile.sidebar.points.resources' | translate }}</li>
+              <li>{{ 'patientSpecialistProfile.sidebar.points.contact' | translate }}</li>
+            </ul>
+
+            <button type="button" class="cta-button" (click)="goToSearchWithName()">
+              {{ 'patientSpecialistProfile.sidebar.cta' | translate }}
+            </button>
+
+            <p class="helper-copy">{{ 'patientSpecialistProfile.sidebar.helper' | translate }}</p>
+          </section>
+
+          <section class="mini-card">
+            <h3>{{ 'patientSpecialistProfile.sidebar.officeTitle' | translate }}</h3>
+            <p>{{ specialist.officeUbi || ('patientSearch.fallback.location' | translate) }}</p>
+          </section>
+        </aside>
+      </section>
+    </ng-container>
+  </div>
+</div>

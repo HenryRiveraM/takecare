@@ -177,7 +177,7 @@
       "searchSpecialist": "Find Specialist",
       "history": "My History",
       "editProfile": "Edit profile",
-      "documents": "My Documents"
+      "documents": "Library"
     },
     "searchPlaceholder": "Search specialists...",
     "newAppointment": "New Appointment",
@@ -239,6 +239,8 @@
     "searchButton": "Search",
     "resetTitle": "Clear filters",
     "viewAllButton": "View all specialists",
+    "profileButton": "View profile",
+    "scheduleButton": "View schedules",
     "results": "specialists found",
     "costPrefix": "Session cost:",
     "cardNote": "Soon you will be able to review more details and request an appointment from here.",
@@ -269,6 +271,52 @@
       "friday": "Friday",
       "saturday": "Saturday",
       "sunday": "Sunday"
+    }
+  },
+
+  "patientSpecialistProfile": {
+    "back": "Back to specialists",
+    "tag": "Specialist profile",
+    "breadcrumb": {
+      "specialists": "Specialists",
+      "profile": "Profile"
+    },
+    "tabs": {
+      "about": "About",
+      "specialties": "Specialties",
+      "documents": "Documents"
+    },
+    "sections": {
+      "about": "About this specialist",
+      "professionalInfo": "Professional information",
+      "specialties": "Specialties",
+      "materials": "Published materials"
+    },
+    "labels": {
+      "location": "Location",
+      "cost": "Session cost",
+      "contact": "Contact",
+      "verified": "Verified"
+    },
+    "materials": {
+      "description": "Review here the documents and resources this specialist shares with the community.",
+      "publishedAt": "Published on",
+      "emptyTitle": "This specialist has not published documents yet",
+      "emptyText": "When they share support material for the community, it will appear in this section."
+    },
+    "sidebar": {
+      "feeTag": "Session fee",
+      "cta": "Go back to book",
+      "helper": "You can return to the directory to review schedules and request an appointment.",
+      "officeTitle": "Care location",
+      "points": {
+        "verified": "Verified profile inside the platform.",
+        "resources": "Shares support documents for the community.",
+        "contact": "Professional information visible to the patient."
+      }
+    },
+    "states": {
+      "loading": "Loading specialist profile..."
     }
   },
 
@@ -653,40 +701,42 @@
   },
 
   "documents": {
-    "title": "My Documents",
-    "subtitle": "Manage your clinical files securely",
-    "uploadBtn": "Upload document",
+    "title": "Resource library",
+    "subtitle": "Browse documents published by specialists to support your care journey.",
+    "searchPlaceholder": "Search by title, specialist, or file type",
 
-    "upload": {
-      "title": "Upload new document",
-      "description": "Select or drag a file from your device",
-      "dropZone": "Drag your file here or click to select",
-      "formats": "Allowed formats: PDF, Word, JPG · Maximum 5MB",
-      "cancel": "Cancel",
-      "confirm": "Upload document"
+    "filters": {
+      "allTypes": "All file types",
+      "reset": "Clear filters"
     },
 
-    "privacy": {
-      "title": "Protected file",
-      "description": "Only specialists with a scheduled appointment with you will be able to view these documents.",
-      "badge": "Only specialists with appointment"
+    "banner": {
+      "title": "Resources shared by the professional community",
+      "description": "Here you can find guides and support documents published by specialists to inform and accompany users."
     },
 
     "actions": {
-      "preview": "Preview",
-      "delete": "Delete"
+      "open": "Open document",
+      "download": "Download"
     },
 
-    "preview": {
-      "wordUnsupported": "Word files cannot be previewed directly. You can download it instead.",
-      "download": "Download file"
+    "card": {
+      "publishedBy": "Published by",
+      "fileType": "File type",
+      "publishedAt": "Publication date"
     },
 
     "empty": {
-      "title": "No documents yet",
-      "description": "Upload your clinical files to share them with your specialists.",
-      "action": "Upload my first document"
-    }
+      "title": "No documents available",
+      "description": "No published materials match your current search or selected filters yet.",
+      "action": "View all resources"
+    },
+
+    "states": {
+      "loading": "Loading library..."
+    },
+
+    "results": "available documents"
   },
 
   "appointments": {
