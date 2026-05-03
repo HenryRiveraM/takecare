@@ -135,6 +135,23 @@
                     : ('appointments.rating.actions.create' | translate)
                 }}
               </button>
+
+              <div class="report-summary" *ngIf="hasReport(apt.id)">
+                <div class="report-summary-header">
+                  <span class="report-chip">{{ 'appointments.report.labels.saved' | translate }}</span>
+                  <span class="report-reason">{{ getReport(apt.id)?.reason | translate }}</span>
+                </div>
+                <p class="report-comment">{{ getReport(apt.id)?.details }}</p>
+              </div>
+
+              <button class="btn-report" (click)="openReportDialog(apt)">
+                <i class="fas fa-flag"></i>
+                {{
+                  hasReport(apt.id)
+                    ? ('appointments.report.actions.edit' | translate)
+                    : ('appointments.report.actions.create' | translate)
+                }}
+              </button>
             </div>
 
           </div>
@@ -196,6 +213,58 @@
           ratingDialog.saving
             ? ('appointments.rating.actions.saving' | translate)
             : ('appointments.rating.actions.save' | translate)
+        }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="confirm-overlay" *ngIf="reportDialog.visible" (click)="closeReportDialog()">
+  <div class="confirm-dialog rating-dialog" (click)="$event.stopPropagation()">
+    <div class="confirm-icon icon-report">
+      <i class="fas fa-flag"></i>
+    </div>
+
+    <h3 class="confirm-title">{{ 'appointments.report.title' | translate }}</h3>
+
+    <p class="confirm-message">
+      {{ 'appointments.report.subtitle' | translate }}
+      <strong>{{ reportDialog.appointment?.patientName }}</strong>
+    </p>
+
+    <select class="report-select" [(ngModel)]="reportDialog.reason">
+      <option value="">{{ 'appointments.report.reasonPlaceholder' | translate }}</option>
+      <option value="appointments.report.reasons.disrespect">{{ 'appointments.report.reasons.disrespect' | translate }}</option>
+      <option value="appointments.report.reasons.aggression">{{ 'appointments.report.reasons.aggression' | translate }}</option>
+      <option value="appointments.report.reasons.absence">{{ 'appointments.report.reasons.absence' | translate }}</option>
+      <option value="appointments.report.reasons.inappropriateLanguage">{{ 'appointments.report.reasons.inappropriateLanguage' | translate }}</option>
+      <option value="appointments.report.reasons.other">{{ 'appointments.report.reasons.other' | translate }}</option>
+    </select>
+
+    <textarea
+      class="rating-textarea"
+      [(ngModel)]="reportDialog.details"
+      maxlength="320"
+      [placeholder]="'appointments.report.placeholder' | translate">
+    </textarea>
+
+    <div class="rating-length">
+      {{ reportDialog.details.length }}/320
+    </div>
+
+    <p class="rating-error" *ngIf="reportDialog.error">
+      {{ reportDialog.error | translate }}
+    </p>
+
+    <div class="confirm-actions">
+      <button class="btn-secondary" (click)="closeReportDialog()">
+        {{ 'appointments.confirm.cancel' | translate }}
+      </button>
+      <button class="btn-report-submit" (click)="saveReport()" [disabled]="reportDialog.saving">
+        {{
+          reportDialog.saving
+            ? ('appointments.report.actions.saving' | translate)
+            : ('appointments.report.actions.save' | translate)
         }}
       </button>
     </div>

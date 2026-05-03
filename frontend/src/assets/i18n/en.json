@@ -752,6 +752,36 @@
       "toast": {
         "saved": "⭐ Rating saved successfully"
       }
+    },
+
+    "report": {
+      "title": "Report user",
+      "subtitle": "Describe the inappropriate behavior or attitude observed during the session with",
+      "reasonPlaceholder": "Select a report reason",
+      "placeholder": "Briefly explain what happened so there is a record of the report...",
+      "labels": {
+        "saved": "Report saved"
+      },
+      "actions": {
+        "create": "Report user",
+        "edit": "Edit report",
+        "save": "Save report",
+        "saving": "Saving..."
+      },
+      "errors": {
+        "reasonRequired": "Select a reason for the report.",
+        "detailsRequired": "Write a description with at least 10 characters."
+      },
+      "reasons": {
+        "disrespect": "Disrespect",
+        "aggression": "Aggressive attitude",
+        "absence": "Unjustified absence",
+        "inappropriateLanguage": "Inappropriate language",
+        "other": "Other"
+      },
+      "toast": {
+        "saved": "🚩 Report saved successfully"
+      }
     }
   }
 }

@@ -56,6 +56,16 @@ export interface SessionRating {
   updatedAt: string;
 }
 
+export interface SessionReport {
+  sessionId: number;
+  specialistId: number;
+  patientName: string;
+  reason: string;
+  details: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -63,6 +73,7 @@ export class SessionService {
 
   private readonly apiUrl = `${environment.apiUrl}/api/v1/sessions`;
   private readonly ratingsStorageKey = 'specialist_session_ratings';
+  private readonly reportsStorageKey = 'specialist_session_reports';
 
   constructor(private http: HttpClient) {}
 
@@ -137,6 +148,45 @@ export class SessionService {
     return nextRating;
   }
 
+  getReportsBySpecialist(specialistId: number): SessionReport[] {
+    return this.readReports().filter((report) => report.specialistId === specialistId);
+  }
+
+  getReportBySession(sessionId: number, specialistId: number): SessionReport | null {
+    return this.readReports().find(
+      (report) => report.sessionId === sessionId && report.specialistId === specialistId
+    ) ?? null;
+  }
+
+  saveReport(report: Omit<SessionReport, 'createdAt' | 'updatedAt'>): SessionReport {
+    const reports = this.readReports();
+    const now = new Date().toISOString();
+    const existingIndex = reports.findIndex(
+      (item) => item.sessionId === report.sessionId && item.specialistId === report.specialistId
+    );
+
+    const nextReport: SessionReport = existingIndex >= 0
+      ? {
+          ...reports[existingIndex],
+          ...report,
+          updatedAt: now
+        }
+      : {
+          ...report,
+          createdAt: now,
+          updatedAt: now
+        };
+
+    if (existingIndex >= 0) {
+      reports[existingIndex] = nextReport;
+    } else {
+      reports.push(nextReport);
+    }
+
+    localStorage.setItem(this.reportsStorageKey, JSON.stringify(reports));
+    return nextReport;
+  }
+
   private readRatings(): SessionRating[] {
     const raw = localStorage.getItem(this.ratingsStorageKey);
 
@@ -146,6 +196,21 @@ export class SessionService {
 
     try {
       const parsed = JSON.parse(raw) as SessionRating[];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private readReports(): SessionReport[] {
+    const raw = localStorage.getItem(this.reportsStorageKey);
+
+    if (!raw) {
+      return [];
+    }
+
+    try {
+      const parsed = JSON.parse(raw) as SessionReport[];
       return Array.isArray(parsed) ? parsed : [];
     } catch {
       return [];

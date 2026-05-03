@@ -348,6 +348,46 @@
   padding: 14px;
 }
 
+.report-summary {
+  background: #fff7f1;
+  border: 1px solid #f4dbc9;
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.report-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.report-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(234, 120, 83, 0.14);
+  color: #c96844;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.report-reason {
+  color: #8a5b45;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.report-comment {
+  margin: 0;
+  color: #5b4a43;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
 .rating-summary-header {
   display: flex;
   align-items: center;
@@ -407,6 +447,48 @@
   color: #c48a13;
   border: 1.5px solid #f4d58f;
   padding: 11px 14px;
+}
+
+.btn-report,
+.btn-report-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-report {
+  background: #fff4ef;
+  color: #d56b45;
+  border: 1.5px solid #f1c7b7;
+  padding: 11px 14px;
+}
+
+.btn-report:hover {
+  background: #ffe7dc;
+  transform: translateY(-1px);
+}
+
+.btn-report-submit {
+  flex: 1;
+  background: #ef8c68;
+  color: white;
+  padding: 12px 24px;
+  box-shadow: 0 8px 18px rgba(239, 140, 104, 0.22);
+}
+
+.btn-report-submit:hover:not(:disabled) {
+  background: #e57d58;
+}
+
+.btn-report-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .btn-rate:hover {
@@ -568,6 +650,11 @@
   color: #c48a13;
 }
 
+.icon-report {
+  background: #fff4ef;
+  color: #d56b45;
+}
+
 .confirm-title {
   font-size: 1.2rem;
   font-weight: 700;
@@ -639,6 +726,23 @@
   color: #8c6b2f;
   font-weight: 700;
   font-size: 0.92rem;
+}
+
+.report-select {
+  width: 100%;
+  border-radius: 14px;
+  border: 1.5px solid #edf2f1;
+  padding: 13px 14px;
+  font: inherit;
+  color: #374151;
+  background: white;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.report-select:focus {
+  border-color: #ef8c68;
+  box-shadow: 0 0 0 4px rgba(239, 140, 104, 0.14);
 }
 
 .rating-textarea {
