@@ -116,6 +116,12 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     this.loadSchedulesBySpecialist(specialist.id);
   }
 
+  openSpecialistProfile(specialist: SpecialistDirectoryItem): void {
+    this.router.navigate(['/patient/specialists', specialist.id], {
+      state: { specialist }
+    });
+  }
+
   closeSchedules(): void {
     this.selectedSpecialistId = null;
     this.selectedScheduleId = null;

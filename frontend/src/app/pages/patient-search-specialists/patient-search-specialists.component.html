@@ -99,13 +99,21 @@
 
         <div class="card-footer appointments-footer">
           <span>{{ 'patientSearch.cardNote' | translate }}</span>
+          <div class="card-actions">
+            <button
+              type="button"
+              class="btn-profile"
+              (click)="openSpecialistProfile(specialist)">
+              {{ 'patientSearch.profileButton' | translate }}
+            </button>
 
-          <button
-            type="button"
-            class="btn-schedule"
-            (click)="openSchedules(specialist)">
-            Ver horarios
-          </button>
+            <button
+              type="button"
+              class="btn-schedule"
+              (click)="openSchedules(specialist)">
+              {{ 'patientSearch.scheduleButton' | translate }}
+            </button>
+          </div>
         </div>
 
         <div class="schedule-panel" *ngIf="selectedSpecialistId === specialist.id">
