@@ -111,9 +111,93 @@
               </button>
             </div>
 
+            <div class="rating-section" *ngIf="isRateable(apt)">
+              <div class="rating-summary" *ngIf="hasRating(apt.id)">
+                <div class="rating-summary-header">
+                  <span class="rating-chip">{{ 'appointments.rating.labels.saved' | translate }}</span>
+                  <div class="rating-stars-readonly">
+                    <span
+                      *ngFor="let filled of getStarArray(getRating(apt.id)?.stars || 0)"
+                      class="material-symbols-outlined"
+                      [class.filled]="filled === 1">
+                      star
+                    </span>
+                  </div>
+                </div>
+                <p class="rating-comment">{{ getRating(apt.id)?.comment }}</p>
+              </div>
+
+              <button class="btn-rate" (click)="openRatingDialog(apt)">
+                <i class="fas fa-star"></i>
+                {{
+                  hasRating(apt.id)
+                    ? ('appointments.rating.actions.edit' | translate)
+                    : ('appointments.rating.actions.create' | translate)
+                }}
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="confirm-overlay" *ngIf="ratingDialog.visible" (click)="closeRatingDialog()">
+  <div class="confirm-dialog rating-dialog" (click)="$event.stopPropagation()">
+    <div class="confirm-icon icon-rate">
+      <i class="fas fa-star"></i>
+    </div>
+
+    <h3 class="confirm-title">{{ 'appointments.rating.title' | translate }}</h3>
+
+    <p class="confirm-message">
+      {{ 'appointments.rating.subtitle' | translate }}
+      <strong>{{ ratingDialog.appointment?.patientName }}</strong>
+    </p>
+
+    <div class="rating-stars-picker">
+      <button
+        type="button"
+        class="star-button"
+        *ngFor="let star of [1,2,3,4,5]"
+        (click)="setRatingStars(star)"
+        [class.active]="star <= ratingDialog.stars">
+        <span class="material-symbols-outlined">star</span>
+      </button>
+    </div>
+
+    <div class="rating-helper" *ngIf="ratingDialog.stars > 0">
+      {{ 'appointments.rating.labels.scorePrefix' | translate }} {{ ratingDialog.stars }}/5
+    </div>
+
+    <textarea
+      class="rating-textarea"
+      [(ngModel)]="ratingDialog.comment"
+      maxlength="240"
+      [placeholder]="'appointments.rating.placeholder' | translate">
+    </textarea>
+
+    <div class="rating-length">
+      {{ ratingDialog.comment.length }}/240
+    </div>
+
+    <p class="rating-error" *ngIf="ratingDialog.error">
+      {{ ratingDialog.error | translate }}
+    </p>
+
+    <div class="confirm-actions">
+      <button class="btn-secondary" (click)="closeRatingDialog()">
+        {{ 'appointments.confirm.cancel' | translate }}
+      </button>
+      <button class="btn-rate-submit" (click)="saveRating()" [disabled]="ratingDialog.saving">
+        {{
+          ratingDialog.saving
+            ? ('appointments.rating.actions.saving' | translate)
+            : ('appointments.rating.actions.save' | translate)
+        }}
+      </button>
     </div>
   </div>
 </div>
