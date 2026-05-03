@@ -29,7 +29,7 @@ public class Session {
     private Integer status; //1 pendiente, 2 aceptada, 3 rechazada, 4 cancelada, 5 finalizada
 
     @Column(name = "type_of_session", columnDefinition = "tinyint")
-    private Integer typeOfSession;
+    private Integer typeOfSession; //1 virtual, 2 presencial
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;

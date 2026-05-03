@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { AuthService } from '../../services/auth.service';
-import { AppointmentResponse, AppointmentService } from '../../services/appointment.service';
+import { SessionResponse, SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-patient-appointments',
@@ -13,16 +13,16 @@ import { AppointmentResponse, AppointmentService } from '../../services/appointm
 })
 export class PatientAppointmentsComponent implements OnInit {
 
-  appointments: AppointmentResponse[] = [];
+  appointments: SessionResponse[] = [];
   loading = false;
   errorMsg = '';
   successMsg = '';
   cancellingId: number | null = null;
-  appointmentToCancel: AppointmentResponse | null = null;
+  appointmentToCancel: SessionResponse | null = null;
   showCancelConfirm = false;
 
   constructor(
-    private appointmentService: AppointmentService,
+    private sessionService: SessionService,
     private authService: AuthService
   ) {}
 
@@ -42,9 +42,9 @@ export class PatientAppointmentsComponent implements OnInit {
     this.errorMsg = '';
     this.successMsg = '';
 
-    this.appointmentService.getAppointmentsByPatient(patientId).subscribe({
-      next: (appointments) => {
-        this.appointments = appointments;
+    this.sessionService.getSessionsByPatient(patientId).subscribe({
+      next: (sessions) => {
+        this.appointments = sessions;
         this.loading = false;
       },
       error: (error) => {
@@ -54,7 +54,7 @@ export class PatientAppointmentsComponent implements OnInit {
     });
   }
 
-  openCancelConfirm(appointment: AppointmentResponse): void {
+  openCancelConfirm(appointment: SessionResponse): void {
     this.appointmentToCancel = appointment;
     this.showCancelConfirm = true;
     this.errorMsg = '';
@@ -85,7 +85,7 @@ export class PatientAppointmentsComponent implements OnInit {
     this.errorMsg = '';
     this.successMsg = '';
 
-    this.appointmentService.cancelAppointment(appointmentId, { patientId }).subscribe({
+    this.sessionService.cancelSession(appointmentId, { patientId }).subscribe({
       next: () => {
         this.cancellingId = null;
         this.successMsg = 'Cita cancelada correctamente.';
@@ -100,8 +100,8 @@ export class PatientAppointmentsComponent implements OnInit {
     });
   }
 
-  canCancel(appointment: AppointmentResponse): boolean {
-    return appointment.status === 1 || appointment.status === 2;
+  canCancel(session: SessionResponse): boolean {
+    return session.status === 1 || session.status === 2;
   }
 
   getStatusLabel(status: number): string {
