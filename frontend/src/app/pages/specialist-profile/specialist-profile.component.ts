@@ -8,7 +8,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { LocationVisibility, SpecialistLocationPreferences, SpecialistLocationPreferencesService } from '../../services/specialist-location-preferences.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
-import { SupportMaterialItem, SupportMaterialService } from '../../services/support-material.service';
 
 interface SpecialistProfileForm {
   names: string;
@@ -18,12 +17,6 @@ interface SpecialistProfileForm {
   biography: string;
   officeUbi: string;
   sessionCost: number | null;
-}
-
-interface SupportMaterialForm {
-  title: string;
-  description: string;
-  fileUrl: string;
 }
 
 @Component({
@@ -57,17 +50,6 @@ export class SpecialistProfileComponent implements OnInit {
   errorMsg = '';
   locationErrorMsg = '';
   isEditing = false;
-  materials: SupportMaterialItem[] = [];
-  isEditingMaterial = false;
-  editingMaterialId: string | null = null;
-  materialErrorMsg = '';
-  materialSuccessMsg = '';
-
-  materialForm: SupportMaterialForm = {
-    title: '',
-    description: '',
-    fileUrl: ''
-  };
 
   constructor(
     private specialistService: SpecialistService,
@@ -75,8 +57,7 @@ export class SpecialistProfileComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private specialistLocationPreferencesService: SpecialistLocationPreferencesService,
-    public sidebarService: SidebarService,
-    private supportMaterialService: SupportMaterialService
+    public sidebarService: SidebarService
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +65,6 @@ export class SpecialistProfileComponent implements OnInit {
     console.log('Usuario obtenido:', this.user);
     if (this.user?.id) {
       this.loadProfile();
-      this.loadMaterials();
     } else {
       this.errorMsg = 'No se pudo obtener el ID del usuario';
       console.error('User ID no disponible');
@@ -127,94 +107,6 @@ export class SpecialistProfileComponent implements OnInit {
     this.successMsg = '';
     this.errorMsg = '';
     this.locationErrorMsg = '';
-  }
-
-  loadMaterials(): void {
-    if (!this.user?.id) {
-      return;
-    }
-
-    this.materials = this.supportMaterialService.getBySpecialistId(this.user.id);
-  }
-
-  startMaterialCreate(): void {
-    this.isEditingMaterial = true;
-    this.editingMaterialId = null;
-    this.materialErrorMsg = '';
-    this.materialSuccessMsg = '';
-    this.materialForm = {
-      title: '',
-      description: '',
-      fileUrl: ''
-    };
-  }
-
-  startMaterialEdit(material: SupportMaterialItem): void {
-    this.isEditingMaterial = true;
-    this.editingMaterialId = material.id;
-    this.materialErrorMsg = '';
-    this.materialSuccessMsg = '';
-    this.materialForm = {
-      title: material.title,
-      description: material.description,
-      fileUrl: material.fileUrl
-    };
-  }
-
-  cancelMaterialEdit(): void {
-    this.isEditingMaterial = false;
-    this.editingMaterialId = null;
-    this.materialErrorMsg = '';
-    this.materialForm = {
-      title: '',
-      description: '',
-      fileUrl: ''
-    };
-  }
-
-  saveMaterial(): void {
-    if (!this.user?.id) {
-      return;
-    }
-
-    if (!this.materialForm.title.trim()) {
-      this.materialErrorMsg = this.translate.instant('specialistProfile.materials.validation.titleRequired');
-      return;
-    }
-
-    if (!this.materialForm.description.trim()) {
-      this.materialErrorMsg = this.translate.instant('specialistProfile.materials.validation.descriptionRequired');
-      return;
-    }
-
-    if (!this.materialForm.fileUrl.trim()) {
-      this.materialErrorMsg = this.translate.instant('specialistProfile.materials.validation.fileUrlRequired');
-      return;
-    }
-
-    this.supportMaterialService.save(
-      this.user.id,
-      {
-        title: this.materialForm.title.trim(),
-        description: this.materialForm.description.trim(),
-        fileUrl: this.materialForm.fileUrl.trim()
-      },
-      this.editingMaterialId ?? undefined
-    );
-
-    this.loadMaterials();
-    this.materialSuccessMsg = this.translate.instant('specialistProfile.materials.success');
-    this.cancelMaterialEdit();
-  }
-
-  deleteMaterial(materialId: string): void {
-    if (!this.user?.id) {
-      return;
-    }
-
-    this.supportMaterialService.delete(this.user.id, materialId);
-    this.loadMaterials();
-    this.materialSuccessMsg = this.translate.instant('specialistProfile.materials.deleted');
   }
 
   cancelEdit(): void {

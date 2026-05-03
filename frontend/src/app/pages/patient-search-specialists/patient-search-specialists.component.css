@@ -268,63 +268,6 @@
   font-size: 0.95rem;
 }
 
-.card-footer-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.btn-material {
-  padding: 10px 16px;
-  border-radius: 12px;
-  border: 1.5px solid #f5d9b2;
-  background: #fff8ed;
-  color: #c08b27;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.btn-material:hover {
-  background: #fff0d7;
-}
-
-.materials-panel {
-  margin-top: 18px;
-  padding: 18px;
-  border-radius: 18px;
-  background: #fffdf8;
-  border: 1px solid #f5ebcf;
-}
-
-.materials-grid {
-  display: grid;
-  gap: 12px;
-  margin-top: 14px;
-}
-
-.material-card {
-  background: white;
-  border-radius: 16px;
-  border: 1px solid #f3ead6;
-  padding: 16px;
-}
-
-.material-card h4 {
-  margin: 0 0 8px;
-  color: #27323f;
-}
-
-.material-card p {
-  margin: 0 0 12px;
-  color: #6b7280;
-  line-height: 1.55;
-}
-
-.material-open-link {
-  display: inline-flex;
-}
-
 .empty-state h2 {
   margin: 0 0 8px;
   color: #1f2937;
