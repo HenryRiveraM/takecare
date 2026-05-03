@@ -731,6 +731,29 @@
     "empty": {
       "title": "Sin citas en este estado",
       "description": "No tienes citas en esta categoría por el momento."
+    },
+
+    "rating": {
+      "title": "Calificar al usuario",
+      "subtitle": "Comparte tu experiencia profesional despues de la sesion con",
+      "placeholder": "Escribe un comentario breve sobre puntualidad, actitud o colaboracion del usuario...",
+      "labels": {
+        "saved": "Calificación guardada",
+        "scorePrefix": "Puntuación"
+      },
+      "actions": {
+        "create": "Calificar usuario",
+        "edit": "Editar calificación",
+        "save": "Guardar calificación",
+        "saving": "Guardando..."
+      },
+      "errors": {
+        "starsRequired": "Selecciona una cantidad de estrellas.",
+        "commentRequired": "Escribe un comentario de al menos 5 caracteres."
+      },
+      "toast": {
+        "saved": "⭐ Calificación guardada correctamente"
+      }
     }
   }
 

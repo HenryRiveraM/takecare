@@ -46,12 +46,23 @@ export interface UpdateSessionStatusRequest {
   action: 'accept' | 'reject';
 }
 
+export interface SessionRating {
+  sessionId: number;
+  specialistId: number;
+  patientName: string;
+  stars: number;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
 
   private readonly apiUrl = `${environment.apiUrl}/api/v1/sessions`;
+  private readonly ratingsStorageKey = 'specialist_session_ratings';
 
   constructor(private http: HttpClient) {}
 
@@ -85,5 +96,59 @@ export class SessionService {
       `${this.apiUrl}/${sessionId}/cancel`,
       request
     );
+  }
+
+  getRatingsBySpecialist(specialistId: number): SessionRating[] {
+    return this.readRatings().filter((rating) => rating.specialistId === specialistId);
+  }
+
+  getRatingBySession(sessionId: number, specialistId: number): SessionRating | null {
+    return this.readRatings().find(
+      (rating) => rating.sessionId === sessionId && rating.specialistId === specialistId
+    ) ?? null;
+  }
+
+  saveRating(rating: Omit<SessionRating, 'createdAt' | 'updatedAt'>): SessionRating {
+    const ratings = this.readRatings();
+    const now = new Date().toISOString();
+    const existingIndex = ratings.findIndex(
+      (item) => item.sessionId === rating.sessionId && item.specialistId === rating.specialistId
+    );
+
+    const nextRating: SessionRating = existingIndex >= 0
+      ? {
+          ...ratings[existingIndex],
+          ...rating,
+          updatedAt: now
+        }
+      : {
+          ...rating,
+          createdAt: now,
+          updatedAt: now
+        };
+
+    if (existingIndex >= 0) {
+      ratings[existingIndex] = nextRating;
+    } else {
+      ratings.push(nextRating);
+    }
+
+    localStorage.setItem(this.ratingsStorageKey, JSON.stringify(ratings));
+    return nextRating;
+  }
+
+  private readRatings(): SessionRating[] {
+    const raw = localStorage.getItem(this.ratingsStorageKey);
+
+    if (!raw) {
+      return [];
+    }
+
+    try {
+      const parsed = JSON.parse(raw) as SessionRating[];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
   }
 }

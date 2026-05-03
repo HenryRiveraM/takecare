@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -8,6 +9,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { AuthService } from '../../services/auth.service';
 import {
   SessionResponse,
+  SessionRating,
   SessionService
 } from '../../services/session.service';
 
@@ -20,6 +22,7 @@ export interface Appointment {
   patientEmail: string;
   date: Date;
   time: string;
+  endTime?: string;
   sessionTypeLabel: string;
   status: AppointmentStatus;
   loading?: boolean;
@@ -31,10 +34,19 @@ interface ConfirmDialog {
   appointment: Appointment | null;
 }
 
+interface RatingDialog {
+  visible: boolean;
+  appointment: Appointment | null;
+  stars: number;
+  comment: string;
+  saving: boolean;
+  error: string;
+}
+
 @Component({
   selector: 'app-specialist-appointments',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslatePipe, SidebarComponent],
+  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent],
   templateUrl: './specialist-appointments.component.html',
   styleUrls: ['./specialist-appointments.component.css']
 })
@@ -50,11 +62,21 @@ export class SpecialistAppointmentsComponent implements OnInit {
   private toastTimer: any;
 
   specialistId!: number;
+  ratingsBySession: Record<number, SessionRating> = {};
 
   confirmDialog: ConfirmDialog = {
     visible: false,
     action: 'accept',
     appointment: null
+  };
+
+  ratingDialog: RatingDialog = {
+    visible: false,
+    appointment: null,
+    stars: 0,
+    comment: '',
+    saving: false,
+    error: ''
   };
 
   appointments: Appointment[] = [];
@@ -73,6 +95,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
       return;
     }
 
+    this.loadRatings();
     this.loadAppointments();
   }
 
@@ -102,6 +125,67 @@ export class SpecialistAppointmentsComponent implements OnInit {
       action: 'accept',
       appointment: null
     };
+  }
+
+  openRatingDialog(appointment: Appointment): void {
+    const existingRating = this.ratingsBySession[appointment.id];
+
+    this.ratingDialog = {
+      visible: true,
+      appointment,
+      stars: existingRating?.stars ?? 0,
+      comment: existingRating?.comment ?? '',
+      saving: false,
+      error: ''
+    };
+  }
+
+  closeRatingDialog(): void {
+    this.ratingDialog = {
+      visible: false,
+      appointment: null,
+      stars: 0,
+      comment: '',
+      saving: false,
+      error: ''
+    };
+  }
+
+  setRatingStars(stars: number): void {
+    this.ratingDialog.stars = stars;
+    this.ratingDialog.error = '';
+  }
+
+  saveRating(): void {
+    if (!this.ratingDialog.appointment) {
+      return;
+    }
+
+    if (this.ratingDialog.stars < 1) {
+      this.ratingDialog.error = 'appointments.rating.errors.starsRequired';
+      return;
+    }
+
+    if (this.ratingDialog.comment.trim().length < 5) {
+      this.ratingDialog.error = 'appointments.rating.errors.commentRequired';
+      return;
+    }
+
+    this.ratingDialog.saving = true;
+
+    const appointment = this.ratingDialog.appointment;
+    const savedRating = this.sessionService.saveRating({
+      sessionId: appointment.id,
+      specialistId: this.specialistId,
+      patientName: appointment.patientName,
+      stars: this.ratingDialog.stars,
+      comment: this.ratingDialog.comment.trim()
+    });
+
+    this.ratingsBySession[appointment.id] = savedRating;
+    this.ratingDialog.saving = false;
+    this.closeRatingDialog();
+    this.showToastMessage('appointments.rating.toast.saved', 'success');
   }
 
   confirmAction(): void {
@@ -236,6 +320,24 @@ export class SpecialistAppointmentsComponent implements OnInit {
     return labels[status];
   }
 
+  isRateable(appointment: Appointment): boolean {
+    return appointment.status === 'finished' || (
+      appointment.status === 'accepted' && this.hasSessionEnded(appointment)
+    );
+  }
+
+  hasRating(sessionId: number): boolean {
+    return !!this.ratingsBySession[sessionId];
+  }
+
+  getRating(sessionId: number): SessionRating | null {
+    return this.ratingsBySession[sessionId] ?? null;
+  }
+
+  getStarArray(stars: number): number[] {
+    return Array.from({ length: 5 }, (_, index) => index + 1).map((value) => (value <= stars ? 1 : 0));
+  }
+
   private mapSessionResponse(item: SessionResponse): Appointment {
     const appointmentDate = item.scheduleDate
       ? new Date(item.scheduleDate)
@@ -249,6 +351,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
       patientEmail: item.patientEmail || '',
       date: appointmentDate,
       time: this.buildAppointmentTime(item),
+      endTime: this.formatTime(item.endTime),
       sessionTypeLabel: this.getSessionTypeLabel(item.typeOfSession),
       status: this.mapStatus(item.status),
       loading: false
@@ -282,6 +385,14 @@ export class SpecialistAppointmentsComponent implements OnInit {
     }
   }
 
+  private loadRatings(): void {
+    const ratings = this.sessionService.getRatingsBySpecialist(this.specialistId);
+    this.ratingsBySession = ratings.reduce<Record<number, SessionRating>>((acc, rating) => {
+      acc[rating.sessionId] = rating;
+      return acc;
+    }, {});
+  }
+
   private buildAppointmentTime(item: SessionResponse): string {
     const start = this.formatTime(item.startTime);
     const end = this.formatTime(item.endTime);
@@ -313,6 +424,34 @@ export class SpecialistAppointmentsComponent implements OnInit {
     }
 
     return time;
+  }
+
+  private hasSessionEnded(appointment: Appointment): boolean {
+    const sessionDate = new Date(appointment.date);
+
+    if (Number.isNaN(sessionDate.getTime())) {
+      return false;
+    }
+
+    const endTime = appointment.endTime || this.extractEndTime(appointment.time);
+    if (!endTime) {
+      return sessionDate.getTime() < Date.now();
+    }
+
+    const [hours, minutes] = endTime.split(':').map(Number);
+    const sessionEnd = new Date(sessionDate);
+    sessionEnd.setHours(hours || 0, minutes || 0, 0, 0);
+
+    return sessionEnd.getTime() <= Date.now();
+  }
+
+  private extractEndTime(range: string): string {
+    if (!range.includes('-')) {
+      return '';
+    }
+
+    const parts = range.split('-').map((value) => value.trim());
+    return parts[1] || '';
   }
 
   private getLoggedSpecialistId(): number {
