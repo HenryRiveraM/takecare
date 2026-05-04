@@ -1,0 +1,192 @@
+<div class="resources-page">
+  <app-sidebar></app-sidebar>
+
+  <div class="sidebar-overlay"
+    *ngIf="sidebarService.isOpen()"
+    (click)="sidebarService.close()">
+  </div>
+
+  <div class="main">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <h1 class="page-title">{{ 'resources.title' | translate }}</h1>
+        <p class="page-subtitle">{{ 'resources.subtitle' | translate }}</p>
+      </div>
+      <button class="btn-upload" (click)="openUploadPanel()">
+        <i class="fas fa-plus"></i> {{ 'resources.uploadBtn' | translate }}
+      </button>
+    </div>
+
+    <div class="content">
+      <div class="toast" [class.show]="showToast" [class.toast-success]="toastType === 'success'" [class.toast-error]="toastType === 'error'">
+        <i [class]="toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+        {{ toastMessage | translate }}
+      </div>
+
+      <div class="upload-panel" *ngIf="showUploadPanel">
+        <div class="upload-card">
+          <div class="upload-card-header">
+            <h2><i class="fas fa-cloud-upload-alt"></i> {{ 'resources.upload.title' | translate }}</h2>
+            <button class="btn-close" (click)="closeUploadPanel()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <p class="upload-desc">{{ 'resources.upload.description' | translate }}</p>
+          <div class="field-group">
+            <label>{{ 'resources.upload.fields.title' | translate }} <span class="required">*</span></label>
+            <div class="input-wrap" [class.input-error]="fieldErrors.title">
+              <span class="material-symbols-outlined">title</span>
+              <input
+                type="text"
+                [(ngModel)]="form.title"
+                [placeholder]="'resources.upload.placeholders.title' | translate"
+                maxlength="100"
+                (input)="clearFieldError('title')"/>
+            </div>
+            <span class="field-error" *ngIf="fieldErrors.title">
+              {{ fieldErrors.title | translate }}
+            </span>
+          </div>
+
+          <div class="field-group">
+            <label>{{ 'resources.upload.fields.description' | translate }} <span class="required">*</span></label>
+            <div class="textarea-wrap" [class.input-error]="fieldErrors.description">
+              <textarea
+                [(ngModel)]="form.description"
+                [placeholder]="'resources.upload.placeholders.description' | translate"
+                maxlength="500"
+                rows="3"
+                (input)="clearFieldError('description')">
+              </textarea>
+            </div>
+            <span class="field-error" *ngIf="fieldErrors.description">
+              {{ fieldErrors.description | translate }}
+            </span>
+          </div>
+
+          <div class="field-group">
+            <label>{{ 'resources.upload.fields.file' | translate }} <span class="required">*</span></label>
+            <div
+              class="drop-zone"
+              [class.drag-over]="isDragging"
+              [class.input-error]="fieldErrors.file"
+              (dragover)="onDragOver($event)"
+              (dragleave)="onDragLeave()"
+              (drop)="onDrop($event)"
+              (click)="fileInput.click()">
+              <i class="fas fa-file-upload drop-icon"></i>
+              <p>{{ 'resources.upload.dropZone' | translate }}</p>
+              <span class="drop-hint">{{ 'resources.upload.formats' | translate }}</span>
+              <input
+                #fileInput
+                type="file"
+                hidden
+                accept=".pdf,.doc,.docx"
+                (change)="onFileSelected($event)"/>
+            </div>
+
+            <span class="field-error" *ngIf="fieldErrors.file">
+              {{ fieldErrors.file | translate }}
+            </span>
+
+            <div class="selected-file" *ngIf="selectedFile">
+              <div class="file-preview">
+                <i [class]="getFileIcon(selectedFile.name)"></i>
+                <div class="file-info">
+                  <span class="file-name">{{ selectedFile.name }}</span>
+                  <span class="file-size">{{ formatFileSize(selectedFile.size) }}</span>
+                </div>
+                <button class="btn-remove-file" (click)="clearSelectedFile()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+
+        </div>
+
+        <div class="field-group">
+            <label>{{ 'resources.upload.fields.visibility' | translate }}</label>
+            <div class="visibility-toggle">
+                <div class="visibility-info">
+                <i [class]="form.isPublic ? 'fas fa-globe' : 'fas fa-lock'"></i>
+                <div>
+                    <strong>{{ (form.isPublic ? 'resources.visibility.public' : 'resources.visibility.private') | translate }}</strong>
+                    <p>{{ (form.isPublic ? 'resources.visibility.publicDesc' : 'resources.visibility.privateDesc') | translate }}</p>
+                </div>
+                </div>
+                <label class="toggle-switch">
+                <input type="checkbox" [(ngModel)]="form.isPublic" />
+                <span class="toggle-slider"></span>
+                </label>
+            </div>
+            </div>
+
+          <div class="upload-actions">
+            <button class="btn-secondary" (click)="closeUploadPanel()">
+              {{ 'resources.upload.cancel' | translate }}
+            </button>
+            <button
+              class="btn-primary"
+              [disabled]="isUploading"
+              (click)="uploadResource()">
+              <i [class]="isUploading ? 'fas fa-spinner fa-spin' : 'fas fa-upload'"></i>
+              {{ isUploading ? ('resources.upload.uploading' | translate) : ('resources.upload.confirm' | translate) }}
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="resources-section">
+        <div class="status-card" *ngIf="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          {{ 'resources.loading' | translate }}
+        </div>
+
+        <div class="status-card error" *ngIf="errorMsg && !loading">
+          <i class="fas fa-exclamation-circle"></i> {{ errorMsg }}
+        </div>
+
+        <div class="empty-state" *ngIf="!loading && !errorMsg && resources.length === 0 && !showUploadPanel">
+          <i class="fas fa-folder-open empty-icon"></i>
+          <h3>{{ 'resources.empty.title' | translate }}</h3>
+          <p>{{ 'resources.empty.description' | translate }}</p>
+          <button class="btn-primary" (click)="openUploadPanel()">
+            <i class="fas fa-plus"></i> {{ 'resources.empty.action' | translate }}
+          </button>
+        </div>
+
+        <div class="resources-grid" *ngIf="!loading && !errorMsg && resources.length > 0">
+          <div class="resource-card" *ngFor="let resource of resources">
+
+            <div class="resource-icon-wrap">
+              <i [class]="getFileIcon(resource.fileName)"></i>
+            </div>
+
+            <div class="resource-info">
+              <h3 class="resource-title">{{ resource.title }}</h3>
+              <p class="resource-desc">{{ resource.description }}</p>
+              <span class="resource-meta">{{ resource.fileName }} · {{ resource.uploadedAt | date:'dd/MM/yyyy' }}</span>
+            </div>
+
+            <div class="card-footer">
+                <div class="visibility-row">
+                    <div class="visibility-label">
+                        <i [class]="resource.isPublic ? 'fas fa-globe' : 'fas fa-lock'"></i>
+                        <span>{{ (resource.isPublic ? 'resources.visibility.public' : 'resources.visibility.private') | translate }}</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" [(ngModel)]="resource.isPublic" (change)="toggleVisibility(resource)" />
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <button class="btn-icon btn-delete" (click)="deleteResource(resource)" [title]="'resources.actions.delete' | translate">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

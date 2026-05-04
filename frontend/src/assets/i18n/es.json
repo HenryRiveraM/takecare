@@ -178,7 +178,8 @@
       "searchSpecialist": "Buscar Especialista",
       "history": "Mi Historial",
       "editProfile": "Editar perfil",
-      "documents": "Biblioteca"
+      "documents": "Biblioteca",
+      "files": "Mis archivos"
     },
     "searchPlaceholder": "Buscar especialistas...",
     "newAppointment": "Nueva Cita",
@@ -598,7 +599,8 @@
       "patients": "Pacientes",
       "messages": "Mensajes",
       "editProfile": "Editar perfil",
-      "appointments": "Citas"
+      "appointments": "Citas",
+      "resources": "Recursos"
     },
     "searchPlaceholder": "Buscar pacientes...",
     "newSession": "Nueva sesión",
@@ -872,7 +874,67 @@
       "description": "Sube tus archivos clínicos para compartirlos con tus especialistas.",
       "action": "Subir mi primer documento"
     }
+  },
+
+  "resources": {
+    "title": "Mis Recursos",
+    "subtitle": "Gestiona tus materiales de apoyo clínico",
+    "uploadBtn": "Subir recurso",
+    "loading": "Cargando recursos...",
+
+    "upload": {
+      "title": "Subir nuevo recurso",
+      "description": "Completa la información y selecciona el archivo a subir",
+      "dropZone": "Arrastra tu archivo aquí o haz clic para seleccionar",
+      "formats": "Formatos permitidos: PDF, DOC, DOCX · Máximo 10MB",
+      "cancel": "Cancelar",
+      "confirm": "Subir recurso",
+      "uploading": "Subiendo...",
+      "fields": {
+        "title": "Título",
+        "description": "Descripción",
+        "file": "Archivo",
+        "visibility": "Visibilidad"
+      },
+      "placeholders": {
+        "title": "Ej: Guía de relajación para ansiedad",
+        "description": "Describe brevemente el contenido del documento..."
+      }
+    },
+
+    "visibility": {
+      "public": "Público",
+      "private": "Privado",
+      "publicDesc": "Todos tus pacientes podrán ver este recurso",
+      "privateDesc": "Solo tú podrás ver este recurso"
+    },
+    
+    "errors": {
+      "titleRequired": "El título es obligatorio",
+      "descriptionRequired": "La descripción es obligatoria",
+      "fileRequired": "Debes seleccionar un archivo",
+      "invalidFormat": "Formato no permitido. Solo PDF, DOC o DOCX",
+      "invalidType": "Tipo de archivo no válido",
+      "tooLarge": "El archivo supera el límite de 10MB"
+    },
+
+    "toast": {
+      "success": "✅ Recurso subido correctamente",
+      "deleted": "🗑️ Recurso eliminado",
+      "error": "❌ Ocurrió un error, intenta de nuevo"
+    },
+
+    "actions": {
+      "delete": "Eliminar"
+    },
+
+    "empty": {
+      "title": "Aún no tienes recursos",
+      "description": "Sube materiales de apoyo para compartir con tus pacientes.",
+      "action": "Subir mi primer recurso"
+    }
   }
+
 }
 
 

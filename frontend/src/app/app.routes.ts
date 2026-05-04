@@ -21,6 +21,7 @@ import { SpecialistProfileComponent } from './pages/specialist-profile/specialis
 import { specialistGuard } from './guards/specialist.guard';
 import { SpecialistScheduleManagementComponent } from './pages/specialist-schedule-management/specialist-schedule-management.component';
 import { SpecialistAppointmentsComponent } from './pages/specialist-appointments/specialist-appointments.component';
+import { SpecialistResourcesComponent } from './pages/specialist-resources/specialist-resources.component';
 
 // PACIENTE
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
@@ -148,6 +149,10 @@ export const routes: Routes = [
         path: 'appointments', 
         component: SpecialistAppointmentsComponent 
       },
+      {
+        path: 'resources',
+        component: SpecialistResourcesComponent
+      }
     ]
   },
 

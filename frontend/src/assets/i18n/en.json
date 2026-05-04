@@ -177,7 +177,8 @@
       "searchSpecialist": "Find Specialist",
       "history": "My History",
       "editProfile": "Edit profile",
-      "documents": "Library"
+      "documents": "Library",
+      "files": "My files"
     },
     "searchPlaceholder": "Search specialists...",
     "newAppointment": "New Appointment",
@@ -597,7 +598,8 @@
       "patients": "Patients",
       "messages": "Messages",
       "editProfile": "Edit profile",
-      "appointments": "Appointments"
+      "appointments": "Appointments",
+      "resources": "Resources"
     },
     "searchPlaceholder": "Search patients...",
     "newSession": "New session",
@@ -870,6 +872,65 @@
       "title": "No documents yet",
       "description": "Upload your clinical files to share them with your specialists.",
       "action": "Upload my first document"
+    }
+  },
+
+  "resources": {
+    "title": "My Resources",
+    "subtitle": "Manage your clinical support materials",
+    "uploadBtn": "Upload resource",
+    "loading": "Loading resources...",
+
+    "upload": {
+      "title": "Upload new resource",
+      "description": "Fill in the information and select the file to upload",
+      "dropZone": "Drag your file here or click to select",
+      "formats": "Allowed formats: PDF, DOC, DOCX · Maximum 10MB",
+      "cancel": "Cancel",
+      "confirm": "Upload resource",
+      "uploading": "Uploading...",
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "file": "File",
+        "visibility": "Visibility"
+      },
+      "placeholders": {
+        "title": "E.g: Relaxation guide for anxiety",
+        "description": "Briefly describe the content of the document..."
+      }
+    },
+
+    "visibility": {
+      "public": "Public",
+      "private": "Private",
+      "publicDesc": "All your patients will be able to see this resource",
+      "privateDesc": "Only you will be able to see this resource"
+    },
+    
+    "errors": {
+      "titleRequired": "Title is required",
+      "descriptionRequired": "Description is required",
+      "fileRequired": "You must select a file",
+      "invalidFormat": "Format not allowed. Only PDF, DOC or DOCX",
+      "invalidType": "Invalid file type",
+      "tooLarge": "File exceeds the 10MB limit"
+    },
+
+    "toast": {
+      "success": "✅ Resource uploaded successfully",
+      "deleted": " 🗑️ Resource deleted",
+      "error": "❌ An error occurred, please try again"
+    },
+
+    "actions": {
+      "delete": "Delete"
+    },
+
+    "empty": {
+      "title": "No resources yet",
+      "description": "Upload support materials to share with your patients.",
+      "action": "Upload my first resource"
     }
   }
 }

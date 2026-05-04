@@ -19,7 +19,7 @@
       </a>
 
       <a class="menu-item" routerLink="/patient/files">
-        <i class="fas fa-folder"></i> Mis archivos
+        <i class="fas fa-folder"></i> {{ 'patientDashboard.menu.files' | translate }}
       </a>
       
       <a class="menu-item" routerLink="/patient/profile" routerLinkActive="active">
@@ -42,6 +42,10 @@
     
     <a class="menu-item" routerLink="/specialist/patients" routerLinkActive="active">
       <i class="fas fa-users"></i> {{ 'specialistDashboard.menu.patients' | translate }}
+    </a>
+
+    <a class="menu-item" routerLink="/specialist/resources" routerLinkActive="active">
+      <i class="fas fa-folder-open"></i> {{ 'specialistDashboard.menu.resources' | translate }}
     </a>
 
     <a class="menu-item" routerLink="/specialist/messages" routerLinkActive="active">
