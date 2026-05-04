@@ -893,7 +893,8 @@
       "fields": {
         "title": "Título",
         "description": "Descripción",
-        "file": "Archivo"
+        "file": "Archivo",
+        "visibility": "Visibilidad"
       },
       "placeholders": {
         "title": "Ej: Guía de relajación para ansiedad",
@@ -901,6 +902,13 @@
       }
     },
 
+    "visibility": {
+      "public": "Público",
+      "private": "Privado",
+      "publicDesc": "Todos tus pacientes podrán ver este recurso",
+      "privateDesc": "Solo tú podrás ver este recurso"
+    },
+    
     "errors": {
       "titleRequired": "El título es obligatorio",
       "descriptionRequired": "La descripción es obligatoria",

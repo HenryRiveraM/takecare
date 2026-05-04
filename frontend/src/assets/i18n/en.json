@@ -892,7 +892,8 @@
       "fields": {
         "title": "Title",
         "description": "Description",
-        "file": "File"
+        "file": "File",
+        "visibility": "Visibility"
       },
       "placeholders": {
         "title": "E.g: Relaxation guide for anxiety",
@@ -900,6 +901,13 @@
       }
     },
 
+    "visibility": {
+      "public": "Public",
+      "private": "Private",
+      "publicDesc": "All your patients will be able to see this resource",
+      "privateDesc": "Only you will be able to see this resource"
+    },
+    
     "errors": {
       "titleRequired": "Title is required",
       "descriptionRequired": "Description is required",
