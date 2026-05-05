@@ -932,6 +932,46 @@
       "description": "Upload support materials to share with your patients.",
       "action": "Upload my first resource"
     }
+  },
+
+  "rating": {
+    "title": "How was your session?",
+    "subtitle": "Your feedback helps us improve the care of our specialists.",
+    "rateLabel": "RATE YOUR EXPERIENCE",
+    "commentLabel": "Anything else you'd like to share?",
+    "commentPlaceholder": "Tell us more about how you felt during this session...",
+    "submitting": "Submitting...",
+    "submit": "Submit rating",
+    "skip": "Maybe later",
+    "secure": "SECURE & CONFIDENTIAL PARTICIPATION",
+
+    "emojis": {
+      "terrible": "Very bad",
+      "bad": "Bad",
+      "regular": "Regular",
+      "good": "Good",
+      "excellent": "Excellent"
+    },
+
+    "anonymous": {
+      "label": "Stay anonymous",
+      "description": "The specialist will not see your identity with these comments."
+    },
+
+    "errors": {
+      "scoreRequired": "You must select a score to continue."
+    },
+
+    "alreadyRated": {
+      "title": "Thanks for your rating!",
+      "description": "You have already rated this session. Your feedback has been recorded.",
+      "close": "Close"
+    },
+
+    "toast": {
+      "success": "✅ Rating submitted successfully",
+      "error": "❌ Error submitting rating"
+    }
   }
 }
 

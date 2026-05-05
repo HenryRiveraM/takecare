@@ -1,0 +1,97 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="onOverlayClick()">
+
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <div class="header-icon">
+        <i class="fas fa-heart"></i>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="already-rated" *ngIf="alreadyRated">
+        <i class="fas fa-check-circle check-icon"></i>
+        <h2>{{ 'rating.alreadyRated.title' | translate }}</h2>
+        <p>{{ 'rating.alreadyRated.description' | translate }}</p>
+        <button class="btn-close-modal" (click)="close()">
+          {{ 'rating.alreadyRated.close' | translate }}
+        </button>
+      </div>
+
+      <ng-container *ngIf="!alreadyRated">
+        <h2 class="modal-title">{{ 'rating.title' | translate }}</h2>
+        <p class="modal-subtitle">{{ 'rating.subtitle' | translate }}</p>
+        <div class="specialist-info" *ngIf="specialistName">
+          <div class="specialist-avatar">{{ getInitials(specialistName) }}</div>
+          <span class="specialist-name">{{ specialistName }}</span>
+        </div>
+
+        <div class="rating-section">
+          <span class="rating-label">{{ 'rating.rateLabel' | translate }}</span>
+          <div class="emoji-row">
+            <button
+              *ngFor="let emoji of emojis; let i = index"
+              class="emoji-btn"
+              [class.selected]="selectedScore === i + 1"
+              [class.dimmed]="selectedScore !== null && selectedScore !== i + 1"
+              (click)="selectScore(i + 1)"
+              [title]="emoji.label | translate">
+              <span class="emoji">{{ emoji.icon }}</span>
+              <span class="emoji-num">{{ i + 1 }}</span>
+            </button>
+          </div>
+
+          <p class="score-label" *ngIf="selectedScore">
+            {{ getScoreLabel(selectedScore) | translate }}
+          </p>
+
+          <p class="field-error" *ngIf="scoreError">
+            {{ 'rating.errors.scoreRequired' | translate }}
+          </p>
+        </div>
+
+        <div class="comment-section">
+          <label class="comment-label">{{ 'rating.commentLabel' | translate }}</label>
+          <textarea
+            [(ngModel)]="comment"
+            [placeholder]="'rating.commentPlaceholder' | translate"
+            maxlength="500"
+            rows="4"
+            class="comment-input">
+          </textarea>
+          <span class="char-count">{{ comment.length }}/500</span>
+        </div>
+
+        <div class="anonymous-section">
+          <div class="anonymous-info">
+            <strong>{{ 'rating.anonymous.label' | translate }}</strong>
+            <p>{{ 'rating.anonymous.description' | translate }}</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="isAnonymous" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button
+            class="btn-submit"
+            [disabled]="isSubmitting"
+            (click)="submit()">
+            <i [class]="isSubmitting ? 'fas fa-spinner fa-spin' : 'fas fa-paper-plane'"></i>
+            {{ isSubmitting ? ('rating.submitting' | translate) : ('rating.submit' | translate) }}
+          </button>
+
+          <button class="btn-skip" (click)="close()">
+            {{ 'rating.skip' | translate }}
+          </button>
+        </div>
+
+        <div class="modal-footer">
+          <i class="fas fa-shield-alt"></i>
+          <span>{{ 'rating.secure' | translate }}</span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
