@@ -925,13 +925,22 @@
     },
 
     "actions": {
-      "delete": "Eliminar"
+      "delete": "Eliminar",
+      "preview": "Previsualizar"
     },
 
     "empty": {
       "title": "Aún no tienes recursos",
       "description": "Sube materiales de apoyo para compartir con tus pacientes.",
       "action": "Subir mi primer recurso"
+    },
+
+    "preview": {
+      "wordUnsupported": "Vista previa no disponible",
+      "wordDescription": "Los archivos Word no se pueden previsualizar. Ábrelo en una nueva pestaña.",
+      "openExternal": "Abrir archivo",
+      "notAvailable": "Archivo no disponible aún",
+      "notAvailableDesc": "El archivo estará disponible una vez que el backend procese la subida."
     }
   },
 
@@ -974,7 +983,6 @@
       "error": "❌ Error al enviar la calificación"
     }
   }
-
 }
 
 

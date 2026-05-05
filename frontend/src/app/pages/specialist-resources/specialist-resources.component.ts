@@ -6,6 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { AuthService } from '../../services/auth.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 const ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx'];
 const ALLOWED_TYPES = [
@@ -22,13 +23,11 @@ export interface Resource {
   fileName: string;
   fileUrl: string;
   uploadedAt: Date;
-  isPublic: boolean;
 }
 
 interface ResourceForm {
   title: string;
   description: string;
-  isPublic: boolean;
 }
 
 interface FieldErrors {
@@ -56,7 +55,7 @@ export class SpecialistResourcesComponent implements OnInit {
   toastType: 'success' | 'error' = 'success';
   private toastTimer: any;
 
-  form: ResourceForm = { title: '', description: '', isPublic: false };
+  form: ResourceForm = { title: '', description: '' };
   selectedFile: File | null = null;
   fieldErrors: FieldErrors = { title: '', description: '', file: '' };
 
@@ -66,7 +65,8 @@ export class SpecialistResourcesComponent implements OnInit {
 
   constructor(
     public sidebarService: SidebarService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -183,7 +183,6 @@ export class SpecialistResourcesComponent implements OnInit {
         fileName: this.selectedFile!.name,
         fileUrl: '',
         uploadedAt: new Date(),
-        isPublic: this.form.isPublic
       };
       this.resources.unshift(newResource);
       this.closeUploadPanel();
@@ -195,9 +194,6 @@ export class SpecialistResourcesComponent implements OnInit {
   deleteResource(resource: Resource): void {
     this.resources = this.resources.filter(r => r.id !== resource.id);
     this.showToastMessage('resources.toast.deleted', 'success');
-  }
-
-  toggleVisibility(resource: Resource): void {    
   }
 
   showToastMessage(messageKey: string, type: 'success' | 'error'): void {
@@ -221,9 +217,33 @@ export class SpecialistResourcesComponent implements OnInit {
   }
 
   private resetForm(): void {
-    this.form = { title: '', description: '', isPublic: false };
+    this.form = { title: '', description: '' };
     this.selectedFile = null;
     this.fieldErrors = { title: '', description: '', file: '' };
     this.isDragging = false;
+  }
+
+  previewResource$: Resource | null = null;
+
+  previewResource(resource: Resource): void {
+    this.previewResource$ = resource;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closePreview(): void {
+    this.previewResource$ = null;
+    document.body.style.overflow = '';
+  }
+
+  getSafeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  isPdf(filename: string): boolean {
+    return /\.pdf$/i.test(filename);
+  }
+
+  isWord(filename: string): boolean {
+    return /\.(doc|docx)$/i.test(filename);
   }
 }
