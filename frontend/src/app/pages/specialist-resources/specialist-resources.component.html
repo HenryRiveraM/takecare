@@ -101,26 +101,8 @@
                 </button>
               </div>
             </div>
-
         </div>
-
-        <div class="field-group">
-            <label>{{ 'resources.upload.fields.visibility' | translate }}</label>
-            <div class="visibility-toggle">
-                <div class="visibility-info">
-                <i [class]="form.isPublic ? 'fas fa-globe' : 'fas fa-lock'"></i>
-                <div>
-                    <strong>{{ (form.isPublic ? 'resources.visibility.public' : 'resources.visibility.private') | translate }}</strong>
-                    <p>{{ (form.isPublic ? 'resources.visibility.publicDesc' : 'resources.visibility.privateDesc') | translate }}</p>
-                </div>
-                </div>
-                <label class="toggle-switch">
-                <input type="checkbox" [(ngModel)]="form.isPublic" />
-                <span class="toggle-slider"></span>
-                </label>
-            </div>
-            </div>
-
+        
           <div class="upload-actions">
             <button class="btn-secondary" (click)="closeUploadPanel()">
               {{ 'resources.upload.cancel' | translate }}
@@ -169,24 +151,55 @@
               <span class="resource-meta">{{ resource.fileName }} · {{ resource.uploadedAt | date:'dd/MM/yyyy' }}</span>
             </div>
 
-            <div class="card-footer">
-                <div class="visibility-row">
-                    <div class="visibility-label">
-                        <i [class]="resource.isPublic ? 'fas fa-globe' : 'fas fa-lock'"></i>
-                        <span>{{ (resource.isPublic ? 'resources.visibility.public' : 'resources.visibility.private') | translate }}</span>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" [(ngModel)]="resource.isPublic" (change)="toggleVisibility(resource)" />
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <button class="btn-icon btn-delete" (click)="deleteResource(resource)" [title]="'resources.actions.delete' | translate">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
+            <div class="resource-actions">
+              <button class="btn-icon btn-preview" (click)="previewResource(resource)" [title]="'resources.actions.preview' | translate">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn-icon btn-delete" (click)="deleteResource(resource)" [title]="'resources.actions.delete' | translate">
+                <i class="fas fa-trash-alt"></i>
+              </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="preview-modal" *ngIf="previewResource$ !== null" (click)="closePreview()">
+    <div class="preview-content" (click)="$event.stopPropagation()">
+
+      <div class="preview-header">
+        <span class="preview-title">{{ previewResource$?.title }}</span>
+        <button class="btn-close-preview" (click)="closePreview()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="preview-body">
+
+        <iframe
+          *ngIf="isPdf(previewResource$?.fileName || '')"
+          [src]="getSafeUrl(previewResource$?.fileUrl || '')"
+          class="preview-iframe">
+        </iframe>
+
+        <div *ngIf="isWord(previewResource$?.fileName || '')" class="preview-unsupported">
+          <i class="fas fa-file-word"></i>
+          <h3>{{ 'resources.preview.wordUnsupported' | translate }}</h3>
+          <p>{{ 'resources.preview.wordDescription' | translate }}</p>
+          <a [href]="previewResource$?.fileUrl" target="_blank" class="btn-primary">
+            <i class="fas fa-external-link-alt"></i>
+            {{ 'resources.preview.openExternal' | translate }}
+          </a>
+        </div>
+
+        <div *ngIf="!previewResource$?.fileUrl" class="preview-unsupported">
+          <i class="fas fa-clock"></i>
+          <h3>{{ 'resources.preview.notAvailable' | translate }}</h3>
+          <p>{{ 'resources.preview.notAvailableDesc' | translate }}</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

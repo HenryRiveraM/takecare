@@ -924,13 +924,22 @@
     },
 
     "actions": {
-      "delete": "Delete"
+      "delete": "Delete",
+      "preview": "Preview"
     },
 
     "empty": {
       "title": "No resources yet",
       "description": "Upload support materials to share with your patients.",
       "action": "Upload my first resource"
+    },
+
+    "preview": {
+      "wordUnsupported": "Preview not available",
+      "wordDescription": "Word files cannot be previewed. Open it in a new tab.",
+      "openExternal": "Open file",
+      "notAvailable": "File not available yet",
+      "notAvailableDesc": "The file will be available once the backend processes the upload."
     }
   }
 }
