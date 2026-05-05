@@ -1,6 +1,5 @@
 <div class="dashboard">
 
-  <!-- Sidebar -->
   <app-sidebar></app-sidebar>
 
   <div class="sidebar-overlay"
@@ -49,9 +48,20 @@
           <p>{{ 'patientDashboard.stats.favoriteSpecialists' | translate }}</p>
         </div>
       </div>
-      
+
     </div>
-    
+
+    <button (click)="openRatingModal()" class="btn-test-rating">
+      Probar Modal de Calificación
+    </button>
+
+    <app-rating-modal
+      #ratingModal
+      (rated)="onRated($event)"
+      (closed)="onModalClosed()">
+    </app-rating-modal>
+
   </div>
 
 </div>
+

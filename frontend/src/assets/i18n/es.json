@@ -933,6 +933,46 @@
       "description": "Sube materiales de apoyo para compartir con tus pacientes.",
       "action": "Subir mi primer recurso"
     }
+  },
+
+  "rating": {
+    "title": "¿Cómo estuvo tu sesión?",
+    "subtitle": "Tu opinión nos ayuda a mejorar la atención de nuestros especialistas.",
+    "rateLabel": "CALIFICA TU EXPERIENCIA",
+    "commentLabel": "¿Algo más que quieras compartir?",
+    "commentPlaceholder": "Cuéntanos más sobre cómo te sentiste en esta sesión...",
+    "submitting": "Enviando...",
+    "submit": "Enviar calificación",
+    "skip": "Quizás más tarde",
+    "secure": "PARTICIPACIÓN SEGURA Y CONFIDENCIAL",
+
+    "emojis": {
+      "terrible": "Muy malo",
+      "bad": "Malo",
+      "regular": "Regular",
+      "good": "Bueno",
+      "excellent": "Excelente"
+    },
+
+    "anonymous": {
+      "label": "Permanecer anónimo",
+      "description": "El especialista no verá tu identidad con estos comentarios."
+    },
+
+    "errors": {
+      "scoreRequired": "Debes seleccionar una puntuación para continuar."
+    },
+
+    "alreadyRated": {
+      "title": "¡Gracias por tu calificación!",
+      "description": "Ya has calificado esta sesión. Tu opinión ha sido registrada.",
+      "close": "Cerrar"
+    },
+
+    "toast": {
+      "success": "✅ Calificación enviada correctamente",
+      "error": "❌ Error al enviar la calificación"
+    }
   }
 
 }

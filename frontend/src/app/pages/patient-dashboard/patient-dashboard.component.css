@@ -186,6 +186,23 @@ app-root {
   overflow: hidden;
 }
 
+/* boton de prueba*/
+.btn-test-rating {
+  position: fixed;  
+  bottom: 30px;      
+  right: 30px;      
+  z-index: 1100;     
+  padding: 12px 24px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: block !important;
+}
+
 @media (max-width: 768px) {
   .main {
     margin-left: 0; 
