@@ -944,43 +944,77 @@
     }
   },
 
-  "rating": {
-    "title": "¿Cómo estuvo tu sesión?",
-    "subtitle": "Tu opinión nos ayuda a mejorar la atención de nuestros especialistas.",
-    "rateLabel": "CALIFICA TU EXPERIENCIA",
-    "commentLabel": "¿Algo más que quieras compartir?",
-    "commentPlaceholder": "Cuéntanos más sobre cómo te sentiste en esta sesión...",
-    "submitting": "Enviando...",
-    "submit": "Enviar calificación",
-    "skip": "Quizás más tarde",
-    "secure": "PARTICIPACIÓN SEGURA Y CONFIDENCIAL",
+  "patientAppointments": {
+    "tag": "Mis citas",
+    "title": "Solicitudes de cita",
+    "subtitle": "Revisa el estado de tus citas solicitadas y cancela aquellas que aún correspondan.",
+    "loading": "Cargando tus citas...",
 
-    "emojis": {
-      "terrible": "Muy malo",
-      "bad": "Malo",
-      "regular": "Regular",
-      "good": "Bueno",
-      "excellent": "Excelente"
+    "card": {
+      "requestedBy": "Cita solicitada por",
+      "registeredDate": "Solicitud registrada",
+      "sessionType": "Tipo de sesión",
+      "virtual": "Virtual",
+      "presential": "Presencial"
     },
 
-    "anonymous": {
-      "label": "Permanecer anónimo",
-      "description": "El especialista no verá tu identidad con estos comentarios."
+    "status": {
+      "pending": "Pendiente",
+      "accepted": "Aceptada",
+      "rejected": "Rechazada",
+      "finished": "Finalizada",
+      "cancelled": "Cancelada"
     },
 
-    "errors": {
-      "scoreRequired": "Debes seleccionar una puntuación para continuar."
+    "actions": {
+      "cancel": "Cancelar cita",
+      "cancelling": "Cancelando...",
+      "cancelBtn": "Cancelar"
     },
 
-    "alreadyRated": {
-      "title": "¡Gracias por tu calificación!",
-      "description": "Ya has calificado esta sesión. Tu opinión ha sido registrada.",
-      "close": "Cerrar"
+    "empty": {
+      "title": "Aún no tienes citas solicitadas",
+      "description": "Cuando solicites una cita con un especialista, aparecerá en esta sección."
     },
 
-    "toast": {
-      "success": "✅ Calificación enviada correctamente",
-      "error": "❌ Error al enviar la calificación"
+    "cancel": {
+      "title": "Cancelar cita",
+      "message": "¿Estás seguro de que deseas cancelar esta cita?",
+      "specialist": "Especialista",
+      "currentStatus": "Estado actual",
+      "keep": "No, mantener cita",
+      "confirm": "Sí, cancelar"
+    },
+
+    "rating": {
+      "saved": "Calificación guardada",
+      "create": "Calificar especialista",
+      "edit": "Editar calificación",
+      "title": "Calificar especialista",
+      "question": "¿Cómo estuvo tu sesión con",
+      "score": "Puntuación",
+      "placeholder": "Cuéntanos sobre tu experiencia...",
+      "save": "Guardar calificación",
+      "saving": "Guardando..."
+    },
+
+    "report": {
+      "saved": "Reporte enviado",
+      "create": "Reportar especialista",
+      "edit": "Editar reporte",
+      "title": "Reportar especialista",
+      "subtitle": "Reportar a",
+      "reasonPlaceholder": "Selecciona un motivo",
+      "placeholder": "Describe lo que ocurrió...",
+      "save": "Enviar reporte",
+      "saving": "Enviando...",
+      "reasons": {
+        "disrespect": "Falta de respeto",
+        "aggression": "Agresión",
+        "absence": "Ausencia sin aviso",
+        "inappropriateLanguage": "Lenguaje inapropiado",
+        "other": "Otro"
+      }
     }
   }
 }

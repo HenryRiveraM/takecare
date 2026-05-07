@@ -3,13 +3,13 @@
 
   <main class="main">
     <section class="header">
-      <span class="tag">Mis citas</span>
-      <h1>Solicitudes de cita</h1>
-      <p>Revisa el estado de tus citas solicitadas y cancela aquellas que aún correspondan.</p>
+      <span class="tag">{{ 'patientAppointments.tag' | translate }}</span>
+      <h1>{{ 'patientAppointments.title' | translate }}</h1>
+      <p>{{ 'patientAppointments.subtitle' | translate }}</p>
     </section>
 
     <div class="status-card" *ngIf="loading">
-      Cargando tus citas...
+      {{ 'patientAppointments.loading' | translate }}
     </div>
 
     <div class="status-card error" *ngIf="errorMsg">
@@ -22,26 +22,30 @@
 
     <section class="appointments-list" *ngIf="!loading && !errorMsg && appointments.length > 0">
       <article class="appointment-card" *ngFor="let appointment of appointments">
+
         <div class="card-header">
           <div>
             <h2>{{ appointment.specialistName }}</h2>
-            <p>Cita solicitada por {{ appointment.patientName }}</p>
+            <p>{{ 'patientAppointments.card.requestedBy' | translate }} {{ appointment.patientName }}</p>
           </div>
-
           <span class="status-badge" [ngClass]="getStatusClass(appointment.status)">
-            {{ getStatusLabel(appointment.status) }}
+            {{ getStatusLabel(appointment.status) | translate }}
           </span>
         </div>
 
         <div class="appointment-meta">
           <div class="meta-item">
             <span class="material-symbols-outlined">event</span>
-            <span>Solicitud registrada: {{ appointment.createdDate | date:'dd/MM/yyyy HH:mm' }}</span>
+            <span>{{ 'patientAppointments.card.registeredDate' | translate }}: {{ appointment.createdDate | date:'dd/MM/yyyy HH:mm' }}</span>
           </div>
-
           <div class="meta-item">
             <span class="material-symbols-outlined">schedule</span>
-            <span>Tipo de sesión: {{ appointment.typeOfSession === 1 ? 'Virtual' : 'Presencial' }}</span>
+            <span>
+              {{ 'patientAppointments.card.sessionType' | translate }}:
+              {{ appointment.typeOfSession === 1
+                ? ('patientAppointments.card.virtual' | translate)
+                : ('patientAppointments.card.presential' | translate) }}
+            </span>
           </div>
         </div>
 
@@ -52,62 +56,207 @@
             *ngIf="canCancel(appointment)"
             [disabled]="cancellingId === appointment.id"
             (click)="openCancelConfirm(appointment)">
-            {{ cancellingId === appointment.id ? 'Cancelando...' : 'Cancelar cita' }}
-           </button>
+            {{ cancellingId === appointment.id
+              ? ('patientAppointments.actions.cancelling' | translate)
+              : ('patientAppointments.actions.cancel' | translate) }}
+          </button>
         </div>
+
+        <!-- RATING Y REPORTE -->
+        <div class="rating-section" *ngIf="isRateable(appointment)">
+
+          <div class="rating-summary" *ngIf="hasRating(appointment.id)">
+            <div class="rating-summary-header">
+              <span class="rating-chip">{{ 'patientAppointments.rating.saved' | translate }}</span>
+              <div class="rating-stars-readonly">
+                <span
+                  *ngFor="let filled of getStarArray(getRating(appointment.id)?.stars || 0)"
+                  class="material-symbols-outlined"
+                  [class.filled]="filled === 1">
+                  star
+                </span>
+              </div>
+            </div>
+            <p class="rating-comment">{{ getRating(appointment.id)?.comment }}</p>
+          </div>
+
+          <button class="btn-rate" (click)="openRatingDialog(appointment)">
+            <i class="fas fa-star"></i>
+            {{ (hasRating(appointment.id)
+              ? 'patientAppointments.rating.edit'
+              : 'patientAppointments.rating.create') | translate }}
+          </button>
+
+          <div class="report-summary" *ngIf="hasReport(appointment.id)">
+            <div class="report-summary-header">
+              <span class="report-chip">{{ 'patientAppointments.report.saved' | translate }}</span>
+              <span class="report-reason">{{ getReport(appointment.id)?.reason | translate }}</span>
+            </div>
+            <p class="report-comment">{{ getReport(appointment.id)?.details }}</p>
+          </div>
+
+          <button class="btn-report" (click)="openReportDialog(appointment)">
+            <i class="fas fa-flag"></i>
+            {{ (hasReport(appointment.id)
+              ? 'patientAppointments.report.edit'
+              : 'patientAppointments.report.create') | translate }}
+          </button>
+
+        </div>
+
       </article>
     </section>
 
     <section class="empty-state" *ngIf="!loading && !errorMsg && appointments.length === 0">
-      <h2>Aún no tienes citas solicitadas</h2>
-      <p>Cuando solicites una cita con un especialista, aparecerá en esta sección.</p>
+      <h2>{{ 'patientAppointments.empty.title' | translate }}</h2>
+      <p>{{ 'patientAppointments.empty.description' | translate }}</p>
     </section>
 
+    <!-- MODAL CANCELAR -->
     <div class="modal-backdrop" *ngIf="showCancelConfirm">
-        <div class="confirm-card">
-            <div class="confirm-icon">
-            <span class="material-symbols-outlined">event_busy</span>
-            </div>
-
-            <h2>Cancelar cita</h2>
-
-            <p>
-            ¿Estás seguro de que deseas cancelar esta cita?
-            </p>
-
-            <div class="confirm-details" *ngIf="appointmentToCancel">
-            <span>
-                Especialista:
-                <strong>{{ appointmentToCancel.specialistName }}</strong>
-            </span>
-
-            <span>
-                Estado actual:
-                <strong>{{ getStatusLabel(appointmentToCancel.status) }}</strong>
-            </span>
-            </div>
-
-            <div class="confirm-actions">
-            <button
-                type="button"
-                class="btn-keep"
-                (click)="closeCancelConfirm()">
-                No, mantener cita
-            </button>
-
-            <button
-                type="button"
-                class="btn-confirm-cancel"
-                [disabled]="cancellingId === appointmentToCancel?.id"
-                (click)="confirmCancelAppointment()">
-                {{
-                cancellingId === appointmentToCancel?.id
-                    ? 'Cancelando...'
-                    : 'Sí, cancelar'
-                }}
-            </button>
-            </div>
+      <div class="confirm-card">
+        <div class="confirm-icon">
+          <span class="material-symbols-outlined">event_busy</span>
         </div>
+        <h2>{{ 'patientAppointments.cancel.title' | translate }}</h2>
+        <p>{{ 'patientAppointments.cancel.message' | translate }}</p>
+        <div class="confirm-details" *ngIf="appointmentToCancel">
+          <span>
+            {{ 'patientAppointments.cancel.specialist' | translate }}:
+            <strong>{{ appointmentToCancel.specialistName }}</strong>
+          </span>
+          <span>
+            {{ 'patientAppointments.cancel.currentStatus' | translate }}:
+            <strong>{{ getStatusLabel(appointmentToCancel.status) | translate }}</strong>
+          </span>
+        </div>
+        <div class="confirm-actions">
+          <button type="button" class="btn-keep" (click)="closeCancelConfirm()">
+            {{ 'patientAppointments.cancel.keep' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn-confirm-cancel"
+            [disabled]="cancellingId === appointmentToCancel?.id"
+            (click)="confirmCancelAppointment()">
+            {{ cancellingId === appointmentToCancel?.id
+              ? ('patientAppointments.actions.cancelling' | translate)
+              : ('patientAppointments.cancel.confirm' | translate) }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast"
+      [class.show]="showToast"
+      [class.toast-success]="toastType === 'success'"
+      [class.toast-error]="toastType === 'error'">
+      <i [class]="toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+      {{ toastMessage }}
+    </div>
+
+    <!-- MODAL RATING -->
+    <div class="confirm-overlay" *ngIf="ratingDialog.visible" (click)="closeRatingDialog()">
+      <div class="confirm-dialog rating-dialog" (click)="$event.stopPropagation()">
+
+        <div class="confirm-icon icon-rate">
+          <i class="fas fa-star"></i>
+        </div>
+
+        <h3 class="confirm-title">{{ 'patientAppointments.rating.title' | translate }}</h3>
+
+        <p class="confirm-message">
+          {{ 'patientAppointments.rating.question' | translate }}
+          <strong>{{ ratingDialog.appointment?.specialistName }}</strong>?
+        </p>
+
+        <div class="rating-stars-picker">
+          <button
+            type="button"
+            class="star-button"
+            *ngFor="let star of [1,2,3,4,5]"
+            (click)="setRatingStars(star)"
+            [class.active]="star <= ratingDialog.stars">
+            <span class="material-symbols-outlined">star</span>
+          </button>
+        </div>
+
+        <div class="rating-helper" *ngIf="ratingDialog.stars > 0">
+          {{ 'patientAppointments.rating.score' | translate }}: {{ ratingDialog.stars }}/5
+        </div>
+
+        <textarea
+          class="rating-textarea"
+          [(ngModel)]="ratingDialog.comment"
+          maxlength="240"
+          [placeholder]="'patientAppointments.rating.placeholder' | translate">
+        </textarea>
+
+        <div class="rating-length">{{ ratingDialog.comment.length }}/240</div>
+
+        <p class="rating-error" *ngIf="ratingDialog.error">{{ ratingDialog.error }}</p>
+
+        <div class="confirm-actions">
+          <button class="btn-secondary" (click)="closeRatingDialog()">
+            {{ 'patientAppointments.actions.cancelBtn' | translate }}
+          </button>
+          <button class="btn-rate-submit" (click)="saveRating()" [disabled]="ratingDialog.saving">
+            {{ ratingDialog.saving
+              ? ('patientAppointments.rating.saving' | translate)
+              : ('patientAppointments.rating.save' | translate) }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MODAL REPORTE -->
+    <div class="confirm-overlay" *ngIf="reportDialog.visible" (click)="closeReportDialog()">
+      <div class="confirm-dialog rating-dialog" (click)="$event.stopPropagation()">
+
+        <div class="confirm-icon icon-report">
+          <i class="fas fa-flag"></i>
+        </div>
+
+        <h3 class="confirm-title">{{ 'patientAppointments.report.title' | translate }}</h3>
+
+        <p class="confirm-message">
+          {{ 'patientAppointments.report.subtitle' | translate }}
+          <strong>{{ reportDialog.appointment?.specialistName }}</strong>
+        </p>
+
+        <select class="report-select" [(ngModel)]="reportDialog.reason">
+          <option value="">{{ 'patientAppointments.report.reasonPlaceholder' | translate }}</option>
+          <option value="patientAppointments.report.reasons.disrespect">{{ 'patientAppointments.report.reasons.disrespect' | translate }}</option>
+          <option value="patientAppointments.report.reasons.aggression">{{ 'patientAppointments.report.reasons.aggression' | translate }}</option>
+          <option value="patientAppointments.report.reasons.absence">{{ 'patientAppointments.report.reasons.absence' | translate }}</option>
+          <option value="patientAppointments.report.reasons.inappropriateLanguage">{{ 'patientAppointments.report.reasons.inappropriateLanguage' | translate }}</option>
+          <option value="patientAppointments.report.reasons.other">{{ 'patientAppointments.report.reasons.other' | translate }}</option>
+        </select>
+
+        <textarea
+          class="rating-textarea"
+          [(ngModel)]="reportDialog.details"
+          maxlength="320"
+          [placeholder]="'patientAppointments.report.placeholder' | translate">
+        </textarea>
+
+        <div class="rating-length">{{ reportDialog.details.length }}/320</div>
+
+        <p class="rating-error" *ngIf="reportDialog.error">{{ reportDialog.error }}</p>
+
+        <div class="confirm-actions">
+          <button class="btn-secondary" (click)="closeReportDialog()">
+            {{ 'patientAppointments.actions.cancelBtn' | translate }}
+          </button>
+          <button class="btn-report-submit" (click)="saveReport()" [disabled]="reportDialog.saving">
+            {{ reportDialog.saving
+              ? ('patientAppointments.report.saving' | translate)
+              : ('patientAppointments.report.save' | translate) }}
+          </button>
+        </div>
+      </div>
     </div>
   </main>
 </div>
