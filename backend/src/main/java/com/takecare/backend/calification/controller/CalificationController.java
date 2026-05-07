@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.takecare.backend.calification.dto.CalificationResponseDTO;
 import com.takecare.backend.calification.dto.CreateCalificationRequestDTO;
 import com.takecare.backend.calification.service.CalificationService;
-import com.takecare.backend.user.model.User;
 
 import jakarta.validation.Valid;
 
@@ -39,17 +36,15 @@ public class CalificationController {
     @PostMapping("/{sessionId}/patient-ratings")
     public ResponseEntity<?> createPatientRating(
             @PathVariable Integer sessionId,
-            @Valid @RequestBody CreateCalificationRequestDTO request,
-            @AuthenticationPrincipal User requestingUser
+            @Valid @RequestBody CreateCalificationRequestDTO request
     ) {
-        logger.info("POST /api/v1/sessions/{}/patient-ratings - specialistId={}",
-                sessionId, requestingUser != null ? requestingUser.getId() : "anonymous");
+        logger.info("POST /api/v1/sessions/{}/patient-ratings", sessionId);
 
         try {
             CalificationResponseDTO response = calificationService.createPatientRating(
                     sessionId,
                     request,
-                    requestingUser
+                    null
             );
 
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -57,11 +52,6 @@ public class CalificationController {
         } catch (NoSuchElementException e) {
             logger.warn("POST patient rating - session not found: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("message", e.getMessage()));
-
-        } catch (AccessDeniedException e) {
-            logger.warn("POST patient rating - access denied: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("message", e.getMessage()));
 
         } catch (DuplicateKeyException e) {
@@ -83,16 +73,14 @@ public class CalificationController {
 
     @GetMapping("/{sessionId}/patient-ratings")
     public ResponseEntity<?> getPatientRating(
-            @PathVariable Integer sessionId,
-            @AuthenticationPrincipal User requestingUser
+            @PathVariable Integer sessionId
     ) {
-        logger.info("GET /api/v1/sessions/{}/patient-ratings - specialistId={}",
-                sessionId, requestingUser != null ? requestingUser.getId() : "anonymous");
+        logger.info("GET /api/v1/sessions/{}/patient-ratings", sessionId);
 
         try {
             CalificationResponseDTO response = calificationService.getPatientRating(
                     sessionId,
-                    requestingUser
+                    null
             );
 
             return ResponseEntity.ok(response);
@@ -100,11 +88,6 @@ public class CalificationController {
         } catch (NoSuchElementException e) {
             logger.warn("GET patient rating - not found: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("message", e.getMessage()));
-
-        } catch (AccessDeniedException e) {
-            logger.warn("GET patient rating - access denied: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("message", e.getMessage()));
 
         } catch (RuntimeException e) {
