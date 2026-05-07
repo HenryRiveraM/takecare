@@ -62,7 +62,6 @@
           </button>
         </div>
 
-        <!-- RATING Y REPORTE -->
         <div class="rating-section" *ngIf="isRateable(appointment)">
 
           <div class="rating-summary" *ngIf="hasRating(appointment.id)">
@@ -112,7 +111,6 @@
       <p>{{ 'patientAppointments.empty.description' | translate }}</p>
     </section>
 
-    <!-- MODAL CANCELAR -->
     <div class="modal-backdrop" *ngIf="showCancelConfirm">
       <div class="confirm-card">
         <div class="confirm-icon">
@@ -147,7 +145,6 @@
       </div>
     </div>
 
-    <!-- TOAST -->
     <div class="toast"
       [class.show]="showToast"
       [class.toast-success]="toastType === 'success'"
@@ -156,7 +153,6 @@
       {{ toastMessage }}
     </div>
 
-    <!-- MODAL RATING -->
     <div class="confirm-overlay" *ngIf="ratingDialog.visible" (click)="closeRatingDialog()">
       <div class="confirm-dialog rating-dialog" (click)="$event.stopPropagation()">
 
@@ -211,7 +207,6 @@
       </div>
     </div>
 
-    <!-- MODAL REPORTE -->
     <div class="confirm-overlay" *ngIf="reportDialog.visible" (click)="closeReportDialog()">
       <div class="confirm-dialog rating-dialog" (click)="$event.stopPropagation()">
 

@@ -440,7 +440,6 @@
 
 .btn-report:hover { background: #ffe7dc; transform: translateY(-1px); }
 
-/* --- MODALES --- */
 .confirm-overlay {
   position: fixed;
   inset: 0;
