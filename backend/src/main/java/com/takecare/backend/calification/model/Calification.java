@@ -1,11 +1,15 @@
 package com.takecare.backend.calification.model;
 
-import jakarta.persistence.*;
+import com.takecare.backend.session.model.Session;
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.model.Specialist;
-import com.takecare.backend.session.model.Session;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "califications")
 public class Calification {
@@ -33,4 +37,7 @@ public class Calification {
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @Column(name = "evaluator_role")
+    private String evaluatorRole;
 }
