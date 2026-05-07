@@ -943,43 +943,77 @@
     }
   },
 
-  "rating": {
-    "title": "How was your session?",
-    "subtitle": "Your feedback helps us improve the care of our specialists.",
-    "rateLabel": "RATE YOUR EXPERIENCE",
-    "commentLabel": "Anything else you'd like to share?",
-    "commentPlaceholder": "Tell us more about how you felt during this session...",
-    "submitting": "Submitting...",
-    "submit": "Submit rating",
-    "skip": "Maybe later",
-    "secure": "SECURE & CONFIDENTIAL PARTICIPATION",
+  "patientAppointments": {
+    "tag": "My appointments",
+    "title": "Appointment requests",
+    "subtitle": "Check the status of your requested appointments and cancel those that still apply.",
+    "loading": "Loading your appointments...",
 
-    "emojis": {
-      "terrible": "Very bad",
-      "bad": "Bad",
-      "regular": "Regular",
-      "good": "Good",
-      "excellent": "Excellent"
+    "card": {
+      "requestedBy": "Appointment requested by",
+      "registeredDate": "Request registered",
+      "sessionType": "Session type",
+      "virtual": "Virtual",
+      "presential": "In-person"
     },
 
-    "anonymous": {
-      "label": "Stay anonymous",
-      "description": "The specialist will not see your identity with these comments."
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "finished": "Finished",
+      "cancelled": "Cancelled"
     },
 
-    "errors": {
-      "scoreRequired": "You must select a score to continue."
+    "actions": {
+      "cancel": "Cancel appointment",
+      "cancelling": "Cancelling...",
+      "cancelBtn": "Cancel"
     },
 
-    "alreadyRated": {
-      "title": "Thanks for your rating!",
-      "description": "You have already rated this session. Your feedback has been recorded.",
-      "close": "Close"
+    "empty": {
+      "title": "No appointments yet",
+      "description": "When you request an appointment with a specialist, it will appear here."
     },
 
-    "toast": {
-      "success": "✅ Rating submitted successfully",
-      "error": "❌ Error submitting rating"
+    "cancel": {
+      "title": "Cancel appointment",
+      "message": "Are you sure you want to cancel this appointment?",
+      "specialist": "Specialist",
+      "currentStatus": "Current status",
+      "keep": "No, keep appointment",
+      "confirm": "Yes, cancel"
+    },
+
+    "rating": {
+      "saved": "Rating saved",
+      "create": "Rate specialist",
+      "edit": "Edit rating",
+      "title": "Rate specialist",
+      "question": "How was your session with",
+      "score": "Score",
+      "placeholder": "Tell us about your experience...",
+      "save": "Save rating",
+      "saving": "Saving..."
+    },
+
+    "report": {
+      "saved": "Report submitted",
+      "create": "Report specialist",
+      "edit": "Edit report",
+      "title": "Report specialist",
+      "subtitle": "Report",
+      "reasonPlaceholder": "Select a reason",
+      "placeholder": "Describe what happened...",
+      "save": "Submit report",
+      "saving": "Submitting...",
+      "reasons": {
+        "disrespect": "Disrespect",
+        "aggression": "Aggression",
+        "absence": "Absence without notice",
+        "inappropriateLanguage": "Inappropriate language",
+        "other": "Other"
+      }
     }
   }
 }
