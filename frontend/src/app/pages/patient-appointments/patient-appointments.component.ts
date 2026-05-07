@@ -47,17 +47,14 @@ export class PatientAppointmentsComponent implements OnInit {
   showCancelConfirm = false;
   patientId!: number;
 
-  // --- TOAST ---
   showToast = false;
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
   private toastTimer: any;
 
-  // --- RATINGS Y REPORTES ---
   ratingsBySession: Record<number, SessionRating> = {};
   reportsBySession: Record<number, SessionReport> = {};
 
-  // --- DIALOGS ---
   ratingDialog: RatingDialog = {
     visible: false,
     appointment: null,
@@ -88,11 +85,7 @@ export class PatientAppointmentsComponent implements OnInit {
     this.loadAppointments();
   }
 
-  // ─────────────────────────────────────────
-  // CITAS
-  // ─────────────────────────────────────────
-
-  /*loadAppointments(): void {
+  loadAppointments(): void {
     if (!this.patientId) {
       this.errorMsg = 'No se pudo identificar al paciente actual.';
       return;
@@ -112,61 +105,8 @@ export class PatientAppointmentsComponent implements OnInit {
         this.loading = false;
       }
     });
-  }*/
-
-  loadAppointments(): void {
-    if (!this.patientId) {
-      this.errorMsg = 'No se pudo identificar al paciente actual.';
-      return;
-    }
-
-    this.loading = true;
-    this.errorMsg = '';
-    this.successMsg = '';
-
-    // TODO: quitar mock cuando el backend esté listo
-    setTimeout(() => {
-      this.appointments = [
-        {
-          id: 1,
-          patientId: this.patientId,
-          scheduleId: 1,
-          specialistId: 10,
-          status: 2,
-          typeOfSession: 1,
-          createdDate: '2026-04-01T10:00:00',
-          patientName: 'Juan Pérez',
-          specialistName: 'Dr. Carlos López',
-          patientEmail: 'juan@email.com',
-          scheduleDate: '2026-04-10',
-          startTime: '10:00',
-          endTime: '11:00'
-        },
-        {
-          id: 2,
-          patientId: this.patientId,
-          scheduleId: 2,
-          specialistId: 11,
-          status: 4,
-          typeOfSession: 2,
-          createdDate: '2026-03-20T09:00:00',
-          patientName: 'Juan Pérez',
-          specialistName: 'Dra. María Sánchez',
-          patientEmail: 'juan@email.com',
-          scheduleDate: '2026-03-25',
-          startTime: '09:00',
-          endTime: '10:00'
-        }
-      ];
-      this.loading = false;
-    }, 500);
-
-    // Llamada real al backend — descomentar cuando esté listo:
-    // this.sessionService.getSessionsByPatient(this.patientId).subscribe({
-    //   next: (sessions) => { this.appointments = sessions; this.loading = false; },
-    //   error: (error) => { this.errorMsg = error.error?.message || 'No se pudieron cargar tus citas.'; this.loading = false; }
-    // });
   }
+
 
   openCancelConfirm(appointment: SessionResponse): void {
     this.appointmentToCancel = appointment;
@@ -202,10 +142,6 @@ export class PatientAppointmentsComponent implements OnInit {
       }
     });
   }
-
-  // ─────────────────────────────────────────
-  // RATING DIALOG
-  // ─────────────────────────────────────────
 
   openRatingDialog(appointment: SessionResponse): void {
     const existing = this.ratingsBySession[appointment.id];
@@ -265,10 +201,6 @@ export class PatientAppointmentsComponent implements OnInit {
     this.showToastMessage('Calificación guardada correctamente', 'success');
   }
 
-  // ─────────────────────────────────────────
-  // REPORT DIALOG
-  // ─────────────────────────────────────────
-
   openReportDialog(appointment: SessionResponse): void {
     const existing = this.reportsBySession[appointment.id];
     this.reportDialog = {
@@ -322,13 +254,8 @@ export class PatientAppointmentsComponent implements OnInit {
     this.showToastMessage('Reporte enviado correctamente', 'success');
   }
 
-  // ─────────────────────────────────────────
-  // HELPERS
-  // ─────────────────────────────────────────
-
   isRateable(appointment: SessionResponse): boolean {
-    //return appointment.status === 4 ;
-    return true;
+    return appointment.status === 4 ;
   }
 
   hasRating(sessionId: number): boolean {
@@ -386,8 +313,7 @@ export class PatientAppointmentsComponent implements OnInit {
   }
 
   private loadRatings(): void {
-    const all = this.sessionService.getRatingsBySpecialist(0); // no filtra
-    // Filtra por las sesiones del paciente
+    const all = this.sessionService.getRatingsBySpecialist(0);
     this.ratingsBySession = all.reduce<Record<number, SessionRating>>((acc, r) => {
       acc[r.sessionId] = r;
       return acc;
@@ -395,7 +321,7 @@ export class PatientAppointmentsComponent implements OnInit {
   }
 
   private loadReports(): void {
-    const all = this.sessionService.getReportsBySpecialist(0); // no filtra
+    const all = this.sessionService.getReportsBySpecialist(0);
     this.reportsBySession = all.reduce<Record<number, SessionReport>>((acc, r) => {
       acc[r.sessionId] = r;
       return acc;
