@@ -127,13 +127,14 @@
                 <p class="rating-comment">{{ getRating(apt.id)?.comment }}</p>
               </div>
 
-              <button class="btn-rate" (click)="openRatingDialog(apt)">
+              <button class="btn-rate" *ngIf="!hasRating(apt.id)" (click)="openRatingDialog(apt)">
                 <i class="fas fa-star"></i>
-                {{
+                <!--
                   hasRating(apt.id)
                     ? ('appointments.rating.actions.edit' | translate)
                     : ('appointments.rating.actions.create' | translate)
-                }}
+                -->
+                {{ 'appointments.rating.actions.create' | translate }}
               </button>
 
               <div class="report-summary" *ngIf="hasReport(apt.id)">
@@ -144,7 +145,7 @@
                 <p class="report-comment">{{ getReport(apt.id)?.details }}</p>
               </div>
 
-              <button class="btn-report" (click)="openReportDialog(apt)">
+              <button class="btn-report" *ngIf="!hasReport(apt.id)" (click)="openReportDialog(apt)">
                 <i class="fas fa-flag"></i>
                 {{
                   hasReport(apt.id)
@@ -234,11 +235,11 @@
 
     <select class="report-select" [(ngModel)]="reportDialog.reason">
       <option value="">{{ 'appointments.report.reasonPlaceholder' | translate }}</option>
-      <option value="appointments.report.reasons.disrespect">{{ 'appointments.report.reasons.disrespect' | translate }}</option>
-      <option value="appointments.report.reasons.aggression">{{ 'appointments.report.reasons.aggression' | translate }}</option>
-      <option value="appointments.report.reasons.absence">{{ 'appointments.report.reasons.absence' | translate }}</option>
-      <option value="appointments.report.reasons.inappropriateLanguage">{{ 'appointments.report.reasons.inappropriateLanguage' | translate }}</option>
-      <option value="appointments.report.reasons.other">{{ 'appointments.report.reasons.other' | translate }}</option>
+      <option value="Falta de respeto">{{ 'appointments.report.reasons.disrespect' | translate }}</option>
+      <option value="Actitud agresiva">{{ 'appointments.report.reasons.aggression' | translate }}</option>
+      <option value="Ausencia injustificada">{{ 'appointments.report.reasons.absence' | translate }}</option>
+      <option value="Lenguaje inapropiado">{{ 'appointments.report.reasons.inappropriateLanguage' | translate }}</option>
+      <option value="Otro">{{ 'appointments.report.reasons.other' | translate }}</option>
     </select>
 
     <textarea

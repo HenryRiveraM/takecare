@@ -66,12 +66,48 @@ export interface SessionReport {
   updatedAt: string;
 }
 
+export interface CreateCalificationRequest {
+  rating: number;
+  comment?: string;
+}
+
+export interface CalificationResponse {
+  id: number;
+  sessionId: number;
+  patientId: number;
+  specialistId: number;
+  rating: number;
+  comment: string | null;
+  createdDate: string;
+  evaluatorRole: string;
+}
+
+export interface CreateReportRequest {
+  specialistId: number;
+  sessionId: number;
+  reason: string;
+  description?: string;
+}
+
+export interface ReportResponse {
+  id: number;
+  sessionId: number;
+  reporterUserId: number;
+  reportedUserId: number;
+  reason: string;
+  description: string | null;
+  status: string;
+  createdDate: string;
+  updatedDate: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
 
   private readonly apiUrl = `${environment.apiUrl}/api/v1/sessions`;
+  private readonly reportsApiUrl = `${environment.apiUrl}/api/v1/reports`;
   private readonly ratingsStorageKey = 'specialist_session_ratings';
   private readonly reportsStorageKey = 'specialist_session_reports';
 
@@ -106,6 +142,32 @@ export class SessionService {
     return this.http.patch<SessionStatusResponse>(
       `${this.apiUrl}/${sessionId}/cancel`,
       request
+    );
+  }
+
+  createPatientRating(
+    sessionId: number,
+    request: CreateCalificationRequest
+  ): Observable<CalificationResponse> {
+    return this.http.post<CalificationResponse>(
+      `${this.apiUrl}/${sessionId}/patient-ratings`,
+      request
+    );
+  }
+
+  getPatientRating(sessionId: number): Observable<CalificationResponse> {
+    return this.http.get<CalificationResponse>(
+      `${this.apiUrl}/${sessionId}/patient-ratings`
+    );
+  }
+
+  createReport(request: CreateReportRequest): Observable<ReportResponse> {
+    return this.http.post<ReportResponse>(this.reportsApiUrl, request);
+  }
+
+  getReportBySession(sessionId: number, specialistId: number): Observable<ReportResponse> {
+    return this.http.get<ReportResponse>(
+      `${this.reportsApiUrl}/session/${sessionId}/specialist/${specialistId}`
     );
   }
 
@@ -150,12 +212,6 @@ export class SessionService {
 
   getReportsBySpecialist(specialistId: number): SessionReport[] {
     return this.readReports().filter((report) => report.specialistId === specialistId);
-  }
-
-  getReportBySession(sessionId: number, specialistId: number): SessionReport | null {
-    return this.readReports().find(
-      (report) => report.sessionId === sessionId && report.specialistId === specialistId
-    ) ?? null;
   }
 
   saveReport(report: Omit<SessionReport, 'createdAt' | 'updatedAt'>): SessionReport {

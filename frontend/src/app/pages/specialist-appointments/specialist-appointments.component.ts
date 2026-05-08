@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { catchError, forkJoin, map, of } from 'rxjs';
 
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { AuthService } from '../../services/auth.service';
 import {
+  CalificationResponse,
+  ReportResponse,
   SessionResponse,
   SessionReport,
   SessionRating,
@@ -115,7 +118,6 @@ export class SpecialistAppointmentsComponent implements OnInit {
       return;
     }
 
-    this.loadRatings();
     this.loadReports();
     this.loadAppointments();
   }
@@ -219,18 +221,22 @@ export class SpecialistAppointmentsComponent implements OnInit {
     this.ratingDialog.saving = true;
 
     const appointment = this.ratingDialog.appointment;
-    const savedRating = this.sessionService.saveRating({
-      sessionId: appointment.id,
-      specialistId: this.specialistId,
-      patientName: appointment.patientName,
-      stars: this.ratingDialog.stars,
+    this.sessionService.createPatientRating(appointment.id, {
+      rating: this.ratingDialog.stars,
       comment: this.ratingDialog.comment.trim()
+    }).subscribe({
+      next: (response) => {
+        const savedRating = this.mapRatingResponse(appointment, response);
+        this.ratingsBySession[appointment.id] = savedRating;
+        this.ratingDialog.saving = false;
+        this.closeRatingDialog();
+        this.showToastMessage('appointments.rating.toast.saved', 'success');
+      },
+      error: (error: any) => {
+        this.ratingDialog.saving = false;
+        this.ratingDialog.error = error?.error?.message || 'appointments.rating.errors.saveFailed';
+      }
     });
-
-    this.ratingsBySession[appointment.id] = savedRating;
-    this.ratingDialog.saving = false;
-    this.closeRatingDialog();
-    this.showToastMessage('appointments.rating.toast.saved', 'success');
   }
 
   saveReport(): void {
@@ -251,18 +257,24 @@ export class SpecialistAppointmentsComponent implements OnInit {
     this.reportDialog.saving = true;
 
     const appointment = this.reportDialog.appointment;
-    const savedReport = this.sessionService.saveReport({
+    this.sessionService.createReport({
       sessionId: appointment.id,
       specialistId: this.specialistId,
-      patientName: appointment.patientName,
       reason: this.reportDialog.reason,
-      details: this.reportDialog.details.trim()
+      description: this.reportDialog.details.trim()
+    }).subscribe({
+      next: (response) => {
+        const savedReport = this.mapReportResponse(appointment, response);
+        this.reportsBySession[appointment.id] = savedReport;
+        this.reportDialog.saving = false;
+        this.closeReportDialog();
+        this.showToastMessage('appointments.report.toast.saved', 'success');
+      },
+      error: (error: any) => {
+        this.reportDialog.saving = false;
+        this.reportDialog.error = error?.error?.message || 'appointments.report.errors.saveFailed';
+      }
     });
-
-    this.reportsBySession[appointment.id] = savedReport;
-    this.reportDialog.saving = false;
-    this.closeReportDialog();
-    this.showToastMessage('appointments.report.toast.saved', 'error');
   }
 
   confirmAction(): void {
@@ -286,6 +298,8 @@ export class SpecialistAppointmentsComponent implements OnInit {
       next: (response) => {
         console.log('GET sessions by specialist response:', response);
         this.appointments = response.map(item => this.mapSessionResponse(item));
+        this.loadRatingsForAppointments(this.appointments);
+        this.loadReportsForAppointments(this.appointments);
         this.loading = false;
       },
       error: (error: any) => {
@@ -470,20 +484,96 @@ export class SpecialistAppointmentsComponent implements OnInit {
     }
   }
 
-  private loadRatings(): void {
-    const ratings = this.sessionService.getRatingsBySpecialist(this.specialistId);
-    this.ratingsBySession = ratings.reduce<Record<number, SessionRating>>((acc, rating) => {
-      acc[rating.sessionId] = rating;
-      return acc;
-    }, {});
+  private loadRatingsForAppointments(appointments: Appointment[]): void {
+    if (!appointments.length) {
+      this.ratingsBySession = {};
+      return;
+    }
+
+    const requests = appointments.map((appointment) =>
+      this.sessionService.getPatientRating(appointment.id).pipe(
+        map((response) => ({ appointment, response })),
+        catchError(() => of({ appointment, response: null }))
+      )
+    );
+
+    forkJoin(requests).subscribe({
+      next: (results) => {
+        const nextRatings: Record<number, SessionRating> = {};
+        results.forEach(({ appointment, response }) => {
+          if (response) {
+            nextRatings[appointment.id] = this.mapRatingResponse(appointment, response);
+          }
+        });
+        this.ratingsBySession = nextRatings;
+      },
+      error: () => {
+        this.ratingsBySession = {};
+      }
+    });
   }
 
   private loadReports(): void {
-    const reports = this.sessionService.getReportsBySpecialist(this.specialistId);
-    this.reportsBySession = reports.reduce<Record<number, SessionReport>>((acc, report) => {
-      acc[report.sessionId] = report;
-      return acc;
-    }, {});
+    this.reportsBySession = {};
+  }
+
+  private loadReportsForAppointments(appointments: Appointment[]): void {
+    if (!appointments.length) {
+      this.reportsBySession = {};
+      return;
+    }
+
+    const requests = appointments.map((appointment) =>
+      this.sessionService.getReportBySession(appointment.id, this.specialistId).pipe(
+        map((response) => ({ appointment, response })),
+        catchError(() => of({ appointment, response: null }))
+      )
+    );
+
+    forkJoin(requests).subscribe({
+      next: (results) => {
+        const nextReports: Record<number, SessionReport> = {};
+        results.forEach(({ appointment, response }) => {
+          if (response) {
+            nextReports[appointment.id] = this.mapReportResponse(appointment, response);
+          }
+        });
+        this.reportsBySession = nextReports;
+      },
+      error: () => {
+        this.reportsBySession = {};
+      }
+    });
+  }
+
+  private mapRatingResponse(
+    appointment: Appointment,
+    response: CalificationResponse
+  ): SessionRating {
+    return {
+      sessionId: response.sessionId ?? appointment.id,
+      specialistId: response.specialistId ?? this.specialistId,
+      patientName: appointment.patientName,
+      stars: response.rating ?? this.ratingDialog.stars,
+      comment: response.comment ?? '',
+      createdAt: response.createdDate,
+      updatedAt: response.createdDate
+    };
+  }
+
+  private mapReportResponse(
+    appointment: Appointment,
+    response: ReportResponse
+  ): SessionReport {
+    return {
+      sessionId: response.sessionId ?? appointment.id,
+      specialistId: this.specialistId,
+      patientName: appointment.patientName,
+      reason: response.reason,
+      details: response.description ?? '',
+      createdAt: response.createdDate,
+      updatedAt: response.updatedDate
+    };
   }
 
   private buildAppointmentTime(item: SessionResponse): string {

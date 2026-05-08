@@ -14,4 +14,9 @@ public interface ReportRepository
             Integer reportedId
     );
 
+    java.util.Optional<Report> findBySessionIdAndReporterId(
+            Integer sessionId,
+            Integer reporterId
+    );
+
 }

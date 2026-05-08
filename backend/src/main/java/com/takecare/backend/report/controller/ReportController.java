@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,6 +72,34 @@ public class ReportController {
 
         } catch (RuntimeException e) {
             logger.warn("POST report - error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/session/{sessionId}/specialist/{specialistId}")
+    public ResponseEntity<?> getReportBySession(
+            @PathVariable Integer sessionId,
+            @PathVariable Integer specialistId
+    ) {
+        logger.info("GET report - sessionId={} specialistId={}", sessionId, specialistId);
+
+        try {
+            ReportResponseDTO response = reportService.getReportBySession(sessionId, specialistId);
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            logger.warn("GET report - invalid data: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", e.getMessage()));
+
+        } catch (NoSuchElementException e) {
+            logger.warn("GET report - not found: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", e.getMessage()));
+
+        } catch (RuntimeException e) {
+            logger.warn("GET report - error: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("message", e.getMessage()));
         }

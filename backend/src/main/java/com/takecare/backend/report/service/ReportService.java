@@ -131,6 +131,32 @@ public class ReportService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public ReportResponseDTO getReportBySession(Integer sessionId, Integer specialistId) {
+        try {
+            if (sessionId == null) {
+                throw new IllegalArgumentException("sessionId es obligatorio");
+            }
+
+            if (specialistId == null) {
+                throw new IllegalArgumentException("specialistId es obligatorio");
+            }
+
+            Session session = sessionRepository.findByIdAndSpecialistId(sessionId, specialistId)
+                    .orElseThrow(() -> new NoSuchElementException(
+                            "Cita no encontrada o no pertenece al especialista indicado"
+                    ));
+
+            return reportRepository.findBySessionIdAndReporterId(sessionId, specialistId)
+                    .map(this::toResponseDto)
+                    .orElseThrow(() -> new NoSuchElementException("Reporte no encontrado"));
+
+        } catch (RuntimeException e) {
+            logger.error("Error fetching report for sessionId={} specialistId={}", sessionId, specialistId, e);
+            throw e;
+        }
+    }
+
     private void validateSessionStatus(Session session) {
         if (session == null || session.getStatus() == null) {
             throw new IllegalStateException("La cita no esta en un estado valido para reportar");
