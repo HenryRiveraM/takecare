@@ -1,4 +1,4 @@
-package com.takecare.backend.supportmaterial.DTO;
+package com.takecare.backend.supportmaterial.dto;
 
 import java.time.LocalDateTime;
 

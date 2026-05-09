@@ -1,6 +1,6 @@
 package com.takecare.backend.supportmaterial.service;
 
-import com.takecare.backend.supportmaterial.DTO.OrientationMaterialDTO;
+import com.takecare.backend.supportmaterial.dto.OrientationMaterialDTO;
 import com.takecare.backend.supportmaterial.model.OrientationMaterial;
 import com.takecare.backend.supportmaterial.repository.OrientationMaterialRepository;
 import com.takecare.backend.user.repository.SpecialistRepository;
@@ -72,7 +72,6 @@ public class OrientationMaterialService {
         specialistRepository.findById(specialistId)
                 .orElseThrow(() -> new IllegalArgumentException("Specialist not found: " + specialistId));
 
-        // Validar campos obligatorios
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("Title is required");
         }
@@ -83,26 +82,22 @@ public class OrientationMaterialService {
             throw new IllegalArgumentException("File is required");
         }
 
-        // Validar extensión
         String originalName = file.getOriginalFilename() != null ? file.getOriginalFilename() : "";
         String extension = "." + originalName.substring(originalName.lastIndexOf('.') + 1).toLowerCase();
         if (!ALLOWED_EXTENSIONS.contains(extension)) {
             throw new IllegalArgumentException("File format not allowed. Only PDF, DOC and DOCX are accepted");
         }
 
-        // Validar content type
         String contentType = file.getContentType();
         if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
             throw new IllegalArgumentException("File type not allowed: " + contentType);
         }
 
-        // Validar tamaño
         if (file.getSize() > MAX_SIZE_BYTES) {
             throw new IllegalArgumentException(
                     String.format("File exceeds 10 MB limit (%.1f MB)", file.getSize() / (1024.0 * 1024)));
         }
 
-        // Guardar archivo en disco
         String safeFileName = sanitizeFileName(originalName);
         String relativePath = specialistId + "/" + System.currentTimeMillis() + "_" + safeFileName;
         Path targetPath = storageRoot.resolve(relativePath);
@@ -111,7 +106,6 @@ public class OrientationMaterialService {
         Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
         logger.info("Stored orientation material for specialist {}: {}", specialistId, targetPath);
 
-        // Persistir en BD
         OrientationMaterial material = new OrientationMaterial();
         material.setSpecialistId(specialistId);
         material.setTitle(title.trim());
@@ -130,10 +124,8 @@ public class OrientationMaterialService {
     }
 
     /**
-     * Devuelve todos los materiales activos de un especialista.
-     *
-     * @param specialistId ID del especialista
-     * @return lista de DTOs
+     * @param specialistId 
+     * @return 
      */
     public List<OrientationMaterialDTO> getMaterialsBySpecialist(Integer specialistId) {
         return materialRepository.findActiveBySpecialistId(specialistId)
@@ -143,12 +135,10 @@ public class OrientationMaterialService {
     }
 
     /**
-     * Elimina lógicamente un material, validando que pertenezca al especialista.
-     *
-     * @param specialistId ID del especialista que hace la petición
-     * @param materialId   ID del material a eliminar
-     * @return true si se eliminó, false si no se encontró
-     * @throws SecurityException si el material no pertenece al especialista
+     * @param specialistId 
+     * @param materialId 
+     * @return
+     * @throws SecurityException 
      */
     public boolean deleteMaterial(Integer specialistId, Long materialId) {
         return materialRepository.findActiveByIdAndSpecialistId(materialId, specialistId)
@@ -163,10 +153,6 @@ public class OrientationMaterialService {
                     return false;
                 });
     }
-
-    // -------------------------------------------------------------------------
-    // Helpers
-    // -------------------------------------------------------------------------
 
     private OrientationMaterialDTO toDTO(OrientationMaterial material) {
         return new OrientationMaterialDTO(
