@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DayPilot, DayPilotModule } from '@daypilot/daypilot-lite-angular';
 
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { SidebarService } from '../../services/sidebar.service';
 import { SpecialistScheduleService } from '../../services/specialist-schedule.service';
 import {
   SpecialistScheduleRequest,
@@ -12,7 +14,7 @@ import {
 @Component({
   selector: 'app-specialist-schedule-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, DayPilotModule],
+  imports: [CommonModule, FormsModule, DayPilotModule, SidebarComponent],
   templateUrl: './specialist-schedule-management.component.html',
   styleUrls: ['./specialist-schedule-management.component.css']
 })
@@ -88,7 +90,10 @@ export class SpecialistScheduleManagementComponent implements OnInit {
     }
   };
 
-  constructor(private scheduleService: SpecialistScheduleService) {}
+  constructor(
+    public sidebarService: SidebarService,
+    private scheduleService: SpecialistScheduleService
+  ) {}
 
   ngOnInit(): void {
     this.initializeSpecialistId();

@@ -51,7 +51,32 @@ export class SidebarComponent implements OnInit {
   }
 
   logout(): void {
+    this.sidebarService.close();
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { replaceUrl: true });
+  }
+
+  closeSidebarOnMobile(): void {
+    if (typeof window !== 'undefined' && window.innerWidth <= 900) {
+      this.sidebarService.close();
+    }
+  }
+
+  closeSidebar(): void {
+    this.sidebarService.close();
+  }
+
+  isAdminTab(tab: 'patients' | 'specialists' | 'validations'): boolean {
+    if (this.role !== 'admin') {
+      return false;
+    }
+
+    const url = this.router.url;
+
+    if (tab === 'patients') {
+      return !url.includes('tab=specialists') && !url.includes('tab=validations');
+    }
+
+    return url.includes(`tab=${tab}`);
   }
 }
