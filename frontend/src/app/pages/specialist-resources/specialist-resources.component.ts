@@ -8,6 +8,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { AuthService } from '../../services/auth.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SpecialistResourcesService, Resource } from '../../services/specialist-resources.service';
+import { environment } from '../../../environments/environment';
  
 const ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx'];
 const ALLOWED_TYPES = [
@@ -246,7 +247,10 @@ export class SpecialistResourcesComponent implements OnInit {
   }
  
   getSafeUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    const fullUrl = url.startsWith('http') 
+      ? url 
+      : `${environment.apiUrl}${url}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(fullUrl);
   }
  
   isPdf(filename: string): boolean {
@@ -255,5 +259,9 @@ export class SpecialistResourcesComponent implements OnInit {
  
   isWord(filename: string): boolean {
     return /\.(doc|docx)$/i.test(filename);
+  }
+
+  getFullUrl(url: string): string {
+  return url.startsWith('http') ? url : `${environment.apiUrl}${url}`;
   }
 }

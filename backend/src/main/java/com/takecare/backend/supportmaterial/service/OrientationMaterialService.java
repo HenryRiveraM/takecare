@@ -1,5 +1,5 @@
 package com.takecare.backend.supportmaterial.service;
-
+ 
 import com.takecare.backend.supportmaterial.dto.OrientationMaterialDTO;
 import com.takecare.backend.supportmaterial.dto.SupportMaterialItemDto;
 import com.takecare.backend.supportmaterial.dto.SupportMaterialListResponseDto;
@@ -10,16 +10,20 @@ import com.takecare.backend.user.repository.SpecialistRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+ 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -28,23 +32,23 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrientationMaterialService {
-
+ 
     private static final Logger logger = LoggerFactory.getLogger(OrientationMaterialService.class);
-
+ 
     private static final List<String> ALLOWED_TYPES = List.of(
             "application/pdf",
             "application/msword",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     );
-
+ 
     private static final List<String> ALLOWED_EXTENSIONS = List.of(".pdf", ".doc", ".docx");
-
-    private static final long MAX_SIZE_BYTES = 10L * 1024 * 1024; // 10 MB
-
+ 
+    private static final long MAX_SIZE_BYTES = 10L * 1024 * 1024;
+ 
     private final OrientationMaterialRepository materialRepository;
     private final SpecialistRepository specialistRepository;
     private final Path storageRoot;
-
+ 
     public OrientationMaterialService(
             OrientationMaterialRepository materialRepository,
             SpecialistRepository specialistRepository,
@@ -52,7 +56,7 @@ public class OrientationMaterialService {
         this.materialRepository = materialRepository;
         this.specialistRepository = specialistRepository;
         this.storageRoot = Paths.get(storagePath).toAbsolutePath().normalize();
-
+ 
         try {
             Files.createDirectories(this.storageRoot);
             logger.info("Orientation materials storage ready at: {}", this.storageRoot);
@@ -60,26 +64,15 @@ public class OrientationMaterialService {
             throw new RuntimeException("Could not initialize orientation-materials storage directory", e);
         }
     }
-
-    /**
-     * Sube y persiste un nuevo material de orientación.
-     *
-     * @param specialistId ID del especialista dueño del material
-     * @param title        Título del material (obligatorio)
-     * @param description  Descripción del material (obligatorio)
-     * @param file         Archivo a subir (obligatorio, máx 10 MB, PDF/DOC/DOCX)
-     * @return DTO del material guardado
-     * @throws IllegalArgumentException si alguna validación falla
-     * @throws IOException              si ocurre un error al guardar el archivo
-     */
+ 
     public OrientationMaterialDTO storeMaterial(Integer specialistId,
                                                 String title,
                                                 String description,
                                                 MultipartFile file) throws IOException {
-
+ 
         specialistRepository.findById(specialistId)
                 .orElseThrow(() -> new IllegalArgumentException("Specialist not found: " + specialistId));
-
+ 
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("Title is required");
         }
@@ -89,31 +82,36 @@ public class OrientationMaterialService {
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("File is required");
         }
-
+ 
         String originalName = file.getOriginalFilename() != null ? file.getOriginalFilename() : "";
-        String extension = "." + originalName.substring(originalName.lastIndexOf('.') + 1).toLowerCase();
+        int dotIndex = originalName.lastIndexOf('.');
+        if (dotIndex < 0) {
+            throw new IllegalArgumentException("File without extension is not allowed");
+        }
+
+        String extension = originalName.substring(dotIndex).toLowerCase();
         if (!ALLOWED_EXTENSIONS.contains(extension)) {
             throw new IllegalArgumentException("File format not allowed. Only PDF, DOC and DOCX are accepted");
         }
-
+ 
         String contentType = file.getContentType();
         if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
             throw new IllegalArgumentException("File type not allowed: " + contentType);
         }
-
+ 
         if (file.getSize() > MAX_SIZE_BYTES) {
             throw new IllegalArgumentException(
                     String.format("File exceeds 10 MB limit (%.1f MB)", file.getSize() / (1024.0 * 1024)));
         }
-
+ 
         String safeFileName = sanitizeFileName(originalName);
         String relativePath = specialistId + "/" + System.currentTimeMillis() + "_" + safeFileName;
         Path targetPath = storageRoot.resolve(relativePath);
-
+ 
         Files.createDirectories(targetPath.getParent());
         Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
         logger.info("Stored orientation material for specialist {}: {}", specialistId, targetPath);
-
+ 
         OrientationMaterial material = new OrientationMaterial();
         material.setSpecialistId(specialistId);
         material.setTitle(title.trim());
@@ -124,30 +122,20 @@ public class OrientationMaterialService {
         material.setFileSize(file.getSize());
         material.setCreatedDate(LocalDateTime.now());
         material.setStatus((byte) 1);
-
+ 
         OrientationMaterial saved = materialRepository.save(material);
         logger.info("OrientationMaterial persisted with id: {}", saved.getId());
-
+ 
         return toDTO(saved);
     }
-
-    /**
-     * @param specialistId 
-     * @return 
-     */
+ 
     public List<OrientationMaterialDTO> getMaterialsBySpecialist(Integer specialistId) {
         return materialRepository.findActiveBySpecialistId(specialistId)
                 .stream()
                 .map(this::toDTO)
                 .toList();
     }
-
-    /**
-     * @param specialistId 
-     * @param materialId 
-     * @return
-     * @throws SecurityException 
-     */
+ 
     public boolean deleteMaterial(Integer specialistId, Long materialId) {
         return materialRepository.findActiveByIdAndSpecialistId(materialId, specialistId)
                 .map(material -> {
@@ -161,6 +149,30 @@ public class OrientationMaterialService {
                     return false;
                 });
     }
+ 
+    /**
+     * Devuelve el archivo físico para servirlo como descarga o vista previa.
+     */
+    public Optional<Resource> getFile(Integer specialistId, Long materialId) throws MalformedURLException {
+        Optional<OrientationMaterial> materialOpt =
+                materialRepository.findActiveByIdAndSpecialistId(materialId, specialistId);
+ 
+        if (materialOpt.isEmpty()) {
+            logger.warn("File not found: material {} for specialist {}", materialId, specialistId);
+            return Optional.empty();
+        }
+ 
+        Path filePath = storageRoot.resolve(materialOpt.get().getFileUrl()).normalize();
+        Resource resource = new UrlResource(filePath.toUri());
+ 
+        if (!resource.exists() || !resource.isReadable()) {
+            logger.error("File not readable: {}", filePath);
+            return Optional.empty();
+        }
+ 
+        return Optional.of(resource);
+    }
+
 
     public SupportMaterialListResponseDto getSupportMaterials(String search, String type) {
         try {
@@ -227,6 +239,9 @@ public class OrientationMaterialService {
     }
 
     private OrientationMaterialDTO toDTO(OrientationMaterial material) {
+        String fileUrl = "/api/v1/specialists/" + material.getSpecialistId()
+                + "/orientation-materials/" + material.getId() + "/file";
+ 
         return new OrientationMaterialDTO(
                 material.getId(),
                 material.getSpecialistId(),
@@ -235,9 +250,11 @@ public class OrientationMaterialService {
                 material.getFileName(),
                 material.getContentType(),
                 material.getFileSize(),
-                material.getCreatedDate()
+                material.getCreatedDate(),
+                fileUrl
         );
     }
+ 
 
     private SupportMaterialItemDto toSupportMaterialItemDto(OrientationMaterial material, String specialistName) {
         String fileType = resolveFileType(material.getContentType(), material.getFileName());

@@ -1,5 +1,5 @@
 package com.takecare.backend.supportmaterial.dto;
-
+ 
 import java.time.LocalDateTime;
 
 public record OrientationMaterialDTO(
@@ -10,5 +10,6 @@ public record OrientationMaterialDTO(
         String fileName,
         String contentType,
         Long fileSize,
-        LocalDateTime uploadedAt
+        LocalDateTime uploadedAt,
+        String fileUrl
 ) {}

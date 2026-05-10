@@ -177,11 +177,15 @@
 
       <div class="preview-body">
 
-        <iframe
-          *ngIf="isPdf(previewResource$?.fileName || '')"
-          [src]="getSafeUrl(previewResource$?.fileUrl || '')"
-          class="preview-iframe">
-        </iframe>
+        <div *ngIf="isPdf(previewResource$?.fileName || '')" class="preview-unsupported">
+          <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 3rem;"></i>
+          <h3>{{ previewResource$?.title }}</h3>
+          <a [href]="getFullUrl(previewResource$?.fileUrl || '')" 
+            target="_blank" 
+            class="btn-primary">
+            <i class="fas fa-external-link-alt"></i> Abrir PDF
+          </a>
+        </div>
 
         <div *ngIf="isWord(previewResource$?.fileName || '')" class="preview-unsupported">
           <i class="fas fa-file-word"></i>
