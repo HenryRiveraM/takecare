@@ -1,8 +1,11 @@
 package com.takecare.backend.supportmaterial.service;
 
 import com.takecare.backend.supportmaterial.dto.OrientationMaterialDTO;
+import com.takecare.backend.supportmaterial.dto.SupportMaterialItemDto;
+import com.takecare.backend.supportmaterial.dto.SupportMaterialListResponseDto;
 import com.takecare.backend.supportmaterial.model.OrientationMaterial;
 import com.takecare.backend.supportmaterial.repository.OrientationMaterialRepository;
+import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.repository.SpecialistRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class OrientationMaterialService {
@@ -154,6 +162,70 @@ public class OrientationMaterialService {
                 });
     }
 
+    public SupportMaterialListResponseDto getSupportMaterials(String search, String type) {
+        try {
+            String normalizedSearch = normalizeNullable(search);
+            String normalizedType = normalizeType(type);
+
+            validateType(normalizedType);
+
+            if (normalizedSearch == null && normalizedType == null) {
+                logger.info("Fetching full support materials library");
+            } else {
+                logger.info("Fetching support materials with filters | search={} | type={}", normalizedSearch, normalizedType);
+            }
+
+            List<OrientationMaterial> materials = materialRepository
+                    .findActiveWithFilters(normalizedSearch, normalizedType);
+
+            if (materials.isEmpty()) {
+                logger.info("No support materials found | search={} | type={}", normalizedSearch, normalizedType);
+            }
+
+            Map<Integer, String> specialistNames = resolveSpecialistNames(materials);
+
+            List<SupportMaterialItemDto> items = materials.stream()
+                    .map(material -> toSupportMaterialItemDto(material, specialistNames.get(material.getSpecialistId())))
+                    .toList();
+
+            return new SupportMaterialListResponseDto(items.size(), items);
+        } catch (RuntimeException e) {
+            logger.error("Error fetching support materials", e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("Unexpected error fetching support materials", e);
+            throw new RuntimeException("Error al obtener materiales");
+        }
+    }
+
+    public SupportMaterialListResponseDto getSupportMaterialsBySpecialist(Integer specialistId) {
+        try {
+            Specialist specialist = specialistRepository.findById(specialistId)
+                    .orElseThrow(() -> new NoSuchElementException("Specialist not found"));
+
+            logger.info("Fetching support materials by specialist {}", specialistId);
+
+            List<OrientationMaterial> materials = materialRepository.findActiveBySpecialistId(specialistId);
+
+            if (materials.isEmpty()) {
+                logger.info("No support materials found for specialist {}", specialistId);
+            }
+
+            String specialistName = buildFullName(specialist);
+            List<SupportMaterialItemDto> items = materials.stream()
+                    .map(material -> toSupportMaterialItemDto(material, specialistName))
+                    .toList();
+
+            return new SupportMaterialListResponseDto(items.size(), items);
+        } catch (RuntimeException e) {
+            logger.error("Error fetching support materials for specialist {}", specialistId, e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("Unexpected error fetching support materials for specialist {}", specialistId, e);
+            throw new RuntimeException("Error al obtener materiales del especialista");
+        }
+    }
+
     private OrientationMaterialDTO toDTO(OrientationMaterial material) {
         return new OrientationMaterialDTO(
                 material.getId(),
@@ -165,6 +237,110 @@ public class OrientationMaterialService {
                 material.getFileSize(),
                 material.getCreatedDate()
         );
+    }
+
+    private SupportMaterialItemDto toSupportMaterialItemDto(OrientationMaterial material, String specialistName) {
+        String fileType = resolveFileType(material.getContentType(), material.getFileName());
+        // TODO: Add preview/download endpoints (e.g., /api/v1/support-materials/{id}/file, /download) once storage is defined.
+        String previewUrl = null; // TODO: define preview URL when storage strategy is decided.
+        String downloadUrl = null; // TODO: define download URL when storage strategy is decided.
+
+        return new SupportMaterialItemDto(
+                material.getId(),
+                material.getTitle(),
+                material.getDescription(),
+                material.getFileName(),
+                material.getContentType(),
+                fileType,
+                material.getFileSize(),
+                material.getFileUrl(),
+                previewUrl,
+                downloadUrl,
+                material.getCreatedDate(),
+                material.getSpecialistId(),
+                specialistName
+        );
+    }
+
+    private Map<Integer, String> resolveSpecialistNames(List<OrientationMaterial> materials) {
+        Set<Integer> specialistIds = materials.stream()
+                .map(OrientationMaterial::getSpecialistId)
+                .collect(Collectors.toSet());
+
+        if (specialistIds.isEmpty()) {
+            return Map.of();
+        }
+
+        return specialistRepository.findAllById(specialistIds).stream()
+                .collect(Collectors.toMap(Specialist::getId, this::buildFullName));
+    }
+
+    private String buildFullName(Specialist specialist) {
+        String fullName = List.of(
+                normalizeOptional(specialist.getNames()),
+                normalizeOptional(specialist.getFirstLastname()),
+                normalizeOptional(specialist.getSecondLastname())
+        ).stream()
+                .filter(part -> !part.isBlank())
+                .collect(Collectors.joining(" "));
+
+        return fullName.isBlank() ? null : fullName;
+    }
+
+    private String resolveFileType(String contentType, String fileName) {
+        String normalizedContentType = normalizeNullable(contentType);
+        String normalizedFileName = normalizeNullable(fileName);
+
+        if (normalizedContentType != null) {
+            String lowerContentType = normalizedContentType.toLowerCase(Locale.ROOT);
+            if (lowerContentType.contains("pdf")) {
+                return "PDF";
+            }
+            if (lowerContentType.contains("wordprocessingml") || lowerContentType.contains("msword")) {
+                return "DOCX";
+            }
+        }
+
+        if (normalizedFileName != null) {
+            String lowerFileName = normalizedFileName.toLowerCase(Locale.ROOT);
+            if (lowerFileName.endsWith(".pdf")) {
+                return "PDF";
+            }
+            if (lowerFileName.endsWith(".docx") || lowerFileName.endsWith(".doc")) {
+                return "DOCX";
+            }
+        }
+
+        return null;
+    }
+
+    private void validateType(String type) {
+        if (type == null) {
+            return;
+        }
+
+        if (!"PDF".equals(type) && !"DOCX".equals(type)) {
+            throw new IllegalArgumentException("Tipo de archivo invalido. Solo PDF o DOCX");
+        }
+    }
+
+    private String normalizeType(String type) {
+        String normalized = normalizeNullable(type);
+        return normalized == null ? null : normalized.toUpperCase(Locale.ROOT);
+    }
+
+    private String normalizeNullable(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        String normalized = value.trim().replaceAll("\\s+", " ");
+        return normalized.isBlank() ? null : normalized;
+    }
+
+    private String normalizeOptional(String value) {
+        String normalized = normalizeNullable(value);
+        return normalized == null ? "" : normalized;
     }
 
     private String sanitizeFileName(String originalName) {

@@ -56,7 +56,7 @@
 
       <section class="documents-section" *ngIf="!loading && !errorMsg">
         <div class="results-header" *ngIf="filteredMaterials.length > 0">
-          <span>{{ filteredMaterials.length }} {{ 'documents.results' | translate }}</span>
+          <span>{{ totalDocuments }} {{ 'documents.results' | translate }}</span>
         </div>
 
         <div class="documents-grid" *ngIf="filteredMaterials.length > 0">
