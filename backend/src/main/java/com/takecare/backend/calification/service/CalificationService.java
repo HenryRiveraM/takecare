@@ -1,7 +1,12 @@
 package com.takecare.backend.calification.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.takecare.backend.calification.dto.CalificationResponseDTO;
 import com.takecare.backend.calification.dto.CreateCalificationRequestDTO;
+import com.takecare.backend.calification.dto.RatingSummaryDTO;
 import com.takecare.backend.calification.model.Calification;
 import com.takecare.backend.calification.repository.CalificationRepository;
 import com.takecare.backend.session.model.Session;
 import com.takecare.backend.session.repository.SessionRepository;
 import com.takecare.backend.user.model.User;
+import com.takecare.backend.user.repository.SpecialistRepository;
 
 @Service
 public class CalificationService {
@@ -28,13 +35,16 @@ public class CalificationService {
 
     private final CalificationRepository calificationRepository;
     private final SessionRepository sessionRepository;
+    private final SpecialistRepository specialistRepository;
 
     public CalificationService(
             CalificationRepository calificationRepository,
-            SessionRepository sessionRepository
+            SessionRepository sessionRepository,
+            SpecialistRepository specialistRepository
     ) {
         this.calificationRepository = calificationRepository;
         this.sessionRepository = sessionRepository;
+        this.specialistRepository = specialistRepository;
     }
 
     @Transactional
@@ -80,6 +90,9 @@ public class CalificationService {
             logger.info("Patient rating created. calificationId={}, sessionId={}, specialistId={}, patientId={}",
                     saved.getId(), sessionId, sessionSpecialistId, patientId);
 
+            // Actualizar promedio de reputación del especialista
+            updateSpecialistReputation(sessionSpecialistId);
+
             return toResponseDto(saved);
 
         } catch (RuntimeException e) {
@@ -115,6 +128,75 @@ public class CalificationService {
             logger.warn("Get patient rating failed. sessionId={}, error={}", sessionId, e.getMessage());
             throw e;
         }
+    }
+
+    /**
+     * Lista todas las calificaciones visibles de un especialista.
+     * GET /api/v1/specialists/{specialistId}/ratings
+     */
+    @Transactional(readOnly = true)
+    public List<CalificationResponseDTO> getRatingsBySpecialist(Integer specialistId) {
+        logger.info("Get ratings for specialist {}", specialistId);
+        return calificationRepository.findBySpecialistId(specialistId)
+                .stream()
+                .map(this::toResponseDto)
+                .toList();
+    }
+
+    /**
+     * Retorna promedio, total y distribución de calificaciones de un especialista.
+     * GET /api/v1/specialists/{specialistId}/rating-summary
+     */
+    @Transactional(readOnly = true)
+    public RatingSummaryDTO getRatingSummary(Integer specialistId) {
+        logger.info("Get rating summary for specialist {}", specialistId);
+
+        List<Calification> ratings = calificationRepository.findAllBySpecialistId(specialistId);
+
+        long total = ratings.size();
+
+        double average = total == 0 ? 0.0 :
+                BigDecimal.valueOf(
+                        ratings.stream()
+                                .mapToInt(Calification::getRating)
+                                .average()
+                                .orElse(0.0)
+                ).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+        Map<Integer, Long> distribution = ratings.stream()
+                .collect(Collectors.groupingBy(Calification::getRating, Collectors.counting()));
+
+        for (int i = 1; i <= 5; i++) {
+            distribution.putIfAbsent(i, 0L);
+        }
+
+        logger.info("Rating summary for specialist {}: avg={} total={}", specialistId, average, total);
+
+        return new RatingSummaryDTO(specialistId, average, total, distribution);
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    private void updateSpecialistReputation(Integer specialistId) {
+        if (specialistId == null) return;
+
+        List<Calification> ratings = calificationRepository.findAllBySpecialistId(specialistId);
+        if (ratings.isEmpty()) return;
+
+        double avg = ratings.stream()
+                .mapToInt(Calification::getRating)
+                .average()
+                .orElse(0.0);
+
+        BigDecimal rounded = BigDecimal.valueOf(avg).setScale(2, RoundingMode.HALF_UP);
+
+        specialistRepository.findById(specialistId).ifPresent(specialist -> {
+            specialist.setReputationAverage(rounded);
+            specialistRepository.save(specialist);
+            logger.info("Specialist {} reputation updated to {}", specialistId, rounded);
+        });
     }
 
     private Session getSessionOrThrow(Integer sessionId) {

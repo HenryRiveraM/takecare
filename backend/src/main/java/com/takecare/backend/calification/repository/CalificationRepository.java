@@ -1,8 +1,11 @@
 package com.takecare.backend.calification.repository;
 
 import com.takecare.backend.calification.model.Calification;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -22,4 +25,23 @@ public interface CalificationRepository
             Integer specialistId,
             String evaluatorRole
     );
+
+    /**
+     * Lista todas las calificaciones de un especialista.
+     */
+    @Query("""
+        SELECT c FROM Calification c
+        WHERE c.specialist.id = :specialistId
+        ORDER BY c.createdDate DESC
+    """)
+    List<Calification> findBySpecialistId(@Param("specialistId") Integer specialistId);
+
+    /**
+     * Todas las calificaciones de un especialista para calcular promedio.
+     */
+    @Query("""
+        SELECT c FROM Calification c
+        WHERE c.specialist.id = :specialistId
+    """)
+    List<Calification> findAllBySpecialistId(@Param("specialistId") Integer specialistId);
 }
