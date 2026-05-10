@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { LocalizedDatePipe } from '../../shared/pipes/localized-date.pipe';
 import {
@@ -41,11 +42,24 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.loadData();
+    this.route.queryParamMap.subscribe((params) => {
+      const tab = params.get('tab');
+
+      if (tab === 'specialists' || tab === 'validations' || tab === 'patients') {
+        this.activeTab = tab;
+      } else {
+        this.activeTab = 'patients';
+      }
+
+      this.searchTerm = '';
+      this.loadData();
+    });
   }
 
   loadData(): void {
@@ -118,9 +132,10 @@ export class AdminComponent implements OnInit {
   }
 
   setTab(tab: 'patients' | 'specialists' | 'validations'): void {
-    this.activeTab = tab;
-    this.searchTerm = '';
-    this.loadData();
+    this.router.navigate(['/admin'], {
+      queryParams: { tab },
+      replaceUrl: true
+    });
   }
 
   onSearch(): void {

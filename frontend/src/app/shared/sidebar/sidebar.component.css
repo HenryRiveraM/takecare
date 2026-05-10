@@ -10,8 +10,14 @@
   border-right: 1px solid #edf2f1;
   padding: 30px 20px;
   overflow-y: auto;
+  overflow-x: hidden;
   flex-shrink: 0;              
   z-index: 100;
+  box-sizing: border-box;
+}
+
+.sidebar-close {
+  display: none;
 }
 
 /* --- MENÚ --- */
@@ -33,6 +39,7 @@
   white-space: nowrap;    
   overflow: hidden;
   text-overflow: ellipsis;
+  box-sizing: border-box;
 }
 
 .menu-item i {
@@ -50,28 +57,155 @@
   border-left: 4px solid #F5A3A3;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;               
-  overscroll-behavior: none;       
-  height: 100%;
-}
-
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
-    top: 75px; 
-    left: -260px; 
-    width: 260px;
-    height: calc(100vh - 75px);
-    background-color: white;
-    z-index: 1100; 
-    transition: all 0.3s ease-in-out;
-    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    top: 0;
+    left: 0;
+    width: min(390px, 92vw);
+    max-width: calc(100vw - 24px);
+    height: 100vh;
+    background: linear-gradient(180deg, #fffdfd, #fff7f7);
+    border-right: 1px solid rgba(245, 163, 163, 0.26);
+    z-index: 1800;
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 20px 0 60px rgba(44, 57, 77, 0.16);
+    will-change: transform;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 92px 18px 24px;
+    box-sizing: border-box;
   }
 
   .sidebar.open {
-    left: 0 !important;
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+  }
+
+  .menu {
+    gap: 12px;
+  }
+
+  .menu-item {
+    min-height: 54px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    font-size: 1.05rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid transparent;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.03);
+  }
+
+  .menu-item:hover,
+  .menu-item.active {
+    background: #f0f4f3;
+    border-color: rgba(245, 163, 163, 0.28);
+  }
+
+  .menu-item.active {
+    border-left: 4px solid #F5A3A3;
+  }
+
+  .sidebar-close {
+    position: absolute;
+    top: 24px;
+    left: 18px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #f3d4d4;
+    border-radius: 14px;
+    background: white;
+    color: #8c6464;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .sidebar-close:hover {
+    background: #fff0f0;
+    color: #f5a3a3;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(390px, 86vw);
+    height: 100vh;
+    background: linear-gradient(180deg, #fffdfd, #fff7f7);
+    border-right: 1px solid rgba(245, 163, 163, 0.26);
+    z-index: 1800;
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 20px 0 60px rgba(44, 57, 77, 0.16);
+    will-change: transform;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 96px 20px 26px;
+    box-sizing: border-box;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+  }
+
+  .menu {
+    gap: 12px;
+  }
+
+  .menu-item {
+    min-height: 54px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    font-size: 1.05rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid transparent;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.03);
+  }
+
+  .menu-item:hover,
+  .menu-item.active {
+    background: #f0f4f3;
+    border-color: rgba(245, 163, 163, 0.28);
+  }
+
+  .sidebar-close {
+    position: absolute;
+    top: 26px;
+    left: 20px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #f3d4d4;
+    border-radius: 14px;
+    background: white;
+    color: #8c6464;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .sidebar-close:hover {
+    background: #fff0f0;
+    color: #f5a3a3;
+  }
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    width: 100vw;
+    max-width: 100vw;
+    padding: 92px 16px 22px;
   }
 }

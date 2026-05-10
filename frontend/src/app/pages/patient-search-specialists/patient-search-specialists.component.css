@@ -9,7 +9,8 @@
   width: 100%;
   background: linear-gradient(180deg, #fff6f6, #ffffff);
   height: calc(100vh - 80px); 
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* --- MAIN --- */
@@ -19,7 +20,8 @@
   flex: 1;
   min-width: 0;
   height: 100%;
-  overflow-y: auto;  
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 34px;
 }
 
@@ -188,6 +190,7 @@
   padding: 24px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
   border: 1px solid #f8e5e5;
+  min-width: 0;
 }
 
 .card-top {
@@ -214,6 +217,7 @@
   margin: 0 0 4px;
   font-size: 1.1rem;
   color: #1f2937;
+  overflow-wrap: anywhere;
 }
 
 .badge-row {
@@ -242,6 +246,7 @@
   color: #6b7280;
   line-height: 1.6;
   min-height: 72px;
+  overflow-wrap: anywhere;
 }
 
 .meta {
@@ -255,10 +260,18 @@
   gap: 10px;
   align-items: flex-start;
   color: #4b5563;
+  min-width: 0;
 }
 
 .meta-item .material-symbols-outlined {
   color: #F5A3A3;
+  flex-shrink: 0;
+}
+
+.meta-item span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .card-footer {
@@ -294,18 +307,48 @@
   .directory-page {
     height: calc(100vh - 75px);
     margin-top: 75px;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   .main {
     margin-left: 0;
     padding: 20px;
+    overflow-x: hidden;
   }
 
   .appointments-footer,
   .card-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .toolbar {
+    gap: 18px;
+  }
+
+  .search-and-filters {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .search-box {
+    min-width: 0;
+  }
+
+  .filters-group {
+    width: 100%;
+  }
+
+  .filter-select,
+  .btn-primary {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .btn-reset {
+    flex-shrink: 0;
   }
 }
 
