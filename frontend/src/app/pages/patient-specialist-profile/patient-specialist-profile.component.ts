@@ -6,7 +6,7 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { SpecialistDirectoryItem, SpecialistService } from '../../services/specialist.service';
-import { SupportMaterialItem, SupportMaterialService } from '../../services/support-material.service';
+import { SupportMaterialItem, SupportMaterialListResponse, SupportMaterialService } from '../../services/support-material.service';
 
 interface SpecialistProfileViewModel extends SpecialistDirectoryItem {
   biography: string;
@@ -211,10 +211,10 @@ export class PatientSpecialistProfileComponent implements OnInit {
 
   private loadMaterials(specialist: SpecialistProfileViewModel): void {
     this.supportMaterialService
-      .getMaterialsBySpecialist(specialist.id, this.getDisplayName())
+      .getMaterialsBySpecialist(specialist.id)
       .subscribe({
-        next: (materials) => {
-          this.materials = materials;
+        next: (response: SupportMaterialListResponse) => {
+          this.materials = response.materials;
           this.loading = false;
         },
         error: () => {

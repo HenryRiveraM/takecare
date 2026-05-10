@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
-import { SupportMaterialItem, SupportMaterialService } from '../../services/support-material.service';
+import { SupportMaterialItem, SupportMaterialListResponse, SupportMaterialService } from '../../services/support-material.service';
 
 @Component({
   selector: 'app-patient-documents',
@@ -21,6 +21,7 @@ export class PatientDocumentsComponent implements OnInit {
   errorMsg = '';
   materials: SupportMaterialItem[] = [];
   filteredMaterials: SupportMaterialItem[] = [];
+  totalDocuments = 0;
   readonly fileTypeOptions = ['PDF', 'DOCX'];
 
   constructor(
@@ -36,40 +37,32 @@ export class PatientDocumentsComponent implements OnInit {
     this.loading = true;
     this.errorMsg = '';
 
-    this.supportMaterialService.getCommunityMaterials().subscribe({
-      next: (materials) => {
-        this.materials = materials;
-        this.applyFilters();
-        this.loading = false;
-      },
-      error: () => {
-        this.errorMsg = 'No se pudieron cargar los materiales disponibles en este momento.';
-        this.filteredMaterials = [];
-        this.loading = false;
-      }
-    });
+    this.supportMaterialService
+      .getCommunityMaterials(this.searchTerm, this.selectedFileType)
+      .subscribe({
+        next: (response: SupportMaterialListResponse) => {
+          this.materials = response.materials;
+          this.filteredMaterials = response.materials;
+          this.totalDocuments = response.totalDocuments;
+          this.loading = false;
+        },
+        error: () => {
+          this.errorMsg = 'No se pudieron cargar los materiales disponibles en este momento.';
+          this.filteredMaterials = [];
+          this.totalDocuments = 0;
+          this.loading = false;
+        }
+      });
   }
 
   applyFilters(): void {
-    const normalizedSearch = this.searchTerm.trim().toLowerCase();
-
-    this.filteredMaterials = this.materials.filter((material) => {
-      const matchesType = !this.selectedFileType || material.fileType === this.selectedFileType;
-      const matchesSearch =
-        !normalizedSearch ||
-        material.title.toLowerCase().includes(normalizedSearch) ||
-        material.description.toLowerCase().includes(normalizedSearch) ||
-        material.specialistName.toLowerCase().includes(normalizedSearch) ||
-        material.fileType.toLowerCase().includes(normalizedSearch);
-
-      return matchesType && matchesSearch;
-    });
+    this.loadMaterials();
   }
 
   resetFilters(): void {
     this.searchTerm = '';
     this.selectedFileType = '';
-    this.applyFilters();
+    this.loadMaterials();
   }
 
   getFileIcon(fileType: string): string {
