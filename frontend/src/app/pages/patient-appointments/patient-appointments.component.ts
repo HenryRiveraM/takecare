@@ -8,9 +8,10 @@ import {
   SessionResponse,
   SessionService,
   SessionRating,
-  SessionReport
+  SessionReport,
+  CalificationResponse
 } from '../../services/session.service';
-
+ 
 interface RatingDialog {
   visible: boolean;
   appointment: SessionResponse | null;
@@ -19,7 +20,7 @@ interface RatingDialog {
   saving: boolean;
   error: string;
 }
-
+ 
 interface ReportDialog {
   visible: boolean;
   appointment: SessionResponse | null;
@@ -28,7 +29,7 @@ interface ReportDialog {
   saving: boolean;
   error: string;
 }
-
+ 
 @Component({
   selector: 'app-patient-appointments',
   standalone: true,
@@ -37,7 +38,7 @@ interface ReportDialog {
   styleUrl: './patient-appointments.component.css'
 })
 export class PatientAppointmentsComponent implements OnInit {
-
+ 
   appointments: SessionResponse[] = [];
   loading = false;
   errorMsg = '';
@@ -46,15 +47,15 @@ export class PatientAppointmentsComponent implements OnInit {
   appointmentToCancel: SessionResponse | null = null;
   showCancelConfirm = false;
   patientId!: number;
-
+ 
   showToast = false;
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
   private toastTimer: any;
-
-  ratingsBySession: Record<number, SessionRating> = {};
+ 
+  ratingsBySession: Record<number, CalificationResponse> = {};
   reportsBySession: Record<number, SessionReport> = {};
-
+ 
   ratingDialog: RatingDialog = {
     visible: false,
     appointment: null,
@@ -63,7 +64,7 @@ export class PatientAppointmentsComponent implements OnInit {
     saving: false,
     error: ''
   };
-
+ 
   reportDialog: ReportDialog = {
     visible: false,
     appointment: null,
@@ -72,33 +73,33 @@ export class PatientAppointmentsComponent implements OnInit {
     saving: false,
     error: ''
   };
-
+ 
   constructor(
     private sessionService: SessionService,
     private authService: AuthService
   ) {}
-
+ 
   ngOnInit(): void {
     this.patientId = this.getPatientId() ?? 0;
-    this.loadRatings();
     this.loadReports();
     this.loadAppointments();
   }
-
+ 
   loadAppointments(): void {
     if (!this.patientId) {
       this.errorMsg = 'No se pudo identificar al paciente actual.';
       return;
     }
-
+ 
     this.loading = true;
     this.errorMsg = '';
     this.successMsg = '';
-
+ 
     this.sessionService.getSessionsByPatient(this.patientId).subscribe({
       next: (sessions) => {
         this.appointments = sessions;
         this.loading = false;
+        this.loadRatingsForFinishedSessions(sessions);
       },
       error: (error) => {
         this.errorMsg = error.error?.message || 'No se pudieron cargar tus citas.';
@@ -106,28 +107,43 @@ export class PatientAppointmentsComponent implements OnInit {
       }
     });
   }
-
-
+ 
+  /**
+   * Para cada sesión finalizada, intenta cargar su calificación del backend.
+   */
+  private loadRatingsForFinishedSessions(sessions: SessionResponse[]): void {
+    sessions
+      .filter(s => s.status === 4)
+      .forEach(session => {
+        this.sessionService.getPatientRating(session.id).subscribe({
+          next: (rating) => {
+            this.ratingsBySession[session.id] = rating;
+          },
+          error: () => {} // 404 = aún no calificada, silencioso
+        });
+      });
+  }
+ 
   openCancelConfirm(appointment: SessionResponse): void {
     this.appointmentToCancel = appointment;
     this.showCancelConfirm = true;
     this.errorMsg = '';
     this.successMsg = '';
   }
-
+ 
   closeCancelConfirm(): void {
     this.appointmentToCancel = null;
     this.showCancelConfirm = false;
   }
-
+ 
   confirmCancelAppointment(): void {
     if (!this.appointmentToCancel) return;
-
+ 
     const appointmentId = this.appointmentToCancel.id;
     this.cancellingId = appointmentId;
     this.errorMsg = '';
     this.successMsg = '';
-
+ 
     this.sessionService.cancelSession(appointmentId, { patientId: this.patientId }).subscribe({
       next: () => {
         this.cancellingId = null;
@@ -142,19 +158,19 @@ export class PatientAppointmentsComponent implements OnInit {
       }
     });
   }
-
+ 
   openRatingDialog(appointment: SessionResponse): void {
     const existing = this.ratingsBySession[appointment.id];
     this.ratingDialog = {
       visible: true,
       appointment,
-      stars: existing?.stars ?? 0,
+      stars: existing?.rating ?? 0,
       comment: existing?.comment ?? '',
       saving: false,
       error: ''
     };
   }
-
+ 
   closeRatingDialog(): void {
     this.ratingDialog = {
       visible: false,
@@ -165,42 +181,45 @@ export class PatientAppointmentsComponent implements OnInit {
       error: ''
     };
   }
-
+ 
   setRatingStars(stars: number): void {
     this.ratingDialog.stars = stars;
     this.ratingDialog.error = '';
   }
-
+ 
   saveRating(): void {
     if (!this.ratingDialog.appointment) return;
-
+ 
     if (this.ratingDialog.stars < 1) {
       this.ratingDialog.error = 'Debes seleccionar al menos una estrella.';
       return;
     }
-
+ 
     if (this.ratingDialog.comment.trim().length < 5) {
       this.ratingDialog.error = 'El comentario debe tener al menos 5 caracteres.';
       return;
     }
-
+ 
     this.ratingDialog.saving = true;
     const appointment = this.ratingDialog.appointment;
-
-    const saved = this.sessionService.saveRating({
-      sessionId: appointment.id,
-      specialistId: appointment.specialistId,
-      patientName: appointment.patientName,
-      stars: this.ratingDialog.stars,
+ 
+    this.sessionService.createPatientRating(appointment.id, {
+      rating: this.ratingDialog.stars,
       comment: this.ratingDialog.comment.trim()
+    }).subscribe({
+      next: (saved) => {
+        this.ratingsBySession[appointment.id] = saved;
+        this.ratingDialog.saving = false;
+        this.closeRatingDialog();
+        this.showToastMessage('Calificación guardada correctamente', 'success');
+      },
+      error: (error) => {
+        this.ratingDialog.saving = false;
+        this.ratingDialog.error = error.error?.message || 'No se pudo guardar la calificación.';
+      }
     });
-
-    this.ratingsBySession[appointment.id] = saved;
-    this.ratingDialog.saving = false;
-    this.closeRatingDialog();
-    this.showToastMessage('Calificación guardada correctamente', 'success');
   }
-
+ 
   openReportDialog(appointment: SessionResponse): void {
     const existing = this.reportsBySession[appointment.id];
     this.reportDialog = {
@@ -212,7 +231,7 @@ export class PatientAppointmentsComponent implements OnInit {
       error: ''
     };
   }
-
+ 
   closeReportDialog(): void {
     this.reportDialog = {
       visible: false,
@@ -223,65 +242,78 @@ export class PatientAppointmentsComponent implements OnInit {
       error: ''
     };
   }
-
+ 
   saveReport(): void {
     if (!this.reportDialog.appointment) return;
-
+ 
     if (!this.reportDialog.reason) {
       this.reportDialog.error = 'Debes seleccionar un motivo.';
       return;
     }
-
+ 
     if (this.reportDialog.details.trim().length < 10) {
       this.reportDialog.error = 'Los detalles deben tener al menos 10 caracteres.';
       return;
     }
-
+ 
     this.reportDialog.saving = true;
     const appointment = this.reportDialog.appointment;
-
-    const saved = this.sessionService.saveReport({
-      sessionId: appointment.id,
+ 
+    this.sessionService.createReport({
       specialistId: appointment.specialistId,
-      patientName: appointment.patientName,
+      sessionId: appointment.id,
       reason: this.reportDialog.reason,
-      details: this.reportDialog.details.trim()
+      description: this.reportDialog.details.trim()
+    }).subscribe({
+      next: (saved) => {
+        this.reportsBySession[appointment.id] = {
+          sessionId: saved.sessionId,
+          specialistId: appointment.specialistId,
+          patientName: appointment.patientName,
+          reason: saved.reason,
+          details: saved.description ?? '',
+          createdAt: saved.createdDate,
+          updatedAt: saved.updatedDate
+        };
+        this.reportDialog.saving = false;
+        this.closeReportDialog();
+        this.showToastMessage('Reporte enviado correctamente', 'success');
+      },
+      error: (error) => {
+        this.reportDialog.saving = false;
+        this.reportDialog.error = error.error?.message || 'No se pudo enviar el reporte.';
+      }
     });
-
-    this.reportsBySession[appointment.id] = saved;
-    this.reportDialog.saving = false;
-    this.closeReportDialog();
-    this.showToastMessage('Reporte enviado correctamente', 'success');
   }
-
+ 
   isRateable(appointment: SessionResponse): boolean {
-    return appointment.status === 4 ;
+    return appointment.status === 4;
   }
-
+ 
   hasRating(sessionId: number): boolean {
     return !!this.ratingsBySession[sessionId];
   }
-
-  getRating(sessionId: number): SessionRating | null {
+ 
+  getRating(sessionId: number): CalificationResponse | null {
     return this.ratingsBySession[sessionId] ?? null;
   }
-
+ 
   hasReport(sessionId: number): boolean {
     return !!this.reportsBySession[sessionId];
   }
-
+ 
   getReport(sessionId: number): SessionReport | null {
     return this.reportsBySession[sessionId] ?? null;
   }
-
+ 
   getStarArray(stars: number): number[] {
     return Array.from({ length: 5 }, (_, i) => (i + 1 <= stars ? 1 : 0));
   }
-
+ 
   canCancel(session: SessionResponse): boolean {
     return session.status === 1 || session.status === 2;
   }
-
+ 
   getStatusLabel(status: number): string {
     const labels: Record<number, string> = {
       1: 'patientAppointments.status.pending',
@@ -292,7 +324,7 @@ export class PatientAppointmentsComponent implements OnInit {
     };
     return labels[status] || 'Desconocido';
   }
-
+ 
   getStatusClass(status: number): string {
     const classes: Record<number, string> = {
       1: 'pending',
@@ -303,7 +335,7 @@ export class PatientAppointmentsComponent implements OnInit {
     };
     return classes[status] || 'unknown';
   }
-
+ 
   showToastMessage(message: string, type: 'success' | 'error'): void {
     if (this.toastTimer) clearTimeout(this.toastTimer);
     this.toastMessage = message;
@@ -311,15 +343,7 @@ export class PatientAppointmentsComponent implements OnInit {
     this.showToast = true;
     this.toastTimer = setTimeout(() => this.showToast = false, 3000);
   }
-
-  private loadRatings(): void {
-    const all = this.sessionService.getRatingsBySpecialist(0);
-    this.ratingsBySession = all.reduce<Record<number, SessionRating>>((acc, r) => {
-      acc[r.sessionId] = r;
-      return acc;
-    }, {});
-  }
-
+ 
   private loadReports(): void {
     const all = this.sessionService.getReportsBySpecialist(0);
     this.reportsBySession = all.reduce<Record<number, SessionReport>>((acc, r) => {
@@ -327,7 +351,7 @@ export class PatientAppointmentsComponent implements OnInit {
       return acc;
     }, {});
   }
-
+ 
   private getPatientId(): number | null {
     const user = this.authService.getUser();
     return user?.id ?? null;

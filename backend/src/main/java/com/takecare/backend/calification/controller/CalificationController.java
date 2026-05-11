@@ -1,5 +1,6 @@
 package com.takecare.backend.calification.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -12,17 +13,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.takecare.backend.calification.dto.CalificationResponseDTO;
 import com.takecare.backend.calification.dto.CreateCalificationRequestDTO;
+import com.takecare.backend.calification.dto.RatingSummaryDTO;
 import com.takecare.backend.calification.service.CalificationService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/sessions")
 public class CalificationController {
 
     private static final Logger logger = LoggerFactory.getLogger(CalificationController.class);
@@ -33,7 +33,11 @@ public class CalificationController {
         this.calificationService = calificationService;
     }
 
-    @PostMapping("/{sessionId}/patient-ratings")
+    /**
+     * POST /api/v1/sessions/{sessionId}/patient-ratings
+     * Registra la calificación de una sesión finalizada.
+     */
+    @PostMapping("/api/v1/sessions/{sessionId}/patient-ratings")
     public ResponseEntity<?> createPatientRating(
             @PathVariable Integer sessionId,
             @Valid @RequestBody CreateCalificationRequestDTO request
@@ -42,11 +46,8 @@ public class CalificationController {
 
         try {
             CalificationResponseDTO response = calificationService.createPatientRating(
-                    sessionId,
-                    request,
-                    null
+                    sessionId, request, null
             );
-
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
         } catch (NoSuchElementException e) {
@@ -71,7 +72,11 @@ public class CalificationController {
         }
     }
 
-    @GetMapping("/{sessionId}/patient-ratings")
+    /**
+     * GET /api/v1/sessions/{sessionId}/patient-ratings
+     * Obtiene la calificación de una sesión.
+     */
+    @GetMapping("/api/v1/sessions/{sessionId}/patient-ratings")
     public ResponseEntity<?> getPatientRating(
             @PathVariable Integer sessionId
     ) {
@@ -79,10 +84,8 @@ public class CalificationController {
 
         try {
             CalificationResponseDTO response = calificationService.getPatientRating(
-                    sessionId,
-                    null
+                    sessionId, null
             );
-
             return ResponseEntity.ok(response);
 
         } catch (NoSuchElementException e) {
@@ -95,5 +98,32 @@ public class CalificationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("message", "Error inesperado"));
         }
+    }
+
+    /**
+     * GET /api/v1/specialists/{specialistId}/ratings
+     * Lista todas las calificaciones de un especialista.
+     */
+    @GetMapping("/api/v1/specialists/{specialistId}/ratings")
+    public ResponseEntity<List<CalificationResponseDTO>> getRatingsBySpecialist(
+            @PathVariable Integer specialistId
+    ) {
+        logger.info("GET /api/v1/specialists/{}/ratings", specialistId);
+        List<CalificationResponseDTO> ratings = calificationService.getRatingsBySpecialist(specialistId);
+        logger.info("GET ratings | specialistId={} | total={}", specialistId, ratings.size());
+        return ResponseEntity.ok(ratings);
+    }
+
+    /**
+     * GET /api/v1/specialists/{specialistId}/rating-summary
+     * Retorna promedio, total y distribución de calificaciones del especialista.
+     */
+    @GetMapping("/api/v1/specialists/{specialistId}/rating-summary")
+    public ResponseEntity<RatingSummaryDTO> getRatingSummary(
+            @PathVariable Integer specialistId
+    ) {
+        logger.info("GET /api/v1/specialists/{}/rating-summary", specialistId);
+        RatingSummaryDTO summary = calificationService.getRatingSummary(specialistId);
+        return ResponseEntity.ok(summary);
     }
 }
