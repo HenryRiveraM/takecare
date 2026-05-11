@@ -29,12 +29,7 @@ public class SessionFinalizerScheduler {
         this.sessionRepository = sessionRepository;
     }
 
-    /**
-     * Corre cada 5 minutos.
-     * Busca todas las sesiones aceptadas (status=2) cuyo horario ya terminó
-     * y las marca como finalizadas (status=4).
-     */
-    @Scheduled(fixedDelay = 5 * 60 * 1000) // 5 minutos en ms
+    @Scheduled(fixedDelay = 5 * 60 * 1000) 
     @Transactional
     public void finalizePastSessions() {
         LocalDateTime now = LocalDateTime.now();
@@ -64,9 +59,6 @@ public class SessionFinalizerScheduler {
         ));
     }
 
-    /**
-     * Una sesión está terminada cuando la fecha+hora de fin del horario ya pasó.
-     */
     private boolean isSessionOver(Session session, LocalDateTime now) {
         SpecialistSchedule schedule = session.getSchedule();
         if (schedule == null) return false;

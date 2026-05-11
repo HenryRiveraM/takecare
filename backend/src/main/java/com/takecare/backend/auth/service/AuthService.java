@@ -19,7 +19,6 @@ public class AuthService {
     }
 
     /**
-     * Autentica un usuario con email y password
      * @param email - email del usuario
      * @param password - contraseña en texto plano
      * @return LoginResponseDTO con datos del usuario si es exitoso

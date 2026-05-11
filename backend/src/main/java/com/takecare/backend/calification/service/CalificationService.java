@@ -33,7 +33,6 @@ public class CalificationService {
     private static final Integer SESSION_ACCEPTED = 2;
     private static final Integer SESSION_FINISHED = 4;
 
-    // EL PACIENTE ES QUIEN EVALÚA AL ESPECIALISTA
     private static final String EVALUATOR_ROLE_PATIENT = "PATIENT";
 
     private final CalificationRepository calificationRepository;
@@ -69,7 +68,6 @@ public class CalificationService {
 
             Integer patientId = session.getPatient().getId();
 
-            // VALIDAR SI YA EXISTE CALIFICACIÓN DEL PACIENTE
             if (calificationRepository.existsBySessionIdAndPatientIdAndSpecialistIdAndEvaluatorRole(
                     sessionId,
                     patientId,
@@ -94,7 +92,6 @@ public class CalificationService {
 
             calification.setCreatedDate(LocalDateTime.now());
 
-            // EL EVALUADOR ES EL PACIENTE
             calification.setEvaluatorRole(EVALUATOR_ROLE_PATIENT);
 
             Calification saved = calificationRepository.save(calification);

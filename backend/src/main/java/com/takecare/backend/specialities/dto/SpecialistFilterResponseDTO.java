@@ -1,7 +1,6 @@
 package com.takecare.backend.specialities.dto;
 
 import java.math.BigDecimal;
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.List;
 

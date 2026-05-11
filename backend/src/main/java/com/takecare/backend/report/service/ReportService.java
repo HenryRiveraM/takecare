@@ -205,10 +205,6 @@ public class ReportService {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // GET /api/v1/reports/session/{sessionId}/specialist/{specialistId} (ya existía)
-    // -------------------------------------------------------------------------
-
     @Transactional(readOnly = true)
     public ReportResponseDTO getReportBySession(Integer sessionId, Integer specialistId) {
         try {
@@ -234,10 +230,6 @@ public class ReportService {
             throw e;
         }
     }
-
-    // -------------------------------------------------------------------------
-    // GET /api/v1/reports/session/{sessionId}/patient/{patientId}
-    // -------------------------------------------------------------------------
 
     @Transactional(readOnly = true)
     public ReportResponseDTO getPatientReportBySession(Integer sessionId, Integer patientId) {
@@ -266,10 +258,6 @@ public class ReportService {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // GET /api/v1/specialists/{specialistId}/reports
-    // -------------------------------------------------------------------------
-
     @Transactional(readOnly = true)
     public List<ReportResponseDTO> getReportsReceivedBySpecialist(Integer specialistId) {
         try {
@@ -290,10 +278,6 @@ public class ReportService {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // GET /api/v1/patients/{patientId}/reports
-    // -------------------------------------------------------------------------
-
     @Transactional(readOnly = true)
     public List<ReportResponseDTO> getReportsReceivedByPatient(Integer patientId) {
         try {
@@ -313,10 +297,6 @@ public class ReportService {
             throw e;
         }
     }
-
-    // -------------------------------------------------------------------------
-    // Helpers privados
-    // -------------------------------------------------------------------------
 
     private void validateSessionStatus(Session session) {
         if (session == null || session.getStatus() == null) {

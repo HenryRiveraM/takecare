@@ -56,7 +56,6 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
             @Param("patientId") Integer patientId
     );
 
-    // Usado por SessionFinalizerScheduler para buscar sesiones aceptadas
     @Query("""
             select s
             from Session s

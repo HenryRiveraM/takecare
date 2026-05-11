@@ -1,20 +1,5 @@
 package com.takecare.backend.supportmaterial.service;
  
-import com.takecare.backend.supportmaterial.dto.OrientationMaterialDTO;
-import com.takecare.backend.supportmaterial.dto.SupportMaterialItemDto;
-import com.takecare.backend.supportmaterial.dto.SupportMaterialListResponseDto;
-import com.takecare.backend.supportmaterial.model.OrientationMaterial;
-import com.takecare.backend.supportmaterial.repository.OrientationMaterialRepository;
-import com.takecare.backend.user.model.Specialist;
-import com.takecare.backend.user.repository.SpecialistRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
- 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -23,12 +8,28 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.takecare.backend.supportmaterial.dto.OrientationMaterialDTO;
+import com.takecare.backend.supportmaterial.dto.SupportMaterialItemDto;
+import com.takecare.backend.supportmaterial.dto.SupportMaterialListResponseDto;
+import com.takecare.backend.supportmaterial.model.OrientationMaterial;
+import com.takecare.backend.supportmaterial.repository.OrientationMaterialRepository;
+import com.takecare.backend.user.model.Specialist;
+import com.takecare.backend.user.repository.SpecialistRepository;
 
 @Service
 public class OrientationMaterialService {
@@ -150,9 +151,6 @@ public class OrientationMaterialService {
                 });
     }
  
-    /**
-     * Devuelve el archivo físico para servirlo como descarga o vista previa.
-     */
     public Optional<Resource> getFile(Integer specialistId, Long materialId) throws MalformedURLException {
         Optional<OrientationMaterial> materialOpt =
                 materialRepository.findActiveByIdAndSpecialistId(materialId, specialistId);

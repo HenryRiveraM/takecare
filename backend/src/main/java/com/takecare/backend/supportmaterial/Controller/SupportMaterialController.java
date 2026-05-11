@@ -1,23 +1,22 @@
 package com.takecare.backend.supportmaterial.controller;
 
+import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.core.io.Resource;
-
-import java.net.MalformedURLException;
-import java.util.Optional;
 
 import com.takecare.backend.supportmaterial.dto.SupportMaterialListResponseDto;
 import com.takecare.backend.supportmaterial.service.OrientationMaterialService;
@@ -78,10 +77,6 @@ public class SupportMaterialController {
         }
     }
 
-    /**
-     * Vista previa de material publicado.
-     * GET /api/v1/support-materials/{id}/file
-     */
     @GetMapping("/support-materials/{id}/file")
     public ResponseEntity<?> getSupportMaterialFile(@PathVariable Long id) {
         logger.info("GET /api/v1/support-materials/{}/file", id);
@@ -115,10 +110,6 @@ public class SupportMaterialController {
         }
     }
 
-    /**
-     * Descarga de material publicado.
-     * GET /api/v1/support-materials/{id}/download
-     */
     @GetMapping("/support-materials/{id}/download")
     public ResponseEntity<?> downloadSupportMaterial(@PathVariable Long id) {
         logger.info("GET /api/v1/support-materials/{}/download", id);
