@@ -79,11 +79,12 @@
             <p class="rating-comment">{{ getRating(appointment.id)?.comment }}</p>
           </div>
 
-          <button class="btn-rate" (click)="openRatingDialog(appointment)">
+          <button
+            class="btn-rate"
+            *ngIf="!hasRating(appointment.id)"
+            (click)="openRatingDialog(appointment)">
             <i class="fas fa-star"></i>
-            {{ (hasRating(appointment.id)
-              ? 'patientAppointments.rating.edit'
-              : 'patientAppointments.rating.create') | translate }}
+            {{ 'patientAppointments.rating.create' | translate }}
           </button>
 
           <div class="report-summary" *ngIf="hasReport(appointment.id)">
@@ -94,11 +95,12 @@
             <p class="report-comment">{{ getReport(appointment.id)?.description }}</p>
           </div>
 
-          <button class="btn-report" (click)="openReportDialog(appointment)">
+          <button
+            class="btn-report"
+            *ngIf="!hasReport(appointment.id)"
+            (click)="openReportDialog(appointment)">
             <i class="fas fa-flag"></i>
-            {{ (hasReport(appointment.id)
-              ? 'patientAppointments.report.edit'
-              : 'patientAppointments.report.create') | translate }}
+            {{ 'patientAppointments.report.create' | translate }}
           </button>
 
         </div>
