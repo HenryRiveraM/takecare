@@ -31,7 +31,10 @@ public class CalificationService {
     private static final Logger logger = LoggerFactory.getLogger(CalificationService.class);
 
     private static final Integer SESSION_ACCEPTED = 2;
-    private static final String EVALUATOR_ROLE_SPECIALIST = "SPECIALIST";
+    private static final Integer SESSION_FINISHED = 4;
+
+    // EL PACIENTE ES QUIEN EVALÚA AL ESPECIALISTA
+    private static final String EVALUATOR_ROLE_PATIENT = "PATIENT";
 
     private final CalificationRepository calificationRepository;
     private final SessionRepository sessionRepository;
@@ -57,7 +60,8 @@ public class CalificationService {
             Session session = getSessionOrThrow(sessionId);
             Integer sessionSpecialistId = getSessionSpecialistId(session);
 
-            logger.info("Create patient rating. sessionId={}, specialistId={}", sessionId, sessionSpecialistId);
+            logger.info("Create patient rating. sessionId={}, specialistId={}",
+                    sessionId, sessionSpecialistId);
 
             validateSessionOwnership(session, requestingUser);
             validateSessionAccepted(session);
@@ -65,38 +69,48 @@ public class CalificationService {
 
             Integer patientId = session.getPatient().getId();
 
+            // VALIDAR SI YA EXISTE CALIFICACIÓN DEL PACIENTE
             if (calificationRepository.existsBySessionIdAndPatientIdAndSpecialistIdAndEvaluatorRole(
                     sessionId,
                     patientId,
                     sessionSpecialistId,
-                    EVALUATOR_ROLE_SPECIALIST
+                    EVALUATOR_ROLE_PATIENT
             )) {
+
                 logger.warn("Patient rating already exists. sessionId={}, specialistId={}, patientId={}",
                         sessionId, sessionSpecialistId, patientId);
-                throw new DuplicateKeyException("El especialista ya califico esta cita");
+
+                throw new DuplicateKeyException("El paciente ya calificó esta cita");
             }
 
             Calification calification = new Calification();
+
             calification.setSession(session);
             calification.setPatient(session.getPatient());
             calification.setSpecialist(session.getSchedule().getSpecialist());
+
             calification.setRating(request.getRating());
             calification.setComment(request.getComment());
+
             calification.setCreatedDate(LocalDateTime.now());
-            calification.setEvaluatorRole(EVALUATOR_ROLE_SPECIALIST);
+
+            // EL EVALUADOR ES EL PACIENTE
+            calification.setEvaluatorRole(EVALUATOR_ROLE_PATIENT);
 
             Calification saved = calificationRepository.save(calification);
 
             logger.info("Patient rating created. calificationId={}, sessionId={}, specialistId={}, patientId={}",
                     saved.getId(), sessionId, sessionSpecialistId, patientId);
 
-            // Actualizar promedio de reputación del especialista
             updateSpecialistReputation(sessionSpecialistId);
 
             return toResponseDto(saved);
 
         } catch (RuntimeException e) {
-            logger.warn("Create patient rating failed. sessionId={}, error={}", sessionId, e.getMessage());
+
+            logger.warn("Create patient rating failed. sessionId={}, error={}",
+                    sessionId, e.getMessage());
+
             throw e;
         }
     }
@@ -107,51 +121,56 @@ public class CalificationService {
             User requestingUser
     ) {
         try {
+
             Session session = getSessionOrThrow(sessionId);
+
             Integer sessionSpecialistId = getSessionSpecialistId(session);
 
-            logger.info("Get patient rating. sessionId={}, specialistId={}", sessionId, sessionSpecialistId);
+            logger.info("Get patient rating. sessionId={}, specialistId={}",
+                    sessionId, sessionSpecialistId);
 
             validateSessionOwnership(session, requestingUser);
 
             Integer patientId = session.getPatient().getId();
 
-            return calificationRepository.findBySessionIdAndPatientIdAndSpecialistIdAndEvaluatorRole(
-                    sessionId,
-                    patientId,
-                    sessionSpecialistId,
-                    EVALUATOR_ROLE_SPECIALIST
-            ).map(this::toResponseDto)
-             .orElseThrow(() -> new NoSuchElementException("Calificacion no encontrada"));
+            return calificationRepository
+                    .findBySessionIdAndPatientIdAndSpecialistIdAndEvaluatorRole(
+                            sessionId,
+                            patientId,
+                            sessionSpecialistId,
+                            EVALUATOR_ROLE_PATIENT
+                    )
+                    .map(this::toResponseDto)
+                    .orElseThrow(() ->
+                            new NoSuchElementException("Calificación no encontrada"));
 
         } catch (RuntimeException e) {
-            logger.warn("Get patient rating failed. sessionId={}, error={}", sessionId, e.getMessage());
+
+            logger.warn("Get patient rating failed. sessionId={}, error={}",
+                    sessionId, e.getMessage());
+
             throw e;
         }
     }
 
-    /**
-     * Lista todas las calificaciones visibles de un especialista.
-     * GET /api/v1/specialists/{specialistId}/ratings
-     */
     @Transactional(readOnly = true)
     public List<CalificationResponseDTO> getRatingsBySpecialist(Integer specialistId) {
+
         logger.info("Get ratings for specialist {}", specialistId);
+
         return calificationRepository.findBySpecialistId(specialistId)
                 .stream()
                 .map(this::toResponseDto)
                 .toList();
     }
 
-    /**
-     * Retorna promedio, total y distribución de calificaciones de un especialista.
-     * GET /api/v1/specialists/{specialistId}/rating-summary
-     */
     @Transactional(readOnly = true)
     public RatingSummaryDTO getRatingSummary(Integer specialistId) {
+
         logger.info("Get rating summary for specialist {}", specialistId);
 
-        List<Calification> ratings = calificationRepository.findAllBySpecialistId(specialistId);
+        List<Calification> ratings =
+                calificationRepository.findAllBySpecialistId(specialistId);
 
         long total = ratings.size();
 
@@ -164,25 +183,33 @@ public class CalificationService {
                 ).setScale(2, RoundingMode.HALF_UP).doubleValue();
 
         Map<Integer, Long> distribution = ratings.stream()
-                .collect(Collectors.groupingBy(Calification::getRating, Collectors.counting()));
+                .collect(Collectors.groupingBy(
+                        Calification::getRating,
+                        Collectors.counting()
+                ));
 
         for (int i = 1; i <= 5; i++) {
             distribution.putIfAbsent(i, 0L);
         }
 
-        logger.info("Rating summary for specialist {}: avg={} total={}", specialistId, average, total);
+        logger.info("Rating summary for specialist {}: avg={} total={}",
+                specialistId, average, total);
 
-        return new RatingSummaryDTO(specialistId, average, total, distribution);
+        return new RatingSummaryDTO(
+                specialistId,
+                average,
+                total,
+                distribution
+        );
     }
 
-    // -------------------------------------------------------------------------
-    // Helpers
-    // -------------------------------------------------------------------------
-
     private void updateSpecialistReputation(Integer specialistId) {
+
         if (specialistId == null) return;
 
-        List<Calification> ratings = calificationRepository.findAllBySpecialistId(specialistId);
+        List<Calification> ratings =
+                calificationRepository.findAllBySpecialistId(specialistId);
+
         if (ratings.isEmpty()) return;
 
         double avg = ratings.stream()
@@ -190,60 +217,107 @@ public class CalificationService {
                 .average()
                 .orElse(0.0);
 
-        BigDecimal rounded = BigDecimal.valueOf(avg).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal rounded = BigDecimal.valueOf(avg)
+                .setScale(2, RoundingMode.HALF_UP);
 
         specialistRepository.findById(specialistId).ifPresent(specialist -> {
+
             specialist.setReputationAverage(rounded);
+
             specialistRepository.save(specialist);
-            logger.info("Specialist {} reputation updated to {}", specialistId, rounded);
+
+            logger.info("Specialist {} reputation updated to {}",
+                    specialistId, rounded);
         });
     }
 
     private Session getSessionOrThrow(Integer sessionId) {
+
         return sessionRepository.findById(sessionId)
                 .orElseThrow(() -> {
-                    logger.warn("Patient rating - session not found. sessionId={}", sessionId);
+
+                    logger.warn("Patient rating - session not found. sessionId={}",
+                            sessionId);
+
                     return new NoSuchElementException("Cita no encontrada");
                 });
     }
 
     private Integer getSessionSpecialistId(Session session) {
-        if (session.getSchedule() == null || session.getSchedule().getSpecialist() == null) {
+
+        if (session.getSchedule() == null
+                || session.getSchedule().getSpecialist() == null) {
+
             return null;
         }
+
         return session.getSchedule().getSpecialist().getId();
     }
 
     private void validateSessionOwnership(Session session, User requestingUser) {
+
         Integer sessionSpecialistId = getSessionSpecialistId(session);
 
         if (sessionSpecialistId == null) {
-            logger.warn("Patient rating - session without specialist. sessionId={}", session.getId());
-            throw new AccessDeniedException("La cita no pertenece al especialista autenticado");
+
+            logger.warn("Patient rating - session without specialist. sessionId={}",
+                    session.getId());
+
+            throw new AccessDeniedException(
+                    "La cita no pertenece al especialista autenticado"
+            );
         }
 
-        if (requestingUser != null && requestingUser.getId() != null
+        if (requestingUser != null
+                && requestingUser.getId() != null
                 && !sessionSpecialistId.equals(requestingUser.getId())) {
-            logger.warn("Patient rating - session not owned by specialist. sessionId={}, specialistId={}, sessionSpecialistId={}",
-                    session.getId(), requestingUser.getId(), sessionSpecialistId);
-            throw new AccessDeniedException("La cita no pertenece al especialista autenticado");
+
+            logger.warn(
+                    "Patient rating - session not owned by specialist. sessionId={}, specialistId={}, sessionSpecialistId={}",
+                    session.getId(),
+                    requestingUser.getId(),
+                    sessionSpecialistId
+            );
+
+            throw new AccessDeniedException(
+                    "La cita no pertenece al especialista autenticado"
+            );
         }
     }
 
     private void validateSessionAccepted(Session session) {
-        if (!SESSION_ACCEPTED.equals(session.getStatus())) {
-            logger.warn("Patient rating - session not accepted. sessionId={}, status={}",
-                    session.getId(), session.getStatus());
-            throw new IllegalStateException("La cita no esta aceptada");
+
+        Integer status = session.getStatus();
+
+        if (!SESSION_ACCEPTED.equals(status)
+                && !SESSION_FINISHED.equals(status)) {
+
+            logger.warn(
+                    "Patient rating - session not accepted. sessionId={}, status={}",
+                    session.getId(),
+                    status
+            );
+
+            throw new IllegalStateException(
+                    "La cita no está en un estado válido para calificar"
+            );
         }
     }
 
     private void validateSessionFinished(Session session) {
+
         if (session.getSchedule() == null
                 || session.getSchedule().getScheduleDate() == null
                 || session.getSchedule().getEndTime() == null) {
-            logger.warn("Patient rating - session schedule missing end time. sessionId={}", session.getId());
-            throw new IllegalStateException("La cita aun no ha finalizado");
+
+            logger.warn(
+                    "Patient rating - session schedule missing end time. sessionId={}",
+                    session.getId()
+            );
+
+            throw new IllegalStateException(
+                    "La cita aún no ha finalizado"
+            );
         }
 
         LocalDateTime sessionEnd = LocalDateTime.of(
@@ -252,22 +326,49 @@ public class CalificationService {
         );
 
         if (LocalDateTime.now().isBefore(sessionEnd)) {
-            logger.warn("Patient rating - session not finished. sessionId={}, endAt={}",
-                    session.getId(), sessionEnd);
-            throw new IllegalStateException("La cita aun no ha finalizado");
+
+            logger.warn(
+                    "Patient rating - session not finished. sessionId={}, endAt={}",
+                    session.getId(),
+                    sessionEnd
+            );
+
+            throw new IllegalStateException(
+                    "La cita aún no ha finalizado"
+            );
         }
     }
 
     private CalificationResponseDTO toResponseDto(Calification calification) {
+
         CalificationResponseDTO dto = new CalificationResponseDTO();
 
         dto.setId(calification.getId());
-        dto.setSessionId(calification.getSession() != null ? calification.getSession().getId() : null);
-        dto.setPatientId(calification.getPatient() != null ? calification.getPatient().getId() : null);
-        dto.setSpecialistId(calification.getSpecialist() != null ? calification.getSpecialist().getId() : null);
+
+        dto.setSessionId(
+                calification.getSession() != null
+                        ? calification.getSession().getId()
+                        : null
+        );
+
+        dto.setPatientId(
+                calification.getPatient() != null
+                        ? calification.getPatient().getId()
+                        : null
+        );
+
+        dto.setSpecialistId(
+                calification.getSpecialist() != null
+                        ? calification.getSpecialist().getId()
+                        : null
+        );
+
         dto.setRating(calification.getRating());
+
         dto.setComment(calification.getComment());
+
         dto.setCreatedDate(calification.getCreatedDate());
+
         dto.setEvaluatorRole(calification.getEvaluatorRole());
 
         return dto;
