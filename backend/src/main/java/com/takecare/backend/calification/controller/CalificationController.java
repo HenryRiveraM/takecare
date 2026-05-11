@@ -33,10 +33,6 @@ public class CalificationController {
         this.calificationService = calificationService;
     }
 
-    /**
-     * POST /api/v1/sessions/{sessionId}/patient-ratings
-     * Registra la calificación de una sesión finalizada.
-     */
     @PostMapping("/api/v1/sessions/{sessionId}/patient-ratings")
     public ResponseEntity<?> createPatientRating(
             @PathVariable Integer sessionId,
@@ -72,10 +68,6 @@ public class CalificationController {
         }
     }
 
-    /**
-     * GET /api/v1/sessions/{sessionId}/patient-ratings
-     * Obtiene la calificación de una sesión.
-     */
     @GetMapping("/api/v1/sessions/{sessionId}/patient-ratings")
     public ResponseEntity<?> getPatientRating(
             @PathVariable Integer sessionId
@@ -100,10 +92,6 @@ public class CalificationController {
         }
     }
 
-    /**
-     * GET /api/v1/specialists/{specialistId}/ratings
-     * Lista todas las calificaciones de un especialista.
-     */
     @GetMapping("/api/v1/specialists/{specialistId}/ratings")
     public ResponseEntity<List<CalificationResponseDTO>> getRatingsBySpecialist(
             @PathVariable Integer specialistId
@@ -114,10 +102,6 @@ public class CalificationController {
         return ResponseEntity.ok(ratings);
     }
 
-    /**
-     * GET /api/v1/specialists/{specialistId}/rating-summary
-     * Retorna promedio, total y distribución de calificaciones del especialista.
-     */
     @GetMapping("/api/v1/specialists/{specialistId}/rating-summary")
     public ResponseEntity<RatingSummaryDTO> getRatingSummary(
             @PathVariable Integer specialistId
