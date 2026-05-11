@@ -9,9 +9,10 @@ import {
   SessionService,
   SessionRating,
   SessionReport,
-  CalificationResponse
+  CalificationResponse,
+  ReportResponse
 } from '../../services/session.service';
- 
+
 interface RatingDialog {
   visible: boolean;
   appointment: SessionResponse | null;
@@ -20,7 +21,7 @@ interface RatingDialog {
   saving: boolean;
   error: string;
 }
- 
+
 interface ReportDialog {
   visible: boolean;
   appointment: SessionResponse | null;
@@ -29,7 +30,7 @@ interface ReportDialog {
   saving: boolean;
   error: string;
 }
- 
+
 @Component({
   selector: 'app-patient-appointments',
   standalone: true,
@@ -38,7 +39,7 @@ interface ReportDialog {
   styleUrl: './patient-appointments.component.css'
 })
 export class PatientAppointmentsComponent implements OnInit {
- 
+
   appointments: SessionResponse[] = [];
   loading = false;
   errorMsg = '';
@@ -47,15 +48,16 @@ export class PatientAppointmentsComponent implements OnInit {
   appointmentToCancel: SessionResponse | null = null;
   showCancelConfirm = false;
   patientId!: number;
- 
+
   showToast = false;
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
   private toastTimer: any;
- 
+
   ratingsBySession: Record<number, CalificationResponse> = {};
-  reportsBySession: Record<number, SessionReport> = {};
- 
+
+  reportsBySession: Record<number, ReportResponse> = {};
+
   ratingDialog: RatingDialog = {
     visible: false,
     appointment: null,
@@ -64,7 +66,7 @@ export class PatientAppointmentsComponent implements OnInit {
     saving: false,
     error: ''
   };
- 
+
   reportDialog: ReportDialog = {
     visible: false,
     appointment: null,
@@ -73,33 +75,32 @@ export class PatientAppointmentsComponent implements OnInit {
     saving: false,
     error: ''
   };
- 
+
   constructor(
     private sessionService: SessionService,
     private authService: AuthService
   ) {}
- 
+
   ngOnInit(): void {
     this.patientId = this.getPatientId() ?? 0;
-    this.loadReports();
     this.loadAppointments();
   }
- 
+
   loadAppointments(): void {
     if (!this.patientId) {
       this.errorMsg = 'No se pudo identificar al paciente actual.';
       return;
     }
- 
+
     this.loading = true;
     this.errorMsg = '';
     this.successMsg = '';
- 
+
     this.sessionService.getSessionsByPatient(this.patientId).subscribe({
       next: (sessions) => {
         this.appointments = sessions;
         this.loading = false;
-        this.loadRatingsForFinishedSessions(sessions);
+        this.loadRatingsAndReportsForFinishedSessions(sessions);
       },
       error: (error) => {
         this.errorMsg = error.error?.message || 'No se pudieron cargar tus citas.';
@@ -107,43 +108,45 @@ export class PatientAppointmentsComponent implements OnInit {
       }
     });
   }
- 
-  /**
-   * Para cada sesión finalizada, intenta cargar su calificación del backend.
-   */
-  private loadRatingsForFinishedSessions(sessions: SessionResponse[]): void {
+
+  private loadRatingsAndReportsForFinishedSessions(sessions: SessionResponse[]): void {
     sessions
       .filter(s => s.status === 4)
       .forEach(session => {
+
         this.sessionService.getPatientRating(session.id).subscribe({
-          next: (rating) => {
-            this.ratingsBySession[session.id] = rating;
-          },
-          error: () => {} // 404 = aún no calificada, silencioso
+          next: (rating) => { this.ratingsBySession[session.id] = rating; },
+          error: () => {} 
+        });
+
+        this.sessionService.getPatientReportBySession(session.id, this.patientId).subscribe({
+          next: (report) => { this.reportsBySession[session.id] = report; },
+          error: () => {} 
         });
       });
   }
- 
+
+
   openCancelConfirm(appointment: SessionResponse): void {
     this.appointmentToCancel = appointment;
     this.showCancelConfirm = true;
     this.errorMsg = '';
     this.successMsg = '';
   }
- 
+
   closeCancelConfirm(): void {
     this.appointmentToCancel = null;
     this.showCancelConfirm = false;
   }
- 
+
   confirmCancelAppointment(): void {
     if (!this.appointmentToCancel) return;
- 
+
     const appointmentId = this.appointmentToCancel.id;
     this.cancellingId = appointmentId;
     this.errorMsg = '';
     this.successMsg = '';
- 
+
     this.sessionService.cancelSession(appointmentId, { patientId: this.patientId }).subscribe({
       next: () => {
         this.cancellingId = null;
@@ -158,7 +161,7 @@ export class PatientAppointmentsComponent implements OnInit {
       }
     });
   }
- 
+
   openRatingDialog(appointment: SessionResponse): void {
     const existing = this.ratingsBySession[appointment.id];
     this.ratingDialog = {
@@ -170,39 +173,35 @@ export class PatientAppointmentsComponent implements OnInit {
       error: ''
     };
   }
- 
+
   closeRatingDialog(): void {
     this.ratingDialog = {
-      visible: false,
-      appointment: null,
-      stars: 0,
-      comment: '',
-      saving: false,
-      error: ''
+      visible: false, appointment: null,
+      stars: 0, comment: '', saving: false, error: ''
     };
   }
- 
+
   setRatingStars(stars: number): void {
     this.ratingDialog.stars = stars;
     this.ratingDialog.error = '';
   }
- 
+
   saveRating(): void {
     if (!this.ratingDialog.appointment) return;
- 
+
     if (this.ratingDialog.stars < 1) {
       this.ratingDialog.error = 'Debes seleccionar al menos una estrella.';
       return;
     }
- 
+
     if (this.ratingDialog.comment.trim().length < 5) {
       this.ratingDialog.error = 'El comentario debe tener al menos 5 caracteres.';
       return;
     }
- 
+
     this.ratingDialog.saving = true;
     const appointment = this.ratingDialog.appointment;
- 
+
     this.sessionService.createPatientRating(appointment.id, {
       rating: this.ratingDialog.stars,
       comment: this.ratingDialog.comment.trim()
@@ -219,62 +218,53 @@ export class PatientAppointmentsComponent implements OnInit {
       }
     });
   }
- 
+
+
   openReportDialog(appointment: SessionResponse): void {
     const existing = this.reportsBySession[appointment.id];
     this.reportDialog = {
       visible: true,
       appointment,
+      // Si ya existe un reporte, pre-rellena el formulario
       reason: existing?.reason ?? '',
-      details: existing?.details ?? '',
+      details: existing?.description ?? '',
       saving: false,
       error: ''
     };
   }
- 
+
   closeReportDialog(): void {
     this.reportDialog = {
-      visible: false,
-      appointment: null,
-      reason: '',
-      details: '',
-      saving: false,
-      error: ''
+      visible: false, appointment: null,
+      reason: '', details: '', saving: false, error: ''
     };
   }
- 
+
   saveReport(): void {
     if (!this.reportDialog.appointment) return;
- 
+
     if (!this.reportDialog.reason) {
       this.reportDialog.error = 'Debes seleccionar un motivo.';
       return;
     }
- 
+
     if (this.reportDialog.details.trim().length < 10) {
       this.reportDialog.error = 'Los detalles deben tener al menos 10 caracteres.';
       return;
     }
- 
+
     this.reportDialog.saving = true;
     const appointment = this.reportDialog.appointment;
- 
-    this.sessionService.createReport({
-      specialistId: appointment.specialistId,
+
+    // ✅ Ahora llama al endpoint correcto: POST /api/v1/reports/patient
+    this.sessionService.createPatientReport({
+      patientId: this.patientId,
       sessionId: appointment.id,
       reason: this.reportDialog.reason,
       description: this.reportDialog.details.trim()
     }).subscribe({
       next: (saved) => {
-        this.reportsBySession[appointment.id] = {
-          sessionId: saved.sessionId,
-          specialistId: appointment.specialistId,
-          patientName: appointment.patientName,
-          reason: saved.reason,
-          details: saved.description ?? '',
-          createdAt: saved.createdDate,
-          updatedAt: saved.updatedDate
-        };
+        this.reportsBySession[appointment.id] = saved;
         this.reportDialog.saving = false;
         this.closeReportDialog();
         this.showToastMessage('Reporte enviado correctamente', 'success');
@@ -285,35 +275,37 @@ export class PatientAppointmentsComponent implements OnInit {
       }
     });
   }
- 
+
+  // ── Helpers de vista ───────────────────────────────────────────────────────
+
   isRateable(appointment: SessionResponse): boolean {
     return appointment.status === 4;
   }
- 
+
   hasRating(sessionId: number): boolean {
     return !!this.ratingsBySession[sessionId];
   }
- 
+
   getRating(sessionId: number): CalificationResponse | null {
     return this.ratingsBySession[sessionId] ?? null;
   }
- 
+
   hasReport(sessionId: number): boolean {
     return !!this.reportsBySession[sessionId];
   }
- 
-  getReport(sessionId: number): SessionReport | null {
+
+  getReport(sessionId: number): ReportResponse | null {
     return this.reportsBySession[sessionId] ?? null;
   }
- 
+
   getStarArray(stars: number): number[] {
     return Array.from({ length: 5 }, (_, i) => (i + 1 <= stars ? 1 : 0));
   }
- 
+
   canCancel(session: SessionResponse): boolean {
     return session.status === 1 || session.status === 2;
   }
- 
+
   getStatusLabel(status: number): string {
     const labels: Record<number, string> = {
       1: 'patientAppointments.status.pending',
@@ -324,7 +316,7 @@ export class PatientAppointmentsComponent implements OnInit {
     };
     return labels[status] || 'Desconocido';
   }
- 
+
   getStatusClass(status: number): string {
     const classes: Record<number, string> = {
       1: 'pending',
@@ -335,7 +327,7 @@ export class PatientAppointmentsComponent implements OnInit {
     };
     return classes[status] || 'unknown';
   }
- 
+
   showToastMessage(message: string, type: 'success' | 'error'): void {
     if (this.toastTimer) clearTimeout(this.toastTimer);
     this.toastMessage = message;
@@ -343,15 +335,7 @@ export class PatientAppointmentsComponent implements OnInit {
     this.showToast = true;
     this.toastTimer = setTimeout(() => this.showToast = false, 3000);
   }
- 
-  private loadReports(): void {
-    const all = this.sessionService.getReportsBySpecialist(0);
-    this.reportsBySession = all.reduce<Record<number, SessionReport>>((acc, r) => {
-      acc[r.sessionId] = r;
-      return acc;
-    }, {});
-  }
- 
+
   private getPatientId(): number | null {
     const user = this.authService.getUser();
     return user?.id ?? null;

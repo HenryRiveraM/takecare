@@ -91,7 +91,7 @@
               <span class="report-chip">{{ 'patientAppointments.report.saved' | translate }}</span>
               <span class="report-reason">{{ getReport(appointment.id)?.reason | translate }}</span>
             </div>
-            <p class="report-comment">{{ getReport(appointment.id)?.details }}</p>
+            <p class="report-comment">{{ getReport(appointment.id)?.description }}</p>
           </div>
 
           <button class="btn-report" (click)="openReportDialog(appointment)">
