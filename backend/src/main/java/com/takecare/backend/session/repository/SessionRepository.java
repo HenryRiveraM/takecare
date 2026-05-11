@@ -56,11 +56,23 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
             @Param("patientId") Integer patientId
     );
 
-    @Query("""
-            select s
-            from Session s
-            join fetch s.schedule sc
-            where s.status = :status
-            """)
-    List<Session> findByStatus(@Param("status") Integer status);
+        @Query("""
+        select s
+        from Session s
+        join fetch s.schedule sc
+        join fetch sc.specialist sp
+        join fetch s.patient p
+        where s.status = :status
+        """)
+        List<Session> findByStatus(@Param("status") Integer status);
+        
+        @Query("""
+        select s
+        from Session s
+        join fetch s.schedule sc
+        join fetch sc.specialist sp
+        join fetch s.patient p
+        where s.id = :sessionId
+        """)
+        Optional<Session> findByIdWithDetails(@Param("sessionId") Integer sessionId);
 }

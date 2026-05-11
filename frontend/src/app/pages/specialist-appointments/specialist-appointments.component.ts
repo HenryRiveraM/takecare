@@ -470,17 +470,12 @@ export class SpecialistAppointmentsComponent implements OnInit {
 
   private mapStatus(status: number): AppointmentStatus {
     switch (status) {
-      case 2:
-        return 'accepted';
-      case 3:
-        return 'rejected';
-      case 4: 
-        return 'cancelled';
-      case 5: 
-        return 'finished';
+      case 2: return 'accepted';
+      case 3: return 'rejected';
+      case 4: return 'finished';  
+      case 5: return 'cancelled'; 
       case 1:
-      default:
-        return 'pending';
+      default: return 'pending';
     }
   }
 

@@ -15,26 +15,32 @@
       </div>
 
       <div class="filters">
-        <button
-          class="filter-btn"
-          [class.active]="activeFilter === 'pending'"
-          (click)="setFilter('pending')">
-          <i class="fas fa-clock"></i> {{ 'appointments.filters.pending' | translate }}
-          <span class="badge" *ngIf="pendingCount > 0">{{ pendingCount }}</span>
-        </button>
-        <button
-          class="filter-btn"
-          [class.active]="activeFilter === 'accepted'"
-          (click)="setFilter('accepted')">
-          <i class="fas fa-check-circle"></i> {{ 'appointments.filters.accepted' | translate }}
-        </button>
-        <button
-          class="filter-btn"
-          [class.active]="activeFilter === 'rejected'"
-          (click)="setFilter('rejected')">
-          <i class="fas fa-times-circle"></i> {{ 'appointments.filters.rejected' | translate }}
-        </button>
-      </div>
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter === 'pending'"
+        (click)="setFilter('pending')">
+        <i class="fas fa-clock"></i> {{ 'appointments.filters.pending' | translate }}
+        <span class="badge" *ngIf="pendingCount > 0">{{ pendingCount }}</span>
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter === 'accepted'"
+        (click)="setFilter('accepted')">
+        <i class="fas fa-check-circle"></i> {{ 'appointments.filters.accepted' | translate }}
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter === 'rejected'"
+        (click)="setFilter('rejected')">
+        <i class="fas fa-times-circle"></i> {{ 'appointments.filters.rejected' | translate }}
+      </button>
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter === 'finished'"
+        (click)="setFilter('finished')">
+        <i class="fas fa-check-double"></i> Finalizadas
+      </button>
+    </div>
     </div>
 
     <div class="content">

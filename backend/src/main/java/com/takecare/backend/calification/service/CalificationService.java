@@ -229,16 +229,9 @@ public class CalificationService {
     }
 
     private Session getSessionOrThrow(Integer sessionId) {
-
-        return sessionRepository.findById(sessionId)
-                .orElseThrow(() -> {
-
-                    logger.warn("Patient rating - session not found. sessionId={}",
-                            sessionId);
-
-                    return new NoSuchElementException("Cita no encontrada");
-                });
-    }
+    return sessionRepository.findByIdWithDetails(sessionId)
+        .orElseThrow(() -> new NoSuchElementException("Cita no encontrada"));
+}
 
     private Integer getSessionSpecialistId(Session session) {
 
