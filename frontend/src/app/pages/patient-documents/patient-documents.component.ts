@@ -6,6 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { SupportMaterialItem, SupportMaterialListResponse, SupportMaterialService } from '../../services/support-material.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-patient-documents',
@@ -91,5 +92,13 @@ export class PatientDocumentsComponent implements OnInit {
 
   trackByMaterialId(_: number, material: SupportMaterialItem): number {
     return material.id;
+  }
+
+  getFullUrl(url?: string | null): string {
+    if (!url) {
+      return '';
+    }
+
+    return url.startsWith('http') ? url : `${environment.apiUrl}${url}`;
   }
 }

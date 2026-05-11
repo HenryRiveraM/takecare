@@ -130,4 +130,44 @@ public class OrientationMaterialController {
                     .body("Could not serve the file");
         }
     }
+
+    /**
+     * Descarga el archivo con content-disposition attachment.
+     * GET /api/v1/specialists/{specialistId}/orientation-materials/{id}/download
+     */
+    @GetMapping("/{specialistId}/orientation-materials/{id}/download")
+    public ResponseEntity<?> downloadFile(
+            @PathVariable Integer specialistId,
+            @PathVariable Long id) {
+
+        logger.info("GET /api/v1/specialists/{}/orientation-materials/{}/download", specialistId, id);
+
+        try {
+            Optional<Resource> resourceOpt = materialService.getFile(specialistId, id);
+
+            if (resourceOpt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("File not found");
+            }
+
+            Resource resource = resourceOpt.get();
+            String filename = resource.getFilename() != null ? resource.getFilename() : "file";
+            String contentDisposition = "attachment; filename=\"" + filename + "\"";
+
+            String contentType = "application/octet-stream";
+            if (filename.endsWith(".pdf")) contentType = "application/pdf";
+            else if (filename.endsWith(".doc"))  contentType = "application/msword";
+            else if (filename.endsWith(".docx")) contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(resource);
+
+        } catch (MalformedURLException e) {
+            logger.error("GET download | malformed URL for material {} specialist {}", id, specialistId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Could not serve the file");
+        }
+    }
 }

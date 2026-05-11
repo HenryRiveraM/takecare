@@ -20,6 +20,9 @@ public interface OrientationMaterialRepository extends JpaRepository<Orientation
     Optional<OrientationMaterial> findActiveByIdAndSpecialistId(@Param("id") Long id,
                                                                 @Param("specialistId") Integer specialistId);
 
+    @Query("SELECT m FROM OrientationMaterial m WHERE m.id = :id AND m.status = 1")
+    Optional<OrientationMaterial> findActiveById(@Param("id") Long id);
+
     @Query("""
         SELECT m FROM OrientationMaterial m
         JOIN com.takecare.backend.user.model.Specialist s ON s.id = m.specialistId

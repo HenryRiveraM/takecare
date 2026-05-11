@@ -7,6 +7,7 @@ import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { SpecialistDirectoryItem, SpecialistService } from '../../services/specialist.service';
 import { SupportMaterialItem, SupportMaterialListResponse, SupportMaterialService } from '../../services/support-material.service';
+import { environment } from '../../../environments/environment';
 
 interface SpecialistProfileViewModel extends SpecialistDirectoryItem {
   biography: string;
@@ -184,6 +185,14 @@ export class PatientSpecialistProfileComponent implements OnInit {
 
   trackByMaterialId(_: number, material: SupportMaterialItem): number {
     return material.id;
+  }
+
+  getFullUrl(url?: string | null): string {
+    if (!url) {
+      return '';
+    }
+
+    return url.startsWith('http') ? url : `${environment.apiUrl}${url}`;
   }
 
   private loadSpecialistProfile(specialistId: number, seed: SpecialistDirectoryItem | null): void {

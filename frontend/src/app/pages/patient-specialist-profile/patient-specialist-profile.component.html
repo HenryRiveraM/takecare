@@ -120,7 +120,7 @@
                 <div class="material-actions">
                   <a
                     class="btn-primary"
-                    [href]="material.fileUrl"
+                    [href]="getFullUrl(material.previewUrl || material.fileUrl)"
                     target="_blank"
                     rel="noopener noreferrer">
                     <i class="fas fa-up-right-from-square"></i> {{ 'documents.actions.open' | translate }}
@@ -128,7 +128,7 @@
 
                   <a
                     class="btn-outline"
-                    [href]="material.fileUrl"
+                    [href]="getFullUrl(material.downloadUrl || material.fileUrl)"
                     target="_blank"
                     rel="noopener noreferrer"
                     download>

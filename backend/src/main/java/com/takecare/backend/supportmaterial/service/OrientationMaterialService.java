@@ -173,6 +173,25 @@ public class OrientationMaterialService {
         return Optional.of(resource);
     }
 
+    public Optional<Resource> getFile(Long materialId) throws MalformedURLException {
+        Optional<OrientationMaterial> materialOpt = materialRepository.findActiveById(materialId);
+
+        if (materialOpt.isEmpty()) {
+            logger.warn("File not found: material {}", materialId);
+            return Optional.empty();
+        }
+
+        Path filePath = storageRoot.resolve(materialOpt.get().getFileUrl()).normalize();
+        Resource resource = new UrlResource(filePath.toUri());
+
+        if (!resource.exists() || !resource.isReadable()) {
+            logger.error("File not readable: {}", filePath);
+            return Optional.empty();
+        }
+
+        return Optional.of(resource);
+    }
+
 
     public SupportMaterialListResponseDto getSupportMaterials(String search, String type) {
         try {
@@ -258,9 +277,8 @@ public class OrientationMaterialService {
 
     private SupportMaterialItemDto toSupportMaterialItemDto(OrientationMaterial material, String specialistName) {
         String fileType = resolveFileType(material.getContentType(), material.getFileName());
-        // TODO: Add preview/download endpoints (e.g., /api/v1/support-materials/{id}/file, /download) once storage is defined.
-        String previewUrl = null; // TODO: define preview URL when storage strategy is decided.
-        String downloadUrl = null; // TODO: define download URL when storage strategy is decided.
+        String previewUrl = "/api/v1/support-materials/" + material.getId() + "/file";
+        String downloadUrl = "/api/v1/support-materials/" + material.getId() + "/download";
 
         return new SupportMaterialItemDto(
                 material.getId(),
@@ -270,7 +288,7 @@ public class OrientationMaterialService {
                 material.getContentType(),
                 fileType,
                 material.getFileSize(),
-                material.getFileUrl(),
+                previewUrl,
                 previewUrl,
                 downloadUrl,
                 material.getCreatedDate(),
