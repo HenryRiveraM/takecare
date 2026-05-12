@@ -12,6 +12,7 @@ import {
   CalificationResponse,
   ReportResponse
 } from '../../services/session.service';
+import { SidebarService } from '../../services/sidebar.service';
 
 interface RatingDialog {
   visible: boolean;
@@ -78,7 +79,8 @@ export class PatientAppointmentsComponent implements OnInit {
 
   constructor(
     private sessionService: SessionService,
-    private authService: AuthService
+    private authService: AuthService,
+    public sidebarService: SidebarService
   ) {}
 
   ngOnInit(): void {
@@ -109,6 +111,7 @@ export class PatientAppointmentsComponent implements OnInit {
     });
   }
 
+  
   private loadRatingsAndReportsForFinishedSessions(sessions: SessionResponse[]): void {
     sessions
       .filter(s => s.status === 4)
@@ -219,7 +222,6 @@ export class PatientAppointmentsComponent implements OnInit {
     });
   }
 
-
   openReportDialog(appointment: SessionResponse): void {
     const existing = this.reportsBySession[appointment.id];
     this.reportDialog = {
@@ -276,6 +278,7 @@ export class PatientAppointmentsComponent implements OnInit {
     });
   }
 
+  
   // ── Helpers de vista ───────────────────────────────────────────────────────
 
   isRateable(appointment: SessionResponse): boolean {
@@ -339,5 +342,41 @@ export class PatientAppointmentsComponent implements OnInit {
   private getPatientId(): number | null {
     const user = this.authService.getUser();
     return user?.id ?? null;
+  }
+
+  getAppointmentDate(appointment: SessionResponse): Date {
+    return appointment.scheduleDate
+      ? new Date(appointment.scheduleDate)
+      : new Date(appointment.createdDate);
+  }
+
+  getAppointmentTime(appointment: SessionResponse): string {
+    const start = appointment.startTime?.substring(0, 5) || '';
+    const end = appointment.endTime?.substring(0, 5) || '';
+
+    if (start && end) 
+      return `${start} - ${end}`;
+    if (start) 
+      return start;
+    
+    return 'Horario no disponible';
+  }
+
+ getSessionTypeLabel(typeOfSession: number): string {
+    switch (typeOfSession) {
+      case 1: return 'patientAppointments.card.virtual';
+      case 2: return 'patientAppointments.card.presential';
+      default: return 'patientAppointments.card.sessionTypeUnknown';
+    }
+  }
+
+  getInitials(name: string): string {
+    if (!name) return '?';
+    return name
+      .split(' ')
+      .slice(0, 2)
+      .map(n => n[0])
+      .join('')
+      .toUpperCase();
   }
 }
