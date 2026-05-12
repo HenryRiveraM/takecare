@@ -34,8 +34,8 @@ public class CalificationController {
         this.calificationService = calificationService;
     }
  
-    @PostMapping("/api/v1/sessions/{sessionId}/patient-ratings")
-    public ResponseEntity<?> createPatientRating(
+        @PostMapping("/api/v1/sessions/{sessionId}/patient-ratings")
+        public ResponseEntity<?> createPatientRating(
             @PathVariable Integer sessionId,
             @Valid @RequestBody CreateCalificationRequestDTO request
     ) {
@@ -43,7 +43,7 @@ public class CalificationController {
  
         try {
             // TODO: obtener el usuario autenticado desde SecurityContext y pasarlo al servicio
-            CalificationResponseDTO response = calificationService.createPatientRating(
+            CalificationResponseDTO response = calificationService.createSpecialistRating(
                     sessionId, request, null
             );
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -75,15 +75,15 @@ public class CalificationController {
         }
     }
  
-    @GetMapping("/api/v1/sessions/{sessionId}/patient-ratings")
-    public ResponseEntity<?> getPatientRating(
+        @GetMapping("/api/v1/sessions/{sessionId}/patient-ratings")
+        public ResponseEntity<?> getPatientRating(
             @PathVariable Integer sessionId
     ) {
         logger.info("GET /api/v1/sessions/{}/patient-ratings", sessionId);
  
         try {
             // TODO: obtener el usuario autenticado desde SecurityContext
-            CalificationResponseDTO response = calificationService.getPatientRating(
+            CalificationResponseDTO response = calificationService.getSpecialistRating(
                     sessionId, null
             );
             return ResponseEntity.ok(response);
@@ -105,15 +105,15 @@ public class CalificationController {
         }
     }
  
-    @PostMapping("/api/v1/sessions/{sessionId}/specialist-ratings")
-    public ResponseEntity<?> createSpecialistRating(
+        @PostMapping("/api/v1/sessions/{sessionId}/specialist-ratings")
+        public ResponseEntity<?> createSpecialistRating(
             @PathVariable Integer sessionId,
             @Valid @RequestBody CreateCalificationRequestDTO request
     ) {
         logger.info("POST /api/v1/sessions/{}/specialist-ratings", sessionId);
  
         try {
-            CalificationResponseDTO response = calificationService.createSpecialistRating(
+            CalificationResponseDTO response = calificationService.createPatientRating(
                     sessionId, request, null
             );
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -145,15 +145,15 @@ public class CalificationController {
         }
     }
 
-    @GetMapping("/api/v1/sessions/{sessionId}/specialist-ratings")
-    public ResponseEntity<?> getSpecialistRating(
+        @GetMapping("/api/v1/sessions/{sessionId}/specialist-ratings")
+        public ResponseEntity<?> getSpecialistRating(
             @PathVariable Integer sessionId
     ) {
         logger.info("GET /api/v1/sessions/{}/specialist-ratings", sessionId);
  
         try {
             // TODO: obtener el usuario autenticado desde SecurityContext
-            CalificationResponseDTO response = calificationService.getSpecialistRating(
+            CalificationResponseDTO response = calificationService.getPatientRating(
                     sessionId, null
             );
             return ResponseEntity.ok(response);

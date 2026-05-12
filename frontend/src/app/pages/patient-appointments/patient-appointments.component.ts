@@ -118,7 +118,11 @@ export class PatientAppointmentsComponent implements OnInit {
       .forEach(session => {
 
         this.sessionService.getPatientRating(session.id).subscribe({
-          next: (rating) => { this.ratingsBySession[session.id] = rating; },
+          next: (rating) => {
+            if (rating?.evaluatorRole === 'PATIENT') {
+              this.ratingsBySession[session.id] = rating;
+            }
+          },
           error: () => {} 
         });
 
@@ -210,7 +214,9 @@ export class PatientAppointmentsComponent implements OnInit {
       comment: this.ratingDialog.comment.trim()
     }).subscribe({
       next: (saved) => {
-        this.ratingsBySession[appointment.id] = saved;
+        if (saved?.evaluatorRole === 'PATIENT') {
+          this.ratingsBySession[appointment.id] = saved;
+        }
         this.ratingDialog.saving = false;
         this.closeRatingDialog();
         this.showToastMessage('Calificación guardada correctamente', 'success');

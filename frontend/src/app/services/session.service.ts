@@ -157,29 +157,9 @@ export class SessionService {
   }
  
   // ── Calificaciones: paciente califica al especialista ───────────────────────
- 
-  /** POST /api/v1/sessions/{sessionId}/patient-ratings — evaluatorRole = PATIENT */
+
+  /** POST /api/v1/sessions/{sessionId}/specialist-ratings — evaluatorRole = PATIENT */
   createPatientRating(
-    sessionId: number,
-    request: CreateCalificationRequest
-  ): Observable<CalificationResponse> {
-    return this.http.post<CalificationResponse>(
-      `${this.apiUrl}/${sessionId}/patient-ratings`,
-      request
-    );
-  }
- 
-  /** GET /api/v1/sessions/{sessionId}/patient-ratings — evaluatorRole = PATIENT */
-  getPatientRating(sessionId: number): Observable<CalificationResponse> {
-    return this.http.get<CalificationResponse>(
-      `${this.apiUrl}/${sessionId}/patient-ratings`
-    );
-  }
- 
-  // ── Calificaciones: especialista califica al paciente ───────────────────────
- 
-  /** POST /api/v1/sessions/{sessionId}/specialist-ratings — evaluatorRole = SPECIALIST */
-  createSpecialistRating(
     sessionId: number,
     request: CreateCalificationRequest
   ): Observable<CalificationResponse> {
@@ -188,11 +168,31 @@ export class SessionService {
       request
     );
   }
- 
-  /** GET /api/v1/sessions/{sessionId}/specialist-ratings — evaluatorRole = SPECIALIST */
-  getSpecialistRating(sessionId: number): Observable<CalificationResponse> {
+
+  /** GET /api/v1/sessions/{sessionId}/specialist-ratings — evaluatorRole = PATIENT */
+  getPatientRating(sessionId: number): Observable<CalificationResponse> {
     return this.http.get<CalificationResponse>(
       `${this.apiUrl}/${sessionId}/specialist-ratings`
+    );
+  }
+
+  // ── Calificaciones: especialista califica al paciente ───────────────────────
+
+  /** POST /api/v1/sessions/{sessionId}/patient-ratings — evaluatorRole = SPECIALIST */
+  createSpecialistRating(
+    sessionId: number,
+    request: CreateCalificationRequest
+  ): Observable<CalificationResponse> {
+    return this.http.post<CalificationResponse>(
+      `${this.apiUrl}/${sessionId}/patient-ratings`,
+      request
+    );
+  }
+
+  /** GET /api/v1/sessions/{sessionId}/patient-ratings — evaluatorRole = SPECIALIST */
+  getSpecialistRating(sessionId: number): Observable<CalificationResponse> {
+    return this.http.get<CalificationResponse>(
+      `${this.apiUrl}/${sessionId}/patient-ratings`
     );
   }
  

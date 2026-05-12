@@ -219,8 +219,10 @@ export class SpecialistAppointmentsComponent implements OnInit {
       comment: this.ratingDialog.comment.trim()
     }).subscribe({
       next: (response) => {
-        const savedRating = this.mapRatingResponse(appointment, response);
-        this.ratingsBySession[appointment.id] = savedRating;
+        if (response?.evaluatorRole === 'SPECIALIST') {
+          const savedRating = this.mapRatingResponse(appointment, response);
+          this.ratingsBySession[appointment.id] = savedRating;
+        }
         this.ratingDialog.saving = false;
         this.closeRatingDialog();
         this.showToastMessage('appointments.rating.toast.saved', 'success');
@@ -457,7 +459,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
       next: (results) => {
         const nextRatings: Record<number, SessionRating> = {};
         results.forEach(({ appointment, response }) => {
-          if (response) {
+          if (response?.evaluatorRole === 'SPECIALIST') {
             nextRatings[appointment.id] = this.mapRatingResponse(appointment, response);
           }
         });
