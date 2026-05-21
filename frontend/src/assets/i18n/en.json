@@ -229,6 +229,13 @@
       "updateError": "Error updating profile.",
       "updateConnectionError": "Error updating profile. Please try again.",
       "requiredFields": "Please complete all required fields."
+    },
+    "errors": {
+      "required": "This field is required",
+      "hasNumbers": "Numbers are not allowed",
+      "doubleSpaces": "Double spaces are not allowed",
+      "invalidChars": "Only letters and accents are allowed",
+      "leadingTrailingSpaces": "Cannot start or end with spaces"
     }
   },
 

@@ -230,6 +230,13 @@
       "updateError": "Error al actualizar el perfil.",
       "updateConnectionError": "Error al actualizar el perfil. Intenta de nuevo.",
       "requiredFields": "Por favor, completa todos los campos requeridos."
+    },
+    "errors": {
+      "required": "Este campo es obligatorio",
+      "hasNumbers": "No se permiten números",
+      "doubleSpaces": "No se permiten dos espacios seguidos",
+      "invalidChars": "Solo se permiten letras y tildes",
+      "leadingTrailingSpaces": "No puede empezar ni terminar con espacios"
     }
   },
 
