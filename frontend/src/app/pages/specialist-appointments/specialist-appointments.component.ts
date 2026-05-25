@@ -398,7 +398,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
  
   private mapSessionResponse(item: SessionResponse): Appointment {
     const appointmentDate = item.scheduleDate
-      ? new Date(item.scheduleDate)
+      ? new Date(`${item.scheduleDate}T00:00:00`)
       : item.createdDate
         ? new Date(item.createdDate)
         : new Date();

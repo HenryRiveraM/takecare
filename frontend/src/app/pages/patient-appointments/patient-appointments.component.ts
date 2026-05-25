@@ -353,7 +353,7 @@ export class PatientAppointmentsComponent implements OnInit {
 
   getAppointmentDate(appointment: SessionResponse): Date {
     return appointment.scheduleDate
-      ? new Date(appointment.scheduleDate)
+      ? new Date(`${appointment.scheduleDate}T00:00:00`)
       : new Date(appointment.createdDate);
   }
 
