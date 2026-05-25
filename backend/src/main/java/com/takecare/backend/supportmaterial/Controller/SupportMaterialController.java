@@ -1,11 +1,16 @@
 package com.takecare.backend.supportmaterial.controller;
 
+import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,6 +74,72 @@ public class SupportMaterialController {
             logger.error("GET /api/v1/specialists/{}/support-materials | unexpected error", specialistId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("message", "Error al obtener materiales del especialista"));
+        }
+    }
+
+    @GetMapping("/support-materials/{id}/file")
+    public ResponseEntity<?> getSupportMaterialFile(@PathVariable Long id) {
+        logger.info("GET /api/v1/support-materials/{}/file", id);
+
+        try {
+            Optional<Resource> resourceOpt = materialService.getFile(id);
+
+            if (resourceOpt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("File not found");
+            }
+
+            Resource resource = resourceOpt.get();
+            String filename = resource.getFilename() != null ? resource.getFilename() : "file";
+            String contentDisposition = "inline; filename=\"" + filename + "\"";
+
+            String contentType = "application/octet-stream";
+            if (filename.endsWith(".pdf")) contentType = "application/pdf";
+            else if (filename.endsWith(".doc"))  contentType = "application/msword";
+            else if (filename.endsWith(".docx")) contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(resource);
+
+        } catch (MalformedURLException e) {
+            logger.error("GET /api/v1/support-materials/{}/file | malformed URL", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Could not serve the file");
+        }
+    }
+
+    @GetMapping("/support-materials/{id}/download")
+    public ResponseEntity<?> downloadSupportMaterial(@PathVariable Long id) {
+        logger.info("GET /api/v1/support-materials/{}/download", id);
+
+        try {
+            Optional<Resource> resourceOpt = materialService.getFile(id);
+
+            if (resourceOpt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("File not found");
+            }
+
+            Resource resource = resourceOpt.get();
+            String filename = resource.getFilename() != null ? resource.getFilename() : "file";
+            String contentDisposition = "attachment; filename=\"" + filename + "\"";
+
+            String contentType = "application/octet-stream";
+            if (filename.endsWith(".pdf")) contentType = "application/pdf";
+            else if (filename.endsWith(".doc"))  contentType = "application/msword";
+            else if (filename.endsWith(".docx")) contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(resource);
+
+        } catch (MalformedURLException e) {
+            logger.error("GET /api/v1/support-materials/{}/download | malformed URL", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Could not serve the file");
         }
     }
 }

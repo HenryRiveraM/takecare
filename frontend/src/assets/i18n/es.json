@@ -757,7 +757,8 @@
     "status": {
       "pending": "Pendiente",
       "accepted": "Aceptada",
-      "rejected": "Rechazada"
+      "rejected": "Rechazada",
+      "finished": "Finalizada"
     },
 
     "actions": {

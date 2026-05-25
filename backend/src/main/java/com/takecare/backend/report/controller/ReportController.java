@@ -120,10 +120,6 @@ public class ReportController {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // GET /api/v1/reports/session/{sessionId}/specialist/{specialistId} (ya existía)
-    // -------------------------------------------------------------------------
-
     @GetMapping("/reports/session/{sessionId}/specialist/{specialistId}")
     public ResponseEntity<?> getReportBySession(
             @PathVariable Integer sessionId,
@@ -151,10 +147,6 @@ public class ReportController {
                     .body(Map.of("message", e.getMessage()));
         }
     }
-
-    // -------------------------------------------------------------------------
-    // GET /api/v1/reports/session/{sessionId}/patient/{patientId}
-    // -------------------------------------------------------------------------
 
     @GetMapping("/reports/session/{sessionId}/patient/{patientId}")
     public ResponseEntity<?> getPatientReportBySession(
@@ -184,10 +176,6 @@ public class ReportController {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // GET /api/v1/specialists/{specialistId}/reports
-    // -------------------------------------------------------------------------
-
     @GetMapping("/specialists/{specialistId}/reports")
     public ResponseEntity<?> getReportsReceivedBySpecialist(
             @PathVariable Integer specialistId
@@ -209,10 +197,6 @@ public class ReportController {
                     .body(Map.of("message", e.getMessage()));
         }
     }
-
-    // -------------------------------------------------------------------------
-    // GET /api/v1/patients/{patientId}/reports
-    // -------------------------------------------------------------------------
 
     @GetMapping("/patients/{patientId}/reports")
     public ResponseEntity<?> getReportsReceivedByPatient(

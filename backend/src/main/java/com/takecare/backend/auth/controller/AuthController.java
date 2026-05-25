@@ -56,7 +56,6 @@ public class AuthController {
             LoginResponseDTO response = authService.login(request.getEmail(), request.getPassword());
             return ResponseEntity.ok(new ApiResponseDTO<>(true, response));
         } catch (RuntimeException e) {
-            // Credenciales incorrectas
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body(new ApiResponseDTO<LoginResponseDTO>(false, null, e.getMessage()));
