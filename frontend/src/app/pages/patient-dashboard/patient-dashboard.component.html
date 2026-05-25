@@ -31,7 +31,7 @@
           <h1>{{ 'patientDashboard.welcome' | translate }} {{ user?.names }}</h1>
           <p>{{ 'patientDashboard.subtitle' | translate }}</p>
         </div>
-        <img src="assets/images/paciente.png" alt="paciente" class="hero-img">
+        <img src="assets/images/paciente.png" [alt]="'patientDashboard.defaultUser' | translate" class="hero-img">
       </section>
 
       <div class="stats">
@@ -54,4 +54,3 @@
   </div>
 
 </div>
-

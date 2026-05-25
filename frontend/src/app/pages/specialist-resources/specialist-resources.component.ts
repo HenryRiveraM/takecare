@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { AuthService } from '../../services/auth.service';
@@ -60,7 +60,8 @@ export class SpecialistResourcesComponent implements OnInit {
     public sidebarService: SidebarService,
     private authService: AuthService,
     private sanitizer: DomSanitizer,
-    private resourcesService: SpecialistResourcesService
+    private resourcesService: SpecialistResourcesService,
+    private translate: TranslateService
   ) {}
  
   ngOnInit(): void {
@@ -78,7 +79,7 @@ export class SpecialistResourcesComponent implements OnInit {
         this.loading = false;
       },
       error: () => {
-        this.errorMsg = 'Error al cargar los recursos';
+        this.errorMsg = this.translate.instant('resources.errors.load');
         this.loading = false;
       }
     });

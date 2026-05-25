@@ -25,6 +25,9 @@
       }
     }
   },
+  "sidebar": {
+    "close": "Close menu"
+  },
 
     "footer": {
     "brandText": "Caring for your mental well-being with love and professionalism.",
@@ -99,6 +102,7 @@
       "email": "Email",
       "birthDate": "Birth date",
       "strikes": "Strikes",
+      "status": "Status",
       "action": "Action"
     },
     "roles": {
@@ -107,6 +111,7 @@
     },
     "actions": {
       "suspend": "Suspend",
+      "activate": "Activate",
       "reject": "Reject",
       "approve": "Approve",
       "cancel": "Cancel"
@@ -129,15 +134,33 @@
     "notifications": {
       "validated": "validated successfully",
       "rejected": "rejected successfully",
-      "suspendedSuccessfully": "suspended successfully"
+      "suspendedSuccessfully": "suspended successfully",
+      "patientActivated": "Patient activated successfully",
+      "patientSuspended": "Patient suspended successfully",
+      "specialistActivated": "Specialist activated successfully",
+      "specialistSuspended": "Specialist suspended successfully"
     },
     "errors": {
       "loadPatients": "Error loading patients",
       "loadSpecialists": "Could not load specialists",
+      "loadValidations": "Could not load validations",
       "loadAppointments": "Could not load appointment history",
       "processValidation": "The operation could not be completed on the server",
       "suspendUser": "Could not suspend user",
       "couldNotSuspend": "Could not suspend user"
+    },
+    "userStatus": {
+      "active": "Active",
+      "suspended": "Suspended"
+    },
+    "documents": {
+      "identityNumber": "ID",
+      "age": "Age",
+      "identity": "Identity document",
+      "selfie": "Verification selfie",
+      "certification": "Professional certification",
+      "viewCertification": "View certification PDF",
+      "unavailable": "Unavailable"
     },
     "appointments": {
       "title": "Appointment history",
@@ -198,7 +221,9 @@
       "completeFields": "Complete all fields correctly",
       "invalidCredentials": "Incorrect email or password",
       "connection": "Connection error with the server",
-      "unknown": "Unknown error"
+      "unknown": "Unknown error",
+      "pendingApproval": "Your account is still under review. Please wait for administrator approval.",
+      "rejectedAccount": "Your account was rejected. Contact support or sign up again."
     }
 },
 
@@ -288,6 +313,7 @@
     "cardNote": "Soon you will be able to review more details and request an appointment from here.",
     "states": {
       "loading": "Loading specialists...",
+      "loadError": "Could not load specialists at this time.",
       "emptyTitle": "We couldn't find specialists for that criteria",
       "emptyText": "Try another name, specialty or location to expand the results."
     },
@@ -313,6 +339,25 @@
       "friday": "Friday",
       "saturday": "Saturday",
       "sunday": "Sunday"
+    },
+    "schedule": {
+      "title": "Available schedules",
+      "help": "Select a schedule to request an appointment.",
+      "loading": "Loading schedules...",
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "empty": "There are no available schedules for this specialist.",
+      "sessionType": "Session type",
+      "virtual": "Virtual",
+      "presential": "In person",
+      "request": "Request appointment",
+      "requesting": "Requesting...",
+      "undefinedDay": "Undefined day",
+      "loadError": "Could not load schedules.",
+      "selectRequired": "Select an available schedule.",
+      "patientRequired": "Could not identify the current patient. Please log in again.",
+      "success": "Appointment requested successfully. The specialist will receive a notification.",
+      "requestError": "Could not request the appointment. Please try again."
     }
   },
 
@@ -359,6 +404,10 @@
     },
     "states": {
       "loading": "Loading specialist profile..."
+    },
+    "errors": {
+      "notFound": "The requested specialist was not found.",
+      "load": "Could not load the specialist profile."
     }
   },
 
@@ -484,7 +533,15 @@
       "noConnectionTitle": "No connection",
       "noConnectionMessage": "Could not connect to the server. Check your internet connection and try again.",
       "genericErrorTitle": "Registration error",
-      "genericErrorMessage": "An unexpected error occurred. Please try again later."
+      "genericErrorMessage": "An unexpected error occurred. Please try again later.",
+      "invalidFileTitle": "Invalid file",
+      "invalidFileMessage": "Only JPG, JPEG, PNG or WEBP images are allowed.",
+      "fileTooLargeTitle": "File too large",
+      "fileTooLargeMessage": "The image must not exceed 5 MB.",
+      "filesRequiredTitle": "Files required",
+      "filesRequiredMessage": "Upload your ID photo and a selfie to verify your identity.",
+      "uploadErrorTitle": "File upload error",
+      "uploadErrorMessage": "An error occurred while uploading your files. Please try again."
     }
   },
 
@@ -627,11 +684,76 @@
       "idPhotoRequiredTitle": "ID photo required",
       "idPhotoRequiredMessage": "Upload a photo of the front side of your identity card.",
       "formIncompleteTitle": "Incomplete form",
-      "formIncompleteMessage": "Check that all required fields are correctly filled out."
+      "formIncompleteMessage": "Check that all required fields are correctly filled out.",
+      "invalidFileTitle": "Invalid file",
+      "invalidPdfMessage": "Only a PDF file is allowed.",
+      "fileTooLargeTitle": "File too large",
+      "pdfTooLargeMessage": "The PDF must not exceed 8 MB.",
+      "invalidIdPhotoMessage": "The ID card must be an image.",
+      "idPhotoTooLargeMessage": "The ID card image must not exceed 5 MB.",
+      "uploadErrorTitle": "File upload error",
+      "uploadErrorMessage": "The ID photo or certification PDF could not be uploaded."
     }
   },
 
   
+  "specialistSchedule": {
+    "title": "Schedule management",
+    "subtitle": "Configure the schedules available for your sessions.",
+    "form": {
+      "createTitle": "Create schedule",
+      "editTitle": "Edit schedule",
+      "date": "Date",
+      "day": "Day of the week",
+      "startTime": "Start time",
+      "endTime": "End time"
+    },
+    "calendar": {
+      "title": "Schedule",
+      "rangePrefix": "From",
+      "rangeTo": "to",
+      "help": "Select a range in the calendar to create a schedule."
+    },
+    "list": {
+      "title": "Registered schedules",
+      "showing": "Showing schedules from",
+      "empty": "There are no registered schedules in this date range."
+    },
+    "actions": {
+      "create": "Create schedule",
+      "save": "Save changes",
+      "cancelEdit": "Cancel editing",
+      "delete": "Delete schedule",
+      "previousRange": "Previous 7 days",
+      "nextRange": "Next 7 days"
+    },
+    "status": {
+      "available": "Available",
+      "booked": "Booked"
+    },
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "messages": {
+      "notEditable": "This schedule cannot be changed because it has already been booked or has started.",
+      "loadError": "Could not load schedules.",
+      "invalidForm": "Check that the date and times are correct.",
+      "createError": "Could not create the schedule.",
+      "editBlocked": "You can only edit available schedules that have not started yet.",
+      "updateError": "Could not update the schedule.",
+      "selectToDelete": "Select a schedule to delete.",
+      "deleteBlocked": "You can only delete available schedules that have not started yet.",
+      "confirmDelete": "Are you sure you want to delete this schedule?",
+      "deleteError": "Could not delete the schedule."
+    }
+  },
+
   "specialistDashboard": {
     "menu": {
       "dashboard": "Dashboard",
@@ -734,6 +856,12 @@
       "addressRequired": "Enter the main office address.",
       "cityRequired": "Enter the city where you provide care."
     },
+    "messages": {
+      "noUserId": "Could not obtain the user identifier.",
+      "loadError": "Error loading profile. Check your connection.",
+      "locationUpdateError": "Error updating specialist location.",
+      "updateError": "Error updating profile."
+    },
 
     "buttons": {
       "edit": "Edit profile",
@@ -777,7 +905,8 @@
     },
 
     "states": {
-      "loading": "Loading library..."
+      "loading": "Loading library...",
+      "loadError": "Could not load the available materials at this time."
     },
 
     "results": "available documents"
@@ -791,13 +920,16 @@
     "filters": {
       "pending": "Pending",
       "accepted": "Accepted",
-      "rejected": "Rejected"
+      "rejected": "Rejected",
+      "finished": "Finished"
     },
 
     "status": {
       "pending": "Pending",
       "accepted": "Accepted",
-      "rejected": "Rejected"
+      "rejected": "Rejected",
+      "finished": "Finished",
+      "cancelled": "Cancelled"
     },
 
     "actions": {
@@ -817,7 +949,8 @@
 
     "toast": {
       "accepted": "✅ Appointment accepted successfully",
-      "rejected": "❌ Appointment rejected"
+      "rejected": "❌ Appointment rejected",
+      "statusError": "Could not update the appointment status."
     },
 
     "empty": {
@@ -841,7 +974,8 @@
       },
       "errors": {
         "starsRequired": "Select a star rating.",
-        "commentRequired": "Write a comment with at least 5 characters."
+        "commentRequired": "Write a comment with at least 5 characters.",
+        "saveFailed": "Could not save the rating."
       },
       "toast": {
         "saved": "⭐ Rating saved successfully"
@@ -864,7 +998,8 @@
       },
       "errors": {
         "reasonRequired": "Select a reason for the report.",
-        "detailsRequired": "Write a description with at least 10 characters."
+        "detailsRequired": "Write a description with at least 10 characters.",
+        "saveFailed": "Could not save the report."
       },
       "reasons": {
         "disrespect": "Disrespect",
@@ -876,6 +1011,19 @@
       "toast": {
         "saved": "🚩 Report saved successfully"
       }
+    },
+    "sessionTypes": {
+      "virtual": "Virtual session",
+      "presential": "In-person session",
+      "unknown": "Session type not specified"
+    },
+    "fallback": {
+      "patient": "Unnamed patient",
+      "time": "Time unavailable"
+    },
+    "error": {
+      "noSpecialistId": "Could not identify the current specialist.",
+      "load": "Could not load appointments."
     }
   },
 
@@ -883,6 +1031,11 @@
     "title": "My Documents",
     "subtitle": "Manage your clinical files securely",
     "uploadBtn": "Upload document",
+    "errors": {
+      "invalidFormat": "Format not allowed. Only PDF, Word and JPG are accepted.",
+      "invalidType": "Invalid file type.",
+      "tooLarge": "The file exceeds the {{limit}}MB limit. ({{size}}MB)"
+    },
 
     "upload": {
       "title": "Upload new document",
@@ -955,7 +1108,8 @@
       "fileRequired": "You must select a file",
       "invalidFormat": "Format not allowed. Only PDF, DOC or DOCX",
       "invalidType": "Invalid file type",
-      "tooLarge": "File exceeds the 10MB limit"
+      "tooLarge": "File exceeds the 10MB limit",
+      "load": "Error loading resources"
     },
 
     "toast": {
@@ -995,7 +1149,9 @@
       "registeredDate": "Request registered",
       "sessionType": "Session type",
       "virtual": "Virtual",
-      "presential": "In-person"
+      "presential": "In-person",
+      "sessionTypeUnknown": "Unspecified",
+      "timeUnavailable": "Time unavailable"
     },
 
     "status": {
@@ -1036,6 +1192,14 @@
       "placeholder": "Tell us about your experience...",
       "save": "Save rating",
       "saving": "Saving..."
+      ,"errors": {
+        "starsRequired": "You must select at least one star.",
+        "commentRequired": "The comment must be at least 5 characters long.",
+        "saveFailed": "Could not save the rating."
+      },
+      "toast": {
+        "saved": "Rating saved successfully"
+      }
     },
 
     "report": {
@@ -1054,7 +1218,21 @@
         "absence": "Absence without notice",
         "inappropriateLanguage": "Inappropriate language",
         "other": "Other"
+      },
+      "errors": {
+        "reasonRequired": "You must select a reason.",
+        "detailsRequired": "Details must be at least 10 characters long.",
+        "saveFailed": "Could not send the report."
+      },
+      "toast": {
+        "saved": "Report submitted successfully"
       }
+    },
+    "messages": {
+      "noPatient": "Could not identify the current patient.",
+      "loadError": "Could not load your appointments.",
+      "cancelSuccess": "Appointment cancelled successfully.",
+      "cancelError": "Could not cancel the appointment."
     }
   }
 }

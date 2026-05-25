@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -40,7 +40,8 @@ export class PatientFilesComponent implements OnInit {
 
   constructor(
     public sidebarService: SidebarService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -85,18 +86,21 @@ export class PatientFilesComponent implements OnInit {
 
     const extension = '.' + file.name.split('.').pop()?.toLowerCase();
     if (!ALLOWED_EXTENSIONS.includes(extension)) {
-      this.uploadError = `Formato no permitido. Solo se aceptan: PDF, Word, JPG.`;
+      this.uploadError = this.translate.instant('patientFiles.errors.invalidFormat');
       return;
     }
 
     if (!ALLOWED_TYPES.includes(file.type)) {
-      this.uploadError = `Tipo de archivo no válido.`;
+      this.uploadError = this.translate.instant('patientFiles.errors.invalidType');
       return;
     }
 
     const sizeMB = file.size / (1024 * 1024);
     if (sizeMB > MAX_SIZE_MB) {
-      this.uploadError = `El archivo supera el límite de ${MAX_SIZE_MB}MB. (${sizeMB.toFixed(1)}MB)`;
+      this.uploadError = this.translate.instant('patientFiles.errors.tooLarge', {
+        limit: MAX_SIZE_MB,
+        size: sizeMB.toFixed(1)
+      });
       return;
     }
 

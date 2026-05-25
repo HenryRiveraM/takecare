@@ -405,7 +405,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
  
     return {
       id: item.id,
-      patientName: item.patientName || 'Paciente sin nombre',
+      patientName: item.patientName || 'appointments.fallback.patient',
       patientEmail: item.patientEmail || '',
       date: appointmentDate,
       time: this.buildAppointmentTime(item),
@@ -418,9 +418,9 @@ export class SpecialistAppointmentsComponent implements OnInit {
  
   private getSessionTypeLabel(typeOfSession: number): string {
     switch (typeOfSession) {
-      case 1: return 'Sesión virtual';
-      case 2: return 'Sesión presencial';
-      default: return 'Tipo de sesión no especificado';
+      case 1: return 'appointments.sessionTypes.virtual';
+      case 2: return 'appointments.sessionTypes.presential';
+      default: return 'appointments.sessionTypes.unknown';
     }
   }
  
@@ -530,7 +530,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
     if (start && end) return `${start} - ${end}`;
     if (start) return start;
     if (end) return end;
-    return 'Horario no disponible';
+    return 'appointments.fallback.time';
   }
  
   private formatTime(time?: string): string {

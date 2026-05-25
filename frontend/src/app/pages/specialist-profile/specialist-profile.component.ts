@@ -66,7 +66,7 @@ export class SpecialistProfileComponent implements OnInit {
     if (this.user?.id) {
       this.loadProfile();
     } else {
-      this.errorMsg = 'No se pudo obtener el ID del usuario';
+      this.errorMsg = this.translate.instant('specialistProfile.messages.noUserId');
       console.error('User ID no disponible');
     }
   }
@@ -96,7 +96,7 @@ export class SpecialistProfileComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error cargando perfil:', error);
-        this.errorMsg = 'Error al cargar el perfil. Verifica la conexión.';
+        this.errorMsg = this.translate.instant('specialistProfile.messages.loadError');
         this.loading = false;
       }
     });
@@ -151,7 +151,7 @@ export class SpecialistProfileComponent implements OnInit {
         },
         error: (error: any) => {
           console.error('Error actualizando ubicación:', error);
-          this.errorMsg = error?.error?.message || 'Error al actualizar la ubicación del especialista';
+          this.errorMsg = error?.error?.message || this.translate.instant('specialistProfile.messages.locationUpdateError');
           this.loading = false;
         }
       });
@@ -215,7 +215,7 @@ export class SpecialistProfileComponent implements OnInit {
 
         this.originalProfile = { ...this.profile };
         this.originalLocationDetails = { ...this.locationDetails };
-        this.successMsg = 'Perfil actualizado correctamente';
+        this.successMsg = this.translate.instant('specialistProfile.success');
         this.isEditing = false;
         this.loading = false;
 
@@ -223,7 +223,7 @@ export class SpecialistProfileComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error actualizando perfil:', error);
-        this.errorMsg = error?.error?.message || 'Error al actualizar el perfil';
+        this.errorMsg = error?.error?.message || this.translate.instant('specialistProfile.messages.updateError');
         this.loading = false;
       }
     });

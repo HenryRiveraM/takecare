@@ -77,7 +77,7 @@
             <th class="col-email">{{ 'admin.table.email' | translate }}</th>
             <th class="col-date">{{ 'admin.table.birthDate' | translate }}</th>
             <th class="col-strikes">{{ 'admin.table.strikes' | translate }}</th>
-            <th class="col-status">Estado</th>
+            <th class="col-status">{{ 'admin.table.status' | translate }}</th>
             <th class="col-action">{{ 'admin.table.action' | translate }}</th>
           </tr>
         </thead>
@@ -91,14 +91,14 @@
             <td class="col-status">
               <span class="status"
                     [ngClass]="patient.status === 1 ? 'status-active' : 'status-suspended'">
-                {{ patient.status === 1 ? 'Activo' : 'Suspendido' }}
+                {{ (patient.status === 1 ? 'admin.userStatus.active' : 'admin.userStatus.suspended') | translate }}
               </span>
             </td>
             <td class="col-action">
               <button type="button"
                       [ngClass]="patient.status === 1 ? 'delete-button' : 'activate-button'"
                       (click)="togglePatientStatus(patient)">
-                {{ patient.status === 1 ? 'Suspender' : 'Activar' }}
+                {{ (patient.status === 1 ? 'admin.actions.suspend' : 'admin.actions.activate') | translate }}
               </button>
             </td>
           </tr>
@@ -129,7 +129,7 @@
             <th class="col-email">{{ 'admin.table.email' | translate }}</th>
             <th class="col-date">{{ 'admin.table.birthDate' | translate }}</th>
             <th class="col-strikes">{{ 'admin.table.strikes' | translate }}</th>
-            <th class="col-status">Estado</th>
+            <th class="col-status">{{ 'admin.table.status' | translate }}</th>
             <th class="col-action">{{ 'admin.table.action' | translate }}</th>
           </tr>
         </thead>
@@ -143,14 +143,14 @@
             <td class="col-status">
               <span class="status"
                     [ngClass]="specialist.status === 1 ? 'status-active' : 'status-suspended'">
-                {{ specialist.status === 1 ? 'Activo' : 'Suspendido' }}
+                {{ (specialist.status === 1 ? 'admin.userStatus.active' : 'admin.userStatus.suspended') | translate }}
               </span>
             </td>
             <td class="col-action">
               <button type="button"
                       [ngClass]="specialist.status === 1 ? 'delete-button' : 'activate-button'"
                       (click)="toggleSpecialistStatus(specialist)">
-                {{ specialist.status === 1 ? 'Suspender' : 'Activar' }}
+                {{ (specialist.status === 1 ? 'admin.actions.suspend' : 'admin.actions.activate') | translate }}
               </button>
             </td>
           </tr>
@@ -190,47 +190,47 @@
 
           <div class="validation-info">
             <div class="info-pill">
-              <span class="info-label">CI</span>
+              <span class="info-label">{{ 'admin.documents.identityNumber' | translate }}</span>
               <span class="info-value">{{ user.ciNumber }}</span>
             </div>
 
             <div class="info-pill">
-              <span class="info-label">Edad</span>
+              <span class="info-label">{{ 'admin.documents.age' | translate }}</span>
               <span class="info-value">{{ getAge(user.birthDate) }}</span>
             </div>
           </div>
 
           <div class="validation-documents">
             <div class="document-block">
-              <h4>Documento de identidad</h4>
+              <h4>{{ 'admin.documents.identity' | translate }}</h4>
 
               <div class="document-preview" *ngIf="user.ciDocumentImg; else noCiDoc">
-                <img [src]="user.ciDocumentImg" alt="Documento de identidad">
+                <img [src]="user.ciDocumentImg" [alt]="'admin.documents.identity' | translate">
               </div>
 
               <ng-template #noCiDoc>
-                <p class="empty-doc">No disponible</p>
+                <p class="empty-doc">{{ 'admin.documents.unavailable' | translate }}</p>
               </ng-template>
             </div>
 
             <div class="document-block" *ngIf="user.role === 1">
-              <h4>Selfie de verificación</h4>
+              <h4>{{ 'admin.documents.selfie' | translate }}</h4>
 
               <div class="document-preview selfie-preview" *ngIf="user.selfieVerification; else noSelfie">
-                <img [src]="user.selfieVerification" alt="Selfie de verificación">
+                <img [src]="user.selfieVerification" [alt]="'admin.documents.selfie' | translate">
               </div>
 
               <ng-template #noSelfie>
-                <p class="empty-doc">No disponible</p>
+                <p class="empty-doc">{{ 'admin.documents.unavailable' | translate }}</p>
               </ng-template>
             </div>
 
             <div class="document-block" *ngIf="user.role === 2">
-              <h4>Certificación profesional</h4>
+              <h4>{{ 'admin.documents.certification' | translate }}</h4>
 
               <ng-container *ngIf="user.certificationImg; else noCert">
                 <div class="document-preview" *ngIf="!isPdf(user.certificationImg)">
-                  <img [src]="user.certificationImg" alt="Certificación profesional">
+                  <img [src]="user.certificationImg" [alt]="'admin.documents.certification' | translate">
                 </div>
 
                 <a
@@ -239,12 +239,12 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   class="pdf-link">
-                  Ver PDF de certificación
+                  {{ 'admin.documents.viewCertification' | translate }}
                 </a>
               </ng-container>
 
               <ng-template #noCert>
-                <p class="empty-doc">No disponible</p>
+                <p class="empty-doc">{{ 'admin.documents.unavailable' | translate }}</p>
               </ng-template>
             </div>
           </div>
@@ -262,7 +262,7 @@
       </div>
 
       <ng-template #noValidations>
-        <p class="empty-message" *ngIf="!loadingValidations">No hay solicitudes por revisar.</p>
+        <p class="empty-message" *ngIf="!loadingValidations">{{ 'admin.empty.validations' | translate }}</p>
       </ng-template>
     </div>
 

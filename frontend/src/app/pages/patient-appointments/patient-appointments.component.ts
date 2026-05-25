@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { AuthService } from '../../services/auth.service';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import {
   SessionResponse,
   SessionService,
@@ -80,7 +80,8 @@ export class PatientAppointmentsComponent implements OnInit {
   constructor(
     private sessionService: SessionService,
     private authService: AuthService,
-    public sidebarService: SidebarService
+    public sidebarService: SidebarService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +91,7 @@ export class PatientAppointmentsComponent implements OnInit {
 
   loadAppointments(): void {
     if (!this.patientId) {
-      this.errorMsg = 'No se pudo identificar al paciente actual.';
+      this.errorMsg = this.translate.instant('patientAppointments.messages.noPatient');
       return;
     }
 
@@ -105,7 +106,7 @@ export class PatientAppointmentsComponent implements OnInit {
         this.loadRatingsAndReportsForFinishedSessions(sessions);
       },
       error: (error) => {
-        this.errorMsg = error.error?.message || 'No se pudieron cargar tus citas.';
+        this.errorMsg = error.error?.message || this.translate.instant('patientAppointments.messages.loadError');
         this.loading = false;
       }
     });
@@ -157,13 +158,13 @@ export class PatientAppointmentsComponent implements OnInit {
     this.sessionService.cancelSession(appointmentId, { patientId: this.patientId }).subscribe({
       next: () => {
         this.cancellingId = null;
-        this.successMsg = 'Cita cancelada correctamente.';
+        this.successMsg = this.translate.instant('patientAppointments.messages.cancelSuccess');
         this.closeCancelConfirm();
         this.loadAppointments();
       },
       error: (error) => {
         this.cancellingId = null;
-        this.errorMsg = error.error?.message || 'No se pudo cancelar la cita.';
+        this.errorMsg = error.error?.message || this.translate.instant('patientAppointments.messages.cancelError');
         this.closeCancelConfirm();
       }
     });
@@ -197,12 +198,12 @@ export class PatientAppointmentsComponent implements OnInit {
     if (!this.ratingDialog.appointment) return;
 
     if (this.ratingDialog.stars < 1) {
-      this.ratingDialog.error = 'Debes seleccionar al menos una estrella.';
+      this.ratingDialog.error = this.translate.instant('patientAppointments.rating.errors.starsRequired');
       return;
     }
 
     if (this.ratingDialog.comment.trim().length < 5) {
-      this.ratingDialog.error = 'El comentario debe tener al menos 5 caracteres.';
+      this.ratingDialog.error = this.translate.instant('patientAppointments.rating.errors.commentRequired');
       return;
     }
 
@@ -219,11 +220,11 @@ export class PatientAppointmentsComponent implements OnInit {
         }
         this.ratingDialog.saving = false;
         this.closeRatingDialog();
-        this.showToastMessage('Calificación guardada correctamente', 'success');
+        this.showToastMessage(this.translate.instant('patientAppointments.rating.toast.saved'), 'success');
       },
       error: (error) => {
         this.ratingDialog.saving = false;
-        this.ratingDialog.error = error.error?.message || 'No se pudo guardar la calificación.';
+        this.ratingDialog.error = error.error?.message || this.translate.instant('patientAppointments.rating.errors.saveFailed');
       }
     });
   }
@@ -252,12 +253,12 @@ export class PatientAppointmentsComponent implements OnInit {
     if (!this.reportDialog.appointment) return;
 
     if (!this.reportDialog.reason) {
-      this.reportDialog.error = 'Debes seleccionar un motivo.';
+      this.reportDialog.error = this.translate.instant('patientAppointments.report.errors.reasonRequired');
       return;
     }
 
     if (this.reportDialog.details.trim().length < 10) {
-      this.reportDialog.error = 'Los detalles deben tener al menos 10 caracteres.';
+      this.reportDialog.error = this.translate.instant('patientAppointments.report.errors.detailsRequired');
       return;
     }
 
@@ -275,11 +276,11 @@ export class PatientAppointmentsComponent implements OnInit {
         this.reportsBySession[appointment.id] = saved;
         this.reportDialog.saving = false;
         this.closeReportDialog();
-        this.showToastMessage('Reporte enviado correctamente', 'success');
+        this.showToastMessage(this.translate.instant('patientAppointments.report.toast.saved'), 'success');
       },
       error: (error) => {
         this.reportDialog.saving = false;
-        this.reportDialog.error = error.error?.message || 'No se pudo enviar el reporte.';
+        this.reportDialog.error = error.error?.message || this.translate.instant('patientAppointments.report.errors.saveFailed');
       }
     });
   }
@@ -323,7 +324,7 @@ export class PatientAppointmentsComponent implements OnInit {
       4: 'patientAppointments.status.finished',
       5: 'patientAppointments.status.cancelled'
     };
-    return labels[status] || 'Desconocido';
+    return labels[status] || 'patientAppointments.status.unknown';
   }
 
   getStatusClass(status: number): string {
@@ -365,7 +366,7 @@ export class PatientAppointmentsComponent implements OnInit {
     if (start) 
       return start;
     
-    return 'Horario no disponible';
+    return this.translate.instant('patientAppointments.card.timeUnavailable');
   }
 
  getSessionTypeLabel(typeOfSession: number): string {

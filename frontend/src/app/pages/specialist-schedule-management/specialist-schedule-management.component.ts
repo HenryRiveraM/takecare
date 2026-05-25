@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DayPilot, DayPilotModule } from '@daypilot/daypilot-lite-angular';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
@@ -14,7 +15,7 @@ import {
 @Component({
   selector: 'app-specialist-schedule-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, DayPilotModule, SidebarComponent],
+  imports: [CommonModule, FormsModule, DayPilotModule, SidebarComponent, TranslatePipe],
   templateUrl: './specialist-schedule-management.component.html',
   styleUrls: ['./specialist-schedule-management.component.css']
 })
@@ -38,13 +39,13 @@ export class SpecialistScheduleManagementComponent implements OnInit {
   };
 
   days = [
-    { value: 1, label: 'Lunes' },
-    { value: 2, label: 'Martes' },
-    { value: 3, label: 'Miércoles' },
-    { value: 4, label: 'Jueves' },
-    { value: 5, label: 'Viernes' },
-    { value: 6, label: 'Sábado' },
-    { value: 7, label: 'Domingo' }
+    { value: 1, label: 'specialistSchedule.days.monday' },
+    { value: 2, label: 'specialistSchedule.days.tuesday' },
+    { value: 3, label: 'specialistSchedule.days.wednesday' },
+    { value: 4, label: 'specialistSchedule.days.thursday' },
+    { value: 5, label: 'specialistSchedule.days.friday' },
+    { value: 6, label: 'specialistSchedule.days.saturday' },
+    { value: 7, label: 'specialistSchedule.days.sunday' }
   ];
 
   config: DayPilot.CalendarConfig = {
@@ -92,13 +93,17 @@ export class SpecialistScheduleManagementComponent implements OnInit {
 
   constructor(
     public sidebarService: SidebarService,
-    private scheduleService: SpecialistScheduleService
+    private scheduleService: SpecialistScheduleService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.initializeSpecialistId();
     this.initializeCurrentSevenDaysRange();
     this.loadSchedules();
+    this.translate.onLangChange.subscribe(() => {
+      this.events = this.mapSchedulesToDayPilotEvents(this.schedules);
+    });
   }
 
   private initializeSpecialistId(): void {
@@ -146,14 +151,14 @@ export class SpecialistScheduleManagementComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error loading schedules:', error);
-        alert('No se pudieron cargar los horarios.');
+        alert(this.translate.instant('specialistSchedule.messages.loadError'));
       }
     });
   }
 
   saveSchedule(): void {
     if (!this.isValidForm()) {
-      alert('Verifica que la fecha y las horas sean correctas.');
+      alert(this.translate.instant('specialistSchedule.messages.invalidForm'));
       return;
     }
 
@@ -172,7 +177,7 @@ export class SpecialistScheduleManagementComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error creating schedule:', error);
-        alert(error?.error?.message || 'No se pudo crear el horario.');
+        alert(error?.error?.message || this.translate.instant('specialistSchedule.messages.createError'));
       }
     });
   }
@@ -185,7 +190,7 @@ export class SpecialistScheduleManagementComponent implements OnInit {
     const selectedSchedule = this.getSelectedSchedule();
 
     if (!selectedSchedule || !this.canModifySchedule(selectedSchedule)) {
-      alert('Solo puedes editar horarios disponibles que todavía no han empezado.');
+      alert(this.translate.instant('specialistSchedule.messages.editBlocked'));
       return;
     }
 
@@ -196,25 +201,25 @@ export class SpecialistScheduleManagementComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error updating schedule:', error);
-        alert(error?.error?.message || 'No se pudo actualizar el horario.');
+        alert(error?.error?.message || this.translate.instant('specialistSchedule.messages.updateError'));
       }
     });
   }
 
   deleteSelectedSchedule(): void {
     if (!this.selectedScheduleId) {
-      alert('Selecciona un horario para eliminar.');
+      alert(this.translate.instant('specialistSchedule.messages.selectToDelete'));
       return;
     }
 
     const selectedSchedule = this.getSelectedSchedule();
 
     if (!selectedSchedule || !this.canModifySchedule(selectedSchedule)) {
-      alert('Solo puedes eliminar horarios disponibles que todavía no han empezado.');
+      alert(this.translate.instant('specialistSchedule.messages.deleteBlocked'));
       return;
     }
 
-    const confirmed = confirm('¿Seguro que deseas eliminar este horario?');
+    const confirmed = confirm(this.translate.instant('specialistSchedule.messages.confirmDelete'));
 
     if (!confirmed) {
       return;
@@ -227,7 +232,7 @@ export class SpecialistScheduleManagementComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error deleting schedule:', error);
-        alert(error?.error?.message || 'No se pudo eliminar el horario.');
+        alert(error?.error?.message || this.translate.instant('specialistSchedule.messages.deleteError'));
       }
     });
   }
@@ -321,7 +326,9 @@ export class SpecialistScheduleManagementComponent implements OnInit {
   }
 
   private buildEventText(schedule: SpecialistScheduleResponse): string {
-    const statusText = schedule.status === 0 ? 'Disponible' : 'Reservado';
+    const statusText = this.translate.instant(
+      schedule.status === 0 ? 'specialistSchedule.status.available' : 'specialistSchedule.status.booked'
+    );
     return `${statusText} | ${this.normalizeTime(schedule.startTime)} - ${this.normalizeTime(schedule.endTime)}`;
   }
 
@@ -401,6 +408,7 @@ export class SpecialistScheduleManagementComponent implements OnInit {
   }
 
   getDayLabel(dayOfWeek: number): string {
-    return this.days.find(day => day.value === dayOfWeek)?.label || '';
+    const key = this.days.find(day => day.value === dayOfWeek)?.label;
+    return key ? this.translate.instant(key) : '';
   }
 }
