@@ -38,7 +38,7 @@
         class="filter-btn"
         [class.active]="activeFilter === 'finished'"
         (click)="setFilter('finished')">
-        <i class="fas fa-check-double"></i> Finalizadas
+        <i class="fas fa-check-double"></i> {{ 'appointments.filters.finished' | translate }}
       </button>
     </div>
     </div>
@@ -51,7 +51,7 @@
       </div>
 
       <div class="status-card error" *ngIf="errorMsg && !loading">
-        <i class="fas fa-exclamation-circle"></i> {{ errorMsg }}
+        <i class="fas fa-exclamation-circle"></i> {{ errorMsg | translate }}
       </div>
 
       <div class="toast" [class.show]="showToast" [class.toast-success]="toastType === 'success'" [class.toast-error]="toastType === 'error'">
@@ -78,7 +78,7 @@
                 {{ getInitials(apt.patientName) }}
               </div>
               <div class="patient-details">
-                <h3 class="patient-name">{{ apt.patientName }}</h3>
+                <h3 class="patient-name">{{ apt.patientName | translate }}</h3>
                 <span class="patient-email">{{ apt.patientEmail }}</span>
               </div>
               <span class="status-badge" [class]="'badge-' + apt.status">
@@ -94,11 +94,11 @@
               </div>
               <div class="detail-item">
                 <i class="fas fa-clock"></i>
-                <span>{{ apt.time }}</span>
+                <span>{{ apt.time | translate }}</span>
               </div>
               <div class="detail-item" *ngIf="apt.sessionTypeLabel">
                 <i class="fas fa-comment-medical"></i>
-                <span>{{ apt.sessionTypeLabel }}</span>
+                <span>{{ apt.sessionTypeLabel | translate }}</span>
               </div>
             </div>
 
@@ -178,7 +178,7 @@
 
     <p class="confirm-message">
       {{ 'appointments.rating.subtitle' | translate }}
-      <strong>{{ ratingDialog.appointment?.patientName }}</strong>
+      <strong>{{ ratingDialog.appointment?.patientName || '' | translate }}</strong>
     </p>
 
     <div class="rating-stars-picker">
@@ -236,7 +236,7 @@
 
     <p class="confirm-message">
       {{ 'appointments.report.subtitle' | translate }}
-      <strong>{{ reportDialog.appointment?.patientName }}</strong>
+      <strong>{{ reportDialog.appointment?.patientName || '' | translate }}</strong>
     </p>
 
     <select class="report-select" [(ngModel)]="reportDialog.reason">
@@ -295,7 +295,7 @@
       {{ confirmDialog.action === 'accept'
         ? ('appointments.confirm.acceptMessage' | translate)
         : ('appointments.confirm.rejectMessage' | translate) }}
-      <strong>{{ confirmDialog.appointment?.patientName }}</strong>
+      <strong>{{ confirmDialog.appointment?.patientName || '' | translate }}</strong>
     </p>
 
     <div class="confirm-actions">

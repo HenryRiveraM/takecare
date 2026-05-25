@@ -10,19 +10,19 @@
     <div class="schedule-content">
       <div class="page-header">
         <div>
-          <h1>Gestión de horarios</h1>
-          <p>Configura los horarios disponibles para tus sesiones.</p>
+          <h1>{{ 'specialistSchedule.title' | translate }}</h1>
+          <p>{{ 'specialistSchedule.subtitle' | translate }}</p>
         </div>
       </div>
 
       <div class="schedule-layout">
 
         <section class="form-card">
-            <h2>{{ selectedScheduleId ? 'Editar horario' : 'Crear horario' }}</h2>
+            <h2>{{ (selectedScheduleId ? 'specialistSchedule.form.editTitle' : 'specialistSchedule.form.createTitle') | translate }}</h2>
 
             <form (ngSubmit)="saveSchedule()">
 
-                <label for="scheduleDate">Fecha</label>
+                <label for="scheduleDate">{{ 'specialistSchedule.form.date' | translate }}</label>
                 <input
                 id="scheduleDate"
                 name="scheduleDate"
@@ -34,7 +34,7 @@
                 required
                 />
 
-                <label>Día de la semana</label>
+                <label>{{ 'specialistSchedule.form.day' | translate }}</label>
                 <input
                 type="text"
                 class="readonly-input"
@@ -42,7 +42,7 @@
                 readonly
                 />
 
-                <label for="startTime">Hora de inicio</label>
+                <label for="startTime">{{ 'specialistSchedule.form.startTime' | translate }}</label>
                 <input
                 id="startTime"
                 name="startTime"
@@ -51,7 +51,7 @@
                 required
                 />
 
-                <label for="endTime">Hora de fin</label>
+                <label for="endTime">{{ 'specialistSchedule.form.endTime' | translate }}</label>
                 <input
                 id="endTime"
                 name="endTime"
@@ -61,7 +61,7 @@
                 />
 
                 <button type="submit" class="primary-btn">
-                {{ selectedScheduleId ? 'Guardar cambios' : 'Crear horario' }}
+                {{ (selectedScheduleId ? 'specialistSchedule.actions.save' : 'specialistSchedule.actions.create') | translate }}
                 </button>
 
                 <button
@@ -70,7 +70,7 @@
                 *ngIf="selectedScheduleId"
                 (click)="resetForm()"
                 >
-                Cancelar edición
+                {{ 'specialistSchedule.actions.cancelEdit' | translate }}
                 </button>
 
                 <button
@@ -80,14 +80,14 @@
                 [disabled]="!isSelectedScheduleEditable()"
                 (click)="deleteSelectedSchedule()"
                 >
-                Eliminar horario
+                {{ 'specialistSchedule.actions.delete' | translate }}
                 </button>
 
                 <p
                 class="warning-message"
                 *ngIf="selectedScheduleId && !isSelectedScheduleEditable()"
                 >
-                Este horario no puede modificarse porque ya fue reservado o ya empezó.
+                {{ 'specialistSchedule.messages.notEditable' | translate }}
                 </p>
 
             </form>
@@ -96,10 +96,11 @@
         <section class="calendar-card">
           <div class="calendar-header">
             <div>
-              <h2>Agenda</h2>
+              <h2>{{ 'specialistSchedule.calendar.title' | translate }}</h2>
               <p>
-                Del {{ currentRangeStart }} al {{ currentRangeEnd }}.
-                Selecciona un rango en el calendario para crear un horario.
+                {{ 'specialistSchedule.calendar.rangePrefix' | translate }} {{ currentRangeStart }}
+                {{ 'specialistSchedule.calendar.rangeTo' | translate }} {{ currentRangeEnd }}.
+                {{ 'specialistSchedule.calendar.help' | translate }}
               </p>
             </div>
 
@@ -109,7 +110,7 @@
                 class="secondary-btn"
                 (click)="goToPreviousRange()"
               >
-                7 días anteriores
+                {{ 'specialistSchedule.actions.previousRange' | translate }}
               </button>
 
               <button
@@ -117,7 +118,7 @@
                 class="secondary-btn"
                 (click)="goToNextRange()"
               >
-                7 días siguientes
+                {{ 'specialistSchedule.actions.nextRange' | translate }}
               </button>
             </div>
           </div>
@@ -133,14 +134,15 @@
       </div>
 
       <section class="list-card">
-        <h2>Horarios registrados</h2>
+        <h2>{{ 'specialistSchedule.list.title' | translate }}</h2>
 
         <p class="range-text">
-          Mostrando horarios del {{ currentRangeStart }} al {{ currentRangeEnd }}.
+          {{ 'specialistSchedule.list.showing' | translate }} {{ currentRangeStart }}
+          {{ 'specialistSchedule.calendar.rangeTo' | translate }} {{ currentRangeEnd }}.
         </p>
 
         <div *ngIf="schedules.length === 0" class="empty-message">
-          No hay horarios registrados en este rango de fechas.
+          {{ 'specialistSchedule.list.empty' | translate }}
         </div>
 
         <div
@@ -159,7 +161,7 @@
           </div>
 
           <span class="status" [class.booked]="schedule.status !== 0">
-            {{ schedule.status === 0 ? 'Disponible' : 'Reservado' }}
+            {{ (schedule.status === 0 ? 'specialistSchedule.status.available' : 'specialistSchedule.status.booked') | translate }}
           </span>
         </div>
       </section>

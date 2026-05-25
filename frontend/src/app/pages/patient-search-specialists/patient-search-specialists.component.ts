@@ -76,16 +76,16 @@ export class PatientSearchSpecialistsComponent implements OnInit {
 
   getDayName(dayOfWeek: number): string {
     const days: Record<number, string> = {
-      1: 'Lunes',
-      2: 'Martes',
-      3: 'Miércoles',
-      4: 'Jueves',
-      5: 'Viernes',
-      6: 'Sábado',
-      7: 'Domingo'
+      1: 'patientSearch.filters.monday',
+      2: 'patientSearch.filters.tuesday',
+      3: 'patientSearch.filters.wednesday',
+      4: 'patientSearch.filters.thursday',
+      5: 'patientSearch.filters.friday',
+      6: 'patientSearch.filters.saturday',
+      7: 'patientSearch.filters.sunday'
     };
 
-    return days[dayOfWeek] || 'Día no definido';
+    return this.translateService.instant(days[dayOfWeek] || 'patientSearch.schedule.undefinedDay');
   }
 
   formatTime(time: string): string {
@@ -141,7 +141,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
         this.loadingSchedules = false;
       },
       error: (error) => {
-        this.scheduleErrorMsg = error.error?.message || 'No se pudieron cargar los horarios.';
+        this.scheduleErrorMsg = error.error?.message || this.translateService.instant('patientSearch.schedule.loadError');
         this.loadingSchedules = false;
       }
     });
@@ -168,14 +168,14 @@ export class PatientSearchSpecialistsComponent implements OnInit {
 
   createAppointment(): void {
     if (!this.selectedScheduleId) {
-      this.appointmentErrorMsg = 'Selecciona un horario disponible.';
+      this.appointmentErrorMsg = this.translateService.instant('patientSearch.schedule.selectRequired');
       return;
     }
 
     const patientId = this.getCurrentPatientId();
 
     if (!patientId) {
-      this.appointmentErrorMsg = 'No se pudo identificar al paciente actual. Vuelve a iniciar sesión.';
+      this.appointmentErrorMsg = this.translateService.instant('patientSearch.schedule.patientRequired');
       return;
     }
 
@@ -190,7 +190,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     }).subscribe({
       next: () => {
         this.creatingAppointment = false;
-        this.appointmentSuccessMsg = 'Cita solicitada correctamente. El especialista recibirá una notificación.';
+        this.appointmentSuccessMsg = this.translateService.instant('patientSearch.schedule.success');
         this.appointmentErrorMsg = '';
         this.selectedScheduleId = null;
         this.typeOfSession = 1;
@@ -205,7 +205,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
         this.appointmentErrorMsg =
           error.error?.message ||
           error.error?.error ||
-          'No se pudo solicitar la cita. Intenta nuevamente.';
+          this.translateService.instant('patientSearch.schedule.requestError');
       }
     });
   }
@@ -278,7 +278,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error cargando especialistas:', error);
-        this.errorMsg = 'No se pudieron cargar los especialistas por el momento.';
+        this.errorMsg = this.translateService.instant('patientSearch.states.loadError');
         this.loading = false;
       }
     });

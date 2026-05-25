@@ -37,12 +37,12 @@ export class RegisterSpecialistComponent implements OnInit {
   private toastTimer: any;
 
   especialidadesOpciones = [
-    { id: 'mental', nombre: 'Trastornos mentales', seleccionado: false },
-    { id: 'adicciones', nombre: 'Adicciones', seleccionado: false },
-    { id: 'familia', nombre: 'Terapia familiar', seleccionado: false },
-    { id: 'infantil', nombre: 'Psicología infantil', seleccionado: false },
-    { id: 'depresion', nombre: 'Depresión y ansiedad', seleccionado: false },
-    { id: 'ocupacional', nombre: 'Terapia ocupacional', seleccionado: false }
+    { id: 'mental', nombre: 'Trastornos mentales', translationKey: 'patientSearch.filters.mentalHealth', seleccionado: false },
+    { id: 'adicciones', nombre: 'Adicciones', translationKey: 'patientSearch.filters.addictions', seleccionado: false },
+    { id: 'familia', nombre: 'Terapia familiar', translationKey: 'patientSearch.filters.familyTherapy', seleccionado: false },
+    { id: 'infantil', nombre: 'Psicología infantil', translationKey: 'patientSearch.filters.childPsychology', seleccionado: false },
+    { id: 'depresion', nombre: 'Depresión y ansiedad', translationKey: 'patientSearch.filters.depressionAnxiety', seleccionado: false },
+    { id: 'ocupacional', nombre: 'Terapia ocupacional', translationKey: 'patientSearch.filters.occupationalTherapy', seleccionado: false }
   ];
 
   constructor(
@@ -173,12 +173,12 @@ export class RegisterSpecialistComponent implements OnInit {
     if (!file) return;
 
     if (file.type !== 'application/pdf') {
-      this.showToast('warning', 'Archivo inválido', 'Solo se permite un archivo PDF.');
+      this.showToast('warning', this.translate.instant('registerSpecialist.toast.invalidFileTitle'), this.translate.instant('registerSpecialist.toast.invalidPdfMessage'));
       return;
     }
 
     if (file.size > 8 * 1024 * 1024) {
-      this.showToast('warning', 'Archivo muy grande', 'El PDF no debe superar los 8 MB.');
+      this.showToast('warning', this.translate.instant('registerSpecialist.toast.fileTooLargeTitle'), this.translate.instant('registerSpecialist.toast.pdfTooLargeMessage'));
       return;
     }
 
@@ -195,12 +195,12 @@ export class RegisterSpecialistComponent implements OnInit {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      this.showToast('warning', 'Archivo inválido', 'El carnet debe ser una imagen.');
+      this.showToast('warning', this.translate.instant('registerSpecialist.toast.invalidFileTitle'), this.translate.instant('registerSpecialist.toast.invalidIdPhotoMessage'));
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      this.showToast('warning', 'Archivo muy grande', 'La imagen del carnet no debe superar los 5 MB.');
+      this.showToast('warning', this.translate.instant('registerSpecialist.toast.fileTooLargeTitle'), this.translate.instant('registerSpecialist.toast.idPhotoTooLargeMessage'));
       return;
     }
 
@@ -325,7 +325,11 @@ export class RegisterSpecialistComponent implements OnInit {
         next: (res) => {
           this.isLoading = false;
           console.log('✅ REGISTRO DE ESPECIALISTA EXITOSO', res);
-          this.showToast('success', 'Registro exitoso', 'Tu perfil será revisado y te notificaremos por correo.');
+          this.showToast(
+            'success',
+            this.translate.instant('registerSpecialist.toast.successTitle'),
+            this.translate.instant('registerSpecialist.toast.successMessage')
+          );
           this.router.navigate(['/login']);
         },
         error: (err) => {
@@ -339,7 +343,11 @@ export class RegisterSpecialistComponent implements OnInit {
     } catch (error) {
       this.isLoading = false;
       console.error('❌ ERROR SUBIENDO ARCHIVOS A CLOUDINARY:', error);
-      this.showToast('error', 'Error al subir archivos', 'No se pudo subir el carnet o el PDF de certificación.');
+      this.showToast(
+        'error',
+        this.translate.instant('registerSpecialist.toast.uploadErrorTitle'),
+        this.translate.instant('registerSpecialist.toast.uploadErrorMessage')
+      );
     }
   }
 }

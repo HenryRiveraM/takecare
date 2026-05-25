@@ -43,7 +43,7 @@ export class PatientSpecialistProfileComponent implements OnInit {
         map((params) => Number(params.get('id'))),
         switchMap((specialistId) => {
           if (!specialistId) {
-            this.errorMsg = 'No se encontró el especialista solicitado.';
+            this.errorMsg = this.translateService.instant('patientSpecialistProfile.errors.notFound');
             return of(null);
           }
 
@@ -75,7 +75,7 @@ export class PatientSpecialistProfileComponent implements OnInit {
           this.loadSpecialistProfile(result.specialistId, result.seed);
         },
         error: () => {
-          this.errorMsg = 'No se pudo cargar el perfil del especialista.';
+          this.errorMsg = this.translateService.instant('patientSpecialistProfile.errors.load');
           this.loading = false;
         }
       });
@@ -203,7 +203,7 @@ export class PatientSpecialistProfileComponent implements OnInit {
         const merged = this.mergeSpecialistData(specialistId, seed, profileData);
 
         if (!merged) {
-          this.errorMsg = 'No se pudo cargar el perfil del especialista.';
+          this.errorMsg = this.translateService.instant('patientSpecialistProfile.errors.load');
           this.loading = false;
           return;
         }
@@ -212,7 +212,7 @@ export class PatientSpecialistProfileComponent implements OnInit {
         this.loadMaterials(merged);
       },
       error: () => {
-        this.errorMsg = 'No se pudo cargar el perfil del especialista.';
+        this.errorMsg = this.translateService.instant('patientSpecialistProfile.errors.load');
         this.loading = false;
       }
     });

@@ -116,7 +116,7 @@
             <label>{{ 'registerPatient.fields.ciPhoto' | translate }}<span class="required">*</span></label>
             <div class="upload" [class.active]="documentoNombre" (click)="fileInput.click()">
               <input type="file" hidden #fileInput accept="image/*" (change)="onFileSelected($event, 'documento')">
-              <img src="assets/icons/upload.svg" alt="Subir documento">
+              <img src="assets/icons/upload.svg" [alt]="'registerPatient.uploads.document' | translate">
               <p>{{ documentoNombre || ('registerPatient.uploads.document' | translate) }}</p>
             </div>
           </div>
@@ -125,7 +125,7 @@
             <label>{{ 'registerPatient.fields.selfie' | translate }}<span class="required">*</span></label>
             <div class="upload" [class.active]="selfieNombre" (click)="selfieInput.click()">
               <input type="file" hidden #selfieInput accept="image/*" (change)="onFileSelected($event, 'selfie')">
-              <img src="assets/icons/user.svg" alt="Tomar selfie">
+              <img src="assets/icons/user.svg" [alt]="'registerPatient.uploads.selfie' | translate">
               <p>{{ selfieNombre || ('registerPatient.uploads.selfie' | translate) }}</p>
             </div>
           </div>

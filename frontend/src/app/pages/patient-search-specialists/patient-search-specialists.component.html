@@ -119,8 +119,8 @@
         <div class="schedule-panel" *ngIf="selectedSpecialistId === specialist.id">
           <div class="schedule-panel-header">
             <div>
-              <h3>Horarios disponibles</h3>
-              <p>Selecciona un horario para solicitar una cita.</p>
+              <h3>{{ 'patientSearch.schedule.title' | translate }}</h3>
+              <p>{{ 'patientSearch.schedule.help' | translate }}</p>
             </div>
 
             <button type="button" class="btn-close-panel" (click)="closeSchedules()">
@@ -129,7 +129,7 @@
           </div>
 
           <div class="status-card compact" *ngIf="loadingSchedules">
-            Cargando horarios...
+            {{ 'patientSearch.schedule.loading' | translate }}
           </div>
 
           <div class="status-card error compact" *ngIf="scheduleErrorMsg">
@@ -161,7 +161,7 @@
                   </span>
 
                   <small>
-                    {{ schedule.status === 0 ? 'Disponible' : 'No disponible' }}
+                    {{ (schedule.status === 0 ? 'patientSearch.schedule.available' : 'patientSearch.schedule.unavailable') | translate }}
                   </small>
                 </button>
               </div>
@@ -171,15 +171,15 @@
           <div
             class="empty-schedules"
             *ngIf="!loadingSchedules && !scheduleErrorMsg && scheduleGroups.length === 0">
-            No hay horarios disponibles para este especialista.
+            {{ 'patientSearch.schedule.empty' | translate }}
           </div>
 
           <div class="appointment-box" *ngIf="selectedScheduleId">
-            <label>Tipo de sesión</label>
+            <label>{{ 'patientSearch.schedule.sessionType' | translate }}</label>
 
             <select [(ngModel)]="typeOfSession" class="filter-select">
-              <option [ngValue]="1">Virtual</option>
-              <option [ngValue]="2">Presencial</option>
+              <option [ngValue]="1">{{ 'patientSearch.schedule.virtual' | translate }}</option>
+              <option [ngValue]="2">{{ 'patientSearch.schedule.presential' | translate }}</option>
             </select>
 
             <button
@@ -187,7 +187,7 @@
               class="btn-primary"
               [disabled]="creatingAppointment"
               (click)="createAppointment()">
-              {{ creatingAppointment ? 'Solicitando...' : 'Solicitar cita' }}
+              {{ (creatingAppointment ? 'patientSearch.schedule.requesting' : 'patientSearch.schedule.request') | translate }}
             </button>
           </div>
 
