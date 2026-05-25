@@ -45,6 +45,7 @@ public class UserRegisterDTO {
 
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Email should be valid")
+    @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", message = "Email must contain @ and .")
     private String email;
 
     @NotBlank(message = "Password cannot be blank")

@@ -78,9 +78,9 @@
                 <div class="field col-2">
                     <label>{{ 'registerSpecialist.fields.email' | translate }} <span class="required">*</span></label>
                     <input type="email" formControlName="email" [placeholder]="'registerSpecialist.placeholders.email' | translate">
-                    <small class="error-msg" *ngIf="(f['email'].touched || submitted) && f['email'].invalid">
+                    <small class="error-msg" *ngIf="(f['email'].touched || f['email'].dirty || submitted) && f['email'].invalid">
                         <span *ngIf="f['email'].errors?.['required']">{{ 'registerSpecialist.errors.email.required' | translate }}</span>
-                        <span *ngIf="f['email'].errors?.['email']">{{ 'registerSpecialist.errors.email.invalid' | translate }}</span>
+                        <span *ngIf="f['email'].errors?.['email'] || f['email'].errors?.['pattern']">{{ 'registerSpecialist.errors.email.invalid' | translate }}</span>
                     </small>
                 </div>
 
