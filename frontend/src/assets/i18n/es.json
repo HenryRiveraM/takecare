@@ -448,25 +448,6 @@
       "documents": "Documentos de verificación"
     },
     "sectionHelp": "Sube tu documento de identidad y una selfie para validar tu cuenta.",
-    "fields": {
-      "names": "Nombres",
-      "firstLastname": "Primer apellido",
-      "secondLastname": "Segundo apellido",
-      "ci": "Documento de identidad",
-      "birthDate": "Fecha de nacimiento",
-      "email": "Correo electrónico",
-      "password": "Contraseña",
-      "ciPhoto": "Fotografía de CI",
-      "selfie": "Selfie de verificación"
-    },
-    "placeholders": {
-      "names": "Ej: Juan Carlos",
-      "firstLastname": "Ej: Pérez",
-      "secondLastname": "Ej: García",
-      "ci": "Número de CI",
-      "email": "Correo electrónico",
-      "password": "* * * * * * * *"
-    },
     "uploads": {
       "document": "Subir documento de identidad",
       "selfie": "Tomar una selfie"
@@ -482,44 +463,76 @@
       "createAccount": "Crear cuenta",
       "cancel": "Cancelar"
     },
+    "fields": {
+      "names": "Nombres",
+      "firstLastname": "Primer apellido",
+      "secondLastname": "Segundo apellido",
+      "ci": "Documento de identidad",
+      "birthDate": "Fecha de nacimiento",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "passwordConfirm": "Confirmar contraseña",
+      "ciPhoto": "Foto del CI",
+      "selfie": "Selfie de verificación"
+    },
+    "placeholders": {
+      "names": "Ej. Juan Carlos",
+      "firstLastname": "Ej. Pérez",
+      "secondLastname": "Ej. García",
+      "ci": "Número de CI",
+      "email": "Correo electrónico",
+      "password": "* * * * * * * *",
+      "passwordConfirm": "* * * * * * * *"
+    },
     "errors": {
       "names": {
-        "required": "Los nombres son obligatorios",
-        "minlength": "Los nombres deben tener al menos 3 caracteres",
-        "maxlength": "Los nombres no pueden tener más de 30 caracteres",
-        "pattern": "Solo se permiten letras y espacios"
+        "required": "Los nombres son obligatorios.",
+        "minlength": "Los nombres deben tener al menos 3 caracteres.",
+        "maxlength": "Los nombres no pueden tener más de 30 caracteres.",
+        "pattern": "Solo se permiten letras y espacios."
       },
       "firstLastname": {
-        "required": "El primer apellido es obligatorio",
-        "minlength": "El primer apellido debe tener al menos 3 caracteres",
-        "maxlength": "El primer apellido no puede tener más de 30 caracteres",
-        "pattern": "Solo se permiten letras y espacios"
+        "required": "El primer apellido es obligatorio.",
+        "minlength": "El primer apellido debe tener al menos 3 caracteres.",
+        "maxlength": "El primer apellido no puede tener más de 30 caracteres.",
+        "pattern": "Solo se permiten letras y espacios."
       },
       "secondLastname": {
-        "minlength": "El segundo apellido debe tener al menos 3 caracteres",
-        "maxlength": "El segundo apellido no puede tener más de 30 caracteres",
-        "pattern": "Solo se permiten letras y espacios"
+        "minlength": "El segundo apellido debe tener al menos 3 caracteres.",
+        "maxlength": "El segundo apellido no puede tener más de 30 caracteres.",
+        "pattern": "Solo se permiten letras y espacios."
       },
       "ci": {
-        "required": "El número de CI es obligatorio",
-        "minlength": "El número de CI debe tener al menos 6 caracteres",
-        "maxlength": "El número de CI no puede tener más de 10 caracteres",
+        "required": "El número de CI es obligatorio.",
+        "minlength": "El número de CI debe tener al menos 6 caracteres.",
+        "maxlength": "El número de CI no puede tener más de 10 caracteres.",
         "pattern": "Solo se permiten números y complemento."
       },
       "birthDate": {
-        "required": "La fecha de nacimiento es obligatoria"
+        "required": "La fecha de nacimiento es obligatoria."
       },
       "email": {
-        "required": "El correo electrónico es obligatorio",
-        "invalid": "El correo electrónico no es válido"
+        "required": "El correo electrónico es obligatorio.",
+        "invalid": "El correo electrónico no es válido."
       },
       "password": {
-        "required": "La contraseña es obligatoria",
-        "minlength": "La contraseña debe tener entre 8 y 50 caracteres"
+        "required": "La contraseña es obligatoria.",
+        "minlength": "La contraseña debe tener entre 8 a 50 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número."
+      },
+      "passwordConfirm": {
+        "required": "La confirmación de contraseña es obligatoria.",
+        "minlength": "La confirmación debe tener entre 8 a 50 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
+        "mismatch": "Las contraseñas no coinciden."
       },
       "terms": {
         "required": "Debes aceptar los términos para continuar."
       }
+    },
+    "accessibility": {
+      "showPassword": "Mostrar contraseña.",
+      "hidePassword": "Ocultar contraseña.",
+      "showPasswordConfirm": "Mostrar confirmación de contraseña.",
+      "hidePasswordConfirm": "Ocultar confirmación de contraseña."
     },
     "toast": {
       "successTitle": "¡Cuenta creada!",
@@ -552,7 +565,6 @@
       "uploadErrorMessage": "Ocurrió un error al subir tus archivos. Intenta de nuevo."
     }
   },
-
   
   "registerRole": {
     "titlePart1": "¿Cómo te gustaría usar ",
@@ -587,6 +599,7 @@
       "birthDate": "Fecha de nacimiento",
       "email": "Correo electrónico",
       "password": "Contraseña",
+      "passwordConfirm": "Confirmar contraseña",
       "document": "Documento de identidad",
       "idPhoto": "Foto del carnet (anverso)",
       "specialties": "Especialidades",
@@ -598,6 +611,7 @@
       "lastName2": "Ej: Johnson",
       "email": "jane@example.com",
       "password": "* * * * * * * *",
+      "passwordConfirm": "* * * * * * * *",
       "document": "Número de CI"
     },
     "uploads": {
@@ -614,7 +628,7 @@
     "actions": {
       "remove": "Eliminar",
       "processing": "Procesando registro...",
-      "complete": "Registro completo"
+      "complete": "Crear cuenta"
     },
     "errors": {
       "firstName": {
@@ -642,7 +656,13 @@
         "invalid": "El formato del correo electrónico es inválido."
       },
       "password": {
-        "range": "Mínimo 8 caracteres y máximo 50 caracteres."
+        "range": "Mínimo 8 caracteres y máximo 50 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
+        "required": "La contraseña es obligatoria."
+      },
+      "passwordConfirm": {
+        "required": "La confirmación de contraseña es obligatoria.",
+        "range": "Mínimo 8 caracteres y máximo 50 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
+        "mismatch": "Las contraseñas no coinciden."
       },
       "document": {
         "required": "El documento de identidad es obligatorio.",
@@ -662,6 +682,12 @@
       "terms": {
         "required": "Debes aceptar los términos para continuar."
       }
+    },
+    "accessibility": {
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "showPasswordConfirm": "Mostrar confirmación de contraseña",
+      "hidePasswordConfirm": "Ocultar confirmación de contraseña"
     },
     "toast": {
       "successTitle": "Registro exitoso",
@@ -702,8 +728,6 @@
       "uploadErrorMessage": "No se pudo subir el carnet o el PDF de certificación."
     }
   },
-
-
   
   "specialistSchedule": {
     "title": "Gestión de horarios",

@@ -44,6 +44,61 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
             @Param("dayOfWeek") Byte dayOfWeek
     );
 
+        @Query("""
+        SELECT DISTINCT s
+        FROM Specialist s
+        LEFT JOIN s.specialties sp
+        LEFT JOIN com.takecare.backend.specialistschedule.model.SpecialistSchedule sc
+          ON sc.specialist.id = s.id
+        WHERE (:dayOfWeek IS NULL OR (sc.status = 0 AND sc.dayOfWeek = :dayOfWeek))
+          AND (
+            :name IS NULL
+            OR LOWER(CONCAT(
+            COALESCE(s.names, ''), ' ',
+            COALESCE(s.firstLastname, ''), ' ',
+            COALESCE(s.secondLastname, '')
+            )) LIKE LOWER(CONCAT('%', :name, '%'))
+          )
+          AND (
+            :category IS NULL
+                OR LOWER(COALESCE(sp.name, '')) LIKE LOWER(CONCAT('%', :category, '%'))
+                OR LOWER(COALESCE(s.biography, '')) LIKE LOWER(CONCAT('%', :category, '%'))
+          )
+          AND (
+            :city IS NULL
+            OR LOWER(COALESCE(s.officeUbi, '')) LIKE LOWER(CONCAT('%', :city, '%'))
+          )
+        """)
+        List<Specialist> findByFilters(
+        @Param("name") String name,
+        @Param("category") String category,
+        @Param("city") String city,
+        @Param("dayOfWeek") Byte dayOfWeek
+        );
+
+        @Query("""
+            SELECT DISTINCT s
+            FROM Specialist s
+            LEFT JOIN s.specialties sp
+            LEFT JOIN com.takecare.backend.specialistschedule.model.SpecialistSchedule sc
+              ON sc.specialist.id = s.id
+            WHERE (:dayOfWeek IS NULL OR (sc.status = 0 AND sc.dayOfWeek = :dayOfWeek))
+              AND (
+                    LOWER(CONCAT(
+                        COALESCE(s.names, ''), ' ',
+                        COALESCE(s.firstLastname, ''), ' ',
+                        COALESCE(s.secondLastname, '')
+                    )) LIKE LOWER(CONCAT('%', :search, '%'))
+                    OR LOWER(COALESCE(sp.name, '')) LIKE LOWER(CONCAT('%', :search, '%'))
+                    OR LOWER(COALESCE(s.biography, '')) LIKE LOWER(CONCAT('%', :search, '%'))
+                    OR LOWER(COALESCE(s.officeUbi, '')) LIKE LOWER(CONCAT('%', :search, '%'))
+              )
+        """)
+        List<Specialist> findBySearchTerm(
+                @Param("search") String search,
+                @Param("dayOfWeek") Byte dayOfWeek
+        );
+
     @Query("""
         SELECT DISTINCT s
         FROM Specialist s

@@ -63,5 +63,5 @@ public class User {
     private Byte status;
 
     @Column(name = "account_verified", columnDefinition = "tinyint default 2")
-    private Byte accountVerified = 0;
+    private Byte accountVerified = 2; // 1: aceptado, 2: pendiente, 3: rechazado
 }

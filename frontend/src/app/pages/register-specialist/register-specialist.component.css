@@ -84,6 +84,61 @@
   box-shadow: 0 0 0 4px rgba(245, 163, 163, 0.2);
 }
 
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 52px !important;
+}
+
+.password-input-wrapper .password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #F5A3A3;
+  cursor: pointer;
+  z-index: 2;
+
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.password-input-wrapper .password-toggle:hover {
+  color: #ec8f8f;
+  background: rgba(245, 163, 163, 0.14);
+}
+
+.password-input-wrapper .password-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(245, 163, 163, 0.22);
+}
+
+.password-input-wrapper .password-toggle .material-symbols-outlined {
+  position: static;
+  transform: none;
+  font-size: 22px;
+  line-height: 1;
+}
+
 .full-width {
   grid-column: span 2;
   margin-top: 10px;
@@ -309,31 +364,94 @@
     display: block;     
 }
 
+.btn-complete {
+  position: relative;
+  grid-column: span 2;
+  margin-top: 30px;
 
-.spinner {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 0.8s linear infinite;
-  display: inline-block;
-  margin-right: 10px;
-  vertical-align: middle;
-}
+  width: 100%;
+  min-height: 52px;
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+  background: #F5A3A3;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
 
-.btn-complete.is-loading {
-  background: #ec8f8f; 
-  cursor: wait;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  overflow: hidden;
+
+  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  box-shadow: 0 10px 20px rgba(245, 163, 163, 0.3);
 }
 
+.btn-complete:hover:not(:disabled) {
+  background: #ec8f8f;
+  transform: translateY(-2px);
+}
+
+.btn-complete:disabled {
+  background: #f3d1d1;
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn-complete.is-loading {
+  background: #ec8f8f;
+  pointer-events: none;
+}
+
+.button-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.btn-complete.is-loading .button-label {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.btn-complete .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  margin-left: -9px;
+
+  border: 3px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+
+  display: inline-block;
+  box-sizing: border-box;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* ========================= */
 /* TOAST NOTIFICATION        */

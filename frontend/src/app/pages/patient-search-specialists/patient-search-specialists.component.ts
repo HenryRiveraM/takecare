@@ -269,7 +269,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     this.loading = true;
     this.errorMsg = '';
 
-    this.specialistService.searchSpecialists(this.selectedCategory, this.selectedSchedule).subscribe({
+    this.specialistService.searchSpecialists(this.searchTerm, this.selectedCategory, this.selectedSchedule).subscribe({
       next: (apiSpecialists) => {
         this.specialists = apiSpecialists.filter(s => this.isVisibleSpecialist(s));
         

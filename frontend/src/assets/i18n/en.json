@@ -435,8 +435,6 @@
     "backToSession": "Back to sign in",
     "alertMessage": "If the email exists, you will receive a link soon."
   },
-
-  
   "registerPatient": {
     "title": "Patient Registration",
     "subtitle": "Create your account to begin your mental health care process.",
@@ -447,25 +445,6 @@
       "documents": "Verification Documents"
     },
     "sectionHelp": "Upload your identity document and a selfie to validate your account.",
-    "fields": {
-      "names": "First names",
-      "firstLastname": "First last name",
-      "secondLastname": "Second last name",
-      "ci": "Identity document",
-      "birthDate": "Birth date",
-      "email": "Email address",
-      "password": "Password",
-      "ciPhoto": "ID photo",
-      "selfie": "Verification selfie"
-    },
-    "placeholders": {
-      "names": "E.g. John Carlos",
-      "firstLastname": "E.g. Perez",
-      "secondLastname": "E.g. Garcia",
-      "ci": "ID number",
-      "email": "Email address",
-      "password": "* * * * * * * *"
-    },
     "uploads": {
       "document": "Upload identity document",
       "selfie": "Take a selfie"
@@ -481,44 +460,76 @@
       "createAccount": "Create account",
       "cancel": "Cancel"
     },
+    "fields": {
+      "names": "First names",
+      "firstLastname": "First last name",
+      "secondLastname": "Second last name",
+      "ci": "Identity document",
+      "birthDate": "Birth date",
+      "email": "Email address",
+      "password": "Password",
+      "passwordConfirm": "Confirm password",
+      "ciPhoto": "ID photo",
+      "selfie": "Verification selfie"
+    },
+    "placeholders": {
+      "names": "E.g. John Carlos",
+      "firstLastname": "E.g. Perez",
+      "secondLastname": "E.g. Garcia",
+      "ci": "ID number",
+      "email": "Email address",
+      "password": "* * * * * * * *",
+      "passwordConfirm": "* * * * * * * *"
+    },
     "errors": {
       "names": {
-        "required": "First names are required",
-        "minlength": "First names must have at least 3 characters",
-        "maxlength": "First names cannot have more than 30 characters",
-        "pattern": "Only letters and spaces are allowed"
+        "required": "First names are required.",
+        "minlength": "First names must have at least 3 characters.",
+        "maxlength": "First names cannot have more than 30 characters.",
+        "pattern": "Only letters and spaces are allowed."
       },
       "firstLastname": {
-        "required": "First last name is required",
-        "minlength": "First last name must have at least 3 characters",
-        "maxlength": "First last name cannot have more than 30 characters",
-        "pattern": "Only letters and spaces are allowed"
+        "required": "First last name is required.",
+        "minlength": "First last name must have at least 3 characters.",
+        "maxlength": "First last name cannot have more than 30 characters.",
+        "pattern": "Only letters and spaces are allowed."
       },
       "secondLastname": {
-        "minlength": "Second last name must have at least 3 characters",
-        "maxlength": "Second last name cannot have more than 30 characters",
-        "pattern": "Only letters and spaces are allowed"
+        "minlength": "Second last name must have at least 3 characters.",
+        "maxlength": "Second last name cannot have more than 30 characters.",
+        "pattern": "Only letters and spaces are allowed."
       },
       "ci": {
-        "required": "ID number is required",
-        "minlength": "ID number must have at least 6 characters",
-        "maxlength": "ID number cannot have more than 10 characters",
+        "required": "ID number is required.",
+        "minlength": "ID number must have at least 6 characters.",
+        "maxlength": "ID number cannot have more than 10 characters.",
         "pattern": "Only numbers and suffix are allowed."
       },
       "birthDate": {
-        "required": "Birth date is required"
+        "required": "Birth date is required."
       },
       "email": {
-        "required": "Email address is required",
-        "invalid": "Email address is invalid"
+        "required": "Email address is required.",
+        "invalid": "Email address is invalid."
       },
       "password": {
-        "required": "Password is required",
-        "minlength": "Password must contain between 8 and 50 characters"
+        "required": "Password is required.",
+        "minlength": "Password must contain between 8 and 50 characters and must contain at least one uppercase letter, one lowercase letter and one number."
+      },
+      "passwordConfirm": {
+        "required": "Password confirmation is required.",
+        "minlength": "Password confirmation must contain between 8 and 50 characters and must contain at least one uppercase letter, one lowercase letter and one number.",
+        "mismatch": "Passwords do not match."
       },
       "terms": {
         "required": "You must accept the terms to continue."
       }
+    },
+    "accessibility": {
+      "showPassword": "Show password.",
+      "hidePassword": "Hide password.",
+      "showPasswordConfirm": "Show password confirmation.",
+      "hidePasswordConfirm": "Hide password confirmation."
     },
     "toast": {
       "successTitle": "Account created!",
@@ -551,7 +562,6 @@
       "uploadErrorMessage": "An error occurred while uploading your files. Please try again."
     }
   },
-
   
   "registerRole": {
     "titlePart1": "How would you like to use ",
@@ -587,6 +597,7 @@
       "birthDate": "Birth date",
       "email": "Email address",
       "password": "Password",
+      "passwordConfirm": "Confirm password",
       "document": "Identity document",
       "idPhoto": "ID photo (front side)",
       "specialties": "Specialties",
@@ -598,6 +609,7 @@
       "lastName2": "E.g. Johnson",
       "email": "jane@example.com",
       "password": "* * * * * * * *",
+      "passwordConfirm": "* * * * * * * *",
       "document": "ID number"
     },
     "uploads": {
@@ -614,7 +626,7 @@
     "actions": {
       "remove": "Remove",
       "processing": "Processing registration...",
-      "complete": "Complete registration"
+      "complete": "Create account"
     },
     "errors": {
       "firstName": {
@@ -642,7 +654,13 @@
         "invalid": "Email format is invalid."
       },
       "password": {
-        "range": "Minimum 8 characters and maximum 50 characters."
+        "required": "Password is required.",
+        "range": "Minimum 8 characters and maximum 50 characters and must contain at least one uppercase letter, one lowercase letter, and one number."
+      },
+      "passwordConfirm": {
+        "required": "Password confirmation is required.",
+        "range": "Password confirmation must contain between 8 and 50 characters and must contain at least one uppercase letter, one lowercase letter, and one number.",
+        "mismatch": "Passwords do not match."
       },
       "document": {
         "required": "Identity document is required.",
@@ -662,6 +680,12 @@
       "terms": {
         "required": "You must accept the terms to continue."
       }
+    },
+    "accessibility": {
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "showPasswordConfirm": "Show password confirmation",
+      "hidePasswordConfirm": "Hide password confirmation"
     },
     "toast": {
       "successTitle": "Registration successful",

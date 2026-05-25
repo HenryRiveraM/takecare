@@ -14,7 +14,7 @@ export class LocalizedDatePipe implements PipeTransform {
       return '-';
     }
 
-    const date = value instanceof Date ? value : new Date(value);
+    const date = value instanceof Date ? value : this.parseDate(value);
     if (Number.isNaN(date.getTime())) {
       return '-';
     }
@@ -27,5 +27,16 @@ export class LocalizedDatePipe implements PipeTransform {
       month: '2-digit',
       day: '2-digit'
     }).format(date);
+  }
+
+  private parseDate(value: string): Date {
+    const dateOnlyMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+
+    if (dateOnlyMatch) {
+      const [, year, month, day] = dateOnlyMatch;
+      return new Date(Number(year), Number(month) - 1, Number(day));
+    }
+
+    return new Date(value);
   }
 }

@@ -189,38 +189,6 @@ h1 {
   margin-top: 5px;
 }
 
-.actions {
-  margin-top: 25px;
-  display: flex;
-  gap: 12px;
-}
-
-.primary {
-  flex: 1;
-  background: #76ab9b;
-  color: white;
-  border: none;
-  padding: 15px;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 10px 20px rgba(245, 163, 163, 0.3);
-}
-
-.primary:hover {
-  background: #83baaa;
-  transform: translateY(-2px);
-}
-
-.primary:disabled {
-  background: #6fae9b;
-  opacity: 0.7;
-  cursor: not-allowed;
-  box-shadow: none;
-  transform: none;
-}
-
 .cancel {
   background: #fff0f0;
   border: none;
@@ -259,6 +227,92 @@ h1 {
   font-weight: 500;
 }
 
+.actions {
+  margin-top: 25px;
+  width: 100%;
+}
+
+.primary {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+
+  background: #76ab9b;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  box-shadow: 0 10px 20px rgba(245, 163, 163, 0.3);
+}
+
+.primary:hover:not(:disabled) {
+  background: #83baaa;
+  transform: translateY(-2px);
+}
+
+.primary:disabled {
+  background: #6fae9b;
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.button-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.primary.loading .button-label {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.primary .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  margin-left: -9px;
+
+  border: 3px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+
+  display: inline-block;
+  box-sizing: border-box;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .field input.ng-invalid.ng-touched,
 .password input.ng-invalid.ng-touched {
   border: 1px solid #ef4444;
@@ -269,6 +323,61 @@ h1 {
 .password input.ng-invalid.ng-touched:focus {
   border-color: #ef4444;
   box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12);
+}
+
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 52px !important;
+}
+
+.password-input-wrapper .password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fca9a9;
+  cursor: pointer;
+  z-index: 2;
+
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.password-input-wrapper .password-toggle:hover {
+  color: #fca9a9;
+  background: rgba(225, 29, 72, 0.08);
+}
+
+.password-input-wrapper .password-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.16);
+}
+
+.password-input-wrapper .password-toggle .material-symbols-outlined {
+  position: static;
+  transform: none;
+  font-size: 22px;
+  line-height: 1;
 }
 
 /* ========================= */
