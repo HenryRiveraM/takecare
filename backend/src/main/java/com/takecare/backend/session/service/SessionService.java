@@ -1,7 +1,10 @@
 package com.takecare.backend.session.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.takecare.backend.notification.service.NotificationService;
+import com.takecare.backend.session.dto.AdminSessionHistoryItemDTO;
 import com.takecare.backend.session.dto.SessionStatusResponseDTO;
 import com.takecare.backend.session.dto.CreateSessionRequestDTO;
 import com.takecare.backend.session.dto.SessionResponseDTO;
@@ -120,6 +124,35 @@ public class SessionService {
                 .stream()
                 .map(this::toResponseDto)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<AdminSessionHistoryItemDTO> listAdminHistory(
+            String statusFilter,
+            String fromFilter,
+            String toFilter
+    ) {
+        Integer status = parseSessionStatus(statusFilter);
+        LocalDate fromDate = parseFilterDate(fromFilter, "from");
+        LocalDate toDate = parseFilterDate(toFilter, "to");
+
+        if (fromDate != null && toDate != null && fromDate.isAfter(toDate)) {
+            logger.warn("Admin session history validation failed: from={} is after to={}",
+                    fromDate, toDate);
+            throw new IllegalArgumentException("La fecha 'from' no puede ser posterior a 'to'");
+        }
+
+        logger.info("Listing admin session history. status={}, from={}, to={}",
+                status, fromDate, toDate);
+
+        List<AdminSessionHistoryItemDTO> sessions = sessionRepository
+                .findForAdminHistory(status, fromDate, toDate)
+                .stream()
+                .map(this::toAdminHistoryDto)
+                .toList();
+
+        logger.info("Admin session history results found: {}", sessions.size());
+        return sessions;
     }
 
     @Transactional
@@ -288,6 +321,85 @@ public class SessionService {
         }
 
         return dto;
+    }
+
+    private AdminSessionHistoryItemDTO toAdminHistoryDto(Session session) {
+        AdminSessionHistoryItemDTO dto = new AdminSessionHistoryItemDTO();
+
+        dto.setId(session.getId());
+        dto.setStatus(session.getStatus());
+        dto.setTypeOfSession(session.getTypeOfSession());
+        dto.setCreatedDate(session.getCreatedDate());
+
+        if (session.getPatient() != null) {
+            Patient patient = session.getPatient();
+            dto.setPatientId(patient.getId());
+            dto.setPatientName(buildFullName(
+                    patient.getNames(),
+                    patient.getFirstLastname(),
+                    patient.getSecondLastname()
+            ));
+            dto.setPatientEmail(patient.getEmail());
+        }
+
+        if (session.getSchedule() != null) {
+            SpecialistSchedule schedule = session.getSchedule();
+            dto.setScheduleId(schedule.getId());
+            dto.setScheduleDate(schedule.getScheduleDate());
+            dto.setStartTime(schedule.getStartTime());
+            dto.setEndTime(schedule.getEndTime());
+
+            if (schedule.getSpecialist() != null) {
+                dto.setSpecialistId(schedule.getSpecialist().getId());
+                dto.setSpecialistName(buildFullName(
+                        schedule.getSpecialist().getNames(),
+                        schedule.getSpecialist().getFirstLastname(),
+                        schedule.getSpecialist().getSecondLastname()
+                ));
+                dto.setSpecialistEmail(schedule.getSpecialist().getEmail());
+            }
+        }
+
+        return dto;
+    }
+
+    private Integer parseSessionStatus(String statusFilter) {
+        if (statusFilter == null || statusFilter.isBlank()) {
+            return null;
+        }
+
+        String status = statusFilter.trim().toUpperCase(Locale.ROOT);
+        Integer parsedStatus = switch (status) {
+            case "1", "PENDING" -> SESSION_PENDING;
+            case "2", "ACCEPTED" -> SESSION_ACCEPTED;
+            case "3", "REJECTED" -> SESSION_REJECTED;
+            case "4", "FINISHED" -> SESSION_FINISHED;
+            case "5", "CANCELLED", "CANCELED" -> SESSION_CANCELLED;
+            default -> null;
+        };
+
+        if (parsedStatus == null) {
+            logger.warn("Admin session history validation failed: invalid status={}", statusFilter);
+            throw new IllegalArgumentException("El estado de cita no es valido");
+        }
+
+        return parsedStatus;
+    }
+
+    private LocalDate parseFilterDate(String value, String parameterName) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+
+        try {
+            return LocalDate.parse(value.trim());
+        } catch (DateTimeParseException exception) {
+            logger.warn("Admin session history validation failed: invalid {}={}",
+                    parameterName, value);
+            throw new IllegalArgumentException(
+                    "El parametro '" + parameterName + "' debe tener formato yyyy-MM-dd"
+            );
+        }
     }
 
     private SessionStatusResponseDTO buildSessionStatusResponse(
