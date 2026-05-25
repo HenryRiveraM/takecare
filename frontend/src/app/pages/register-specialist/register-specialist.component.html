@@ -62,9 +62,6 @@
                         <span *ngIf="f['apellidoMaterno'].errors?.['maxlength']">{{ 'registerSpecialist.errors.lastName2.maxlength' | translate }}</span>
                         <span *ngIf="f['apellidoMaterno'].errors?.['minlength']">{{ 'registerSpecialist.errors.lastName2.minlength' | translate }}</span>
                     </small>
-                    <small class="helper-msg" *ngIf="!f['apellidoMaterno'].touched && f['apellidoMaterno'].valid">
-                        {{ 'registerSpecialist.optional' | translate }}
-                    </small>
                 </div>
 
                 <div class="field col-2">
@@ -85,14 +82,6 @@
                 </div>
 
                 <div class="field col-2">
-                    <label>{{ 'registerSpecialist.fields.password' | translate }} <span class="required">*</span></label>
-                    <input type="password" formControlName="password" [placeholder]="'registerSpecialist.placeholders.password' | translate">
-                    <small class="error-msg" *ngIf="(f['password'].touched || submitted) && f['password'].invalid">
-                      {{ 'registerSpecialist.errors.password.range' | translate }}
-                    </small>
-                </div>
-
-                <div class="field col-2">
                     <label>{{ 'registerSpecialist.fields.document' | translate }} <span class="required">*</span></label>
                     <input type="text" formControlName="documento" [placeholder]="'registerSpecialist.placeholders.document' | translate">
                     <small class="error-msg" *ngIf="(f['documento'].touched || submitted) && f['documento'].invalid">
@@ -100,6 +89,67 @@
                         <span *ngIf="f['documento'].errors?.['minlength']">{{ 'registerSpecialist.errors.document.minlength' | translate }}</span>
                         <span *ngIf="f['documento'].errors?.['maxlength']">{{ 'registerSpecialist.errors.document.maxlength' | translate }}</span>
                         <span *ngIf="f['documento'].errors?.['pattern']">{{ 'registerSpecialist.errors.document.pattern' | translate }}</span>
+                    </small>
+                </div>
+
+                <div class="field col-2">
+                    <label>
+                        {{ 'registerSpecialist.fields.password' | translate }}
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="password-input-wrapper">
+                        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" [placeholder]="'registerSpecialist.placeholders.password' | translate">
+
+                        <button type="button" class="password-toggle" (click)="showPassword = !showPassword"
+                            [attr.aria-label]="(showPassword ? 'registerSpecialist.accessibility.hidePassword' : 'registerSpecialist.accessibility.showPassword') | translate"
+                            [attr.title]="(showPassword ? 'registerSpecialist.accessibility.hidePassword' : 'registerSpecialist.accessibility.showPassword') | translate"
+                            [attr.aria-pressed]="showPassword">
+                            <span class="material-symbols-outlined">
+                                {{ showPassword ? 'visibility_off' : 'visibility' }}
+                            </span>
+                        </button>
+                    </div>
+
+                    <small class="error-msg" *ngIf="(f['password'].touched || submitted) && f['password'].invalid">
+                        <span *ngIf="f['password'].errors?.['required']">
+                            {{ 'registerSpecialist.errors.password.required' | translate }}
+                        </span>
+                        <span *ngIf="f['password'].errors?.['minlength'] || f['password'].errors?.['maxlength'] || f['password'].errors?.['range']">
+                            {{ 'registerSpecialist.errors.password.range' | translate }}
+                        </span>
+                    </small>
+                </div>
+
+                <div class="field col-2">
+                    <label>
+                        {{ 'registerSpecialist.fields.passwordConfirm' | translate }}
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="password-input-wrapper">
+                        <input [type]="showPasswordConfirm ? 'text' : 'password'" formControlName="passwordConfirm"[placeholder]="'registerSpecialist.placeholders.passwordConfirm' | translate">
+                        <button type="button" class="password-toggle" (click)="showPasswordConfirm = !showPasswordConfirm"
+                            [attr.aria-label]="(showPasswordConfirm ? 'registerSpecialist.accessibility.hidePasswordConfirm' : 'registerSpecialist.accessibility.showPasswordConfirm') | translate"
+                            [attr.title]="(showPasswordConfirm ? 'registerSpecialist.accessibility.hidePasswordConfirm' : 'registerSpecialist.accessibility.showPasswordConfirm') | translate"
+                            [attr.aria-pressed]="showPasswordConfirm">
+                            <span class="material-symbols-outlined">
+                                {{ showPasswordConfirm ? 'visibility_off' : 'visibility' }}
+                            </span>
+                        </button>
+                    </div>
+
+                    <small class="error-msg" *ngIf="(f['passwordConfirm'].touched || submitted) && f['passwordConfirm'].invalid">
+                        <span *ngIf="f['passwordConfirm'].errors?.['required']">
+                            {{ 'registerSpecialist.errors.passwordConfirm.required' | translate }}
+                        </span>
+                        <span *ngIf="f['passwordConfirm'].errors?.['minlength'] || f['passwordConfirm'].errors?.['maxlength'] || f['passwordConfirm'].errors?.['range']">
+                            {{ 'registerSpecialist.errors.passwordConfirm.range' | translate }}
+                        </span>
+                    </small>
+
+                    <small class="error-msg" *ngIf="(f['passwordConfirm'].touched || submitted) && registerForm.hasError('passwordMismatch')">
+                        {{ 'registerSpecialist.errors.passwordConfirm.mismatch' | translate }}
                     </small>
                 </div>
 
@@ -183,12 +233,11 @@
                     </small>
                 </div>
 
-                <button type="submit" class="btn-complete" 
-                    [class.is-loading]="isLoading"
-                    [disabled]="registerForm.invalid || fileList.length === 0 || !tieneEspecialidadSeleccionada() || !carnetFile || isLoading">
-                    
-                    <span *ngIf="isLoading" class="spinner"></span>
-                    <span>{{ isLoading ? ('registerSpecialist.actions.processing' | translate) : ('registerSpecialist.actions.complete' | translate) }}</span>
+                <button type="submit" class="btn-complete" [class.is-loading]="isLoading" [disabled]="registerForm.invalid || fileList.length === 0 || !tieneEspecialidadSeleccionada() || !carnetFile || isLoading">
+                    <span class="button-label">
+                        {{ 'registerSpecialist.actions.complete' | translate }}
+                    </span>
+                    <span *ngIf="isLoading" class="loader" aria-hidden="true"></span>
                 </button>
 
                 <p class="footer-note">{{ 'registerSpecialist.footerNote' | translate }}</p>

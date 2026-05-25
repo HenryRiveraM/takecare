@@ -111,6 +111,36 @@
   box-shadow: 0 0 0 3px rgba(245, 163, 163, 0.2);
 }
 
+.input-icon .password-toggle {
+  position: absolute;
+  right: 12px;
+  left: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-icon .password-toggle .material-symbols-outlined {
+  position: static;
+  left: auto;
+  right: auto;
+  transform: none;
+  font-size: 22px;
+}
+
+.input-icon input[type="password"],
+.input-icon input[type="text"] {
+  padding-right: 45px;
+}
+
 .login-options {
   display: flex;
   justify-content: space-between;
