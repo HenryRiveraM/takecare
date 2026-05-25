@@ -99,12 +99,64 @@
 
         <div class="password">
           <label>{{ 'registerPatient.fields.password' | translate }}<span class="required">*</span></label>
-          <input type="password" formControlName="password" [placeholder]="'registerPatient.placeholders.password' | translate">
+          <div class="password-input-wrapper">
+            <input 
+              [type]="showPassword ? 'text' : 'password'" 
+              formControlName="password" 
+              [placeholder]="'registerPatient.placeholders.password' | translate">
+            <button 
+              type="button" 
+              class="password-toggle"
+              (click)="showPassword = !showPassword">
+              <span class="material-symbols-outlined">
+                {{ showPassword ? 'visibility_off' : 'visibility' }}
+              </span>
+            </button>
+          </div>
           <small class="error-msg" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
             <span *ngIf="form.get('password')?.errors?.['required']">{{ 'registerPatient.errors.password.required' | translate }}</span>
             <span *ngIf="form.get('password')?.errors?.['minlength']">{{ 'registerPatient.errors.password.minlength' | translate }}</span>
           </small>
         </div>
+
+        <div class="password">
+        <label>
+          {{ 'registerPatient.fields.passwordConfirm' | translate }}
+          <span class="required">*</span>
+        </label>
+
+        <div class="password-input-wrapper">
+          <input 
+            [type]="showPasswordConfirm ? 'text' : 'password'" 
+            formControlName="passwordConfirm" 
+            [placeholder]="'registerPatient.placeholders.passwordConfirm' | translate">
+
+          <button 
+            type="button" 
+            class="password-toggle"
+            (click)="showPasswordConfirm = !showPasswordConfirm"
+            [attr.aria-label]="(showPasswordConfirm ? 'registerPatient.accessibility.hidePasswordConfirm' : 'registerPatient.accessibility.showPasswordConfirm') | translate"
+            [attr.title]="(showPasswordConfirm ? 'registerPatient.accessibility.hidePasswordConfirm' : 'registerPatient.accessibility.showPasswordConfirm') | translate"
+            [attr.aria-pressed]="showPasswordConfirm">
+            <span class="material-symbols-outlined">
+              {{ showPasswordConfirm ? 'visibility_off' : 'visibility' }}
+            </span>
+          </button>
+        </div>
+
+        <small class="error-msg" *ngIf="form.get('passwordConfirm')?.touched && form.get('passwordConfirm')?.invalid">
+          <span *ngIf="form.get('passwordConfirm')?.errors?.['required']">
+            {{ 'registerPatient.errors.passwordConfirm.required' | translate }}
+          </span>
+          <span *ngIf="form.get('passwordConfirm')?.errors?.['minlength']">
+            {{ 'registerPatient.errors.passwordConfirm.minlength' | translate }}
+          </span>
+        </small>
+
+        <small class="error-msg" *ngIf="form.get('passwordConfirm')?.touched && !passwordsMatch()">
+          {{ 'registerPatient.errors.passwordConfirm.mismatch' | translate }}
+        </small>
+      </div>
 
         <h3 class="section-title">{{ 'registerPatient.sections.documents' | translate }}</h3>
         <p class="section-help">
@@ -149,11 +201,9 @@
 
         <div class="actions">
           <button class="primary" type="submit" [disabled]="form.invalid || loading">
-            <span *ngIf="!loading">{{ 'registerPatient.actions.createAccount' | translate }}</span>
-            <span *ngIf="loading" class="loader"></span>
-          </button>
-          <button class="cancel" type="button" (click)="cancel()" [disabled]="loading">
-            {{ 'registerPatient.actions.cancel' | translate }}
+            <span *ngIf="!loading"> {{ 'registerPatient.actions.createAccount' | translate }}</span>
+            <span *ngIf="loading" class="loader" aria-hidden="true">
+            </span>
           </button>
         </div>
       </div>

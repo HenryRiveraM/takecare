@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, AbstractControl, ValidationErrors } from '@angular/forms';import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ApiService, SpecialistRegisterRequest } from '../../services/api.service';
 import { CloudinaryUploadService } from '../../services/cloudinary-upload.service';
@@ -18,6 +17,9 @@ export class RegisterSpecialistComponent implements OnInit {
   submitted = false;
   isDragging = false;
   isLoading: boolean = false;
+
+  showPassword = false;
+  showPasswordConfirm = false;
 
   fileList: { file: File, size: string }[] = [];
   carnetFile: { file: File, url: string } | null = null;
@@ -80,6 +82,10 @@ export class RegisterSpecialistComponent implements OnInit {
         Validators.required, 
         Validators.minLength(8), 
         Validators.maxLength(50)]],
+      passwordConfirm: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(50)]],
       documento: ['', [
         Validators.required,
         Validators.minLength(6),
@@ -87,10 +93,23 @@ export class RegisterSpecialistComponent implements OnInit {
         Validators.pattern(/^[0-9-A-Za-z\s]+$/)]],
       aceptaTerminos: [false, Validators.requiredTrue],
       aceptaComunicaciones: [false]
+    },{
+      validators: this.passwordsMatchValidator 
     });
   }
 
   get f() { return this.registerForm.controls; }
+
+  passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const passwordConfirm = group.get('passwordConfirm')?.value;
+
+    if (!password || !passwordConfirm) {
+      return null;
+    }
+
+    return password === passwordConfirm ? null : { passwordMismatch: true };
+  }
 
   showToast(type: 'error' | 'success' | 'warning', title: string, message: string): void {
     clearTimeout(this.toastTimer);

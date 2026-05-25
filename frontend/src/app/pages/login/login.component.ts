@@ -16,7 +16,9 @@ export class LoginComponent {
 
   loading = false;
   errorMsg = '';
+  loginMessageType: 'error' | 'pending' | 'rejected' | '' = '';
   loginSuccess = false;
+  showPassword = false;
 
   loginForm: FormGroup;
 
@@ -35,13 +37,13 @@ export class LoginComponent {
   onSubmit(): void {
 
     if (this.loginForm.invalid) {
-      this.errorMsg = this.translate.instant('login.errors.completeFields');
+      this.showLoginMessage('error', 'login.errors.completeFields');
       this.loginForm.markAllAsTouched();
       return;
     }
 
     this.loading = true;
-    this.errorMsg = '';
+    this.clearLoginMessage();
     this.loginSuccess = false;
 
     const credentials = this.loginForm.getRawValue();
@@ -55,25 +57,30 @@ export class LoginComponent {
 
           console.log('LOGIN RESPONSE:', response);
 
-          if (response.data.accountVerified === 2) {
-            this.errorMsg = this.translate.instant('login.errors.pendingApproval');
+          const accountVerified = Number(response.data.accountVerified);
+
+          // accountVerified: 1 = aceptado, 2 = pendiente, 0 = rechazado
+          if (accountVerified === 2) {
+            this.showLoginMessage('pending', 'login.errors.pendingApproval');
             return;
           }
 
-          if (response.data.accountVerified === 0) {
-            this.errorMsg = this.translate.instant('login.errors.rejectedAccount');
+          if (accountVerified === 0) {
+            this.showLoginMessage('rejected', 'login.errors.rejectedAccount');
             return;
           }
 
-          localStorage.setItem('user', JSON.stringify(response.data));
-          this.loginSuccess = true;
+          if (accountVerified === 1) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+            this.loginSuccess = true;
 
-          setTimeout(() => {
-            this.redirectByRole(response.data!.role);
-          }, 800);
+            setTimeout(() => {
+              this.redirectByRole(response.data!.role);
+            }, 800);
+          }
 
         } else {
-          this.errorMsg = response.error ?? this.translate.instant('login.errors.unknown');
+          this.showLoginMessage('error', 'login.errors.unknown');
         }
       },
 
@@ -81,7 +88,19 @@ export class LoginComponent {
         this.loading = false;
 
         if (err.status === 401) {
-          this.errorMsg = this.translate.instant('login.errors.invalidCredentials');
+          const errorMessage = String(err.error?.error || err.error?.message || '').toLowerCase();
+
+          if (errorMessage.includes('pendiente') || errorMessage.includes('pending')) {
+            this.errorMsg = this.translate.instant('login.errors.pendingApproval');
+          } else if (
+            errorMessage.includes('rechazada') ||
+            errorMessage.includes('rechazado') ||
+            errorMessage.includes('rejected')
+          ) {
+            this.errorMsg = this.translate.instant('login.errors.rejectedAccount');
+          } else {
+            this.errorMsg = this.translate.instant('login.errors.invalidCredentials');
+          }
         } else {
           this.errorMsg = this.translate.instant('login.errors.connection');
         }
@@ -89,6 +108,19 @@ export class LoginComponent {
         console.error('Login error:', err);
       }
     });
+  }
+
+  private showLoginMessage(
+    type: 'error' | 'pending' | 'rejected',
+    translationKey: string
+  ): void {
+    this.loginMessageType = type;
+    this.errorMsg = this.translate.instant(translationKey);
+  }
+
+  private clearLoginMessage(): void {
+    this.loginMessageType = '';
+    this.errorMsg = '';
   }
 
   redirectByRole(role: number): void {

@@ -13,7 +13,7 @@ export interface LoginResponse {
   names: string;
   email: string;
   role: number;
-  accountVerified?: number;
+  accountVerified: number; // 1: aceptado, 2: pendiente, 3: rechazado
 }
 
 export interface ApiResponse<T> {

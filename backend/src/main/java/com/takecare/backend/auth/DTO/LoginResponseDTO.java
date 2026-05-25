@@ -13,4 +13,5 @@ public class LoginResponseDTO {
     private String names;
     private String email;
     private Byte role;
+    private Byte accountVerified;
 }

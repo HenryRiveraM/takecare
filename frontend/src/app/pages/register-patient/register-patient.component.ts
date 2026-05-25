@@ -18,6 +18,8 @@ export class RegisterPatientComponent {
   form: FormGroup;
   submitted = false;
   loading = false;
+  showPassword = false;
+  showPasswordConfirm = false;
 
   documentoFile: File | null = null;
   selfieFile: File | null = null;
@@ -73,6 +75,11 @@ export class RegisterPatientComponent {
       birth_date: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(50)
+      ]],
+      passwordConfirm: ['', [
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(50)
@@ -206,11 +213,26 @@ export class RegisterPatientComponent {
     };
   }
 
+  passwordsMatch(): boolean {
+    const password = this.form.get('password')?.value;
+    const passwordConfirm = this.form.get('passwordConfirm')?.value;
+    return password === passwordConfirm && password?.length > 0;
+  }
+
    async onSubmit() {
     this.submitted = true;
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
+    }
+
+    if (!this.passwordsMatch()) {
+      this.showToast(
+        'error',
+        this.translate.instant('registerPatient.toast.passwordMismatchTitle') || 'Contraseñas no coinciden',
+        this.translate.instant('registerPatient.toast.passwordMismatchMessage') || 'Las contraseñas deben ser iguales'
+      );
       return;
     }
 
