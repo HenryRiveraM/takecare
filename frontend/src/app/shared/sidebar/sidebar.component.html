@@ -1,5 +1,5 @@
 <aside class="sidebar" [class.open]="sidebarService.isOpen()">
-  <button type="button" class="sidebar-close" (click)="closeSidebar()" aria-label="Cerrar menú">
+  <button type="button" class="sidebar-close" (click)="closeSidebar()" [attr.aria-label]="'sidebar.close' | translate">
     <span class="material-symbols-outlined">close</span>
   </button>
 
@@ -87,6 +87,15 @@
         [class.active]="isAdminTab('validations')"
         (click)="closeSidebarOnMobile()">
         <i class="fas fa-id-card"></i> {{ 'admin.tabs.validations' | translate }}
+      </a>
+
+      <a
+        class="menu-item"
+        routerLink="/admin"
+        [queryParams]="{ tab: 'appointments' }"
+        [class.active]="isAdminTab('appointments')"
+        (click)="closeSidebarOnMobile()">
+        <i class="fas fa-calendar-check"></i> {{ 'admin.tabs.appointments' | translate }}
       </a>
     </ng-container>
 

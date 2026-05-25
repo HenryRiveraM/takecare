@@ -130,7 +130,7 @@
                     <div class="checkbox-grid">
                         <label class="check-item" *ngFor="let opt of especialidadesOpciones">
                             <input type="checkbox" [(ngModel)]="opt.seleccionado" [ngModelOptions]="{standalone: true}">
-                            {{ opt.nombre }}
+                            {{ opt.translationKey | translate }}
                         </label>
                     </div>
                     <small class="error-msg" *ngIf="submitted && !tieneEspecialidadSeleccionada()">

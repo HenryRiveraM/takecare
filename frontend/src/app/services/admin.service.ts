@@ -40,6 +40,23 @@ export interface PendingValidationUser extends User {
   selfieVerification?: string;
 }
 
+export interface AdminAppointmentHistory {
+  id: number;
+  patientId: number;
+  specialistId: number;
+  scheduleId: number;
+  patientName: string;
+  specialistName: string;
+  patientEmail?: string;
+  specialistEmail?: string;
+  status: number;
+  typeOfSession: number;
+  createdDate: string;
+  scheduleDate?: string;
+  startTime?: string;
+  endTime?: string;
+}
+
 interface SpecialistProfileResponse {
   id: number;
   names: string;
@@ -185,6 +202,16 @@ private normalizeSpecialist(raw: any): Specialist {
         return [...pendingPatients, ...pendingSpecialists];
       })
     );
+  }
+
+  /**
+   * HU19: expected backend contract is GET /api/v1/admin/sessions.
+   * The endpoint must return all sessions visible to an administrator.
+   */
+  getAppointmentHistory(): Observable<AdminAppointmentHistory[]> {
+    return this.http.get<AdminAppointmentHistory[]>(`${this.apiUrl}/api/v1/admin/sessions`, {
+      headers: this.getHeaders()
+    });
   }
 
   updateUserStatus(id: number, status: 0 | 1): Observable<any> {

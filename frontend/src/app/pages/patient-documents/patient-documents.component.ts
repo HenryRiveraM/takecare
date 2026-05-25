@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { SupportMaterialItem, SupportMaterialListResponse, SupportMaterialService } from '../../services/support-material.service';
@@ -27,7 +27,8 @@ export class PatientDocumentsComponent implements OnInit {
 
   constructor(
     public sidebarService: SidebarService,
-    private supportMaterialService: SupportMaterialService
+    private supportMaterialService: SupportMaterialService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +49,7 @@ export class PatientDocumentsComponent implements OnInit {
           this.loading = false;
         },
         error: () => {
-          this.errorMsg = 'No se pudieron cargar los materiales disponibles en este momento.';
+          this.errorMsg = this.translate.instant('documents.states.loadError');
           this.filteredMaterials = [];
           this.totalDocuments = 0;
           this.loading = false;
