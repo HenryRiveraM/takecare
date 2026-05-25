@@ -83,7 +83,8 @@
     "tabs": {
       "patients": "Patients",
       "specialists": "Specialists",
-      "validations": "Pending validations"
+      "validations": "Pending validations",
+      "appointments": "Appointment history"
     },
     "searchPlaceholder": "Search by name, surname or email",
     "sections": {
@@ -113,7 +114,8 @@
     "loading": {
       "patients": "Loading patients...",
       "specialists": "Loading specialists...",
-      "validations": "Loading validations..."
+      "validations": "Loading validations...",
+      "appointments": "Loading appointment history..."
     },
     "empty": {
       "patients": "There are no registered patients.",
@@ -132,9 +134,48 @@
     "errors": {
       "loadPatients": "Error loading patients",
       "loadSpecialists": "Could not load specialists",
+      "loadAppointments": "Could not load appointment history",
       "processValidation": "The operation could not be completed on the server",
       "suspendUser": "Could not suspend user",
       "couldNotSuspend": "Could not suspend user"
+    },
+    "appointments": {
+      "title": "Appointment history",
+      "subtitle": "Monitor requested and completed appointments between patients and specialists.",
+      "searchPlaceholder": "Search by user, email or appointment number",
+      "results": "appointments",
+      "filters": {
+        "status": "Status",
+        "allStatuses": "All statuses",
+        "from": "From",
+        "to": "To",
+        "clear": "Clear filters"
+      },
+      "table": {
+        "id": "Appointment",
+        "dateTime": "Date and time",
+        "patient": "Patient",
+        "specialist": "Specialist",
+        "modality": "Modality",
+        "status": "Status"
+      },
+      "status": {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "finished": "Finished",
+        "cancelled": "Cancelled",
+        "unknown": "Unknown"
+      },
+      "sessionTypes": {
+        "virtual": "Virtual",
+        "presential": "In person",
+        "unknown": "Unspecified"
+      },
+      "empty": {
+        "title": "No appointments to show",
+        "description": "No appointments match the selected filters."
+      }
     }
   },
 
@@ -1017,4 +1058,3 @@
     }
   }
 }
-

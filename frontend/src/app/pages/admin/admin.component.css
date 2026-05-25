@@ -1,4 +1,12 @@
+.admin-layout {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(180deg, #fff6f6, #ffffff);
+}
+
 .admin-page {
+  flex: 1;
+  min-width: 0;
   width: 100%;
   min-height: 100vh;
   padding: 40px 60px;
@@ -273,6 +281,136 @@
   background: #fbe2e2;
   color: #b54747;
   border-color: #df8f8f;
+}
+
+/* =========================
+   HISTORIAL DE CITAS
+========================= */
+.section-description {
+  margin: 6px 0 0;
+  color: #6b7280;
+}
+
+.appointment-filters {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 18px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  background: #fff8f8;
+  border: 1px solid #f2e6e6;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+  min-width: 170px;
+}
+
+.filter-field span {
+  color: #66736f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.filter-field select,
+.filter-field input {
+  min-height: 46px;
+  padding: 0 13px;
+  border: 1px solid #dfd1d1;
+  border-radius: 11px;
+  color: #374151;
+  background: #fff;
+  font: inherit;
+}
+
+.clear-filters {
+  min-height: 46px;
+  padding: 0 17px;
+  border: 1px solid #d5dfdc;
+  border-radius: 11px;
+  background: #fff;
+  color: #52756b;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.history-table table {
+  min-width: 880px;
+}
+
+.history-table strong,
+.history-table small {
+  display: block;
+}
+
+.history-table small {
+  margin-top: 4px;
+  color: #6b7280;
+}
+
+.col-session { width: 9%; }
+.col-date-time { width: 18%; }
+.col-person { width: 23%; }
+.col-mode { width: 13%; }
+.col-appointment-status { width: 14%; text-align: center; }
+
+.session-id {
+  color: #557d72;
+  font-weight: 800;
+}
+
+.appointment-status {
+  min-width: 108px;
+}
+
+.status-pending {
+  background: #fff2d7;
+  color: #996912;
+  border-color: #efcf87;
+}
+
+.status-accepted {
+  background: #dff3e8;
+  color: #2f6b52;
+  border-color: #7fbea0;
+}
+
+.status-rejected,
+.status-cancelled {
+  background: #fbe2e2;
+  color: #b54747;
+  border-color: #df8f8f;
+}
+
+.status-finished {
+  background: #e6edfa;
+  color: #3e5f99;
+  border-color: #99b3df;
+}
+
+.empty-appointments {
+  padding: 52px 15px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.empty-appointments .material-symbols-outlined {
+  font-size: 42px;
+  color: #8ca39c;
+}
+
+.empty-appointments h3 {
+  margin: 10px 0 7px;
+  color: #1f2937;
+}
+
+.empty-appointments p {
+  margin: 0;
 }
 
 /* ===== botones ===== */
@@ -704,6 +842,10 @@
 
   .search-input {
     max-width: 100%;
+  }
+
+  .appointment-filters {
+    align-items: stretch;
   }
 }
 

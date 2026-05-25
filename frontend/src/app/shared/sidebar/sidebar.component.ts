@@ -66,7 +66,7 @@ export class SidebarComponent implements OnInit {
     this.sidebarService.close();
   }
 
-  isAdminTab(tab: 'patients' | 'specialists' | 'validations'): boolean {
+  isAdminTab(tab: 'patients' | 'specialists' | 'validations' | 'appointments'): boolean {
     if (this.role !== 'admin') {
       return false;
     }
@@ -74,7 +74,9 @@ export class SidebarComponent implements OnInit {
     const url = this.router.url;
 
     if (tab === 'patients') {
-      return !url.includes('tab=specialists') && !url.includes('tab=validations');
+      return !url.includes('tab=specialists') &&
+        !url.includes('tab=validations') &&
+        !url.includes('tab=appointments');
     }
 
     return url.includes(`tab=${tab}`);

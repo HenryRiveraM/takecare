@@ -84,7 +84,8 @@
     "tabs": {
       "patients": "Pacientes",
       "specialists": "Especialistas",
-      "validations": "Validaciones Pendientes"
+      "validations": "Validaciones Pendientes",
+      "appointments": "Historial de citas"
     },
     "searchPlaceholder": "Buscar por nombre, apellido o correo",
     "sections": {
@@ -114,7 +115,8 @@
     "loading": {
       "patients": "Cargando pacientes...",
       "specialists": "Cargando especialistas...",
-      "validations": "Cargando validaciones..."
+      "validations": "Cargando validaciones...",
+      "appointments": "Cargando historial de citas..."
     },
     "empty": {
       "patients": "No hay pacientes registrados.",
@@ -133,9 +135,48 @@
     "errors": {
       "loadPatients": "Error cargando pacientes",
       "loadSpecialists": "No se pudieron cargar los especialistas",
+      "loadAppointments": "No se pudo cargar el historial de citas",
       "processValidation": "No se pudo completar la operación en el servidor",
       "suspendUser": "No se pudo suspender el usuario",
       "couldNotSuspend": "No se pudo suspender el usuario"
+    },
+    "appointments": {
+      "title": "Historial de citas",
+      "subtitle": "Supervisa las citas realizadas y solicitadas entre pacientes y especialistas.",
+      "searchPlaceholder": "Buscar por usuario, correo o número de cita",
+      "results": "citas",
+      "filters": {
+        "status": "Estado",
+        "allStatuses": "Todos los estados",
+        "from": "Desde",
+        "to": "Hasta",
+        "clear": "Limpiar filtros"
+      },
+      "table": {
+        "id": "Cita",
+        "dateTime": "Fecha y hora",
+        "patient": "Paciente",
+        "specialist": "Especialista",
+        "modality": "Modalidad",
+        "status": "Estado"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "accepted": "Aceptada",
+        "rejected": "Rechazada",
+        "finished": "Finalizada",
+        "cancelled": "Cancelada",
+        "unknown": "Desconocido"
+      },
+      "sessionTypes": {
+        "virtual": "Virtual",
+        "presential": "Presencial",
+        "unknown": "Sin especificar"
+      },
+      "empty": {
+        "title": "No hay citas para mostrar",
+        "description": "No se encontraron citas que coincidan con los filtros seleccionados."
+      }
     }
   },
 
@@ -1019,5 +1060,4 @@
     }
   }
 }
-
 
