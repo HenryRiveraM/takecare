@@ -28,29 +28,30 @@ public class SpecialistSearchService {
         this.scheduleRepository = scheduleRepository;
     }
 
-    public List<SpecialistFilterResponseDTO> searchSpecialists(String category, String availability) {
-        logger.info("Buscando especialistas | category={} | availability={}", category, availability);
+    public List<SpecialistFilterResponseDTO> searchSpecialists(String search, String name, String category, String city, String availability) {
+        logger.info("Buscando especialistas | search={} | name={} | category={} | city={} | availability={}", search, name, category, city, availability);
 
         Byte dayOfWeek = parseDay(availability);
 
+        String normalizedSearch = normalizeNullable(search);
+        String normalizedName = normalizeNullable(name);
+        String normalizedCategory = normalizeNullable(category);
+        String normalizedCity = normalizeNullable(city);
+
         List<Specialist> specialists;
 
-        boolean hasCategory = category != null && !category.isBlank();
-        boolean hasDay = dayOfWeek != null;
-
-        if (hasCategory && hasDay) {
-            specialists = specialistRepository.findBySpecialityNameAndAvailability(category, dayOfWeek);
-            logger.info("Filtro combinado | resultados={}", specialists.size());
-        } else if (hasCategory) {
-            specialists = specialistRepository.findBySpecialityName(category);
-            logger.info("Filtro por categoría | resultados={}", specialists.size());
-        } else if (hasDay) {
-            specialists = specialistRepository.findByAvailability(dayOfWeek);
-            logger.info("Filtro por disponibilidad | resultados={}", specialists.size());
+        if (normalizedSearch != null && normalizedName == null && normalizedCategory == null && normalizedCity == null) {
+            specialists = specialistRepository.findBySearchTerm(normalizedSearch, dayOfWeek);
         } else {
-            specialists = specialistRepository.findAll();
-            logger.info("Sin filtros, devolviendo todos | resultados={}", specialists.size());
+            specialists = specialistRepository.findByFilters(
+                    normalizedName,
+                    normalizedCategory,
+                    normalizedCity,
+                    dayOfWeek
+            );
         }
+
+        logger.info("Filtro aplicado | resultados={}", specialists.size());
 
         return specialists.stream()
                 .map(s -> toDTO(s, dayOfWeek))
@@ -117,5 +118,12 @@ public class SpecialistSearchService {
                 .specialities(specialityNames)
                 .availableSchedules(scheduleDTOs)
                 .build();
+    }
+    private String normalizeNullable(String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmed = value.trim();
+        return trimmed.isBlank() ? null : trimmed;
     }
 }
