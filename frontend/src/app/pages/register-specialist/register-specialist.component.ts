@@ -72,8 +72,10 @@ export class RegisterSpecialistComponent implements OnInit {
         Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)]],
       fechaNacimiento: ['', Validators.required],
       email: ['', [
-        Validators.required, 
-        Validators.email]],
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+      ]],
       password: ['', [
         Validators.required, 
         Validators.minLength(8), 
