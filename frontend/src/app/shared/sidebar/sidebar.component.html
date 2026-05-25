@@ -88,6 +88,15 @@
         (click)="closeSidebarOnMobile()">
         <i class="fas fa-id-card"></i> {{ 'admin.tabs.validations' | translate }}
       </a>
+
+      <a
+        class="menu-item"
+        routerLink="/admin"
+        [queryParams]="{ tab: 'appointments' }"
+        [class.active]="isAdminTab('appointments')"
+        (click)="closeSidebarOnMobile()">
+        <i class="fas fa-calendar-check"></i> {{ 'admin.tabs.appointments' | translate }}
+      </a>
     </ng-container>
 
   </nav>

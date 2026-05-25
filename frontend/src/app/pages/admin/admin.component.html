@@ -1,4 +1,7 @@
-<div class="admin-page">
+<div class="admin-layout">
+  <app-sidebar></app-sidebar>
+
+  <main class="admin-page">
 
   <section class="admin-hero">
     <div class="admin-hero-text">
@@ -31,6 +34,13 @@
           (click)="setTab('validations')">
           {{ 'admin.tabs.validations' | translate }}
         </button>
+
+        <button
+          class="tab-button"
+          [class.active]="activeTab === 'appointments'"
+          (click)="setTab('appointments')">
+          {{ 'admin.tabs.appointments' | translate }}
+        </button>
       </div>
 
       <div class="search-box">
@@ -38,7 +48,7 @@
           type="text"
           [(ngModel)]="searchTerm"
           (input)="onSearch()"
-          [placeholder]="'admin.searchPlaceholder' | translate"
+          [placeholder]="(activeTab === 'appointments' ? 'admin.appointments.searchPlaceholder' : 'admin.searchPlaceholder') | translate"
           class="search-input"
         />
       </div>
@@ -256,10 +266,102 @@
       </ng-template>
     </div>
 
+    <!-- TAB: HISTORIAL DE CITAS -->
+    <div class="appointments-history" *ngIf="activeTab === 'appointments'">
+      <div class="section-header">
+        <div>
+          <h2>{{ 'admin.appointments.title' | translate }}</h2>
+          <p class="section-description">{{ 'admin.appointments.subtitle' | translate }}</p>
+        </div>
+        <span class="count-badge">
+          {{ filteredAppointments.length }} {{ 'admin.appointments.results' | translate }}
+        </span>
+      </div>
+
+      <div class="appointment-filters">
+        <label class="filter-field">
+          <span>{{ 'admin.appointments.filters.status' | translate }}</span>
+          <select [(ngModel)]="appointmentStatus" (change)="applyAppointmentFilters()">
+            <option value="all">{{ 'admin.appointments.filters.allStatuses' | translate }}</option>
+            <option [ngValue]="1">{{ 'admin.appointments.status.pending' | translate }}</option>
+            <option [ngValue]="2">{{ 'admin.appointments.status.accepted' | translate }}</option>
+            <option [ngValue]="3">{{ 'admin.appointments.status.rejected' | translate }}</option>
+            <option [ngValue]="4">{{ 'admin.appointments.status.finished' | translate }}</option>
+            <option [ngValue]="5">{{ 'admin.appointments.status.cancelled' | translate }}</option>
+          </select>
+        </label>
+
+        <label class="filter-field">
+          <span>{{ 'admin.appointments.filters.from' | translate }}</span>
+          <input type="date" [(ngModel)]="appointmentDateFrom" (change)="applyAppointmentFilters()">
+        </label>
+
+        <label class="filter-field">
+          <span>{{ 'admin.appointments.filters.to' | translate }}</span>
+          <input type="date" [(ngModel)]="appointmentDateTo" (change)="applyAppointmentFilters()">
+        </label>
+
+        <button type="button" class="clear-filters" (click)="clearAppointmentFilters()">
+          {{ 'admin.appointments.filters.clear' | translate }}
+        </button>
+      </div>
+
+      <div *ngIf="loadingAppointments" class="loading-message">
+        {{ 'admin.loading.appointments' | translate }}
+      </div>
+
+      <div class="table-card history-table" *ngIf="!loadingAppointments && filteredAppointments.length > 0; else noAppointments">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-session">{{ 'admin.appointments.table.id' | translate }}</th>
+              <th class="col-date-time">{{ 'admin.appointments.table.dateTime' | translate }}</th>
+              <th class="col-person">{{ 'admin.appointments.table.patient' | translate }}</th>
+              <th class="col-person">{{ 'admin.appointments.table.specialist' | translate }}</th>
+              <th class="col-mode">{{ 'admin.appointments.table.modality' | translate }}</th>
+              <th class="col-appointment-status">{{ 'admin.appointments.table.status' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let appointment of filteredAppointments">
+              <td class="session-id">#{{ appointment.id }}</td>
+              <td>
+                <strong>{{ getAppointmentDateValue(appointment) | localizedDate }}</strong>
+                <small>{{ getAppointmentTime(appointment) }}</small>
+              </td>
+              <td>
+                <strong>{{ appointment.patientName }}</strong>
+                <small *ngIf="appointment.patientEmail">{{ appointment.patientEmail }}</small>
+              </td>
+              <td>
+                <strong>{{ appointment.specialistName }}</strong>
+                <small *ngIf="appointment.specialistEmail">{{ appointment.specialistEmail }}</small>
+              </td>
+              <td>{{ getSessionTypeLabel(appointment.typeOfSession) | translate }}</td>
+              <td class="col-appointment-status">
+                <span class="status appointment-status" [ngClass]="getAppointmentStatusClass(appointment.status)">
+                  {{ getAppointmentStatusLabel(appointment.status) | translate }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #noAppointments>
+        <div class="empty-appointments" *ngIf="!loadingAppointments">
+          <span class="material-symbols-outlined">event_note</span>
+          <h3>{{ 'admin.appointments.empty.title' | translate }}</h3>
+          <p>{{ 'admin.appointments.empty.description' | translate }}</p>
+        </div>
+      </ng-template>
+    </div>
+
     <!-- TOAST -->
     <div class="toast-notification" [class.error]="notification.type === 'error'" *ngIf="notification">
       <div class="toast-icon">✓</div>
       <div class="toast-text">{{ notification.message }}</div>
     </div>
   </section>
+  </main>
 </div>
