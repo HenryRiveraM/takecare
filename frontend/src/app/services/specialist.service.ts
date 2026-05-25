@@ -75,8 +75,12 @@ export class SpecialistService {
     return this.http.put(`${this.baseUrl}/api/v1/specialists/${id}/profile`, data);
   }
 
-  searchSpecialists(category?: string, availability?: string): Observable<SpecialistDirectoryItem[]> {
+  searchSpecialists(search?: string, category?: string, availability?: string): Observable<SpecialistDirectoryItem[]> {
     let params = new HttpParams();
+
+    if (search && search.trim() !== '') {
+      params = params.set('search', search.trim());
+    }
     
     if (category && category.trim() !== '') {
       params = params.set('category', category);

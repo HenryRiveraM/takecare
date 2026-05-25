@@ -53,10 +53,13 @@ public class SpecialistController {
 
     @GetMapping("/search")
     public ResponseEntity<List<SpecialistFilterResponseDTO>> searchSpecialists(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,
+            @RequestParam(required = false) String city,
             @RequestParam(required = false) String availability) {
-        logger.info("GET /api/v1/specialists/search | category={} | availability={}", category, availability);
-        List<SpecialistFilterResponseDTO> result = specialistSearchService.searchSpecialists(category, availability);
+        logger.info("GET /api/v1/specialists/search | search={} | name={} | category={} | city={} | availability={}", search, name, category, city, availability);
+        List<SpecialistFilterResponseDTO> result = specialistSearchService.searchSpecialists(search, name, category, city, availability);
         logger.info("GET /api/v1/specialists/search | total={}", result.size());
         return ResponseEntity.ok(result);
     }
