@@ -239,6 +239,24 @@
   z-index: 1500;
 }
 
+.input-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+}
+
+.field-errors {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.field-errors span {
+  font-size: 0.78rem;
+  color: #ef4444;
+  font-weight: 600;
+}
+
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   .profile-page {

@@ -34,7 +34,8 @@ export class SidebarComponent implements OnInit {
   }
 
   detectRole(): void {
-    const segments = this.router.url.split('/').filter(Boolean);
+    const urlWithoutParams = this.router.url.split('?')[0];
+    const segments = urlWithoutParams.split('/').filter(Boolean);
     const firstSegment = segments[0];
 
     if (firstSegment === 'patient') {

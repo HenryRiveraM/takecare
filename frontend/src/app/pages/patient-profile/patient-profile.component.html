@@ -40,6 +40,13 @@
                 [readonly]="!isEditing"
                 [placeholder]="'patientProfile.placeholders.names' | translate">
             </div>
+            <div class="field-errors" *ngIf="profileForm.get('names')?.invalid && profileForm.get('names')?.touched && isEditing">
+              <span *ngIf="profileForm.get('names')?.errors?.['required']">{{ 'patientProfile.errors.required' | translate }}</span>
+              <span *ngIf="profileForm.get('names')?.errors?.['hasNumbers']">{{ 'patientProfile.errors.hasNumbers' | translate }}</span>
+              <span *ngIf="profileForm.get('names')?.errors?.['doubleSpaces']">{{ 'patientProfile.errors.doubleSpaces' | translate }}</span>
+              <span *ngIf="profileForm.get('names')?.errors?.['invalidChars']">{{ 'patientProfile.errors.invalidChars' | translate }}</span>
+              <span *ngIf="profileForm.get('names')?.errors?.['leadingTrailingSpaces']">{{ 'patientProfile.errors.leadingTrailingSpaces' | translate }}</span>
+            </div>
           </div>
 
           <div class="field-group">
@@ -51,6 +58,13 @@
                 [readonly]="!isEditing"
                 [placeholder]="'patientProfile.placeholders.firstLastname' | translate">
             </div>
+            <div class="field-errors" *ngIf="profileForm.get('firstLastname')?.invalid && profileForm.get('firstLastname')?.touched && isEditing">
+              <span *ngIf="profileForm.get('firstLastname')?.errors?.['required']">{{ 'patientProfile.errors.required' | translate }}</span>
+              <span *ngIf="profileForm.get('firstLastname')?.errors?.['hasNumbers']">{{ 'patientProfile.errors.hasNumbers' | translate }}</span>
+              <span *ngIf="profileForm.get('firstLastname')?.errors?.['doubleSpaces']">{{ 'patientProfile.errors.doubleSpaces' | translate }}</span>
+              <span *ngIf="profileForm.get('firstLastname')?.errors?.['invalidChars']">{{ 'patientProfile.errors.invalidChars' | translate }}</span>
+              <span *ngIf="profileForm.get('firstLastname')?.errors?.['leadingTrailingSpaces']">{{ 'patientProfile.errors.leadingTrailingSpaces' | translate }}</span>
+            </div>
           </div>
 
           <div class="field-group">
@@ -61,6 +75,12 @@
                 formControlName="secondLastname"
                 [readonly]="!isEditing"
                 [placeholder]="'patientProfile.placeholders.secondLastname' | translate">
+            </div>
+            <div class="field-errors" *ngIf="profileForm.get('secondLastname')?.invalid && profileForm.get('secondLastname')?.touched && isEditing">
+              <span *ngIf="profileForm.get('secondLastname')?.errors?.['hasNumbers']">{{ 'patientProfile.errors.hasNumbers' | translate }}</span>
+              <span *ngIf="profileForm.get('secondLastname')?.errors?.['doubleSpaces']">{{ 'patientProfile.errors.doubleSpaces' | translate }}</span>
+              <span *ngIf="profileForm.get('secondLastname')?.errors?.['invalidChars']">{{ 'patientProfile.errors.invalidChars' | translate }}</span>
+              <span *ngIf="profileForm.get('secondLastname')?.errors?.['leadingTrailingSpaces']">{{ 'patientProfile.errors.leadingTrailingSpaces' | translate }}</span>
             </div>
           </div>
 

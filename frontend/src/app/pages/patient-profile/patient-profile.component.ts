@@ -7,6 +7,7 @@ import { PatientService, PatientProfile } from '../../services/patient.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-patient-profile',
@@ -40,9 +41,9 @@ export class PatientProfileComponent implements OnInit {
 
   initForm(): void {
     this.profileForm = this.fb.group({
-      names: ['', Validators.required],
-      firstLastname: ['', Validators.required],
-      secondLastname: [''],
+      names: ['', [Validators.required, nameValidator() ]],
+      firstLastname: ['', [Validators.required, nameValidator()]],
+      secondLastname: ['', [nameValidator()]],
       ciNumber: [{ value: '', disabled: true }],
       email: [{ value: '', disabled: true }],
       clinicalHistory: ['']
@@ -79,6 +80,7 @@ export class PatientProfileComponent implements OnInit {
     });
   }
 
+
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
     if (!this.isEditing && this.userDataBackup) {
@@ -90,6 +92,10 @@ export class PatientProfileComponent implements OnInit {
     if (this.profileForm.valid) {
       this.isLoading = true;
       const formData = this.profileForm.getRawValue();
+      
+      formData.names = formData.names.trim();
+      formData.firstLastname = formData.firstLastname.trim();
+      formData.secondLastname = formData.secondLastname?.trim() || null;
       
       this.patientService.updateProfile(formData).subscribe({
         next: (updatedProfile: any) => {
@@ -121,4 +127,30 @@ export class PatientProfileComponent implements OnInit {
       console.log('Archivo seleccionado:', file.name);
     }
   }
+}
+
+export function nameValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value as string;
+
+    if (!value) return null; 
+
+    if (/\d/.test(value)) {
+      return { hasNumbers: true };
+    }
+
+    if (/\s{2,}/.test(value)) {
+      return { doubleSpaces: true };
+    }
+
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value)) {
+      return { invalidChars: true };
+    }
+
+    if (value.startsWith(' ') || value.endsWith(' ')) {
+      return { leadingTrailingSpaces: true };
+    }
+
+    return null;
+  };
 }
