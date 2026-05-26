@@ -3,8 +3,10 @@ package com.takecare.backend.session.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.slf4j.Logger;
@@ -17,6 +19,8 @@ import com.takecare.backend.session.dto.AdminSessionHistoryItemDTO;
 import com.takecare.backend.session.dto.SessionStatusResponseDTO;
 import com.takecare.backend.session.dto.CreateSessionRequestDTO;
 import com.takecare.backend.session.dto.SessionResponseDTO;
+import com.takecare.backend.session.dto.SpecialistPatientDTO;
+import com.takecare.backend.session.dto.SpecialistPatientsResponseDTO;
 import com.takecare.backend.session.model.Session;
 import com.takecare.backend.session.repository.SessionRepository;
 import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
@@ -124,6 +128,20 @@ public class SessionService {
                 .stream()
                 .map(this::toResponseDto)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public SpecialistPatientsResponseDTO listPatientsBySpecialist(Integer specialistId) {
+        LocalDateTime now = LocalDateTime.now();
+        Map<Integer, SpecialistPatientDTO> patientsById = new LinkedHashMap<>();
+
+        sessionRepository.findBySpecialistIdOrderByCreatedDateDesc(specialistId)
+                .forEach(session -> addPatientSession(patientsById, session, now));
+
+        SpecialistPatientsResponseDTO response = new SpecialistPatientsResponseDTO();
+        response.setPatients(List.copyOf(patientsById.values()));
+        response.setTotalPatients(response.getPatients().size());
+        return response;
     }
 
     @Transactional(readOnly = true)
@@ -355,6 +373,48 @@ public class SessionService {
         dto.setDescription(session.getDescription());
 
         return dto;
+    }
+
+    private void addPatientSession(
+            Map<Integer, SpecialistPatientDTO> patientsById,
+            Session session,
+            LocalDateTime now
+    ) {
+        Patient patient = session.getPatient();
+        if (patient == null || patient.getId() == null) {
+            return;
+        }
+
+        SpecialistPatientDTO dto = patientsById.computeIfAbsent(patient.getId(), patientId -> {
+            SpecialistPatientDTO newPatient = new SpecialistPatientDTO();
+            newPatient.setPatientId(patientId);
+            newPatient.setFullName(buildFullName(
+                    patient.getNames(),
+                    patient.getFirstLastname(),
+                    patient.getSecondLastname()
+            ));
+            newPatient.setEmail(patient.getEmail());
+            return newPatient;
+        });
+
+        SpecialistSchedule schedule = session.getSchedule();
+        if (schedule == null || schedule.getScheduleDate() == null || schedule.getStartTime() == null) {
+            return;
+        }
+
+        LocalDate sessionDate = schedule.getScheduleDate();
+        LocalDateTime sessionStart = LocalDateTime.of(sessionDate, schedule.getStartTime());
+
+        if (!sessionStart.isAfter(now)) {
+            if (dto.getLastSessionDate() == null || sessionDate.isAfter(dto.getLastSessionDate())) {
+                dto.setLastSessionDate(sessionDate);
+            }
+            return;
+        }
+
+        if (dto.getNextSessionDate() == null || sessionDate.isBefore(dto.getNextSessionDate())) {
+            dto.setNextSessionDate(sessionDate);
+        }
     }
 
     private AdminSessionHistoryItemDTO toAdminHistoryDto(Session session) {

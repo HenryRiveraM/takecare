@@ -42,6 +42,19 @@ export interface SpecialistLocationResponse {
   officeUbi: string;
 }
 
+export interface SpecialistPatient {
+  patientId: number;
+  fullName: string;
+  email: string;
+  lastSessionDate: string | null;
+  nextSessionDate: string | null;
+}
+
+export interface SpecialistPatientsResponse {
+  totalPatients: number;
+  patients: SpecialistPatient[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -68,6 +81,10 @@ export class SpecialistService {
   getProfile(id: number): Observable<any> {
     console.log(`Obteniendo perfil de especialista: ${this.baseUrl}/api/v1/specialists/${id}/profile`);
     return this.http.get(`${this.baseUrl}/api/v1/specialists/${id}/profile`);
+  }
+
+  getPatients(id: number): Observable<SpecialistPatientsResponse> {
+    return this.http.get<SpecialistPatientsResponse>(`${this.baseUrl}/api/v1/specialists/${id}/patients`);
   }
   
   updateProfile(id: number, data: any): Observable<any> {

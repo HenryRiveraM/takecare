@@ -900,6 +900,23 @@
     }
   },
 
+  "specialistPatients": {
+    "title": "Mis pacientes",
+    "subtitle": "Pacientes asociados a tus citas.",
+    "counter": "Pacientes",
+    "searchPlaceholder": "Buscar por nombre o correo...",
+    "loading": "Cargando pacientes...",
+    "empty": "Aún no tienes pacientes asociados.",
+    "noResults": "No se encontraron pacientes con esa búsqueda.",
+    "lastSession": "Última sesión",
+    "nextSession": "Próxima sesión",
+    "notAvailable": "Sin registro",
+    "errors": {
+      "noSpecialist": "No se pudo identificar al especialista actual.",
+      "load": "No se pudieron cargar tus pacientes."
+    }
+  },
+
   "specialistNotifications": {
     "tag": "Alertas en tiempo real",
     "title": "Notificaciones",

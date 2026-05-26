@@ -22,6 +22,7 @@ import { specialistGuard } from './guards/specialist.guard';
 import { SpecialistScheduleManagementComponent } from './pages/specialist-schedule-management/specialist-schedule-management.component';
 import { SpecialistAppointmentsComponent } from './pages/specialist-appointments/specialist-appointments.component';
 import { SpecialistResourcesComponent } from './pages/specialist-resources/specialist-resources.component';
+import { SpecialistPatientsComponent } from './pages/specialist-patients/specialist-patients.component';
 
 // PACIENTE
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
@@ -152,6 +153,10 @@ export const routes: Routes = [
       {
         path: 'resources',
         component: SpecialistResourcesComponent
+      },
+      {
+        path: 'patients',
+        component: SpecialistPatientsComponent
       }
     ]
   },

@@ -896,6 +896,23 @@
     }
   },
 
+  "specialistPatients": {
+    "title": "My patients",
+    "subtitle": "Patients associated with your appointments.",
+    "counter": "Patients",
+    "searchPlaceholder": "Search by name or email...",
+    "loading": "Loading patients...",
+    "empty": "You do not have associated patients yet.",
+    "noResults": "No patients match your search.",
+    "lastSession": "Last session",
+    "nextSession": "Next session",
+    "notAvailable": "No record",
+    "errors": {
+      "noSpecialist": "Could not identify the current specialist.",
+      "load": "Could not load your patients."
+    }
+  },
+
   "specialistNotifications": {
     "tag": "Real-time alerts",
     "title": "Notifications",

@@ -1,0 +1,83 @@
+<div class="patients-page">
+  <app-sidebar></app-sidebar>
+
+  <div class="sidebar-overlay"
+    *ngIf="sidebarService.isOpen()"
+    (click)="sidebarService.close()">
+  </div>
+
+  <div class="main">
+    <header class="top-bar">
+      <div>
+        <h1 class="page-title">{{ 'specialistPatients.title' | translate }}</h1>
+        <p class="page-subtitle">{{ 'specialistPatients.subtitle' | translate }}</p>
+      </div>
+
+      <div class="counter" [attr.aria-label]="'specialistPatients.counter' | translate">
+        <strong>{{ loading ? '...' : totalPatients }}</strong>
+        <span>{{ 'specialistPatients.counter' | translate }}</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <label class="search-box">
+        <i class="fas fa-search"></i>
+        <input
+          type="search"
+          [(ngModel)]="searchTerm"
+          [placeholder]="'specialistPatients.searchPlaceholder' | translate">
+      </label>
+
+      <section class="status-card" *ngIf="loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        {{ 'specialistPatients.loading' | translate }}
+      </section>
+
+      <section class="status-card error" *ngIf="!loading && errorMsg">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ errorMsg | translate }}
+      </section>
+
+      <section class="empty-state" *ngIf="!loading && !errorMsg && !patients.length">
+        <i class="fas fa-users"></i>
+        <p>{{ 'specialistPatients.empty' | translate }}</p>
+      </section>
+
+      <section class="empty-state" *ngIf="!loading && !errorMsg && patients.length && !filteredPatients.length">
+        <i class="fas fa-search"></i>
+        <p>{{ 'specialistPatients.noResults' | translate }}</p>
+      </section>
+
+      <section class="patients-grid" *ngIf="!loading && !errorMsg && filteredPatients.length">
+        <article class="patient-card" *ngFor="let patient of filteredPatients">
+          <div class="card-heading">
+            <div class="avatar">{{ getInitials(patient.fullName) }}</div>
+            <div class="patient-main">
+              <h2>{{ patient.fullName }}</h2>
+              <p>{{ patient.email }}</p>
+            </div>
+          </div>
+
+          <div class="sessions">
+            <div>
+              <span>{{ 'specialistPatients.lastSession' | translate }}</span>
+              <strong *ngIf="patient.lastSessionDate; else notAvailable">
+                {{ asLocalDate(patient.lastSessionDate) | date:'mediumDate' }}
+              </strong>
+            </div>
+            <div>
+              <span>{{ 'specialistPatients.nextSession' | translate }}</span>
+              <strong *ngIf="patient.nextSessionDate; else notAvailable">
+                {{ asLocalDate(patient.nextSessionDate) | date:'mediumDate' }}
+              </strong>
+            </div>
+          </div>
+
+          <ng-template #notAvailable>
+            <strong class="muted">{{ 'specialistPatients.notAvailable' | translate }}</strong>
+          </ng-template>
+        </article>
+      </section>
+    </main>
+  </div>
+</div>

@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 
 import com.takecare.backend.specialities.dto.SpecialistFilterResponseDTO;
 import com.takecare.backend.specialities.service.SpecialistSearchService;
+import com.takecare.backend.session.dto.SpecialistPatientsResponseDTO;
+import com.takecare.backend.session.service.SessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -42,13 +44,16 @@ public class SpecialistController {
     private final SpecialistService specialistService;
     private final SpecialistProfileService specialistProfileService;
     private final SpecialistSearchService specialistSearchService;
+    private final SessionService sessionService;
 
     public SpecialistController(SpecialistService specialistService,
                                 SpecialistProfileService specialistProfileService,
-                                SpecialistSearchService specialistSearchService) {
+                                SpecialistSearchService specialistSearchService,
+                                SessionService sessionService) {
         this.specialistService = specialistService;
         this.specialistProfileService = specialistProfileService;
         this.specialistSearchService = specialistSearchService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping("/search")
@@ -129,6 +134,15 @@ public class SpecialistController {
             logger.error("GET /api/v1/specialists/{}/profile - Unexpected error fetching specialist profile", id, e);
             throw new RuntimeException("Error al obtener perfil del especialista");
         }
+    }
+
+    @GetMapping("/{id}/patients")
+    public ResponseEntity<SpecialistPatientsResponseDTO> getSpecialistPatients(@PathVariable Integer id) {
+        logger.info("GET /api/v1/specialists/{}/patients - Fetching associated patients", id);
+        SpecialistPatientsResponseDTO response = sessionService.listPatientsBySpecialist(id);
+        logger.info("GET /api/v1/specialists/{}/patients - Found {} associated patients",
+                id, response.getTotalPatients());
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
