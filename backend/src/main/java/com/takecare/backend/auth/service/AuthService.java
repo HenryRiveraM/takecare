@@ -33,7 +33,7 @@ public class AuthService {
         }
 
         if (user.getStatus() == null || user.getStatus() != 1) {
-            throw new RuntimeException("Cuenta inactiva");
+            throw new RuntimeException("Cuenta suspendida");
         }
 
         // Validar estado de verificación de cuenta

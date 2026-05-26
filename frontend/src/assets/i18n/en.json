@@ -265,7 +265,8 @@
       "connection": "Connection error with the server",
       "unknown": "Unknown error",
       "pendingApproval": "Your account is still under review. Please wait for administrator approval.",
-      "rejectedAccount": "Your account was rejected. Contact support or sign up again."
+      "rejectedAccount": "Your account was rejected. Contact support or sign up again.",
+      "suspendedAccount": "Your account is suspended. Contact support for more information."
     }
 },
 

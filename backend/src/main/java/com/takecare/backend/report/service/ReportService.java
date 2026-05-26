@@ -365,7 +365,8 @@ public class ReportService {
             byte updatedStrikes = (byte) (currentStrikes + 1);
             reportedUser.setStrikes(updatedStrikes);
 
-            if (updatedStrikes >= STRIKES_TO_SUSPEND) {
+            boolean suspensionApplied = updatedStrikes % STRIKES_TO_SUSPEND == 0;
+            if (suspensionApplied) {
                 reportedUser.setStatus(USER_STATUS_SUSPENDED);
             }
 
@@ -374,7 +375,7 @@ public class ReportService {
 
             logger.info("Accepted reportId={}; strike applied to reportedId={}, strikes={}, suspended={}",
                     reportId, reportedUser.getId(), updatedStrikes,
-                    updatedStrikes >= STRIKES_TO_SUSPEND);
+                    suspensionApplied);
         } else {
             logger.info("Finished reportId={} without applying strike", reportId);
         }

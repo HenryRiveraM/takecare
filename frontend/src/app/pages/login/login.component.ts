@@ -90,7 +90,13 @@ export class LoginComponent {
         if (err.status === 401) {
           const errorMessage = String(err.error?.error || err.error?.message || '').toLowerCase();
 
-          if (errorMessage.includes('pendiente') || errorMessage.includes('pending')) {
+          if (
+            errorMessage.includes('suspendida') ||
+            errorMessage.includes('suspended') ||
+            errorMessage.includes('inactiva')
+          ) {
+            this.errorMsg = this.translate.instant('login.errors.suspendedAccount');
+          } else if (errorMessage.includes('pendiente') || errorMessage.includes('pending')) {
             this.errorMsg = this.translate.instant('login.errors.pendingApproval');
           } else if (
             errorMessage.includes('rechazada') ||
