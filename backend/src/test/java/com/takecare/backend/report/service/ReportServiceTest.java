@@ -69,6 +69,32 @@ class ReportServiceTest {
     }
 
     @Test
+    void acceptingReportAfterReactivationKeepsAccountActiveUntilNextThreeStrikes() {
+        reportedUser.setStrikes((byte) 3);
+        reportedUser.setStatus((byte) 1);
+        when(reportRepository.save(report)).thenReturn(report);
+
+        reportService.updateAdminReportStatus(25, request("ACCEPTED"));
+
+        assertThat(reportedUser.getStrikes()).isEqualTo((byte) 4);
+        assertThat(reportedUser.getStatus()).isEqualTo((byte) 1);
+        verify(userRepository).save(reportedUser);
+    }
+
+    @Test
+    void acceptingReportSuspendsReactivatedAccountOnSixthStrike() {
+        reportedUser.setStrikes((byte) 5);
+        reportedUser.setStatus((byte) 1);
+        when(reportRepository.save(report)).thenReturn(report);
+
+        reportService.updateAdminReportStatus(25, request("ACCEPTED"));
+
+        assertThat(reportedUser.getStrikes()).isEqualTo((byte) 6);
+        assertThat(reportedUser.getStatus()).isEqualTo((byte) 0);
+        verify(userRepository).save(reportedUser);
+    }
+
+    @Test
     void finishingReportDoesNotApplyStrike() {
         when(reportRepository.save(report)).thenReturn(report);
 

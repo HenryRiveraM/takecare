@@ -266,7 +266,8 @@
       "connection": "Error de conexión con el servidor",
       "unknown": "Error desconocido",
       "pendingApproval": "Tu cuenta aún está en revisión. Debes esperar la aprobación del administrador.",
-      "rejectedAccount": "Tu cuenta fue rechazada. Comunícate con soporte o vuelve a registrarte."
+      "rejectedAccount": "Tu cuenta fue rechazada. Comunícate con soporte o vuelve a registrarte.",
+      "suspendedAccount": "Tu cuenta está suspendida. Comunícate con soporte para más información."
     }
   },
 
