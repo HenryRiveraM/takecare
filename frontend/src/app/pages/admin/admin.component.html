@@ -12,98 +12,71 @@
   </section>
 
   <section class="admin-panel">
-    <div class="top-controls">
-      <div class="tab-bar">
-        <button
-          class="tab-button"
-          [class.active]="activeTab === 'patients'"
-          (click)="setTab('patients')">
-          {{ 'admin.tabs.patients' | translate }}
-        </button>
-
-        <button
-          class="tab-button"
-          [class.active]="activeTab === 'specialists'"
-          (click)="setTab('specialists')">
-          {{ 'admin.tabs.specialists' | translate }}
-        </button>
-
-        <button
-          class="tab-button"
-          [class.active]="activeTab === 'validations'"
-          (click)="setTab('validations')">
-          {{ 'admin.tabs.validations' | translate }}
-        </button>
-
-        <button
-          class="tab-button"
-          [class.active]="activeTab === 'appointments'"
-          (click)="setTab('appointments')">
-          {{ 'admin.tabs.appointments' | translate }}
-        </button>
-      </div>
-
-      <div class="search-box">
-        <input
-          type="text"
-          [(ngModel)]="searchTerm"
-          (input)="onSearch()"
-          [placeholder]="(activeTab === 'appointments' ? 'admin.appointments.searchPlaceholder' : 'admin.searchPlaceholder') | translate"
-          class="search-input"
-        />
-      </div>
-    </div>
-
     <div *ngIf="errorMsg" class="error-message">
       {{ errorMsg }}
     </div>
 
     <!-- TAB: PACIENTES -->
-    <div class="table-card" *ngIf="activeTab === 'patients'">
+    <div class="users-management" *ngIf="activeTab === 'patients'">
       <div class="section-header">
-        <h2>{{ 'admin.sections.patientsRegistered' | translate }}</h2>
+        <div>
+          <h2>{{ 'admin.sections.patientsRegistered' | translate }}</h2>
+        </div>
         <span class="count-badge">{{ filteredPatients.length }}</span>
+      </div>
+
+      <div class="section-search">
+        <input
+          type="search"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          [placeholder]="'admin.searchPlaceholder' | translate"
+          [attr.aria-label]="'admin.searchPlaceholder' | translate"
+          class="search-input"
+        />
       </div>
 
       <div *ngIf="loadingPatients" class="loading-message">
         {{ 'admin.loading.patients' | translate }}
       </div>
 
-      <table *ngIf="!loadingPatients && filteredPatients.length > 0; else noPatients">
-        <thead>
-          <tr>
-            <th class="col-name">{{ 'admin.table.names' | translate }}</th>
-            <th class="col-lastname">{{ 'admin.table.lastnames' | translate }}</th>
-            <th class="col-email">{{ 'admin.table.email' | translate }}</th>
-            <th class="col-date">{{ 'admin.table.birthDate' | translate }}</th>
-            <th class="col-strikes">{{ 'admin.table.strikes' | translate }}</th>
-            <th class="col-status">{{ 'admin.table.status' | translate }}</th>
-            <th class="col-action">{{ 'admin.table.action' | translate }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let patient of filteredPatients">
-            <td>{{ patient.names }}</td>
-            <td>{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
-            <td>{{ patient.email }}</td>
-            <td>{{ patient.birthDate | localizedDate }}</td>
-            <td>{{ patient.strikes }}</td>
-            <td class="col-status">
-              <span class="status"
-                    [ngClass]="patient.status === 1 ? 'status-active' : 'status-suspended'">
-                {{ (patient.status === 1 ? 'admin.userStatus.active' : 'admin.userStatus.suspended') | translate }}
-              </span>
-            </td>
-            <td class="col-action">
-              <button type="button"
-                      [ngClass]="patient.status === 1 ? 'delete-button' : 'activate-button'"
-                      (click)="togglePatientStatus(patient)">
-                {{ (patient.status === 1 ? 'admin.actions.suspend' : 'admin.actions.activate') | translate }}
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-card users-table" *ngIf="!loadingPatients && filteredPatients.length > 0; else noPatients">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-name">{{ 'admin.table.names' | translate }}</th>
+              <th class="col-lastname">{{ 'admin.table.lastnames' | translate }}</th>
+              <th class="col-email">{{ 'admin.table.email' | translate }}</th>
+              <th class="col-date">{{ 'admin.table.birthDate' | translate }}</th>
+              <th class="col-strikes">{{ 'admin.table.strikes' | translate }}</th>
+              <th class="col-status">{{ 'admin.table.status' | translate }}</th>
+              <th class="col-action">{{ 'admin.table.action' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let patient of filteredPatients">
+              <td>{{ patient.names }}</td>
+              <td>{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
+              <td>{{ patient.email }}</td>
+              <td>{{ patient.birthDate | localizedDate }}</td>
+              <td>{{ patient.strikes }}</td>
+              <td class="col-status">
+                <span class="status"
+                      [ngClass]="patient.status === 1 ? 'status-active' : 'status-suspended'">
+                  {{ (patient.status === 1 ? 'admin.userStatus.active' : 'admin.userStatus.suspended') | translate }}
+                </span>
+              </td>
+              <td class="col-action">
+                <button type="button"
+                        [ngClass]="patient.status === 1 ? 'delete-button' : 'activate-button'"
+                        (click)="togglePatientStatus(patient)">
+                  {{ (patient.status === 1 ? 'admin.actions.suspend' : 'admin.actions.activate') | translate }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <ng-template #noPatients>
         <p class="empty-message" *ngIf="!loadingPatients">{{ 'admin.empty.patients' | translate }}</p>
@@ -111,51 +84,66 @@
     </div>
 
     <!-- TAB: ESPECIALISTAS -->
-    <div class="table-card" *ngIf="activeTab === 'specialists'">
+    <div class="users-management" *ngIf="activeTab === 'specialists'">
       <div class="section-header">
-        <h2>{{ 'admin.sections.specialistsRegistered' | translate }}</h2>
+        <div>
+          <h2>{{ 'admin.sections.specialistsRegistered' | translate }}</h2>
+        </div>
         <span class="count-badge">{{ filteredSpecialists.length }}</span>
+      </div>
+
+      <div class="section-search">
+        <input
+          type="search"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          [placeholder]="'admin.searchPlaceholder' | translate"
+          [attr.aria-label]="'admin.searchPlaceholder' | translate"
+          class="search-input"
+        />
       </div>
 
       <div *ngIf="loadingSpecialists" class="loading-message">
         {{ 'admin.loading.specialists' | translate }}
       </div>
 
-      <table *ngIf="!loadingSpecialists && filteredSpecialists.length > 0; else noSpecialists">
-        <thead>
-          <tr>
-            <th class="col-name">{{ 'admin.table.names' | translate }}</th>
-            <th class="col-lastname">{{ 'admin.table.lastnames' | translate }}</th>
-            <th class="col-email">{{ 'admin.table.email' | translate }}</th>
-            <th class="col-date">{{ 'admin.table.birthDate' | translate }}</th>
-            <th class="col-strikes">{{ 'admin.table.strikes' | translate }}</th>
-            <th class="col-status">{{ 'admin.table.status' | translate }}</th>
-            <th class="col-action">{{ 'admin.table.action' | translate }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let specialist of filteredSpecialists">
-            <td>{{ specialist.names || '-' }}</td>
-            <td>{{ (specialist.firstLastname || '') + (specialist.secondLastname ? ' ' + specialist.secondLastname : '') || '-' }}</td>
-            <td>{{ specialist.email || '-' }}</td>
-            <td>{{ specialist.birthDate | localizedDate }}</td>
-            <td>{{ specialist.strikes }}</td>
-            <td class="col-status">
-              <span class="status"
-                    [ngClass]="specialist.status === 1 ? 'status-active' : 'status-suspended'">
-                {{ (specialist.status === 1 ? 'admin.userStatus.active' : 'admin.userStatus.suspended') | translate }}
-              </span>
-            </td>
-            <td class="col-action">
-              <button type="button"
-                      [ngClass]="specialist.status === 1 ? 'delete-button' : 'activate-button'"
-                      (click)="toggleSpecialistStatus(specialist)">
-                {{ (specialist.status === 1 ? 'admin.actions.suspend' : 'admin.actions.activate') | translate }}
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-card users-table" *ngIf="!loadingSpecialists && filteredSpecialists.length > 0; else noSpecialists">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-name">{{ 'admin.table.names' | translate }}</th>
+              <th class="col-lastname">{{ 'admin.table.lastnames' | translate }}</th>
+              <th class="col-email">{{ 'admin.table.email' | translate }}</th>
+              <th class="col-date">{{ 'admin.table.birthDate' | translate }}</th>
+              <th class="col-strikes">{{ 'admin.table.strikes' | translate }}</th>
+              <th class="col-status">{{ 'admin.table.status' | translate }}</th>
+              <th class="col-action">{{ 'admin.table.action' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let specialist of filteredSpecialists">
+              <td>{{ specialist.names || '-' }}</td>
+              <td>{{ (specialist.firstLastname || '') + (specialist.secondLastname ? ' ' + specialist.secondLastname : '') || '-' }}</td>
+              <td>{{ specialist.email || '-' }}</td>
+              <td>{{ specialist.birthDate | localizedDate }}</td>
+              <td>{{ specialist.strikes }}</td>
+              <td class="col-status">
+                <span class="status"
+                      [ngClass]="specialist.status === 1 ? 'status-active' : 'status-suspended'">
+                  {{ (specialist.status === 1 ? 'admin.userStatus.active' : 'admin.userStatus.suspended') | translate }}
+                </span>
+              </td>
+              <td class="col-action">
+                <button type="button"
+                        [ngClass]="specialist.status === 1 ? 'delete-button' : 'activate-button'"
+                        (click)="toggleSpecialistStatus(specialist)">
+                  {{ (specialist.status === 1 ? 'admin.actions.suspend' : 'admin.actions.activate') | translate }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <ng-template #noSpecialists>
         <p class="empty-message" *ngIf="!loadingSpecialists">{{ 'admin.empty.specialists' | translate }}</p>
@@ -163,9 +151,11 @@
     </div>
 
     <!-- TAB: VALIDACIONES -->
-    <div class="table-card" *ngIf="activeTab === 'validations'">
+    <div class="validations-management" *ngIf="activeTab === 'validations'">
       <div class="section-header">
-        <h2>{{ 'admin.sections.identityReviews' | translate }}</h2>
+        <div>
+          <h2>{{ 'admin.tabs.validations' | translate }}</h2>
+        </div>
         <span class="count-badge">{{ filteredValidations.length }} {{ 'admin.sections.pending' | translate }}</span>
       </div>
 
@@ -353,6 +343,95 @@
           <span class="material-symbols-outlined">event_note</span>
           <h3>{{ 'admin.appointments.empty.title' | translate }}</h3>
           <p>{{ 'admin.appointments.empty.description' | translate }}</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- TAB: GESTION DE REPORTES -->
+    <div class="reports-management" *ngIf="activeTab === 'reports'">
+      <div class="section-header">
+        <div>
+          <h2>{{ 'admin.reports.title' | translate }}</h2>
+          <p class="section-description">{{ 'admin.reports.subtitle' | translate }}</p>
+        </div>
+        <span class="count-badge">
+          {{ reports.length }} {{ 'admin.reports.results' | translate }}
+        </span>
+      </div>
+
+      <div *ngIf="loadingReports" class="loading-message">
+        {{ 'admin.loading.reports' | translate }}
+      </div>
+
+      <div class="table-card reports-table" *ngIf="!loadingReports && reports.length > 0; else noReports">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-report-person">{{ 'admin.reports.table.reporter' | translate }}</th>
+              <th class="col-report-person">{{ 'admin.reports.table.reported' | translate }}</th>
+              <th class="col-report-session">{{ 'admin.reports.table.session' | translate }}</th>
+              <th class="col-report-date">{{ 'admin.reports.table.date' | translate }}</th>
+              <th class="col-report-reason">{{ 'admin.reports.table.reason' | translate }}</th>
+              <th class="col-report-description">{{ 'admin.reports.table.description' | translate }}</th>
+              <th class="col-report-status">{{ 'admin.reports.table.status' | translate }}</th>
+              <th class="col-report-actions">{{ 'admin.reports.table.actions' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let report of reports">
+              <td>
+                <strong>{{ report.reporterName || ('admin.reports.notRegistered' | translate) }}</strong>
+                <small>{{ getReportRoleLabel(report.reporterRole) | translate }}</small>
+              </td>
+              <td>
+                <strong>{{ report.reportedName || ('admin.reports.notRegistered' | translate) }}</strong>
+                <small>{{ getReportRoleLabel(report.reportedRole) | translate }}</small>
+              </td>
+              <td class="session-id">
+                <span *ngIf="report.sessionId; else unregisteredSession">#{{ report.sessionId }}</span>
+                <ng-template #unregisteredSession>{{ 'admin.reports.notRegistered' | translate }}</ng-template>
+                <small *ngIf="report.sessionDate">{{ report.sessionDate | localizedDate }}</small>
+              </td>
+              <td>
+                {{ report.createdDate ? (report.createdDate | localizedDate) : ('admin.reports.notRegistered' | translate) }}
+              </td>
+              <td>{{ report.reason || ('admin.reports.notRegistered' | translate) }}</td>
+              <td class="report-description">{{ report.description || ('admin.reports.notRegistered' | translate) }}</td>
+              <td class="col-report-status">
+                <span class="status report-status" [ngClass]="getReportStatusClass(report.status)">
+                  {{ getReportStatusLabel(report.status) | translate }}
+                </span>
+              </td>
+              <td class="col-report-actions">
+                <div class="report-actions" *ngIf="isPendingReport(report); else reportManaged">
+                  <button
+                    type="button"
+                    class="report-accept-button"
+                    [disabled]="processingReportId === report.id"
+                    (click)="updateReportStatus(report, 'ACCEPTED')">
+                    {{ 'admin.reports.actions.accept' | translate }}
+                  </button>
+                  <button
+                    type="button"
+                    class="report-finish-button"
+                    [disabled]="processingReportId === report.id"
+                    (click)="updateReportStatus(report, 'FINISHED')">
+                    {{ 'admin.reports.actions.finish' | translate }}
+                  </button>
+                </div>
+                <ng-template #reportManaged>
+                  <span class="report-managed">{{ 'admin.reports.actions.managed' | translate }}</span>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #noReports>
+        <div class="empty-appointments" *ngIf="!loadingReports">
+          <span class="material-symbols-outlined">flag</span>
+          <h3>{{ 'admin.reports.empty.title' | translate }}</h3>
         </div>
       </ng-template>
     </div>

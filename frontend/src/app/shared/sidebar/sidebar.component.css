@@ -44,7 +44,14 @@
 
 .menu-item i {
   width: 20px;
+  flex-shrink: 0;
   text-align: center;
+}
+
+.admin-validation-item {
+  align-items: center;
+  line-height: 1.25;
+  white-space: normal;
 }
 
 .menu-item:hover,.menu-item.active {

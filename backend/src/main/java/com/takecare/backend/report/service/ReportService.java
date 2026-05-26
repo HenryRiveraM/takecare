@@ -10,15 +10,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.takecare.backend.report.dto.AdminReportItemDTO;
 import com.takecare.backend.report.dto.CreatePatientReportRequestDTO;
 import com.takecare.backend.report.dto.CreateReportRequestDTO;
 import com.takecare.backend.report.dto.ReportResponseDTO;
+import com.takecare.backend.report.dto.UpdateAdminReportStatusRequestDTO;
 import com.takecare.backend.report.model.Report;
 import com.takecare.backend.report.repository.ReportRepository;
 import com.takecare.backend.session.model.Session;
 import com.takecare.backend.session.repository.SessionRepository;
 import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 import com.takecare.backend.user.model.Patient;
+import com.takecare.backend.user.model.User;
+import com.takecare.backend.user.repository.UserRepository;
 
 @Service
 public class ReportService {
@@ -29,6 +33,13 @@ public class ReportService {
     private static final Integer SESSION_FINISHED = 4;
 
     private static final String STATUS_PENDING = "PENDING";
+    private static final String STATUS_ACCEPTED = "ACCEPTED";
+    private static final String STATUS_FINISHED = "FINISHED";
+    private static final byte USER_STATUS_SUSPENDED = 0;
+    private static final byte STRIKES_TO_SUSPEND = 3;
+    private static final Byte ROLE_PATIENT = 1;
+    private static final Byte ROLE_SPECIALIST = 2;
+    private static final Byte ROLE_ADMIN = 3;
 
     private static final List<String> ALLOWED_REASONS = List.of(
             "Falta de respeto",
@@ -43,10 +54,14 @@ public class ReportService {
 
     private final ReportRepository reportRepository;
     private final SessionRepository sessionRepository;
+    private final UserRepository userRepository;
 
-    public ReportService(ReportRepository reportRepository, SessionRepository sessionRepository) {
+    public ReportService(ReportRepository reportRepository,
+                         SessionRepository sessionRepository,
+                         UserRepository userRepository) {
         this.reportRepository = reportRepository;
         this.sessionRepository = sessionRepository;
+        this.userRepository = userRepository;
     }
     
     @Transactional
@@ -298,6 +313,81 @@ public class ReportService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<AdminReportItemDTO> getAdminReports() {
+        try {
+            logger.info("Listing reports for administration");
+
+            List<AdminReportItemDTO> reports = reportRepository.findAllForAdmin()
+                    .stream()
+                    .map(this::toAdminReportItemDto)
+                    .toList();
+
+            logger.info("Admin reports found: {}", reports.size());
+            return reports;
+        } catch (RuntimeException exception) {
+            logger.error("Unexpected error listing reports for administration", exception);
+            throw exception;
+        }
+    }
+
+    @Transactional
+    public AdminReportItemDTO updateAdminReportStatus(
+            Integer reportId,
+            UpdateAdminReportStatusRequestDTO request
+    ) {
+        if (reportId == null) {
+            throw new IllegalArgumentException("reportId es obligatorio");
+        }
+        if (request == null || request.getStatus() == null || request.getStatus().isBlank()) {
+            throw new IllegalArgumentException("status es obligatorio");
+        }
+
+        String nextStatus = request.getStatus().trim().toUpperCase();
+        if (!STATUS_ACCEPTED.equals(nextStatus) && !STATUS_FINISHED.equals(nextStatus)) {
+            throw new IllegalArgumentException("status debe ser ACCEPTED o FINISHED");
+        }
+
+        Report report = reportRepository.findByIdForStatusUpdate(reportId)
+                .orElseThrow(() -> new NoSuchElementException("Reporte no encontrado"));
+
+        if (!isPendingReport(report.getStatus())) {
+            throw new IllegalStateException("El reporte ya fue gestionado");
+        }
+
+        if (STATUS_ACCEPTED.equals(nextStatus)) {
+            User reportedUser = report.getReported();
+            if (reportedUser == null || reportedUser.getId() == null) {
+                throw new NoSuchElementException("Usuario reportado no encontrado");
+            }
+
+            byte currentStrikes = reportedUser.getStrikes() == null ? 0 : reportedUser.getStrikes();
+            byte updatedStrikes = (byte) (currentStrikes + 1);
+            reportedUser.setStrikes(updatedStrikes);
+
+            if (updatedStrikes >= STRIKES_TO_SUSPEND) {
+                reportedUser.setStatus(USER_STATUS_SUSPENDED);
+            }
+
+            reportedUser.setLastUpdate(LocalDateTime.now());
+            userRepository.save(reportedUser);
+
+            logger.info("Accepted reportId={}; strike applied to reportedId={}, strikes={}, suspended={}",
+                    reportId, reportedUser.getId(), updatedStrikes,
+                    updatedStrikes >= STRIKES_TO_SUSPEND);
+        } else {
+            logger.info("Finished reportId={} without applying strike", reportId);
+        }
+
+        report.setStatus(nextStatus);
+        report.setUpdatedDate(LocalDateTime.now());
+        return toAdminReportItemDto(reportRepository.save(report));
+    }
+
+    private boolean isPendingReport(String status) {
+        return STATUS_PENDING.equalsIgnoreCase(status) || "0".equals(status);
+    }
+
     private void validateSessionStatus(Session session) {
         if (session == null || session.getStatus() == null) {
             throw new IllegalStateException("La cita no esta en un estado valido para reportar");
@@ -370,6 +460,57 @@ public class ReportService {
         }
 
         return dto;
+    }
+
+    private AdminReportItemDTO toAdminReportItemDto(Report report) {
+        AdminReportItemDTO dto = new AdminReportItemDTO();
+        dto.setId(report.getId());
+        dto.setReason(report.getReason());
+        dto.setDescription(report.getDescription());
+        dto.setStatus(report.getStatus());
+        dto.setCreatedDate(report.getCreatedDate());
+
+        if (report.getReporter() != null) {
+            dto.setReporterId(report.getReporter().getId());
+            dto.setReporterName(buildFullName(report.getReporter()));
+            dto.setReporterRole(toRoleLabel(report.getReporter().getRole()));
+        }
+
+        if (report.getReported() != null) {
+            dto.setReportedId(report.getReported().getId());
+            dto.setReportedName(buildFullName(report.getReported()));
+            dto.setReportedRole(toRoleLabel(report.getReported().getRole()));
+        }
+
+        if (report.getSession() != null) {
+            dto.setSessionId(report.getSession().getId());
+            if (report.getSession().getSchedule() != null) {
+                dto.setSessionDate(report.getSession().getSchedule().getScheduleDate());
+            }
+        }
+
+        return dto;
+    }
+
+    private String buildFullName(User user) {
+        return String.join(" ",
+                user.getNames() == null ? "" : user.getNames(),
+                user.getFirstLastname() == null ? "" : user.getFirstLastname(),
+                user.getSecondLastname() == null ? "" : user.getSecondLastname()
+        ).trim();
+    }
+
+    private String toRoleLabel(Byte role) {
+        if (ROLE_PATIENT.equals(role)) {
+            return "PATIENT";
+        }
+        if (ROLE_SPECIALIST.equals(role)) {
+            return "SPECIALIST";
+        }
+        if (ROLE_ADMIN.equals(role)) {
+            return "ADMIN";
+        }
+        return "UNKNOWN";
     }
 
     public static String getDuplicateReportMessage() {

@@ -88,7 +88,8 @@
       "patients": "Pacientes",
       "specialists": "Especialistas",
       "validations": "Validaciones Pendientes",
-      "appointments": "Historial de citas"
+      "appointments": "Historial de citas",
+      "reports": "Gestión de reportes"
     },
     "searchPlaceholder": "Buscar por nombre, apellido o correo",
     "sections": {
@@ -108,7 +109,8 @@
     },
     "roles": {
       "patient": "Paciente",
-      "specialist": "Especialista"
+      "specialist": "Especialista",
+      "admin": "Administrador"
     },
     "actions": {
       "suspend": "Suspender",
@@ -121,7 +123,8 @@
       "patients": "Cargando pacientes...",
       "specialists": "Cargando especialistas...",
       "validations": "Cargando validaciones...",
-      "appointments": "Cargando historial de citas..."
+      "appointments": "Cargando historial de citas...",
+      "reports": "Cargando gestión de reportes..."
     },
     "empty": {
       "patients": "No hay pacientes registrados.",
@@ -146,6 +149,8 @@
       "loadSpecialists": "No se pudieron cargar los especialistas",
       "loadValidations": "No se pudieron cargar las validaciones",
       "loadAppointments": "No se pudo cargar el historial de citas",
+      "loadReports": "No se pudo cargar la gestión de reportes.",
+      "updateReport": "No se pudo actualizar el estado del reporte.",
       "processValidation": "No se pudo completar la operación en el servidor",
       "suspendUser": "No se pudo suspender el usuario",
       "couldNotSuspend": "No se pudo suspender el usuario"
@@ -199,6 +204,43 @@
       "empty": {
         "title": "No hay citas para mostrar",
         "description": "No se encontraron citas que coincidan con los filtros seleccionados."
+      }
+    },
+    "reports": {
+      "title": "Gestión de reportes",
+      "subtitle": "Supervisa los reportes realizados entre usuarios y especialistas.",
+      "results": "reportes",
+      "notRegistered": "No registrado",
+      "table": {
+        "reporter": "Reportó",
+        "reported": "Reportado",
+        "session": "Cita",
+        "date": "Fecha",
+        "reason": "Motivo",
+        "description": "Descripción",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "accepted": "Aceptada",
+        "finished": "Finalizada",
+        "approved": "Aprobado",
+        "resolved": "Resuelto",
+        "rejected": "Rechazado",
+        "unknown": "No registrado"
+      },
+      "actions": {
+        "accept": "Aceptar",
+        "finish": "Finalizar",
+        "managed": "Gestionado"
+      },
+      "notifications": {
+        "accepted": "Reporte aceptado. Se agregó un strike al usuario reportado.",
+        "finished": "Reporte finalizado sin penalización."
+      },
+      "empty": {
+        "title": "No existen reportes registrados."
       }
     }
   },

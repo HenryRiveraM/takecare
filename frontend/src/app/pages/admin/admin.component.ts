@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { LocalizedDatePipe } from '../../shared/pipes/localized-date.pipe';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import {
   AdminAppointmentHistory,
+  AdminReport,
   AdminService,
   Patient,
   Specialist,
@@ -35,7 +36,9 @@ export class AdminComponent implements OnInit {
   appointments: AdminAppointmentHistory[] = [];
   filteredAppointments: AdminAppointmentHistory[] = [];
 
-  activeTab: 'patients' | 'specialists' | 'validations' | 'appointments' = 'patients';
+  reports: AdminReport[] = [];
+
+  activeTab: 'patients' | 'specialists' | 'validations' | 'appointments' | 'reports' = 'patients';
   searchTerm = '';
   appointmentStatus: number | 'all' = 'all';
   appointmentDateFrom = '';
@@ -45,6 +48,8 @@ export class AdminComponent implements OnInit {
   loadingSpecialists = false;
   loadingValidations = false;
   loadingAppointments = false;
+  loadingReports = false;
+  processingReportId: number | null = null;
   errorMsg = '';
 
   notification: { message: string; type: 'success' | 'error' } | null = null;
@@ -52,15 +57,15 @@ export class AdminComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private translate: TranslateService,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       const tab = params.get('tab');
 
-      if (tab === 'specialists' || tab === 'validations' || tab === 'appointments' || tab === 'patients') {
+      if (tab === 'specialists' || tab === 'validations' || tab === 'appointments' ||
+          tab === 'reports' || tab === 'patients') {
         this.activeTab = tab;
       } else {
         this.activeTab = 'patients';
@@ -89,7 +94,12 @@ export class AdminComponent implements OnInit {
       return;
     }
 
-    this.loadAppointmentHistory();
+    if (this.activeTab === 'appointments') {
+      this.loadAppointmentHistory();
+      return;
+    }
+
+    this.loadReports();
   }
 
   loadPatients(): void {
@@ -164,10 +174,20 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  setTab(tab: 'patients' | 'specialists' | 'validations' | 'appointments'): void {
-    this.router.navigate(['/admin'], {
-      queryParams: { tab },
-      replaceUrl: true
+  loadReports(): void {
+    this.loadingReports = true;
+
+    this.adminService.getReports().subscribe({
+      next: (data) => {
+        this.reports = data;
+        this.loadingReports = false;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.reports = [];
+        this.errorMsg = this.translate.instant('admin.errors.loadReports');
+        this.loadingReports = false;
+        console.error(err);
+      }
     });
   }
 
@@ -276,6 +296,75 @@ export class AdminComponent implements OnInit {
     const start = appointment.startTime.substring(0, 5);
     const end = appointment.endTime?.substring(0, 5);
     return end ? `${start} - ${end}` : start;
+  }
+
+  getReportRoleLabel(role?: string): string {
+    const labels: Record<string, string> = {
+      PATIENT: 'admin.roles.patient',
+      SPECIALIST: 'admin.roles.specialist',
+      ADMIN: 'admin.roles.admin'
+    };
+
+    return labels[(role || '').toUpperCase()] || 'admin.reports.notRegistered';
+  }
+
+  getReportStatusLabel(status?: string): string {
+    const labels: Record<string, string> = {
+      '0': 'admin.reports.status.pending',
+      PENDING: 'admin.reports.status.pending',
+      ACCEPTED: 'admin.reports.status.accepted',
+      FINISHED: 'admin.reports.status.finished',
+      APPROVED: 'admin.reports.status.approved',
+      RESOLVED: 'admin.reports.status.resolved',
+      REJECTED: 'admin.reports.status.rejected'
+    };
+
+    return labels[(status || '').toUpperCase()] || 'admin.reports.status.unknown';
+  }
+
+  getReportStatusClass(status?: string): string {
+    const normalizedStatus = (status || '').toUpperCase();
+
+    if (normalizedStatus === '0' || normalizedStatus === 'PENDING') {
+      return 'status-pending';
+    }
+    if (normalizedStatus === 'ACCEPTED') {
+      return 'status-accepted';
+    }
+    if (normalizedStatus === 'FINISHED' || normalizedStatus === 'APPROVED' || normalizedStatus === 'RESOLVED') {
+      return 'status-finished';
+    }
+    return 'status-rejected';
+  }
+
+  isPendingReport(report: AdminReport): boolean {
+    const status = (report.status || '').toUpperCase();
+    return status === '0' || status === 'PENDING';
+  }
+
+  updateReportStatus(report: AdminReport, status: 'ACCEPTED' | 'FINISHED'): void {
+    this.processingReportId = report.id;
+    this.errorMsg = '';
+
+    this.adminService.updateReportStatus(report.id, status).subscribe({
+      next: (updatedReport) => {
+        this.reports = this.reports.map(item => item.id === updatedReport.id ? updatedReport : item);
+        this.processingReportId = null;
+        this.showNotification(
+          this.translate.instant(
+            status === 'ACCEPTED'
+              ? 'admin.reports.notifications.accepted'
+              : 'admin.reports.notifications.finished'
+          )
+        );
+      },
+      error: (err: HttpErrorResponse) => {
+        this.processingReportId = null;
+        this.errorMsg = this.translate.instant('admin.errors.updateReport');
+        this.showNotification(this.errorMsg, 'error');
+        console.error(err);
+      }
+    });
   }
 
   processValidation(user: PendingValidationUser, status: 'approved' | 'rejected'): void {

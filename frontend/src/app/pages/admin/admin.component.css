@@ -51,50 +51,13 @@
 }
 
 /* =========================
-   CONTROLES
+   BUSQUEDA DE SECCION
 ========================= */
 
-.top-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
-.tab-bar {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.tab-button {
-  background: #f4eded;
-  color: #1f2937;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 14px;
-  cursor: pointer;
-  font-weight: 700;
-  transition: 0.25s ease;
-}
-
-.tab-button:hover {
-  background: #eadfdf;
-  transform: translateY(-2px);
-}
-
-.tab-button.active {
-  background: #8ca39c;
-  color: white;
-  box-shadow: 0 10px 20px rgba(140, 163, 156, 0.3);
-}
-
-.search-box {
-  flex: 1;
+.section-search {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 22px;
 }
 
 .search-input {
@@ -152,8 +115,17 @@
   margin: 0;
   font-size: 28px;
   color: #1f2937;
+}
+
+.section-header > div {
   flex: 1;
   min-width: 250px;
+}
+
+.users-management,
+.validations-management,
+.reports-management {
+  width: 100%;
 }
 
 .count-badge {
@@ -179,6 +151,10 @@
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
+}
+
+.users-table table {
+  min-width: 900px;
 }
 
 .table-card thead {
@@ -218,19 +194,19 @@
 
 /* ===== anchos de columnas ===== */
 .col-name {
-  width: 16%;
+  width: 13%;
 }
 
 .col-lastname {
-  width: 18%;
+  width: 15%;
 }
 
 .col-email {
-  width: 24%;
+  width: 20%;
 }
 
 .col-date {
-  width: 13%;
+  width: 12%;
 }
 
 .col-strikes {
@@ -239,12 +215,12 @@
 }
 
 .col-status {
-  width: 12%;
+  width: 16%;
   text-align: center;
 }
 
 .col-action {
-  width: 10%;
+  width: 17%;
   text-align: center;
 }
 
@@ -252,6 +228,16 @@
 .col-status,
 .col-action {
   white-space: normal;
+}
+
+.users-table .status,
+.users-table .delete-button,
+.users-table .activate-button {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 /* ===== badge de estado ===== */
@@ -393,6 +379,94 @@
   border-color: #99b3df;
 }
 
+/* =========================
+   GESTION DE REPORTES
+========================= */
+
+.reports-table table {
+  min-width: 1210px;
+}
+
+.reports-table strong,
+.reports-table small {
+  display: block;
+}
+
+.reports-table small {
+  margin-top: 4px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.col-report-person { width: 14%; }
+.col-report-session { width: 8%; }
+.col-report-date { width: 10%; }
+.col-report-reason { width: 12%; }
+.col-report-description { width: 17%; }
+.col-report-status { width: 11%; text-align: center; }
+.col-report-actions { width: 14%; text-align: center; }
+
+.reports-table td.col-report-status,
+.reports-table th.col-report-status,
+.reports-table td.col-report-actions,
+.reports-table th.col-report-actions {
+  text-align: center;
+}
+
+.report-description {
+  line-height: 1.55;
+}
+
+.report-status {
+  min-width: 98px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.report-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-accept-button,
+.report-finish-button {
+  min-height: 38px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.report-accept-button {
+  background: #8ca39c;
+  color: #ffffff;
+}
+
+.report-finish-button {
+  background: #eef3fb;
+  color: #3e5f99;
+}
+
+.report-accept-button:hover:not(:disabled),
+.report-finish-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.report-accept-button:disabled,
+.report-finish-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.report-managed {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 .empty-appointments {
   padding: 52px 15px;
   text-align: center;
@@ -466,42 +540,14 @@
 
 /* responsive */
 @media (max-width: 1024px) {
-  .table-card table {
-    min-width: 980px;
-  }
-
-  .col-name {
-    width: 15%;
-  }
-
-  .col-lastname {
-    width: 18%;
-  }
-
-  .col-email {
-    width: 25%;
-  }
-
-  .col-date {
-    width: 13%;
-  }
-
-  .col-strikes {
-    width: 7%;
-  }
-
-  .col-status {
-    width: 12%;
-  }
-
-  .col-action {
-    width: 10%;
+  .users-table table {
+    min-width: 860px;
   }
 }
 
 @media (max-width: 768px) {
-  .table-card table {
-    min-width: 940px;
+  .users-table table {
+    min-width: 820px;
   }
 
   .table-card th,
@@ -827,19 +873,6 @@
     padding: 25px;
   }
 
-  .top-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .tab-bar {
-    justify-content: center;
-  }
-
-  .search-box {
-    justify-content: center;
-  }
-
   .search-input {
     max-width: 100%;
   }
@@ -885,16 +918,6 @@
     border-radius: 18px;
   }
 
-  .tab-bar {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .tab-button {
-    width: 100%;
-    text-align: center;
-  }
-
   .section-header {
     flex-direction: column;
     align-items: flex-start;
@@ -909,7 +932,11 @@
   }
 
   .table-card table {
-    min-width: 980px;
+    min-width: 880px;
+  }
+
+  .users-table table {
+    min-width: 820px;
   }
 }
 

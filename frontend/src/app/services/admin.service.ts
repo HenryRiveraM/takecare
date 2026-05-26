@@ -57,6 +57,22 @@ export interface AdminAppointmentHistory {
   endTime?: string;
 }
 
+export interface AdminReport {
+  id: number;
+  reporterId?: number;
+  reporterName?: string;
+  reporterRole?: string;
+  reportedId?: number;
+  reportedName?: string;
+  reportedRole?: string;
+  sessionId?: number;
+  sessionDate?: string;
+  reason?: string;
+  description?: string;
+  status?: string;
+  createdDate?: string;
+}
+
 interface SpecialistProfileResponse {
   id: number;
   names: string;
@@ -212,6 +228,20 @@ private normalizeSpecialist(raw: any): Specialist {
     return this.http.get<AdminAppointmentHistory[]>(`${this.apiUrl}/api/v1/admin/sessions`, {
       headers: this.getHeaders()
     });
+  }
+
+  getReports(): Observable<AdminReport[]> {
+    return this.http.get<AdminReport[]>(`${this.apiUrl}/api/v1/admin/reports`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  updateReportStatus(id: number, status: 'ACCEPTED' | 'FINISHED'): Observable<AdminReport> {
+    return this.http.put<AdminReport>(
+      `${this.apiUrl}/api/v1/admin/reports/${id}/status`,
+      { status },
+      { headers: this.getHeaders() }
+    );
   }
 
   updateUserStatus(id: number, status: 0 | 1): Observable<any> {

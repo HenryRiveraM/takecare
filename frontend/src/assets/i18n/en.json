@@ -87,7 +87,8 @@
       "patients": "Patients",
       "specialists": "Specialists",
       "validations": "Pending validations",
-      "appointments": "Appointment history"
+      "appointments": "Appointment history",
+      "reports": "Report management"
     },
     "searchPlaceholder": "Search by name, surname or email",
     "sections": {
@@ -107,7 +108,8 @@
     },
     "roles": {
       "patient": "Patient",
-      "specialist": "Specialist"
+      "specialist": "Specialist",
+      "admin": "Administrator"
     },
     "actions": {
       "suspend": "Suspend",
@@ -120,7 +122,8 @@
       "patients": "Loading patients...",
       "specialists": "Loading specialists...",
       "validations": "Loading validations...",
-      "appointments": "Loading appointment history..."
+      "appointments": "Loading appointment history...",
+      "reports": "Loading report management..."
     },
     "empty": {
       "patients": "There are no registered patients.",
@@ -145,6 +148,8 @@
       "loadSpecialists": "Could not load specialists",
       "loadValidations": "Could not load validations",
       "loadAppointments": "Could not load appointment history",
+      "loadReports": "Could not load report management.",
+      "updateReport": "Could not update the report status.",
       "processValidation": "The operation could not be completed on the server",
       "suspendUser": "Could not suspend user",
       "couldNotSuspend": "Could not suspend user"
@@ -198,6 +203,43 @@
       "empty": {
         "title": "No appointments to show",
         "description": "No appointments match the selected filters."
+      }
+    },
+    "reports": {
+      "title": "Report management",
+      "subtitle": "Monitor reports made between users and specialists.",
+      "results": "reports",
+      "notRegistered": "Not registered",
+      "table": {
+        "reporter": "Reported by",
+        "reported": "Reported user",
+        "session": "Appointment",
+        "date": "Date",
+        "reason": "Reason",
+        "description": "Description",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "finished": "Finished",
+        "approved": "Approved",
+        "resolved": "Resolved",
+        "rejected": "Rejected",
+        "unknown": "Not registered"
+      },
+      "actions": {
+        "accept": "Accept",
+        "finish": "Finish",
+        "managed": "Managed"
+      },
+      "notifications": {
+        "accepted": "Report accepted. A strike was added to the reported user.",
+        "finished": "Report finished without a penalty."
+      },
+      "empty": {
+        "title": "There are no registered reports."
       }
     }
   },
