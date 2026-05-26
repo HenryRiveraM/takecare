@@ -12,6 +12,7 @@ public class NotificationResponseDto {
     private Integer id;
     private Integer sessionId;
     private Integer specialistId;
+    private Integer patientId;
     private String description;
     private Byte type;
     private Byte status;

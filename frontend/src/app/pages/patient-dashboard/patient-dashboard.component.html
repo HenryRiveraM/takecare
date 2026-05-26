@@ -19,7 +19,7 @@
           class="search-input">
       </div>
 
-      <button class="btn-dashboard-action">
+      <button class="btn-dashboard-action" routerLink="/patient/search-specialists">
         <i class="fas fa-plus"></i> {{ 'patientDashboard.newAppointment' | translate }}
       </button>
     </header>
@@ -34,23 +34,68 @@
         <img src="assets/images/paciente.png" [alt]="'patientDashboard.defaultUser' | translate" class="hero-img">
       </section>
 
-      <div class="stats">
-        <div class="card">
-          <h3>0</h3>
-          <p>{{ 'patientDashboard.stats.nextAppointments' | translate }}</p>
+      <section class="appointments-section section" aria-live="polite">
+        <div class="section-header">
+          <div>
+            <h2>{{ 'patientDashboard.todayAppointments.title' | translate }}</h2>
+            <p>{{ 'patientDashboard.todayAppointments.subtitle' | translate }}</p>
+          </div>
+          <a routerLink="/patient/appointments" class="appointments-link">
+            {{ 'patientDashboard.todayAppointments.viewAll' | translate }}
+          </a>
         </div>
-        <div class="card">
-          <h3>0</h3>
-          <p>{{ 'patientDashboard.stats.newMessages' | translate }}</p>
-        </div>
-        <div class="card">
-          <h3>0</h3>
-          <p>{{ 'patientDashboard.stats.favoriteSpecialists' | translate }}</p>
-        </div>
-      </div>
 
+        <div class="appointments-state" *ngIf="loadingAppointments">
+          {{ 'patientDashboard.todayAppointments.loading' | translate }}
+        </div>
+
+        <div class="appointments-state error" *ngIf="!loadingAppointments && appointmentsError">
+          {{ appointmentsError | translate }}
+        </div>
+
+        <div class="appointments-state empty" *ngIf="!loadingAppointments && !appointmentsError && !todayAppointments.length">
+          <i class="far fa-calendar-check"></i>
+          <p>{{ 'patientDashboard.todayAppointments.empty' | translate }}</p>
+        </div>
+
+        <div class="appointments-list" *ngIf="!loadingAppointments && !appointmentsError && todayAppointments.length">
+          <article class="appointment-card card" *ngFor="let appointment of todayAppointments">
+            <div class="appointment-header">
+              <div class="specialist-avatar">{{ getInitials(appointment.specialistName) }}</div>
+              <div class="specialist-details">
+                <h3>{{ appointment.specialistName }}</h3>
+                <span>{{ 'patientDashboard.todayAppointments.specialist' | translate }}</span>
+              </div>
+              <span class="status-badge" [ngClass]="getStatusClass(appointment.status)">
+                {{ getStatusLabel(appointment.status) | translate }}
+              </span>
+            </div>
+
+            <div class="appointment-details">
+              <div class="detail-item">
+                <i class="far fa-calendar"></i>
+                <span><strong>{{ 'patientDashboard.todayAppointments.date' | translate }}:</strong> {{ getAppointmentDate(appointment) | date:'fullDate' }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="far fa-clock"></i>
+                <span><strong>{{ 'patientDashboard.todayAppointments.startTime' | translate }}:</strong> {{ appointment.startTime?.substring(0, 5) || ('patientDashboard.todayAppointments.timeUnavailable' | translate) }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="far fa-clock"></i>
+                <span><strong>{{ 'patientDashboard.todayAppointments.endTime' | translate }}:</strong> {{ appointment.endTime?.substring(0, 5) || ('patientDashboard.todayAppointments.timeUnavailable' | translate) }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-video"></i>
+                <span><strong>{{ 'patientDashboard.todayAppointments.sessionType' | translate }}:</strong> {{ getSessionTypeLabel(appointment.typeOfSession) | translate }}</span>
+              </div>
+            </div>
+
+            <a routerLink="/patient/appointments" class="appointment-action">
+              {{ 'patientDashboard.todayAppointments.details' | translate }}
+            </a>
+          </article>
+        </div>
+      </section>
     </div>
-
   </div>
-
 </div>

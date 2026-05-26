@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, forkJoin, map, of } from 'rxjs';
  
@@ -77,6 +77,8 @@ export class SpecialistAppointmentsComponent implements OnInit {
   private toastTimer: any;
  
   specialistId!: number;
+  highlightedAppointmentId: number | null = null;
+  private requestedAppointmentId: number | null = null;
  
   // Calificaciones que el ESPECIALISTA hizo al paciente (evaluatorRole = SPECIALIST)
   ratingsBySession: Record<number, SessionRating> = {};
@@ -114,10 +116,12 @@ export class SpecialistAppointmentsComponent implements OnInit {
   constructor(
     public sidebarService: SidebarService,
     private sessionService: SessionService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
  
   ngOnInit(): void {
+    this.requestedAppointmentId = this.readRequestedAppointmentId();
     this.specialistId = this.getLoggedSpecialistId();
  
     if (!this.specialistId) {
@@ -347,6 +351,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
     this.sessionService.getSessionsBySpecialist(this.specialistId).subscribe({
       next: (response) => {
         this.appointments = response.map(item => this.mapSessionResponse(item));
+        this.focusRequestedAppointment();
         this.loadRatingsForAppointments(this.appointments);
         this.loadReportsForAppointments(this.appointments);
         this.loading = false;
@@ -581,6 +586,35 @@ export class SpecialistAppointmentsComponent implements OnInit {
     if (!range.includes('-')) return '';
     const parts = range.split('-').map(v => v.trim());
     return parts[1] || '';
+  }
+
+  private readRequestedAppointmentId(): number | null {
+    const value = Number(this.route.snapshot.queryParamMap.get('sessionId'));
+    return Number.isInteger(value) && value > 0 ? value : null;
+  }
+
+  private focusRequestedAppointment(): void {
+    if (!this.requestedAppointmentId) {
+      return;
+    }
+
+    const appointment = this.appointments.find(
+      item => item.id === this.requestedAppointmentId
+    );
+
+    if (!appointment) {
+      return;
+    }
+
+    this.activeFilter = appointment.status;
+    this.highlightedAppointmentId = appointment.id;
+
+    setTimeout(() => {
+      document.getElementById(`appointment-${appointment.id}`)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    });
   }
  
   private getLoggedSpecialistId(): number {

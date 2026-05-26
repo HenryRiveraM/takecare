@@ -46,6 +46,23 @@ public class NotificationController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<NotificationResponseDto>> listByPatient(@PathVariable Integer patientId) {
+        logger.info("GET /api/v1/notifications/patient/{} - listing notifications", patientId);
+        return ResponseEntity.ok(notificationService.listByPatient(patientId));
+    }
+
+    @GetMapping("/patient/{patientId}/unread-count")
+    public ResponseEntity<UnreadNotificationCountDto> patientUnreadCount(@PathVariable Integer patientId) {
+        logger.info("GET /api/v1/notifications/patient/{}/unread-count", patientId);
+
+        UnreadNotificationCountDto response = new UnreadNotificationCountDto();
+        response.setPatientId(patientId);
+        response.setUnreadCount(notificationService.countUnreadByPatient(patientId));
+
+        return ResponseEntity.ok(response);
+    }
+
     @PutMapping("/{notificationId}/read-status")
     public ResponseEntity<NotificationResponseDto> updateReadStatus(
             @PathVariable Integer notificationId,
@@ -59,6 +76,26 @@ public class NotificationController {
 
         NotificationResponseDto updated = notificationService.updateReadStatus(
                 request.getSpecialistId(),
+                notificationId,
+                request.getRead()
+        );
+
+        return ResponseEntity.ok(updated);
+    }
+
+    @PutMapping("/{notificationId}/patient-read-status")
+    public ResponseEntity<NotificationResponseDto> updatePatientReadStatus(
+            @PathVariable Integer notificationId,
+            @RequestBody UpdateNotificationStatusRequestDto request) {
+
+        logger.info("PUT /api/v1/notifications/{}/patient-read-status", notificationId);
+
+        if (request.getPatientId() == null || request.getRead() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        NotificationResponseDto updated = notificationService.updatePatientReadStatus(
+                request.getPatientId(),
                 notificationId,
                 request.getRead()
         );

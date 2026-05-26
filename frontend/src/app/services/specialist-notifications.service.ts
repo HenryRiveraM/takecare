@@ -9,6 +9,7 @@ export interface SpecialistNotification {
   id: number;
   sessionId: number;
   specialistId: number;
+  patientId?: number;
   description: string;
   type: number;
   status: number;
@@ -23,9 +24,12 @@ export interface SpecialistNotificationSocketEvent {
 }
 
 interface UnreadCountResponse {
-  specialistId: number;
+  specialistId?: number;
+  patientId?: number;
   unreadCount: number;
 }
+
+export type NotificationAudience = 'specialist' | 'patient';
 
 @Injectable({
   providedIn: 'root'
@@ -41,8 +45,9 @@ export class SpecialistNotificationsService {
 
   private stompClient: Client | null = null;
   private socketSubscription: StompSubscription | null = null;
-  private currentSpecialistId: number | null = null;
-  private pendingSubscriptionSpecialistId: number | null = null;
+  private currentUserId: number | null = null;
+  private currentAudience: NotificationAudience = 'specialist';
+  private pendingSubscriptionUserId: number | null = null;
   private connectingPromise: Promise<void> | null = null;
 
   constructor(private http: HttpClient) {}
@@ -59,22 +64,24 @@ export class SpecialistNotificationsService {
     return this.loadingSubject.asObservable();
   }
 
-  initialize(specialistId: number): void {
-    if (!specialistId) {
+  initialize(userId: number, audience: NotificationAudience = 'specialist'): void {
+    if (!userId) {
       return;
     }
 
-    if (this.currentSpecialistId !== specialistId) {
+    if (this.currentUserId !== userId || this.currentAudience !== audience) {
+      this.disconnect();
       this.resetState();
-      this.currentSpecialistId = specialistId;
+      this.currentUserId = userId;
+      this.currentAudience = audience;
     }
 
-    this.refreshUnreadCount(specialistId);
-    this.connectAndSubscribe(specialistId);
+    this.refreshUnreadCount(userId, audience);
+    this.connectAndSubscribe(userId, audience);
   }
 
-  loadNotifications(specialistId: number, force = false): void {
-    if (!specialistId) {
+  loadNotifications(userId: number, audience: NotificationAudience = 'specialist', force = false): void {
+    if (!userId) {
       return;
     }
 
@@ -85,15 +92,15 @@ export class SpecialistNotificationsService {
     this.loadingSubject.next(true);
 
     this.http
-      .get<SpecialistNotification[]>(`${this.apiUrl}/specialist/${specialistId}`)
+      .get<SpecialistNotification[]>(`${this.apiUrl}/${audience}/${userId}`)
       .pipe(
         tap((notifications) => {
-          this.notificationsSubject.next(this.sortNotifications(notifications));
+          this.notificationsSubject.next(this.mergeNotifications(notifications));
           this.loadedSubject.next(true);
           this.loadingSubject.next(false);
         }),
         catchError((error) => {
-          console.error('Error loading specialist notifications:', error);
+          console.error(`Error loading ${audience} notifications:`, error);
           this.loadingSubject.next(false);
           return of([]);
         })
@@ -101,16 +108,16 @@ export class SpecialistNotificationsService {
       .subscribe();
   }
 
-  refreshUnreadCount(specialistId: number): void {
+  refreshUnreadCount(userId: number, audience: NotificationAudience = 'specialist'): void {
     this.http
-      .get<UnreadCountResponse>(`${this.apiUrl}/specialist/${specialistId}/unread-count`)
+      .get<UnreadCountResponse>(`${this.apiUrl}/${audience}/${userId}/unread-count`)
       .pipe(
         tap((response) => {
           this.unreadCountSubject.next(response.unreadCount ?? 0);
         }),
         catchError((error) => {
-          console.error('Error loading unread notifications count:', error);
-          return of({ specialistId, unreadCount: 0 });
+          console.error(`Error loading ${audience} unread notifications count:`, error);
+          return of({ unreadCount: 0 });
         })
       )
       .subscribe((response) => {
@@ -118,12 +125,19 @@ export class SpecialistNotificationsService {
       });
   }
 
-  setReadStatus(notificationId: number, specialistId: number, read: boolean): Observable<SpecialistNotification> {
+  setReadStatus(
+    notificationId: number,
+    userId: number,
+    read: boolean,
+    audience: NotificationAudience = 'specialist'
+  ): Observable<SpecialistNotification> {
+    const statusRoute = audience === 'patient' ? 'patient-read-status' : 'read-status';
+    const recipientPayload = audience === 'patient'
+      ? { patientId: userId, read }
+      : { specialistId: userId, read };
+
     return this.http
-      .put<SpecialistNotification>(`${this.apiUrl}/${notificationId}/read-status`, {
-        specialistId,
-        read
-      })
+      .put<SpecialistNotification>(`${this.apiUrl}/${notificationId}/${statusRoute}`, recipientPayload)
       .pipe(
         tap((notification) => {
           this.upsertNotification(notification);
@@ -135,7 +149,7 @@ export class SpecialistNotificationsService {
   disconnect(): void {
     this.socketSubscription?.unsubscribe();
     this.socketSubscription = null;
-    this.pendingSubscriptionSpecialistId = null;
+    this.pendingSubscriptionUserId = null;
 
     if (this.stompClient) {
       this.stompClient.deactivate();
@@ -150,12 +164,12 @@ export class SpecialistNotificationsService {
     this.loadedSubject.next(false);
   }
 
-  private connectAndSubscribe(specialistId: number): void {
-    if (!specialistId) {
+  private connectAndSubscribe(userId: number, audience: NotificationAudience): void {
+    if (!userId) {
       return;
     }
 
-    if (this.stompClient?.connected && this.pendingSubscriptionSpecialistId === specialistId) {
+    if (this.stompClient?.connected && this.pendingSubscriptionUserId === userId) {
       return;
     }
 
@@ -166,26 +180,26 @@ export class SpecialistNotificationsService {
     }
 
     if (this.stompClient?.connected) {
-      this.subscribeToTopic(specialistId);
+      this.subscribeToTopic(userId, audience);
       return;
     }
 
-    this.pendingSubscriptionSpecialistId = specialistId;
+    this.pendingSubscriptionUserId = userId;
   }
 
-  private subscribeToTopic(specialistId: number): void {
+  private subscribeToTopic(userId: number, audience: NotificationAudience): void {
     if (!this.stompClient?.connected) {
-      this.pendingSubscriptionSpecialistId = specialistId;
+      this.pendingSubscriptionUserId = userId;
       return;
     }
 
     this.socketSubscription?.unsubscribe();
     this.socketSubscription = this.stompClient.subscribe(
-      `/topic/notifications/specialist/${specialistId}`,
+      `/topic/notifications/${audience}/${userId}`,
       (message: IMessage) => this.handleSocketEvent(message)
     );
 
-    this.pendingSubscriptionSpecialistId = specialistId;
+    this.pendingSubscriptionUserId = userId;
   }
 
   private handleSocketEvent(message: IMessage): void {
@@ -198,7 +212,7 @@ export class SpecialistNotificationsService {
 
       this.unreadCountSubject.next(event.unreadCount ?? this.countUnread(this.notificationsSubject.value));
     } catch (error) {
-      console.error('Error parsing specialist notification socket event:', error);
+      console.error('Error parsing notification socket event:', error);
     }
   }
 
@@ -233,6 +247,15 @@ export class SpecialistNotificationsService {
     });
   }
 
+  private mergeNotifications(notifications: SpecialistNotification[]): SpecialistNotification[] {
+    const merged = new Map<number, SpecialistNotification>();
+
+    notifications.forEach((notification) => merged.set(notification.id, notification));
+    this.notificationsSubject.value.forEach((notification) => merged.set(notification.id, notification));
+
+    return this.sortNotifications(Array.from(merged.values()));
+  }
+
   private async createClient(): Promise<void> {
     const [{ Client }, sockJsModule] = await Promise.all([
       import('@stomp/stompjs'),
@@ -248,8 +271,8 @@ export class SpecialistNotificationsService {
     });
 
     this.stompClient.onConnect = () => {
-      if (this.currentSpecialistId) {
-        this.subscribeToTopic(this.currentSpecialistId);
+      if (this.currentUserId) {
+        this.subscribeToTopic(this.currentUserId, this.currentAudience);
       }
     };
 

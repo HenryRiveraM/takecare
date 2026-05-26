@@ -315,6 +315,23 @@
       "newMessages": "Mensajes nuevos",
       "favoriteSpecialists": "Especialistas favoritos"
     },
+    "todayAppointments": {
+      "title": "Citas de hoy",
+      "subtitle": "Tus sesiones programadas para hoy.",
+      "loading": "Cargando tus citas de hoy...",
+      "empty": "No tienes citas programadas para hoy.",
+      "loadError": "No se pudieron cargar tus citas de hoy.",
+      "noPatient": "No se pudo identificar al paciente actual.",
+      "specialist": "Especialista",
+      "date": "Fecha",
+      "startTime": "Hora de inicio",
+      "endTime": "Hora de fin",
+      "sessionType": "Modalidad",
+      "viewAll": "Ver todas mis citas",
+      "details": "Ver detalles",
+      "timeUnavailable": "Horario no disponible",
+      "unknownStatus": "Sin estado"
+    },
     "section": {
       "title": "Próximas consultas",
       "text": "Aquí aparecerán los detalles de tus sesiones agendadas.",
@@ -863,6 +880,20 @@
       "sessionsToday": "Sesiones hoy",
       "requests": "Solicitudes"
     },
+    "upcoming": {
+      "loading": "Cargando resumen y próximas citas...",
+      "empty": "No tienes próximas citas programadas.",
+      "loadError": "No se pudo cargar el resumen del panel.",
+      "noSpecialist": "No se pudo identificar al especialista actual.",
+      "patient": "Paciente",
+      "date": "Fecha",
+      "startTime": "Hora de inicio",
+      "endTime": "Hora de fin",
+      "sessionType": "Modalidad",
+      "unknownStatus": "Sin estado",
+      "viewAll": "Ver todas las citas",
+      "manage": "Gestionar cita"
+    },
     "section": {
       "title": "Próximas citas",
       "text": "Aquí se mostrarán las sesiones del especialista."
@@ -887,6 +918,27 @@
       "loading": "Cargando notificaciones...",
       "emptyTitle": "No tienes notificaciones todavía",
       "emptyText": "Cuando se agende una nueva cita o cambie un estado importante, aparecerá aquí."
+    }
+  },
+
+  "patientNotifications": {
+    "tag": "Alertas en tiempo real",
+    "title": "Notificaciones",
+    "subtitle": "Revisa respuestas y cambios importantes de tus citas.",
+    "open": "Abrir notificaciones",
+    "close": "Cerrar notificaciones",
+    "status": {
+      "unread": "No leída",
+      "read": "Leída"
+    },
+    "actions": {
+      "markRead": "Marcar como leída",
+      "markUnread": "Marcar como no leída"
+    },
+    "states": {
+      "loading": "Cargando notificaciones...",
+      "emptyTitle": "No tienes notificaciones todavía",
+      "emptyText": "Cuando un especialista acepte o rechace una cita, aparecerá aquí."
     }
   },
 

@@ -311,6 +311,23 @@
       "newMessages": "New messages",
       "favoriteSpecialists": "Favorite specialists"
     },
+    "todayAppointments": {
+      "title": "Today's appointments",
+      "subtitle": "Your sessions scheduled for today.",
+      "loading": "Loading today's appointments...",
+      "empty": "You do not have appointments scheduled for today.",
+      "loadError": "Could not load today's appointments.",
+      "noPatient": "Could not identify the current patient.",
+      "specialist": "Specialist",
+      "date": "Date",
+      "startTime": "Start time",
+      "endTime": "End time",
+      "sessionType": "Modality",
+      "viewAll": "View all my appointments",
+      "details": "View details",
+      "timeUnavailable": "Time unavailable",
+      "unknownStatus": "No status"
+    },
     "section": {
       "title": "Upcoming consultations",
       "text": "Your scheduled session details will appear here.",
@@ -859,6 +876,20 @@
       "sessionsToday": "Sessions today",
       "requests": "Requests"
     },
+    "upcoming": {
+      "loading": "Loading summary and upcoming appointments...",
+      "empty": "You do not have upcoming appointments scheduled.",
+      "loadError": "Could not load the dashboard summary.",
+      "noSpecialist": "Could not identify the current specialist.",
+      "patient": "Patient",
+      "date": "Date",
+      "startTime": "Start time",
+      "endTime": "End time",
+      "sessionType": "Modality",
+      "unknownStatus": "No status",
+      "viewAll": "View all appointments",
+      "manage": "Manage appointment"
+    },
     "section": {
       "title": "Upcoming appointments",
       "text": "The specialist's sessions will be displayed here."
@@ -883,6 +914,27 @@
       "loading": "Loading notifications...",
       "emptyTitle": "You have no notifications yet",
       "emptyText": "When a new appointment is scheduled or an important status changes, it will appear here."
+    }
+  },
+
+  "patientNotifications": {
+    "tag": "Real-time alerts",
+    "title": "Notifications",
+    "subtitle": "Review responses and important changes to your appointments.",
+    "open": "Open notifications",
+    "close": "Close notifications",
+    "status": {
+      "unread": "Unread",
+      "read": "Read"
+    },
+    "actions": {
+      "markRead": "Mark as read",
+      "markUnread": "Mark as unread"
+    },
+    "states": {
+      "loading": "Loading notifications...",
+      "emptyTitle": "You have no notifications yet",
+      "emptyText": "When a specialist accepts or rejects an appointment, it will appear here."
     }
   },
 

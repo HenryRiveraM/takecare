@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { LanguageService } from '../../services/language.service';
 import { AuthService, LoginResponse } from '../../services/auth.service';
 import { SidebarService } from '../../services/sidebar.service';
-import { SpecialistNotificationsService } from '../../services/specialist-notifications.service';
+import { NotificationAudience, SpecialistNotificationsService } from '../../services/specialist-notifications.service';
 import { SpecialistNotificationsSidebarComponent } from '../specialist-notifications-sidebar/specialist-notifications-sidebar.component';
 
 type NavbarMode = 'hidden' | 'public' | 'private';
@@ -28,11 +28,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isDashboard: boolean = false;
   currentUrl = '';
   user: LoginResponse | null = null;
-  specialistNotificationCount = 0;
+  notificationCount = 0;
   notificationsOpen = false;
 
   private notificationsSubscription?: Subscription;
-  private specialistNotificationsInitialized = false;
+  private notificationsInitialized = false;
 
   constructor(
     private router: Router,
@@ -72,15 +72,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   toggleNotifications(): void {
-    if (this.privateArea !== 'specialist' || !this.user?.id) {
+    if ((this.privateArea !== 'specialist' && this.privateArea !== 'patient') || !this.user?.id) {
       return;
     }
 
     this.notificationsOpen = !this.notificationsOpen;
 
     if (this.notificationsOpen) {
-      this.specialistNotificationsService.loadNotifications(this.user.id);
-      this.specialistNotificationsService.refreshUnreadCount(this.user.id);
+      const audience = this.privateArea as NotificationAudience;
+      this.specialistNotificationsService.loadNotifications(this.user.id, audience, true);
+      this.specialistNotificationsService.refreshUnreadCount(this.user.id, audience);
     }
   }
 
@@ -122,12 +123,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.privateArea = firstSegment as PrivateArea;
       this.navbarMode = 'private';
 
-      if (this.privateArea === 'specialist') {
-        this.initializeSpecialistNotifications();
-      } else {
-        this.notificationsOpen = false;
-        this.disconnectSpecialistNotifications();
-      }
+      this.initializeNotifications(firstSegment as NotificationAudience);
 
       return;
     }
@@ -153,30 +149,30 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.sidebarService.toggle();
   }
 
-  private initializeSpecialistNotifications(): void {
-    const specialistId = this.user?.id;
+  private initializeNotifications(audience: NotificationAudience): void {
+    const userId = this.user?.id;
 
-    if (!specialistId) {
+    if (!userId) {
       return;
     }
 
-    if (!this.specialistNotificationsInitialized) {
+    if (!this.notificationsInitialized) {
       this.notificationsSubscription = this.specialistNotificationsService
         .unreadCountStream()
         .subscribe((count) => {
-          this.specialistNotificationCount = count;
+          this.notificationCount = count;
         });
 
-      this.specialistNotificationsInitialized = true;
+      this.notificationsInitialized = true;
     }
 
-    this.specialistNotificationsService.initialize(specialistId);
+    this.specialistNotificationsService.initialize(userId, audience);
   }
 
   private disconnectSpecialistNotifications(): void {
-    this.specialistNotificationCount = 0;
+    this.notificationCount = 0;
 
-    if (!this.specialistNotificationsInitialized) {
+    if (!this.notificationsInitialized) {
       return;
     }
 
@@ -184,6 +180,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.specialistNotificationsService.resetState();
     this.notificationsSubscription?.unsubscribe();
     this.notificationsSubscription = undefined;
-    this.specialistNotificationsInitialized = false;
+    this.notificationsInitialized = false;
   }
 }

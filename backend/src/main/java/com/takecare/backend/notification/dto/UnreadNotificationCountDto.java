@@ -8,5 +8,6 @@ import lombok.Setter;
 public class UnreadNotificationCountDto {
 
     private Integer specialistId;
+    private Integer patientId;
     private Long unreadCount;
 }

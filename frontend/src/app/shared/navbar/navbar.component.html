@@ -60,14 +60,14 @@
     </select>
 
     <button
-      *ngIf="privateArea === 'specialist'"
+      *ngIf="privateArea === 'specialist' || privateArea === 'patient'"
       type="button"
       class="notification-bell"
       (click)="toggleNotifications()"
-      [attr.aria-label]="'specialistNotifications.open' | translate">
+      [attr.aria-label]="((privateArea === 'patient' ? 'patientNotifications' : 'specialistNotifications') + '.open') | translate">
       <span class="material-symbols-outlined">notifications</span>
-      <span class="notification-badge" *ngIf="specialistNotificationCount > 0">
-        {{ specialistNotificationCount > 99 ? '99+' : specialistNotificationCount }}
+      <span class="notification-badge" *ngIf="notificationCount > 0">
+        {{ notificationCount > 99 ? '99+' : notificationCount }}
       </span>
     </button>
 
@@ -83,8 +83,9 @@
 </header>
 
 <app-specialist-notifications-sidebar
-  *ngIf="privateArea === 'specialist'"
-  [specialistId]="user?.id ?? null"
+  *ngIf="privateArea === 'specialist' || privateArea === 'patient'"
+  [userId]="user?.id ?? null"
+  [audience]="privateArea === 'patient' ? 'patient' : 'specialist'"
   [isOpen]="notificationsOpen"
   (closePanel)="closeNotifications()">
 </app-specialist-notifications-sidebar>

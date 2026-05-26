@@ -3,25 +3,25 @@
 <aside class="notifications-sidebar" [class.open]="isOpen" [attr.aria-hidden]="!isOpen">
   <div class="sidebar-header">
     <div>
-      <span class="sidebar-tag">{{ 'specialistNotifications.tag' | translate }}</span>
-      <h2>{{ 'specialistNotifications.title' | translate }}</h2>
+      <span class="sidebar-tag">{{ (translationKey + '.tag') | translate }}</span>
+      <h2>{{ (translationKey + '.title') | translate }}</h2>
     </div>
 
-    <button type="button" class="close-button" (click)="close()" [attr.aria-label]="'specialistNotifications.close' | translate">
+    <button type="button" class="close-button" (click)="close()" [attr.aria-label]="(translationKey + '.close') | translate">
       <span class="material-symbols-outlined">close</span>
     </button>
   </div>
 
-  <p class="sidebar-subtitle">{{ 'specialistNotifications.subtitle' | translate }}</p>
+  <p class="sidebar-subtitle">{{ (translationKey + '.subtitle') | translate }}</p>
 
   <div class="state-card" *ngIf="loading">
-    {{ 'specialistNotifications.states.loading' | translate }}
+    {{ (translationKey + '.states.loading') | translate }}
   </div>
 
   <div class="empty-card" *ngIf="!loading && notifications.length === 0">
     <span class="material-symbols-outlined empty-icon">notifications_off</span>
-    <h3>{{ 'specialistNotifications.states.emptyTitle' | translate }}</h3>
-    <p>{{ 'specialistNotifications.states.emptyText' | translate }}</p>
+    <h3>{{ (translationKey + '.states.emptyTitle') | translate }}</h3>
+    <p>{{ (translationKey + '.states.emptyText') | translate }}</p>
   </div>
 
   <div class="notifications-list" *ngIf="!loading && notifications.length > 0">
@@ -41,8 +41,8 @@
           <span class="notification-status" [class.read]="notification.status === 1">
             {{
               notification.status === 0
-                ? ('specialistNotifications.status.unread' | translate)
-                : ('specialistNotifications.status.read' | translate)
+                ? ((translationKey + '.status.unread') | translate)
+                : ((translationKey + '.status.read') | translate)
             }}
           </span>
         </div>
@@ -54,8 +54,8 @@
         <button type="button" class="action-button" (click)="toggleReadStatus(notification)">
           {{
             notification.status === 0
-              ? ('specialistNotifications.actions.markRead' | translate)
-              : ('specialistNotifications.actions.markUnread' | translate)
+              ? ((translationKey + '.actions.markRead') | translate)
+              : ((translationKey + '.actions.markUnread') | translate)
           }}
         </button>
       </div>

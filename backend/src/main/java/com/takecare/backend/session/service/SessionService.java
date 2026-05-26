@@ -229,6 +229,8 @@ public class SessionService {
             session.setStatus(SESSION_ACCEPTED);
             schedule.setStatus(SCHEDULE_UNAVAILABLE);
             notificationDescription = "Cita aceptada correctamente";
+            logger.info("Accepting appointment. sessionId={}, specialistId={}, patientId={}",
+                    sessionId, specialistId, session.getPatient().getId());
 
             String cleanDescription = description != null ? description.trim() : null;
 
@@ -246,6 +248,8 @@ public class SessionService {
             session.setStatus(SESSION_REJECTED);
             schedule.setStatus(SCHEDULE_AVAILABLE);
             notificationDescription = "Cita rechazada correctamente";
+            logger.info("Rejecting appointment. sessionId={}, specialistId={}, patientId={}",
+                    sessionId, specialistId, session.getPatient().getId());
         }
 
         Session saved = sessionRepository.save(session);
@@ -256,6 +260,20 @@ public class SessionService {
                 notificationDescription,
                 NOTIFICATION_TYPE_SESSION_RESPONSE
         );
+
+        String specialistName = buildFullName(
+                schedule.getSpecialist().getNames(),
+                schedule.getSpecialist().getFirstLastname(),
+                schedule.getSpecialist().getSecondLastname()
+        );
+        String patientNotificationDescription = isAccepted
+                ? "Tu cita fue aceptada por " + specialistName
+                : "Tu cita fue rechazada por " + specialistName;
+
+        notificationService.createForPatientSession(saved, patientNotificationDescription);
+
+        logger.info("Patient notified after appointment response. sessionId={}, patientId={}, status={}",
+                saved.getId(), saved.getPatient().getId(), saved.getStatus());
 
         logger.info("Session status updated. sessionId={}, newStatus={}, scheduleStatus={}",
                 saved.getId(), saved.getStatus(), schedule.getStatus());

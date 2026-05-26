@@ -23,6 +23,7 @@ public class NotificationService {
     private static final Byte STATUS_UNREAD = 0;
     private static final Byte STATUS_READ = 1;
     private static final Byte TYPE_NEW_SESSION = 1;
+    private static final Byte TYPE_PATIENT_SESSION_RESPONSE = 3;
 
     private static final String EVENT_NOTIFICATION_CREATED = "NOTIFICATION_CREATED";
     private static final String EVENT_NOTIFICATION_STATUS_UPDATED = "NOTIFICATION_STATUS_UPDATED";
@@ -50,6 +51,20 @@ public class NotificationService {
         return notificationRepository.countUnreadBySpecialistId(specialistId);
     }
 
+    @Transactional(readOnly = true)
+    public List<NotificationResponseDto> listByPatient(Integer patientId) {
+        logger.info("Listing notifications for patient id: {}", patientId);
+        return notificationRepository.findAllByPatientIdOrderByCreatedDateDesc(patientId)
+                .stream()
+                .map(this::toResponseDto)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public long countUnreadByPatient(Integer patientId) {
+        return notificationRepository.countUnreadByPatientId(patientId);
+    }
+
     @Transactional
     public NotificationResponseDto createForSession(Session session,
                                                     String description,
@@ -74,6 +89,31 @@ public class NotificationService {
     }
 
     @Transactional
+    public NotificationResponseDto createForPatientSession(Session session, String description) {
+        if (session == null || session.getPatient() == null) {
+            throw new RuntimeException("No se puede notificar una cita sin paciente asociado");
+        }
+
+        Notification notification = new Notification();
+        notification.setSession(session);
+        notification.setDescription(normalizeDescription(description));
+        notification.setType(TYPE_PATIENT_SESSION_RESPONSE);
+        notification.setStatus(STATUS_UNREAD);
+        notification.setCreatedDate(LocalDateTime.now());
+        notification.setReadDate(null);
+
+        Notification saved = notificationRepository.save(notification);
+        NotificationResponseDto response = toResponseDto(saved);
+
+        logger.info("Patient notification created. notificationId={}, patientId={}, sessionId={}",
+                response.getId(), response.getPatientId(), response.getSessionId());
+
+        publishPatientNotificationEvent(response.getPatientId(), EVENT_NOTIFICATION_CREATED, response);
+
+        return response;
+    }
+
+    @Transactional
     public NotificationResponseDto updateReadStatus(Integer specialistId,
                                                     Integer notificationId,
                                                     boolean read) {
@@ -89,6 +129,27 @@ public class NotificationService {
         logger.info("Notification id: {} updated to status: {}", notificationId, response.getStatus());
 
         publishNotificationEvent(specialistId, EVENT_NOTIFICATION_STATUS_UPDATED, response);
+
+        return response;
+    }
+
+    @Transactional
+    public NotificationResponseDto updatePatientReadStatus(Integer patientId,
+                                                           Integer notificationId,
+                                                           boolean read) {
+        Notification notification = notificationRepository.findByIdAndPatientId(notificationId, patientId)
+                .orElseThrow(() -> new RuntimeException("NotificaciÃ³n no encontrada para el paciente"));
+
+        notification.setStatus(read ? STATUS_READ : STATUS_UNREAD);
+        notification.setReadDate(read ? LocalDateTime.now() : null);
+
+        Notification saved = notificationRepository.save(notification);
+        NotificationResponseDto response = toResponseDto(saved);
+
+        logger.info("Patient notification status updated. notificationId={}, patientId={}, status={}",
+                notificationId, patientId, response.getStatus());
+
+        publishPatientNotificationEvent(patientId, EVENT_NOTIFICATION_STATUS_UPDATED, response);
 
         return response;
     }
@@ -112,6 +173,30 @@ public class NotificationService {
         logger.info("Notification event {} sent to topic {}", eventType, topic);
     }
 
+    private void publishPatientNotificationEvent(Integer patientId,
+                                                 String eventType,
+                                                 NotificationResponseDto notification) {
+        if (patientId == null) {
+            logger.warn("Skipping patient socket publish because patientId is null");
+            return;
+        }
+
+        NotificationSocketEventDto event = new NotificationSocketEventDto();
+        event.setEventType(eventType);
+        event.setNotification(notification);
+        event.setUnreadCount(countUnreadByPatient(patientId));
+
+        String topic = "/topic/notifications/patient/" + patientId;
+
+        try {
+            messagingTemplate.convertAndSend(topic, event);
+            logger.info("Patient notification event {} sent to topic {}", eventType, topic);
+        } catch (RuntimeException exception) {
+            logger.error("Unexpected error sending patient notification event to topic {}", topic, exception);
+            throw exception;
+        }
+    }
+
     private NotificationResponseDto toResponseDto(Notification notification) {
         NotificationResponseDto dto = new NotificationResponseDto();
         dto.setId(notification.getId());
@@ -123,6 +208,10 @@ public class NotificationService {
 
         if (notification.getSession() != null) {
             dto.setSessionId(notification.getSession().getId());
+
+            if (notification.getSession().getPatient() != null) {
+                dto.setPatientId(notification.getSession().getPatient().getId());
+            }
 
             if (notification.getSession().getSchedule() != null
                     && notification.getSession().getSchedule().getSpecialist() != null) {

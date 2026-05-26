@@ -67,7 +67,11 @@
 
       <div class="appointments-grid" *ngIf="!loading && !errorMsg && filteredAppointments.length > 0">
 
-        <div class="appointment-card" *ngFor="let apt of filteredAppointments">
+        <div
+          class="appointment-card"
+          *ngFor="let apt of filteredAppointments"
+          [attr.id]="'appointment-' + apt.id"
+          [class.highlighted]="highlightedAppointmentId === apt.id">
 
           <div class="card-status-bar" [class]="'status-' + apt.status"></div>
 

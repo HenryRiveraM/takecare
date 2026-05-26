@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import {
+  NotificationAudience,
   SpecialistNotification,
   SpecialistNotificationsService
 } from '../../services/specialist-notifications.service';
@@ -15,7 +16,8 @@ import { LanguageService } from '../../services/language.service';
   styleUrl: './specialist-notifications-sidebar.component.css'
 })
 export class SpecialistNotificationsSidebarComponent implements OnChanges {
-  @Input() specialistId: number | null = null;
+  @Input() userId: number | null = null;
+  @Input() audience: NotificationAudience = 'specialist';
   @Input() isOpen = false;
   @Output() closePanel = new EventEmitter<void>();
 
@@ -36,9 +38,9 @@ export class SpecialistNotificationsSidebarComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isOpen']?.currentValue && this.specialistId) {
-      this.notificationsService.loadNotifications(this.specialistId);
-      this.notificationsService.refreshUnreadCount(this.specialistId);
+    if (changes['isOpen']?.currentValue && this.userId) {
+      this.notificationsService.loadNotifications(this.userId, this.audience);
+      this.notificationsService.refreshUnreadCount(this.userId, this.audience);
     }
   }
 
@@ -47,18 +49,22 @@ export class SpecialistNotificationsSidebarComponent implements OnChanges {
   }
 
   toggleReadStatus(notification: SpecialistNotification): void {
-    if (!this.specialistId) {
+    if (!this.userId) {
       return;
     }
 
     const shouldMarkAsRead = notification.status === 0;
     this.notificationsService
-      .setReadStatus(notification.id, this.specialistId, shouldMarkAsRead)
+      .setReadStatus(notification.id, this.userId, shouldMarkAsRead, this.audience)
       .subscribe({
         error: (error) => {
-          console.error('Error updating specialist notification status:', error);
+          console.error('Error updating notification status:', error);
         }
       });
+  }
+
+  get translationKey(): string {
+    return this.audience === 'patient' ? 'patientNotifications' : 'specialistNotifications';
   }
 
   trackByNotificationId(_: number, notification: SpecialistNotification): number {

@@ -8,5 +8,6 @@ import lombok.Setter;
 public class UpdateNotificationStatusRequestDto {
 
     private Integer specialistId;
+    private Integer patientId;
     private Boolean read;
 }

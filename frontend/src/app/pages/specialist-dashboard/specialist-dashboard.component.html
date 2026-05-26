@@ -16,7 +16,7 @@
           class="search-input"
           [placeholder]="'specialistDashboard.searchPlaceholder' | translate" />
       </div>
-      <button class="btn-primary">{{ 'specialistDashboard.newSession' | translate }}</button>
+      <button class="btn-primary" routerLink="/specialist/schedule">{{ 'specialistDashboard.newSession' | translate }}</button>
     </div>
 
     <div class="content">
@@ -35,22 +35,85 @@
 
       <div class="stats">
         <div class="card">
-          <h3>0</h3>
+          <h3>{{ loadingSummary ? '...' : (summaryError ? '--' : totalPatients) }}</h3>
           <p>{{ 'specialistDashboard.stats.patients' | translate }}</p>
         </div>
         <div class="card">
-          <h3>0</h3>
+          <h3>{{ loadingSummary ? '...' : (summaryError ? '--' : todaySessions) }}</h3>
           <p>{{ 'specialistDashboard.stats.sessionsToday' | translate }}</p>
         </div>
         <div class="card">
-          <h3>0</h3>
+          <h3>{{ loadingSummary ? '...' : (summaryError ? '--' : pendingRequests) }}</h3>
           <p>{{ 'specialistDashboard.stats.requests' | translate }}</p>
         </div>
       </div>
 
       <div class="section">
-        <h2>{{ 'specialistDashboard.section.title' | translate }}</h2>
-        <p>{{ 'specialistDashboard.section.text' | translate }}</p>
+        <div class="section-header">
+          <div>
+            <h2>{{ 'specialistDashboard.section.title' | translate }}</h2>
+            <p>{{ 'specialistDashboard.section.text' | translate }}</p>
+          </div>
+          <a class="appointments-link" routerLink="/specialist/appointments">
+            {{ 'specialistDashboard.upcoming.viewAll' | translate }}
+          </a>
+        </div>
+
+        <div class="appointments-state" *ngIf="loadingSummary">
+          {{ 'specialistDashboard.upcoming.loading' | translate }}
+        </div>
+
+        <div class="appointments-state error" *ngIf="!loadingSummary && summaryError">
+          {{ summaryError | translate }}
+        </div>
+
+        <div class="appointments-state empty"
+          *ngIf="!loadingSummary && !summaryError && !upcomingSessions.length">
+          <i class="far fa-calendar-check"></i>
+          <p>{{ 'specialistDashboard.upcoming.empty' | translate }}</p>
+        </div>
+
+        <div class="appointments-list"
+          *ngIf="!loadingSummary && !summaryError && upcomingSessions.length">
+          <article class="appointment-card" *ngFor="let session of upcomingSessions">
+            <div class="appointment-header">
+              <div class="patient-avatar">{{ getInitials(session.patientName) }}</div>
+              <div class="patient-details">
+                <h3>{{ session.patientName }}</h3>
+                <span>{{ 'specialistDashboard.upcoming.patient' | translate }}</span>
+              </div>
+              <span class="status-badge" [ngClass]="getStatusClass(session.status)">
+                {{ getStatusLabel(session.status) | translate }}
+              </span>
+            </div>
+
+            <div class="appointment-details">
+              <div class="detail-item">
+                <i class="far fa-calendar"></i>
+                <span><strong>{{ 'specialistDashboard.upcoming.date' | translate }}:</strong> {{ getAppointmentDate(session) | date:'fullDate' }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="far fa-clock"></i>
+                <span><strong>{{ 'specialistDashboard.upcoming.startTime' | translate }}:</strong> {{ session.startTime?.substring(0, 5) }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="far fa-clock"></i>
+                <span><strong>{{ 'specialistDashboard.upcoming.endTime' | translate }}:</strong> {{ session.endTime?.substring(0, 5) }}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-video"></i>
+                <span><strong>{{ 'specialistDashboard.upcoming.sessionType' | translate }}:</strong> {{ getSessionTypeLabel(session.typeOfSession) | translate }}</span>
+              </div>
+            </div>
+
+            <a
+              class="appointment-action"
+              routerLink="/specialist/appointments"
+              [queryParams]="{ sessionId: session.id }">
+              {{ 'specialistDashboard.upcoming.manage' | translate }}
+            </a>
+          </article>
+        </div>
       </div>
 
     </div>
