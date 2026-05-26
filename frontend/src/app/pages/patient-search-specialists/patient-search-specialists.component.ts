@@ -137,7 +137,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
 
     this.specialistScheduleService.getSchedulesGroupedByDay(specialistId).subscribe({
       next: (groups) => {
-        this.scheduleGroups = groups;
+        this.scheduleGroups = this.filterFutureSchedules(groups);
         this.loadingSchedules = false;
       },
       error: (error) => {
@@ -282,9 +282,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
         this.loading = false;
       }
     });
-
   }
-
 
   private applyAllFilters(): void {
     const term = this.searchTerm.toLowerCase().trim();
@@ -351,5 +349,30 @@ export class PatientSearchSpecialistsComponent implements OnInit {
       .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase()
       .trim();
+  }
+
+  private filterFutureSchedules(groups: SpecialistScheduleGroup[]): SpecialistScheduleGroup[] {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    return groups
+      .map(group => ({
+        ...group,
+        schedules: group.schedules.filter(schedule => {
+          if (!schedule.scheduleDate) return false;
+
+          const [year, month, day] = schedule.scheduleDate.split('-').map(Number);
+          const scheduleDate = new Date(year, month - 1, day);
+
+          if (scheduleDate.getTime() === today.getTime()) {
+            if (!schedule.startTime) return true;
+            const [hours, minutes] = schedule.startTime.split(':').map(Number);
+            const scheduleDateTime = new Date(year, month - 1, day, hours, minutes);
+            return scheduleDateTime > now;
+          }
+          return scheduleDate > today;
+        })
+      }))
+      .filter(group => group.schedules.length > 0);
   }
 }
