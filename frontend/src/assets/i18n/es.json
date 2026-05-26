@@ -201,6 +201,20 @@
         "presential": "Presencial",
         "unknown": "Sin especificar"
       },
+      "confirm": {
+        "descriptionLabel": "Indicación para el paciente",
+        "descriptionPlaceholder": "Ej. Enlace de reunión virtual, indicaciones previas o detalles importantes para la cita."
+      },
+      "description": {
+        "label": "Indicación para el paciente",
+        "placeholder": "Ej. Enlace de reunión virtual, indicaciones previas o detalles importantes para la cita.",
+        "helper": "Este texto será visible para el paciente cuando la cita sea aceptada.",
+        "counter": "Máximo 500 caracteres"
+      },
+      "sessionDescription": {
+        "title": "Indicación para la cita",
+        "empty": "Sin indicaciones adicionales"
+      },
       "empty": {
         "title": "No hay citas para mostrar",
         "description": "No se encontraron citas que coincidan con los filtros seleccionados."
@@ -1019,7 +1033,9 @@
       "rejectMessage": "Confirmas que deseas rechazar la cita de",
       "cancel": "Cancelar",
       "confirmAccept": "Sí, aceptar",
-      "confirmReject": "Sí, rechazar"
+      "confirmReject": "Sí, rechazar",
+      "descriptionLabel": "Indicación para el paciente",
+      "descriptionPlaceholder": "Ej. Enlace de reunión virtual, indicaciones previas o detalles importantes para la cita."
     },
 
     "toast": {
@@ -1226,7 +1242,8 @@
       "virtual": "Virtual",
       "presential": "Presencial",
       "sessionTypeUnknown": "Sin especificar",
-      "timeUnavailable": "Horario no disponible"
+      "timeUnavailable": "Horario no disponible",
+      "specialistComment": "Indicación del especialista"
     },
 
     "status": {

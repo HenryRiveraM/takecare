@@ -33,4 +33,7 @@ public class Session {
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @Column(length = 500)
+    private String description; //comentario del especialista al aceptar
 }

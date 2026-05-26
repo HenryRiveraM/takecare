@@ -200,7 +200,8 @@ public class SessionService {
     public SessionStatusResponseDTO updateSessionStatus(
             Integer sessionId,
             Integer specialistId,
-            String action
+            String action,
+            String description
     ) {
         logger.info("PATCH session status. sessionId={}, specialistId={}, action={}",
                 sessionId, specialistId, action);
@@ -228,6 +229,19 @@ public class SessionService {
             session.setStatus(SESSION_ACCEPTED);
             schedule.setStatus(SCHEDULE_UNAVAILABLE);
             notificationDescription = "Cita aceptada correctamente";
+
+            String cleanDescription = description != null ? description.trim() : null;
+
+            if (cleanDescription != null && cleanDescription.length() > 500) {
+                throw new RuntimeException("La descripción no puede exceder 500 caracteres");
+            }
+
+            session.setDescription(
+                    cleanDescription != null && !cleanDescription.isBlank()
+                            ? cleanDescription
+                            : null
+            );
+
         } else {
             session.setStatus(SESSION_REJECTED);
             schedule.setStatus(SCHEDULE_AVAILABLE);
@@ -319,6 +333,8 @@ public class SessionService {
                 ));
             }
         }
+
+        dto.setDescription(session.getDescription());
 
         return dto;
     }
@@ -422,6 +438,7 @@ public class SessionService {
 
         dto.setUpdatedAt(LocalDateTime.now());
         dto.setNotificationDescription(notificationDescription);
+        dto.setDescription(session.getDescription());
 
         return dto;
     }

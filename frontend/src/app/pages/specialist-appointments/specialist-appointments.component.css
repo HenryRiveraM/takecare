@@ -329,6 +329,46 @@
   margin-top: 2px;
 }
 
+.description-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.description-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.description-textarea {
+  width: 100%;
+  min-height: 110px;
+  resize: vertical;
+  border-radius: 16px;
+  border: 1.5px solid #edf2f1;
+  padding: 14px 16px;
+  font: inherit;
+  color: #374151;
+  outline: none;
+  box-sizing: border-box;
+  background: #f8faf9;
+}
+
+.description-textarea:focus {
+  border-color: #72a092;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(114, 160, 146, 0.14);
+}
+
+.description-length {
+  text-align: right;
+  color: #9ca3af;
+  font-size: 0.82rem;
+}
+
 /* --- ACCIONES DE LA CARD --- */
 .card-actions {
   display: flex;

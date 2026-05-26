@@ -26,4 +26,6 @@ public class SessionResponseDTO {
     private LocalDate scheduleDate;
     private LocalTime startTime;
     private LocalTime endTime;
+
+    private String description;
 }

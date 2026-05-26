@@ -76,6 +76,15 @@
             </div>
           </div>
 
+            <div class="specialist-comment" *ngIf="(appointment.status === 2 || appointment.status === 4) && appointment.description">
+              <div class="comment-header">
+                <i class="fas fa-comment-dots"></i>
+                <span>{{ 'patientAppointments.card.specialistComment' | translate }}</span>
+              </div>
+
+              <p class="comment-text">{{ appointment.description }}</p>
+            </div>
+
             <div class="card-actions" *ngIf="canCancel(appointment)">
               <button
                 type="button"

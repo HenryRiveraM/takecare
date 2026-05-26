@@ -24,6 +24,7 @@ export interface SessionResponse {
   scheduleDate?: string;
   startTime?: string;
   endTime?: string;
+  description?: string;
 }
  
 export interface SessionStatusResponse {
@@ -34,6 +35,7 @@ export interface SessionStatusResponse {
   status: number;
   scheduleStatus: number;
   updatedAt: string;
+  description?: string;
   notificationDescription: string;
 }
  
@@ -44,6 +46,7 @@ export interface CancelSessionRequest {
 export interface UpdateSessionStatusRequest {
   specialistId: number;
   action: 'accept' | 'reject';
+  description?: string;
 }
  
 export interface SessionRating {

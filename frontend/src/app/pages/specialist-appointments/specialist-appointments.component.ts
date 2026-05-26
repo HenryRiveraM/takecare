@@ -29,6 +29,7 @@ export interface Appointment {
   endTime?: string;
   sessionTypeLabel: string;
   status: AppointmentStatus;
+  description?: string;
   loading?: boolean;
 }
  
@@ -36,6 +37,7 @@ interface ConfirmDialog {
   visible: boolean;
   action: DialogAction;
   appointment: Appointment | null;
+  description: string;
 }
  
 interface RatingDialog {
@@ -85,7 +87,8 @@ export class SpecialistAppointmentsComponent implements OnInit {
   confirmDialog: ConfirmDialog = {
     visible: false,
     action: 'accept',
-    appointment: null
+    appointment: null,
+    description: ''
   };
  
   ratingDialog: RatingDialog = {
@@ -139,11 +142,11 @@ export class SpecialistAppointmentsComponent implements OnInit {
   }
  
   openConfirmDialog(appointment: Appointment, action: DialogAction): void {
-    this.confirmDialog = { visible: true, action, appointment };
+    this.confirmDialog = { visible: true, action, appointment, description: '' };
   }
  
   closeConfirmDialog(): void {
-    this.confirmDialog = { visible: false, action: 'accept', appointment: null };
+    this.confirmDialog = { visible: false, action: 'accept', appointment: null, description: '' };
   }
  
   openRatingDialog(appointment: Appointment): void {
@@ -272,13 +275,69 @@ export class SpecialistAppointmentsComponent implements OnInit {
  
   confirmAction(): void {
     if (!this.confirmDialog.appointment) return;
-    const { action, appointment } = this.confirmDialog;
+
+    const action = this.confirmDialog.action;
+    const appointment = this.confirmDialog.appointment;
+    const description = this.confirmDialog.description.trim();
+
     this.closeConfirmDialog();
+
     if (action === 'accept') {
-      this.acceptAppointment(appointment);
+      this.acceptAppointment(appointment, description);
     } else {
       this.rejectAppointment(appointment);
     }
+  }
+
+  acceptAppointment(appointment: Appointment, description: string = ''): void {
+    this.updateStatus(appointment, 'accept', 'accepted', description);
+  }
+
+  rejectAppointment(appointment: Appointment): void {
+    this.updateStatus(appointment, 'reject', 'rejected');
+  }
+
+  private updateStatus(
+    appointment: Appointment,
+    action: 'accept' | 'reject',
+    newStatus: AppointmentStatus,
+    description: string = ''
+  ): void {
+    appointment.loading = true;
+
+    const cleanDescription = description.trim();
+
+    const payload = {
+      specialistId: this.specialistId,
+      action,
+      ...(action === 'accept' && cleanDescription
+        ? { description: cleanDescription }
+        : {})
+    };
+
+    this.sessionService.updateSessionStatus(appointment.id, payload).subscribe({
+      next: (response) => {
+        appointment.status = newStatus;
+        appointment.loading = false;
+
+        if (action === 'accept') {
+          appointment.description = response.description || cleanDescription;
+        }
+
+        const messageKey = newStatus === 'accepted'
+          ? 'appointments.toast.accepted'
+          : 'appointments.toast.rejected';
+
+        const toastType = newStatus === 'accepted' ? 'success' : 'error';
+
+        this.showToastMessage(messageKey, toastType);
+      },
+      error: (error: any) => {
+        console.error('Error al actualizar estado de cita:', error);
+        appointment.loading = false;
+        this.showToastMessage('appointments.toast.statusError', 'error');
+      }
+    });
   }
  
   loadAppointments(): void {
@@ -296,42 +355,6 @@ export class SpecialistAppointmentsComponent implements OnInit {
         console.error('Error al cargar citas del especialista:', error);
         this.errorMsg = 'appointments.error.load';
         this.loading = false;
-      }
-    });
-  }
- 
-  acceptAppointment(appointment: Appointment): void {
-    this.updateStatus(appointment, 'accept', 'accepted');
-  }
- 
-  rejectAppointment(appointment: Appointment): void {
-    this.updateStatus(appointment, 'reject', 'rejected');
-  }
- 
-  private updateStatus(
-    appointment: Appointment,
-    action: 'accept' | 'reject',
-    newStatus: AppointmentStatus
-  ): void {
-    appointment.loading = true;
- 
-    this.sessionService.updateSessionStatus(appointment.id, {
-      specialistId: this.specialistId,
-      action
-    }).subscribe({
-      next: () => {
-        appointment.status = newStatus;
-        appointment.loading = false;
-        const messageKey = newStatus === 'accepted'
-          ? 'appointments.toast.accepted'
-          : 'appointments.toast.rejected';
-        const toastType = newStatus === 'accepted' ? 'success' : 'error';
-        this.showToastMessage(messageKey, toastType);
-      },
-      error: (error: any) => {
-        console.error('Error al actualizar estado de cita:', error);
-        appointment.loading = false;
-        this.showToastMessage('appointments.toast.statusError', 'error');
       }
     });
   }
@@ -412,6 +435,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
       endTime: this.formatTime(item.endTime),
       sessionTypeLabel: this.getSessionTypeLabel(item.typeOfSession),
       status: this.mapStatus(item.status),
+      description: item.description || '',
       loading: false
     };
   }

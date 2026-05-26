@@ -121,7 +121,8 @@ public class SessionController {
             SessionStatusResponseDTO response = sessionService.updateSessionStatus(
                     id,
                     request.getSpecialistId(),
-                    request.getAction()
+                    request.getAction(),
+                    request.getDescription()
             );
 
             logger.info("PATCH session status completed - id={} status={}",

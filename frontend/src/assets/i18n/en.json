@@ -200,6 +200,17 @@
         "presential": "In person",
         "unknown": "Unspecified"
       },
+      "description": {
+        "label": "Instructions for the patient",
+        "placeholder": "E.g. virtual meeting link, previous instructions, or important appointment details.",
+        "helper": "This text will be visible to the patient when the appointment is accepted.",
+        "counter": "Maximum 500 characters"
+      },
+      "sessionDescription": {
+        "title": "Appointment instructions",
+        "empty": "No additional instructions"
+      },
+      
       "empty": {
         "title": "No appointments to show",
         "description": "No appointments match the selected filters."
@@ -1018,7 +1029,9 @@
       "rejectMessage": "You are about to reject the appointment of",
       "cancel": "Cancel",
       "confirmAccept": "Yes, accept",
-      "confirmReject": "Yes, reject"
+      "confirmReject": "Yes, reject",
+      "descriptionLabel": "Instructions for the patient",
+      "descriptionPlaceholder": "E.g. virtual meeting link, previous instructions, or important appointment details."
     },
 
     "toast": {
@@ -1225,7 +1238,8 @@
       "virtual": "Virtual",
       "presential": "In-person",
       "sessionTypeUnknown": "Unspecified",
-      "timeUnavailable": "Time unavailable"
+      "timeUnavailable": "Time unavailable",
+      "specialistComment": "Specialist instructions"
     },
 
     "status": {

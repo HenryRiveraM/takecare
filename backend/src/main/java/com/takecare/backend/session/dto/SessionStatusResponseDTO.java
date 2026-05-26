@@ -17,4 +17,5 @@ public class SessionStatusResponseDTO {
     private Integer scheduleStatus; 
     private LocalDateTime updatedAt;
     private String notificationDescription;
+    private String description;
 }
