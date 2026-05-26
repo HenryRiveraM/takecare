@@ -77,7 +77,7 @@
       </a>
 
       <a
-        class="menu-item"
+        class="menu-item admin-validation-item"
         routerLink="/admin"
         [queryParams]="{ tab: 'validations' }"
         [class.active]="isAdminTab('validations')"
@@ -92,6 +92,15 @@
         [class.active]="isAdminTab('appointments')"
         (click)="closeSidebarOnMobile()">
         <i class="fas fa-calendar-check"></i> {{ 'admin.tabs.appointments' | translate }}
+      </a>
+
+      <a
+        class="menu-item"
+        routerLink="/admin"
+        [queryParams]="{ tab: 'reports' }"
+        [class.active]="isAdminTab('reports')"
+        (click)="closeSidebarOnMobile()">
+        <i class="fas fa-flag"></i> {{ 'admin.tabs.reports' | translate }}
       </a>
     </ng-container>
 
