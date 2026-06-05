@@ -1,4 +1,4 @@
-package com.takecare.backend.supportmaterial.controller;
+package com.takecare.backend.supportmaterial.Controller;
 
 import java.net.MalformedURLException;
 import java.util.Map;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.takecare.backend.supportmaterial.dto.SupportMaterialListResponseDto;
+import com.takecare.backend.supportmaterial.DTO.SupportMaterialListResponseDto;
 import com.takecare.backend.supportmaterial.service.OrientationMaterialService;
 
 @RestController
@@ -95,7 +95,7 @@ public class SupportMaterialController {
 
             String contentType = "application/octet-stream";
             if (filename.endsWith(".pdf")) contentType = "application/pdf";
-            else if (filename.endsWith(".doc"))  contentType = "application/msword";
+            else if (filename.endsWith(".doc")) contentType = "application/msword";
             else if (filename.endsWith(".docx")) contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
             return ResponseEntity.ok()
@@ -128,7 +128,7 @@ public class SupportMaterialController {
 
             String contentType = "application/octet-stream";
             if (filename.endsWith(".pdf")) contentType = "application/pdf";
-            else if (filename.endsWith(".doc"))  contentType = "application/msword";
+            else if (filename.endsWith(".doc")) contentType = "application/msword";
             else if (filename.endsWith(".docx")) contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
             return ResponseEntity.ok()

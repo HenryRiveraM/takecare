@@ -1,5 +1,5 @@
-package com.takecare.backend.supportmaterial.dto;
- 
+package com.takecare.backend.supportmaterial.DTO;
+
 import java.time.LocalDateTime;
 
 public record OrientationMaterialDTO(

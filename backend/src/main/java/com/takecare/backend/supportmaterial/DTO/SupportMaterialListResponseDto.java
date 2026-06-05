@@ -1,4 +1,4 @@
-package com.takecare.backend.supportmaterial.dto;
+package com.takecare.backend.supportmaterial.DTO;
 
 import java.util.List;
 

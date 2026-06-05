@@ -23,9 +23,9 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.takecare.backend.supportmaterial.dto.OrientationMaterialDTO;
-import com.takecare.backend.supportmaterial.dto.SupportMaterialItemDto;
-import com.takecare.backend.supportmaterial.dto.SupportMaterialListResponseDto;
+import com.takecare.backend.supportmaterial.DTO.OrientationMaterialDTO;
+import com.takecare.backend.supportmaterial.DTO.SupportMaterialItemDto;
+import com.takecare.backend.supportmaterial.DTO.SupportMaterialListResponseDto;
 import com.takecare.backend.supportmaterial.model.OrientationMaterial;
 import com.takecare.backend.supportmaterial.repository.OrientationMaterialRepository;
 import com.takecare.backend.user.model.Specialist;
