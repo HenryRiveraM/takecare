@@ -516,9 +516,14 @@
       "documents": "Verification Documents"
     },
     "sectionHelp": "Upload your identity document and a selfie to validate your account.",
+    "passwordRequirements": "Use between 8 and 50 characters, with at least one uppercase letter, one lowercase letter, and one number.",
     "uploads": {
       "document": "Upload identity document",
       "selfie": "Take a selfie"
+    },
+    "uploadHelp": {
+      "document": "JPG, PNG, or WEBP. Max. 5 MB.",
+      "selfie": "JPG, PNG, or WEBP. Max. 5 MB."
     },
     "terms": {
       "text1": "I accept the",
@@ -553,6 +558,10 @@
       "passwordConfirm": "* * * * * * * *"
     },
     "errors": {
+      "summary": {
+        "title": "Review the highlighted fields",
+        "message": "Each message explains what to correct before creating your account."
+      },
       "names": {
         "required": "First names are required.",
         "minlength": "First names must have at least 3 characters.",
@@ -577,20 +586,32 @@
         "pattern": "Only numbers and suffix are allowed."
       },
       "birthDate": {
-        "required": "Birth date is required."
+        "required": "Birth date is required.",
+        "invalid": "Enter a valid date.",
+        "future": "Birth date cannot be in the future.",
+        "underage": "You must be at least 18 years old to register."
       },
       "email": {
         "required": "Email address is required.",
-        "invalid": "Email address is invalid."
+        "invalid": "Enter a valid email address, for example name@domain.com."
       },
       "password": {
         "required": "Password is required.",
-        "minlength": "Password must contain between 8 and 50 characters and must contain at least one uppercase letter, one lowercase letter and one number."
+        "minlength": "Password must have at least 8 characters.",
+        "maxlength": "Password cannot have more than 50 characters.",
+        "strength": "Include at least one uppercase letter, one lowercase letter, and one number."
       },
       "passwordConfirm": {
         "required": "Password confirmation is required.",
-        "minlength": "Password confirmation must contain between 8 and 50 characters and must contain at least one uppercase letter, one lowercase letter and one number.",
+        "minlength": "Password confirmation must have at least 8 characters.",
+        "maxlength": "Password confirmation cannot have more than 50 characters.",
         "mismatch": "Passwords do not match."
+      },
+      "ciPhoto": {
+        "required": "Upload a clear photo of your identity document."
+      },
+      "selfie": {
+        "required": "Upload a selfie to verify that you are the person in the document."
       },
       "terms": {
         "required": "You must accept the terms to continue."
@@ -661,6 +682,7 @@
     "optional": "Optional.",
     "readyToUpload": "Ready to upload",
     "footerNote": "ⓘ Your profile will be reviewed by the administrator",
+    "passwordRequirements": "Use between 8 and 50 characters, with at least one uppercase letter, one lowercase letter, and one number.",
     "fields": {
       "firstName": "First name",
       "lastName1": "Last name",
@@ -684,8 +706,12 @@
       "document": "ID number"
     },
     "uploads": {
-      "idPhoto": "📷 Upload ID photo",
-      "certifications": "➕ Drag or click to upload PDFs"
+      "idPhoto": "Upload ID photo",
+      "certifications": "Drag or click to upload PDFs"
+    },
+    "uploadHelp": {
+      "idPhoto": "JPG, PNG, or WEBP. Max. 5 MB.",
+      "certifications": "PDF. Max. 8 MB."
     },
     "terms": {
       "text1": "I accept the",
@@ -700,6 +726,10 @@
       "complete": "Create account"
     },
     "errors": {
+      "summary": {
+        "title": "Review the highlighted fields",
+        "message": "Each message explains what to correct before sending your registration."
+      },
       "firstName": {
         "required": "First name is required.",
         "pattern": "First name must contain letters only.",
@@ -718,19 +748,27 @@
         "minlength": "Second last name must have at least 3 characters."
       },
       "birthDate": {
-        "required": "Birth date is required."
+        "required": "Birth date is required.",
+        "invalid": "Enter a valid date.",
+        "future": "Birth date cannot be in the future.",
+        "underage": "You must be at least 18 years old to register as a specialist."
       },
       "email": {
         "required": "Email address is required.",
-        "invalid": "Email format is invalid."
+        "invalid": "Enter a valid email address, for example specialist@domain.com."
       },
       "password": {
         "required": "Password is required.",
-        "range": "Minimum 8 characters and maximum 50 characters and must contain at least one uppercase letter, one lowercase letter, and one number."
+        "range": "Minimum 8 characters and maximum 50 characters and must contain at least one uppercase letter, one lowercase letter, and one number.",
+        "minlength": "Password must have at least 8 characters.",
+        "maxlength": "Password cannot have more than 50 characters.",
+        "strength": "Include at least one uppercase letter, one lowercase letter, and one number."
       },
       "passwordConfirm": {
         "required": "Password confirmation is required.",
         "range": "Password confirmation must contain between 8 and 50 characters and must contain at least one uppercase letter, one lowercase letter, and one number.",
+        "minlength": "Password confirmation must have at least 8 characters.",
+        "maxlength": "Password confirmation cannot have more than 50 characters.",
         "mismatch": "Passwords do not match."
       },
       "document": {

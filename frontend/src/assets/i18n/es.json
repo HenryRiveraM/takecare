@@ -522,9 +522,14 @@
       "documents": "Documentos de verificación"
     },
     "sectionHelp": "Sube tu documento de identidad y una selfie para validar tu cuenta.",
+    "passwordRequirements": "Usa entre 8 y 50 caracteres, con al menos una mayúscula, una minúscula y un número.",
     "uploads": {
       "document": "Subir documento de identidad",
       "selfie": "Tomar una selfie"
+    },
+    "uploadHelp": {
+      "document": "JPG, PNG o WEBP. Máx. 5 MB.",
+      "selfie": "JPG, PNG o WEBP. Máx. 5 MB."
     },
     "terms": {
       "text1": "Acepto los",
@@ -559,6 +564,10 @@
       "passwordConfirm": "* * * * * * * *"
     },
     "errors": {
+      "summary": {
+        "title": "Revisa los campos marcados",
+        "message": "Cada mensaje te indica qué corregir antes de crear tu cuenta."
+      },
       "names": {
         "required": "Los nombres son obligatorios.",
         "minlength": "Los nombres deben tener al menos 3 caracteres.",
@@ -583,20 +592,32 @@
         "pattern": "Solo se permiten números y complemento."
       },
       "birthDate": {
-        "required": "La fecha de nacimiento es obligatoria."
+        "required": "La fecha de nacimiento es obligatoria.",
+        "invalid": "Ingresa una fecha válida.",
+        "future": "La fecha de nacimiento no puede ser futura.",
+        "underage": "Debes tener al menos 18 años para registrarte."
       },
       "email": {
         "required": "El correo electrónico es obligatorio.",
-        "invalid": "El correo electrónico no es válido."
+        "invalid": "Ingresa un correo válido, por ejemplo nombre@dominio.com."
       },
       "password": {
         "required": "La contraseña es obligatoria.",
-        "minlength": "La contraseña debe tener entre 8 a 50 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número."
+        "minlength": "La contraseña debe tener al menos 8 caracteres.",
+        "maxlength": "La contraseña no puede tener más de 50 caracteres.",
+        "strength": "Incluye al menos una letra mayúscula, una minúscula y un número."
       },
       "passwordConfirm": {
         "required": "La confirmación de contraseña es obligatoria.",
-        "minlength": "La confirmación debe tener entre 8 a 50 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
+        "minlength": "La confirmación debe tener al menos 8 caracteres.",
+        "maxlength": "La confirmación no puede tener más de 50 caracteres.",
         "mismatch": "Las contraseñas no coinciden."
+      },
+      "ciPhoto": {
+        "required": "Sube una foto clara de tu documento de identidad."
+      },
+      "selfie": {
+        "required": "Sube una selfie para verificar que eres la persona del documento."
       },
       "terms": {
         "required": "Debes aceptar los términos para continuar."
@@ -666,6 +687,7 @@
     "optional": "Opcional.",
     "readyToUpload": "Listo para subir",
     "footerNote": "ⓘ Su perfil será revisado por el administrador",
+    "passwordRequirements": "Usa entre 8 y 50 caracteres, con al menos una mayúscula, una minúscula y un número.",
     "fields": {
       "firstName": "Nombre",
       "lastName1": "Apellido paterno",
@@ -689,8 +711,12 @@
       "document": "Número de CI"
     },
     "uploads": {
-      "idPhoto": "📷 Subir fotografía de CI",
-      "certifications": "➕ Arrastra o haz clic para subir PDFs"
+      "idPhoto": "Subir fotografía de CI",
+      "certifications": "Arrastra o haz clic para subir PDFs"
+    },
+    "uploadHelp": {
+      "idPhoto": "JPG, PNG o WEBP. Máx. 5 MB.",
+      "certifications": "PDF. Máx. 8 MB."
     },
     "terms": {
       "text1": "Acepto los",
@@ -705,6 +731,10 @@
       "complete": "Crear cuenta"
     },
     "errors": {
+      "summary": {
+        "title": "Revisa los campos marcados",
+        "message": "Cada mensaje te indica qué corregir antes de enviar tu registro."
+      },
       "firstName": {
         "required": "El nombre es obligatorio.",
         "pattern": "El nombre solo debe tener caracteres.",
@@ -723,19 +753,27 @@
         "minlength": "El segundo apellido debe tener al menos 3 caracteres."
       },
       "birthDate": {
-        "required": "La fecha de nacimiento es obligatoria."
+        "required": "La fecha de nacimiento es obligatoria.",
+        "invalid": "Ingresa una fecha válida.",
+        "future": "La fecha de nacimiento no puede ser futura.",
+        "underage": "Debes tener al menos 18 años para registrarte como especialista."
       },
       "email": {
         "required": "El correo electrónico es obligatorio.",
-        "invalid": "El formato del correo electrónico es inválido."
+        "invalid": "Ingresa un correo válido, por ejemplo especialista@dominio.com."
       },
       "password": {
         "range": "Mínimo 8 caracteres y máximo 50 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
-        "required": "La contraseña es obligatoria."
+        "required": "La contraseña es obligatoria.",
+        "minlength": "La contraseña debe tener al menos 8 caracteres.",
+        "maxlength": "La contraseña no puede tener más de 50 caracteres.",
+        "strength": "Incluye al menos una letra mayúscula, una minúscula y un número."
       },
       "passwordConfirm": {
         "required": "La confirmación de contraseña es obligatoria.",
         "range": "Mínimo 8 caracteres y máximo 50 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
+        "minlength": "La confirmación debe tener al menos 8 caracteres.",
+        "maxlength": "La confirmación no puede tener más de 50 caracteres.",
         "mismatch": "Las contraseñas no coinciden."
       },
       "document": {

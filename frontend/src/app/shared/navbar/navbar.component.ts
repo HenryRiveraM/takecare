@@ -71,6 +71,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login'], { replaceUrl: true });
   }
 
+  navigateToLogoRoute(): void {
+    this.notificationsOpen = false;
+    this.sidebarService.close();
+    this.router.navigate([this.getLogoRoute()]);
+  }
+
   toggleNotifications(): void {
     if ((this.privateArea !== 'specialist' && this.privateArea !== 'patient') || !this.user?.id) {
       return;
@@ -90,6 +96,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   getPrivateHomeRoute(): string {
+    return this.getHomeRouteByRole(this.user);
+  }
+
+  getLogoRoute(): string {
+    const user = this.user ?? this.authService.getUser();
+    return this.getHomeRouteByRole(user);
+  }
+
+  private getHomeRouteByRole(user: LoginResponse | null): string {
+    const role = Number(user?.role);
+
+    if (role === 3) {
+      return '/admin';
+    }
+
+    if (role === 2) {
+      return '/specialist';
+    }
+
+    if (role === 1) {
+      return '/patient';
+    }
+
     if (this.privateArea === 'admin') {
       return '/admin';
     }
@@ -98,7 +127,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       return '/specialist';
     }
 
-    return '/patient';
+    if (this.privateArea === 'patient') {
+      return '/patient';
+    }
+
+    return '/';
   }
 
   private updateNavbarState(): void {

@@ -29,6 +29,13 @@
   cursor: pointer;
 }
 
+.logo-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+}
+
 .logo:hover img {
   transform: scale(1.05);
 }

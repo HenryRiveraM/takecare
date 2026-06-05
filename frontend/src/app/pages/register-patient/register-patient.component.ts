@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -72,12 +72,17 @@ export class RegisterPatientComponent {
         Validators.maxLength(10),
         Validators.pattern(/^[0-9A-Za-z-]+$/)
       ]],
-      birth_date: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      birth_date: ['', [Validators.required, this.adultDateValidator]],
+      email: ['', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+      ]],
       password: ['', [
         Validators.required,
         Validators.minLength(8),
-        Validators.maxLength(50)
+        Validators.maxLength(50),
+        this.passwordStrengthValidator
       ]],
       passwordConfirm: ['', [
         Validators.required,
@@ -88,12 +93,28 @@ export class RegisterPatientComponent {
       documento: [null, Validators.required],
       selfie: [null, Validators.required],
       terms: [false, Validators.requiredTrue]
+    }, {
+      validators: this.passwordsMatchValidator
     });
   }
 
   isInvalid(field: string): boolean {
     const control = this.form.get(field);
-    return !!(control && control.touched && control.invalid);
+    return !!(control && (control.touched || this.submitted) && control.invalid);
+  }
+
+  hasError(field: string, error: string): boolean {
+    const control = this.form.get(field);
+    return !!(control && (control.touched || this.submitted) && control.hasError(error));
+  }
+
+  hasPasswordMismatch(): boolean {
+    const confirmControl = this.form.get('passwordConfirm');
+    return !!(
+      this.form.hasError('passwordMismatch') &&
+      confirmControl?.value &&
+      (confirmControl.touched || this.submitted)
+    );
   }
 
   onFileSelected(event: Event, tipo: 'documento' | 'selfie') {
@@ -217,6 +238,56 @@ export class RegisterPatientComponent {
     const password = this.form.get('password')?.value;
     const passwordConfirm = this.form.get('passwordConfirm')?.value;
     return password === passwordConfirm && password?.length > 0;
+  }
+
+  private passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const passwordConfirm = group.get('passwordConfirm')?.value;
+
+    if (!password || !passwordConfirm) {
+      return null;
+    }
+
+    return password === passwordConfirm ? null : { passwordMismatch: true };
+  }
+
+  private passwordStrengthValidator(control: AbstractControl): ValidationErrors | null {
+    const value = String(control.value || '');
+
+    if (!value) {
+      return null;
+    }
+
+    const hasUppercase = /[A-ZÁÉÍÓÚÑ]/.test(value);
+    const hasLowercase = /[a-záéíóúñ]/.test(value);
+    const hasNumber = /\d/.test(value);
+
+    return hasUppercase && hasLowercase && hasNumber ? null : { passwordStrength: true };
+  }
+
+  private adultDateValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value) {
+      return null;
+    }
+
+    const birthDate = new Date(`${value}T00:00:00`);
+    if (Number.isNaN(birthDate.getTime())) {
+      return { invalidDate: true };
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (birthDate > today) {
+      return { futureDate: true };
+    }
+
+    const adultDate = new Date(today);
+    adultDate.setFullYear(adultDate.getFullYear() - 18);
+
+    return birthDate <= adultDate ? null : { underage: true };
   }
 
    async onSubmit() {
