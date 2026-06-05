@@ -4,13 +4,14 @@
   </button>
 
   <nav class="links">
-    <a routerLink="/">{{ 'navbar.home' | translate }}</a>
-    <a routerLink="/">{{ 'navbar.about' | translate }}</a>
+    <a routerLink="/" fragment="inicio">{{ 'navbar.home' | translate }}</a>
+    <a routerLink="/" fragment="nosotros">{{ 'navbar.about' | translate }}</a>
   </nav>
 
   <div class="actions">
     <select
       class="lang-select"
+      [attr.aria-label]="'navbar.language' | translate"
       [value]="languageService.getCurrentLanguage()"
       (change)="changeLanguage($event)">
       <option value="es">ES</option>
@@ -42,7 +43,7 @@
     </div>
   </button>
 
-  <div *ngIf="isDashboard" style="flex: 1;"></div>
+  <div *ngIf="isDashboard" class="navbar-spacer"></div>
 
   <nav class="links private-links" *ngIf="privateArea === 'patient' && !isDashboard">
     <a routerLink="/patient" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
@@ -54,7 +55,11 @@
   </nav>
 
   <div class="actions private-actions">
-    <select class="lang-select" [value]="languageService.getCurrentLanguage()" (change)="changeLanguage($event)">
+    <select
+      class="lang-select"
+      [attr.aria-label]="'navbar.language' | translate"
+      [value]="languageService.getCurrentLanguage()"
+      (change)="changeLanguage($event)">
       <option value="es">ES</option>
       <option value="en">EN</option>
     </select>

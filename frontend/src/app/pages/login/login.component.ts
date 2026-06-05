@@ -55,8 +55,6 @@ export class LoginComponent {
 
         if (response.success && response.data) {
 
-          console.log('LOGIN RESPONSE:', response);
-
           const accountVerified = Number(response.data.accountVerified);
 
           // accountVerified: 1 = aceptado, 2 = pendiente, 0 = rechazado
@@ -130,8 +128,6 @@ export class LoginComponent {
   }
 
   redirectByRole(role: number): void {
-
-    console.log('ROLE:', role);
 
     if (role === 3) {
       this.router.navigate(['/admin']);

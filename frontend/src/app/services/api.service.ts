@@ -63,7 +63,6 @@ export class ApiService {
   getPatientProfile(): Observable<PatientProfile> {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const userId = user?.id;
-    console.log(`API: Obteniendo perfil de paciente. UserId: ${userId}`);
     return this.http.get<PatientProfile>(
       `${this.baseUrl}/api/v1/users/profile/${userId}`
     );
@@ -72,7 +71,6 @@ export class ApiService {
   updatePatientProfile(data: PatientProfile): Observable<PatientProfile> {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     const userId = user?.id;
-    console.log(`API: Actualizando perfil de paciente. UserId: ${userId}`);
     return this.http.put<PatientProfile>(
       `${this.baseUrl}/api/v1/users/profile/${userId}`,
       data

@@ -931,12 +931,71 @@
     align-self: flex-start;
   }
 
-  .table-card table {
-    min-width: 880px;
+  .users-table {
+    overflow: visible;
+    background: transparent;
   }
 
-  .users-table table {
-    min-width: 820px;
+  .users-table table,
+  .users-table thead,
+  .users-table tbody,
+  .users-table tr,
+  .users-table td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .users-table thead {
+    display: none;
+  }
+
+  .users-table tbody {
+    display: grid;
+    gap: 14px;
+  }
+
+  .users-table tbody tr {
+    background: #ffffff;
+    border: 1px solid #edf2f1;
+    border-radius: 18px;
+    padding: 14px;
+    box-shadow: 0 8px 20px rgba(31, 41, 55, 0.06);
+  }
+
+  .users-table tbody tr:hover {
+    background: #ffffff;
+  }
+
+  .users-table td {
+    display: grid;
+    grid-template-columns: minmax(110px, 40%) 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 11px 0;
+    border-bottom: 1px solid #f1e8e8;
+    text-align: left;
+  }
+
+  .users-table td::before {
+    content: attr(data-label);
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .users-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .users-table .status,
+  .users-table .delete-button,
+  .users-table .activate-button {
+    width: auto;
+    min-width: 130px;
+    justify-self: start;
   }
 }
 

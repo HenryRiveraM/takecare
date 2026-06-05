@@ -173,6 +173,10 @@
   white-space: nowrap;
 }
 
+.navbar-spacer {
+  flex: 1;
+}
+
 .private-actions {
   gap: 10px;
 }

@@ -6,13 +6,12 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { PatientService, PatientProfile } from '../../services/patient.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
-import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-patient-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslatePipe,SidebarComponent,NavbarComponent],
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe, SidebarComponent],
   templateUrl: './patient-profile.component.html',
   styleUrl: './patient-profile.component.css'
 })
@@ -65,7 +64,6 @@ export class PatientProfileComponent implements OnInit {
             clinicalHistory: profile.clinicalHistory || ''
           });
           this.userDataBackup = profile;
-          console.log('Datos cargados:', profile);
         } else {
           console.error('Error: perfil vacío');
           alert(this.translate.instant('patientProfile.messages.loadError'));
@@ -124,7 +122,6 @@ export class PatientProfileComponent implements OnInit {
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      console.log('Archivo seleccionado:', file.name);
     }
   }
 }

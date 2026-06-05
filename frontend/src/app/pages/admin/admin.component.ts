@@ -343,6 +343,14 @@ export class AdminComponent implements OnInit {
   }
 
   updateReportStatus(report: AdminReport, status: 'ACCEPTED' | 'FINISHED'): void {
+    const confirmationKey = status === 'ACCEPTED'
+      ? 'admin.reports.confirmations.accept'
+      : 'admin.reports.confirmations.finish';
+
+    if (!confirm(this.translate.instant(confirmationKey))) {
+      return;
+    }
+
     this.processingReportId = report.id;
     this.errorMsg = '';
 
@@ -395,6 +403,13 @@ export class AdminComponent implements OnInit {
 
   togglePatientStatus(patient: Patient): void {
     const newStatus: 0 | 1 = patient.status === 1 ? 0 : 1;
+    const confirmationKey = newStatus === 1
+      ? 'admin.confirmations.activatePatient'
+      : 'admin.confirmations.suspendPatient';
+
+    if (!confirm(this.translate.instant(confirmationKey))) {
+      return;
+    }
 
     this.adminService.updateUserStatus(patient.id, newStatus).subscribe({
       next: () => {
@@ -415,6 +430,13 @@ export class AdminComponent implements OnInit {
 
   toggleSpecialistStatus(specialist: Specialist): void {
     const newStatus: 0 | 1 = specialist.status === 1 ? 0 : 1;
+    const confirmationKey = newStatus === 1
+      ? 'admin.confirmations.activateSpecialist'
+      : 'admin.confirmations.suspendSpecialist';
+
+    if (!confirm(this.translate.instant(confirmationKey))) {
+      return;
+    }
 
     this.adminService.updateUserStatus(specialist.id, newStatus).subscribe({
       next: () => {

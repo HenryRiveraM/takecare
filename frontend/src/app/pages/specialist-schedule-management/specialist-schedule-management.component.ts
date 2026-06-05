@@ -115,8 +115,6 @@ export class SpecialistScheduleManagementComponent implements OnInit {
 
     const user = JSON.parse(userData);
     this.specialistId = Number(user.id);
-
-    console.log('Specialist ID usado en Agenda:', this.specialistId);
   }
 
   private initializeCurrentSevenDaysRange(): void {
@@ -135,8 +133,6 @@ export class SpecialistScheduleManagementComponent implements OnInit {
     };
 
     this.resetForm();
-
-    console.log('Rango visible:', this.currentRangeStart, 'a', this.currentRangeEnd);
   }
 
   loadSchedules(): void {

@@ -45,7 +45,9 @@
             type="button" 
             class="password-toggle"
             (click)="showPassword = !showPassword"
-            [attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+            [attr.aria-label]="(showPassword ? 'login.accessibility.hidePassword' : 'login.accessibility.showPassword') | translate"
+            [attr.title]="(showPassword ? 'login.accessibility.hidePassword' : 'login.accessibility.showPassword') | translate"
+            [attr.aria-pressed]="showPassword">
             <span class="material-symbols-outlined">
               {{ showPassword ? 'visibility_off' : 'visibility' }}
             </span>

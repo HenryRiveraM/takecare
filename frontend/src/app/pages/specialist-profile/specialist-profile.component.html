@@ -35,69 +35,88 @@
 
       <form (ngSubmit)="save()" class="form" *ngIf="!loading">
 
-        <div class="grid">
+        <section class="profile-section">
+          <div class="section-copy">
+            <span class="section-tag">{{ 'specialistProfile.sections.personal' | translate }}</span>
+            <h2>{{ 'specialistProfile.sections.personal' | translate }}</h2>
+            <p>{{ 'specialistProfile.sections.personalHelp' | translate }}</p>
+          </div>
 
-          <div class="field">
-            <label>{{ 'specialistProfile.fields.names' | translate }}</label>
-            <div class="input-group">
-              <span class="material-symbols-outlined">person</span>
-              <input [(ngModel)]="profile.names" name="names" [readonly]="!isEditing"/>
+          <div class="grid">
+
+            <div class="field">
+              <label>{{ 'specialistProfile.fields.names' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">person</span>
+                <input [(ngModel)]="profile.names" name="names" [readonly]="!isEditing"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.fields.firstLastname' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">person</span>
+                <input [(ngModel)]="profile.firstLastname" name="firstLastname" [readonly]="!isEditing"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.fields.secondLastname' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">person</span>
+                <input
+                  [(ngModel)]="profile.secondLastname"
+                  name="secondLastname"
+                  [placeholder]="'specialistProfile.placeholders.secondLastname' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.fields.email' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">mail</span>
+                <input [(ngModel)]="profile.email" name="email" type="email" readonly/>
+              </div>
             </div>
           </div>
+        </section>
 
-          <div class="field">
-            <label>{{ 'specialistProfile.fields.firstLastname' | translate }}</label>
-            <div class="input-group">
-              <span class="material-symbols-outlined">person</span>
-              <input [(ngModel)]="profile.firstLastname" name="firstLastname" [readonly]="!isEditing"/>
+        <section class="profile-section">
+          <div class="section-copy">
+            <span class="section-tag">{{ 'specialistProfile.sections.professional' | translate }}</span>
+            <h2>{{ 'specialistProfile.sections.professional' | translate }}</h2>
+            <p>{{ 'specialistProfile.sections.professionalHelp' | translate }}</p>
+          </div>
+
+          <div class="grid">
+            <div class="field full">
+              <label>{{ 'specialistProfile.fields.biography' | translate }}</label>
+              <textarea
+                [(ngModel)]="profile.biography"
+                name="biography"
+                [placeholder]="'specialistProfile.placeholders.biography' | translate"
+                [readonly]="!isEditing">
+              </textarea>
+            </div>
+
+            <div class="field">
+              <label>{{ 'specialistProfile.fields.cost' | translate }}</label>
+              <div class="input-group">
+                <span class="material-symbols-outlined">payments</span>
+                <input
+                  [(ngModel)]="profile.sessionCost"
+                  name="sessionCost"
+                  type="number"
+                  min="0"
+                  [placeholder]="'specialistProfile.placeholders.cost' | translate"
+                  [readonly]="!isEditing"/>
+              </div>
             </div>
           </div>
+        </section>
 
-          <div class="field">
-            <label>{{ 'specialistProfile.fields.secondLastname' | translate }}</label>
-            <div class="input-group">
-              <span class="material-symbols-outlined">person</span>
-              <input
-                [(ngModel)]="profile.secondLastname"
-                name="secondLastname"
-                [placeholder]="'specialistProfile.placeholders.secondLastname' | translate"
-                [readonly]="!isEditing"/>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>{{ 'specialistProfile.fields.email' | translate }}</label>
-            <div class="input-group">
-              <span class="material-symbols-outlined">mail</span>
-              <input [(ngModel)]="profile.email" name="email" type="email" readonly/>
-            </div>
-          </div>
-
-          <div class="field full">
-            <label>{{ 'specialistProfile.fields.biography' | translate }}</label>
-            <textarea
-              [(ngModel)]="profile.biography"
-              name="biography"
-              [placeholder]="'specialistProfile.placeholders.biography' | translate"
-              [readonly]="!isEditing">
-            </textarea>
-          </div>
-
-          <div class="field">
-            <label>{{ 'specialistProfile.fields.cost' | translate }}</label>
-            <div class="input-group">
-              <span class="material-symbols-outlined">payments</span>
-              <input
-                [(ngModel)]="profile.sessionCost"
-                name="sessionCost"
-                type="number"
-                min="0"
-                [placeholder]="'specialistProfile.placeholders.cost' | translate"
-                [readonly]="!isEditing"/>
-            </div>
-          </div>
-
-          <div class="location-card full">
+          <div class="location-card">
             <div class="section-copy">
               <span class="section-tag">{{ 'specialistProfile.location.tag' | translate }}</span>
               <h2>{{ 'specialistProfile.location.title' | translate }}</h2>
@@ -199,8 +218,6 @@
               {{ locationErrorMsg }}
             </p>
           </div>
-
-        </div>
 
         <!-- ACTIONS -->
         <div class="actions" *ngIf="!isEditing">

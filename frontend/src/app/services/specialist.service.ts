@@ -79,7 +79,6 @@ export class SpecialistService {
   }
 
   getProfile(id: number): Observable<any> {
-    console.log(`Obteniendo perfil de especialista: ${this.baseUrl}/api/v1/specialists/${id}/profile`);
     return this.http.get(`${this.baseUrl}/api/v1/specialists/${id}/profile`);
   }
 
@@ -88,7 +87,6 @@ export class SpecialistService {
   }
   
   updateProfile(id: number, data: any): Observable<any> {
-    console.log(`Actualizando perfil de especialista: ${this.baseUrl}/api/v1/specialists/${id}/profile`, data);
     return this.http.put(`${this.baseUrl}/api/v1/specialists/${id}/profile`, data);
   }
 
