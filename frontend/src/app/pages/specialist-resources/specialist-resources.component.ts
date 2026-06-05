@@ -197,6 +197,10 @@ export class SpecialistResourcesComponent implements OnInit {
   }
  
   deleteResource(resource: Resource): void {
+    if (!confirm(this.translate.instant('resources.confirmations.delete'))) {
+      return;
+    }
+
     this.resourcesService.deleteResource(this.user.id, resource.id).subscribe({
       next: () => {
         this.resources = this.resources.filter(r => r.id !== resource.id);

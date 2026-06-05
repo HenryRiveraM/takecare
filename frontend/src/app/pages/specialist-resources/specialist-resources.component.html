@@ -27,7 +27,7 @@
         <div class="upload-card">
           <div class="upload-card-header">
             <h2><i class="fas fa-cloud-upload-alt"></i> {{ 'resources.upload.title' | translate }}</h2>
-            <button class="btn-close" (click)="closeUploadPanel()">
+            <button class="btn-close" (click)="closeUploadPanel()" [attr.aria-label]="'resources.actions.close' | translate">
               <i class="fas fa-times"></i>
             </button>
           </div>
@@ -96,7 +96,7 @@
                   <span class="file-name">{{ selectedFile.name }}</span>
                   <span class="file-size">{{ formatFileSize(selectedFile.size) }}</span>
                 </div>
-                <button class="btn-remove-file" (click)="clearSelectedFile()">
+                <button class="btn-remove-file" (click)="clearSelectedFile()" [attr.aria-label]="'resources.actions.removeFile' | translate">
                   <i class="fas fa-times"></i>
                 </button>
               </div>
@@ -152,10 +152,10 @@
             </div>
 
             <div class="resource-actions">
-              <button class="btn-icon btn-preview" (click)="previewResource(resource)" [title]="'resources.actions.preview' | translate">
+              <button class="btn-icon btn-preview" (click)="previewResource(resource)" [title]="'resources.actions.preview' | translate" [attr.aria-label]="'resources.actions.preview' | translate">
                 <i class="fas fa-eye"></i>
               </button>
-              <button class="btn-icon btn-delete" (click)="deleteResource(resource)" [title]="'resources.actions.delete' | translate">
+              <button class="btn-icon btn-delete" (click)="deleteResource(resource)" [title]="'resources.actions.delete' | translate" [attr.aria-label]="'resources.actions.delete' | translate">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </div>
@@ -169,29 +169,29 @@
     <div class="preview-content" (click)="$event.stopPropagation()">
 
       <div class="preview-header">
-        <span class="preview-title">{{ previewResource$?.title }}</span>
-        <button class="btn-close-preview" (click)="closePreview()">
+        <span class="preview-title">{{ previewResource$.title }}</span>
+        <button class="btn-close-preview" (click)="closePreview()" [attr.aria-label]="'resources.actions.close' | translate">
           <i class="fas fa-times"></i>
         </button>
       </div>
 
       <div class="preview-body">
 
-        <div *ngIf="isPdf(previewResource$?.fileName || '')" class="preview-unsupported">
-          <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 3rem;"></i>
-          <h3>{{ previewResource$?.title }}</h3>
-          <a [href]="getFullUrl(previewResource$?.fileUrl || '')" 
+        <div *ngIf="isPdf(previewResource$.fileName || '')" class="preview-unsupported">
+          <i class="fas fa-file-pdf preview-file-icon"></i>
+          <h3>{{ previewResource$.title }}</h3>
+          <a [href]="getFullUrl(previewResource$.fileUrl || '')"
             target="_blank" 
             class="btn-primary">
-            <i class="fas fa-external-link-alt"></i> Abrir PDF
+            <i class="fas fa-external-link-alt"></i> {{ 'resources.preview.openPdf' | translate }}
           </a>
         </div>
 
-        <div *ngIf="isWord(previewResource$?.fileName || '')" class="preview-unsupported">
+        <div *ngIf="isWord(previewResource$.fileName || '')" class="preview-unsupported">
           <i class="fas fa-file-word"></i>
           <h3>{{ 'resources.preview.wordUnsupported' | translate }}</h3>
           <p>{{ 'resources.preview.wordDescription' | translate }}</p>
-          <a [href]="previewResource$?.fileUrl" target="_blank" class="btn-primary">
+          <a [href]="previewResource$.fileUrl" target="_blank" class="btn-primary">
             <i class="fas fa-external-link-alt"></i>
             {{ 'resources.preview.openExternal' | translate }}
           </a>

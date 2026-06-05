@@ -4,6 +4,7 @@
     "about": "About us",
     "login": "Log in",
     "register": "Sign up",
+    "language": "Select language",
     "private": {
       "common": {
         "home": "Home",
@@ -45,33 +46,48 @@
     "hero": {
       "tag": "Your journey begins here",
       "title": "You are not alone.",
-      "subtitle": "Find professional support and manage your mental well-being with Take Care. A safe and compassionate space for your path toward healing and peace of mind.",
-      "primaryButton": "Find Help",
-      "secondaryButton": "Watch Video"
+      "subtitle": "Find verified specialists, schedule appointments, and manage your mental well-being in Take Care, a safe and supportive space to move at your own pace.",
+      "primaryButton": "Find support",
+      "secondaryButton": "Explore the platform",
+      "imageAlt": "Therapeutic support illustration"
     },
     "stats": {
       "specialists": "Verified Specialists",
       "sessions": "Secure Sessions",
-      "success": "Patient Success"
+      "success": "People supported"
     },
     "features": {
-      "title": "Compassionate Care for Everyone",
+      "title": "Clear, human, and secure care",
+      "subtitle": "Take Care is designed to make asking for help simpler: less uncertainty, more information, and professional support.",
       "card1": {
-        "title": "Clinical Excellence",
-        "text": "Access top-tier psychologists and psychiatrists with verified backgrounds and full licenses."
+        "title": "Verified specialists",
+        "text": "Each specialist goes through a review before joining the platform."
       },
       "card2": {
-        "title": "Radical Privacy",
-        "text": "Your sessions and data are your business. We use military-grade encryption to keep them that way."
+        "title": "Privacy handled with care",
+        "text": "Your health information is handled with care, clarity, and controlled access."
       },
       "card3": {
-        "title": "Seamless Booking",
-        "text": "Forget the calls. Book, reschedule, or cancel appointments directly through our intuitive calendar."
+        "title": "Simple scheduling",
+        "text": "Find specialists, review availability, and request appointments without unnecessary calls."
+      }
+    },
+    "trust": {
+      "tag": "About us",
+      "title": "A platform designed to support you better",
+      "text": "Take Care connects patients, specialists, and administration in a clear flow: registration, validation, search, appointments, and follow-up.",
+      "item1": {
+        "title": "Validation before care",
+        "text": "Profiles go through review to strengthen trust in the system."
+      },
+      "item2": {
+        "title": "Supervised activity",
+        "text": "The system supports reviewing appointments, reports, and statuses to protect the experience."
       }
     },
     "cta": {
       "title": "Ready to begin your journey?",
-      "text": "Join thousands of people who have taken the first step toward a healthier mind.",
+      "text": "Create your account and start looking for the professional support that best fits you.",
       "button": "Start Now"
     }
   },
@@ -117,6 +133,12 @@
       "reject": "Reject",
       "approve": "Approve",
       "cancel": "Cancel"
+    },
+    "confirmations": {
+      "suspendPatient": "Are you sure you want to suspend this patient? They will not be able to use their account until you activate it again.",
+      "activatePatient": "Are you sure you want to activate this patient?",
+      "suspendSpecialist": "Are you sure you want to suspend this specialist? They will not be able to use their account until you activate it again.",
+      "activateSpecialist": "Are you sure you want to activate this specialist?"
     },
     "loading": {
       "patients": "Loading patients...",
@@ -245,6 +267,10 @@
         "finish": "Finish",
         "managed": "Managed"
       },
+      "confirmations": {
+        "accept": "Are you sure you want to accept this report? A strike will be added to the reported user.",
+        "finish": "Are you sure you want to finish this report without a penalty?"
+      },
       "notifications": {
         "accepted": "Report accepted. A strike was added to the reported user.",
         "finished": "Report finished without a penalty."
@@ -268,6 +294,10 @@
     "submit": "Log In",
     "success": "Login successful",
     "secure": "Secure connection",
+    "accessibility": {
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
+    },
     "errors": {
       "invalidEmail": "Invalid email",
       "passwordRequired": "Password required (min. 8 characters)",
@@ -340,7 +370,7 @@
     "back": "Back",
     "tag": "Patient profile",
     "title": "Edit profile",
-    "subtitle": "Update your information and improve your presence on TakeCare.",
+    "subtitle": "Update your information and improve your presence on Take Care.",
     "fields": {
       "names": "First names",
       "firstLastname": "First last name",
@@ -504,7 +534,11 @@
     "successText2": "Please check your inbox.",
     "tryAnother": "Try another email",
     "backToSession": "Back to sign in",
-    "alertMessage": "If the email exists, you will receive a link soon."
+    "alertMessage": "If the email exists, you will receive a link soon.",
+    "errors": {
+      "required": "Enter the email associated with your account.",
+      "email": "Enter a valid email address, for example name@domain.com."
+    }
   },
   "registerPatient": {
     "title": "Patient Registration",
@@ -908,7 +942,7 @@
     "newSession": "New session",
     "tag": "Specialist dashboard",
     "welcome": "Welcome",
-    "subtitle": "Your professional space in TakeCare",
+    "subtitle": "Your professional space in Take Care",
     "stats": {
       "patients": "Patients",
       "sessionsToday": "Sessions today",
@@ -998,8 +1032,14 @@
     "back": "Back",
     "tag": "Specialist profile",
     "title": "Edit profile",
-    "subtitle": "Update your information and improve your presence on TakeCare.",
+    "subtitle": "Update your information and improve your presence on Take Care.",
     "loading": "Loading information...",
+    "sections": {
+      "personal": "Personal information",
+      "personalHelp": "This information identifies your professional account inside Take Care.",
+      "professional": "Professional presentation",
+      "professionalHelp": "Help patients understand your approach, experience, and session cost."
+    },
 
     "fields": {
       "names": "Names",
@@ -1307,14 +1347,20 @@
     },
 
     "toast": {
-      "success": "✅ Resource uploaded successfully",
-      "deleted": " 🗑️ Resource deleted",
-      "error": "❌ An error occurred, please try again"
+      "success": "Resource uploaded successfully",
+      "deleted": "Resource deleted",
+      "error": "An error occurred, please try again"
     },
 
     "actions": {
       "delete": "Delete",
-      "preview": "Preview"
+      "preview": "Preview",
+      "close": "Close",
+      "removeFile": "Remove file"
+    },
+
+    "confirmations": {
+      "delete": "Are you sure you want to delete this resource? This action cannot be undone from the interface."
     },
 
     "empty": {
@@ -1326,6 +1372,7 @@
     "preview": {
       "wordUnsupported": "Preview not available",
       "wordDescription": "Word files cannot be previewed. Open it in a new tab.",
+      "openPdf": "Open PDF",
       "openExternal": "Open file",
       "notAvailable": "File not available yet",
       "notAvailableDesc": "The file will be available once the backend processes the upload."

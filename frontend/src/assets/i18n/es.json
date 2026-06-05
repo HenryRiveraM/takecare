@@ -4,6 +4,7 @@
     "about": "Nosotros",
     "login": "Iniciar sesión",
     "register": "Registrarse",
+    "language": "Seleccionar idioma",
     "private": {
       "common": {
         "home": "Inicio",
@@ -43,36 +44,51 @@
   
   "home": {
     "hero": {
-      "tag": "Su viaje comienza aquí",
-      "title": "Usted no está solo.",
-      "subtitle": "Encuentra apoyo profesional y gestiona tu bienestar mental con Take Care. Un espacio seguro y compasivo para tu camino hacia la sanación y la paz mental.",
-      "primaryButton": "Encuentra Ayuda",
-      "secondaryButton": "Ver Video"
+      "tag": "Tu proceso comienza aquí",
+      "title": "No tienes que hacerlo solo.",
+      "subtitle": "Encuentra especialistas verificados, agenda citas y gestiona tu bienestar mental en Take Care, un espacio seguro y cercano para avanzar a tu ritmo.",
+      "primaryButton": "Encontrar apoyo",
+      "secondaryButton": "Conocer la plataforma",
+      "imageAlt": "Ilustración de acompañamiento terapéutico"
     },
     "stats": {
-      "specialists": "Especialistas Verificados",
-      "sessions": "Sesiones Seguras",
-      "success": "Éxito de Pacientes"
+      "specialists": "Especialistas verificados",
+      "sessions": "Sesiones seguras",
+      "success": "Personas acompañadas"
     },
     "features": {
-      "title": "Cuidado Compasivo para Todos",
+      "title": "Cuidado claro, humano y seguro",
+      "subtitle": "Diseñamos Take Care para que pedir ayuda sea más simple: menos incertidumbre, más información y acompañamiento profesional.",
       "card1": {
-        "title": "Excelencia Clínica",
-        "text": "Acceda a psicólogos y psiquiatras de primer nivel, con antecedentes verificados y con licencia completa."
+        "title": "Especialistas verificados",
+        "text": "Cada especialista pasa por revisión antes de formar parte de la plataforma."
       },
       "card2": {
-        "title": "Privacidad Radical",
-        "text": "Tus sesiones y datos son asunto tuyo. Usamos cifrado de nivel militar para garantizar que así sea."
+        "title": "Privacidad cuidada",
+        "text": "Tu información de salud se trata con cuidado, claridad y acceso controlado."
       },
       "card3": {
-        "title": "Reserva Sin Interrupciones",
-        "text": "Olvídate de las llamadas. Reserva, reprograma o cancela citas directamente a través de nuestro calendario intuitivo."
+        "title": "Agenda simple",
+        "text": "Busca especialistas, revisa disponibilidad y solicita citas sin llamadas innecesarias."
+      }
+    },
+    "trust": {
+      "tag": "Sobre nosotros",
+      "title": "Una plataforma pensada para acompañarte mejor",
+      "text": "Take Care conecta pacientes, especialistas y administración en un flujo claro: registro, validación, búsqueda, citas y seguimiento.",
+      "item1": {
+        "title": "Validación antes de atender",
+        "text": "Los perfiles pasan por revisión para fortalecer la confianza del sistema."
+      },
+      "item2": {
+        "title": "Actividad supervisada",
+        "text": "El sistema permite revisar citas, reportes y estados para cuidar la experiencia."
       }
     },
     "cta": {
-      "title": "¿Listo para comenzar tu viaje?",
-      "text": "Únete a miles de personas que han dado el primer paso hacia una mente más saludable.",
-      "button": "Comienza Ahora"
+      "title": "¿Listo para dar el primer paso?",
+      "text": "Crea tu cuenta y empieza a buscar el apoyo profesional que mejor se adapte a ti.",
+      "button": "Comenzar ahora"
     }
   
 },
@@ -118,6 +134,12 @@
       "reject": "Rechazar",
       "approve": "Aprobar",
       "cancel": "Cancelar"
+    },
+    "confirmations": {
+      "suspendPatient": "¿Seguro que deseas suspender a este paciente? No podrá usar su cuenta hasta que lo actives nuevamente.",
+      "activatePatient": "¿Seguro que deseas activar a este paciente?",
+      "suspendSpecialist": "¿Seguro que deseas suspender a este especialista? No podrá usar su cuenta hasta que lo actives nuevamente.",
+      "activateSpecialist": "¿Seguro que deseas activar a este especialista?"
     },
     "loading": {
       "patients": "Cargando pacientes...",
@@ -249,6 +271,10 @@
         "finish": "Finalizar",
         "managed": "Gestionado"
       },
+      "confirmations": {
+        "accept": "¿Seguro que deseas aceptar este reporte? Se agregará un strike al usuario reportado.",
+        "finish": "¿Seguro que deseas finalizar este reporte sin penalización?"
+      },
       "notifications": {
         "accepted": "Reporte aceptado. Se agregó un strike al usuario reportado.",
         "finished": "Reporte finalizado sin penalización."
@@ -263,7 +289,7 @@
   "login": {
     "title": "Tu espacio seguro comienza aquí",
     "subtitle": "Take Care: Tu bienestar mental es nuestra prioridad.",
-    "emailLabel": "Email",
+    "emailLabel": "Correo electrónico",
     "emailPlaceholder": "ejemplo@correo.com",
     "passwordLabel": "Contraseña",
     "passwordPlaceholder": "••••••••",
@@ -272,8 +298,12 @@
     "submit": "Iniciar Sesión",
     "success": "Inicio de sesión exitoso",
     "secure": "Conexión segura",
+    "accessibility": {
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña"
+    },
     "errors": {
-      "invalidEmail": "Email inválido",
+      "invalidEmail": "Correo inválido",
       "passwordRequired": "Contraseña requerida (mín. 8 caracteres)",
       "completeFields": "Completa todos los campos correctamente",
       "invalidCredentials": "Correo o contraseña incorrectos",
@@ -344,7 +374,7 @@
     "back": "Volver",
     "tag": "Perfil del paciente",
     "title": "Editar perfil",
-    "subtitle": "Actualiza tu información y mejora tu presencia en TakeCare.",
+    "subtitle": "Actualiza tu información y mejora tu presencia en Take Care.",
     "fields": {
       "names": "Nombres",
       "firstLastname": "Primer apellido",
@@ -508,7 +538,11 @@
     "successText2": "Por favor, revisa tu bandeja de entrada.",
     "tryAnother": "Intentar con otro correo",
     "backToSession": "Volver al inicio de sesión",
-    "alertMessage": "Si el correo existe, recibirás un enlace pronto."
+    "alertMessage": "Si el correo existe, recibirás un enlace pronto.",
+    "errors": {
+      "required": "Ingresa el correo asociado a tu cuenta.",
+      "email": "Ingresa un correo válido, por ejemplo nombre@dominio.com."
+    }
   },
 
   
@@ -912,7 +946,7 @@
     "newSession": "Nueva sesión",
     "tag": "Panel especialista",
     "welcome": "Bienvenido",
-    "subtitle": "Tu espacio profesional en TakeCare",
+    "subtitle": "Tu espacio profesional en Take Care",
     "stats": {
       "patients": "Pacientes",
       "sessionsToday": "Sesiones hoy",
@@ -1002,8 +1036,14 @@
     "back": "Volver",
     "tag": "Perfil especialista",
     "title": "Editar perfil",
-    "subtitle": "Actualiza tu información y mejora tu presencia en TakeCare.",
+    "subtitle": "Actualiza tu información y mejora tu presencia en Take Care.",
     "loading": "Cargando información...",
+    "sections": {
+      "personal": "Datos personales",
+      "personalHelp": "Esta información identifica tu cuenta profesional dentro de Take Care.",
+      "professional": "Presentación profesional",
+      "professionalHelp": "Ayuda a los pacientes a entender tu enfoque, experiencia y costo por sesión."
+    },
 
     "fields": {
       "names": "Nombres",
@@ -1311,14 +1351,20 @@
     },
 
     "toast": {
-      "success": "✅ Recurso subido correctamente",
-      "deleted": "🗑️ Recurso eliminado",
-      "error": "❌ Ocurrió un error, intenta de nuevo"
+      "success": "Recurso subido correctamente",
+      "deleted": "Recurso eliminado",
+      "error": "Ocurrió un error, intenta de nuevo"
     },
 
     "actions": {
       "delete": "Eliminar",
-      "preview": "Previsualizar"
+      "preview": "Previsualizar",
+      "close": "Cerrar",
+      "removeFile": "Quitar archivo"
+    },
+
+    "confirmations": {
+      "delete": "¿Seguro que deseas eliminar este recurso? Esta acción no se puede deshacer desde la interfaz."
     },
 
     "empty": {
@@ -1330,6 +1376,7 @@
     "preview": {
       "wordUnsupported": "Vista previa no disponible",
       "wordDescription": "Los archivos Word no se pueden previsualizar. Ábrelo en una nueva pestaña.",
+      "openPdf": "Abrir PDF",
       "openExternal": "Abrir archivo",
       "notAvailable": "Archivo no disponible aún",
       "notAvailableDesc": "El archivo estará disponible una vez que el backend procese la subida."

@@ -62,7 +62,6 @@ export class SpecialistProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
-    console.log('Usuario obtenido:', this.user);
     if (this.user?.id) {
       this.loadProfile();
     } else {
@@ -74,11 +73,9 @@ export class SpecialistProfileComponent implements OnInit {
   loadProfile() {
     this.loading = true;
     this.errorMsg = '';
-    console.log(`Cargando perfil del especialista ID: ${this.user.id}`);
     
     this.specialistService.getProfile(this.user.id).subscribe({
       next: (data: any) => {
-        console.log('Perfil cargado:', data);
 
         this.profile = {
           names: data.names || '',
@@ -211,7 +208,6 @@ export class SpecialistProfileComponent implements OnInit {
 
     this.specialistService.updateProfile(this.user.id, payload).subscribe({
       next: (response: any) => {
-        console.log('Perfil actualizado:', response);
 
         this.originalProfile = { ...this.profile };
         this.originalLocationDetails = { ...this.locationDetails };

@@ -408,16 +408,3 @@
     margin-left: 0;
   }
 }
-
-@media (prefers-color-scheme: dark) {
-  .appointments-state,
-  .appointment-details {
-    background: var(--tc-surface-raised);
-    color: var(--tc-text-muted);
-  }
-
-  .appointments-state.empty p,
-  .detail-item {
-    color: var(--tc-text-muted);
-  }
-}

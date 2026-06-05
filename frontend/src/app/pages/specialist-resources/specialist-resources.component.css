@@ -706,6 +706,10 @@
   color: #2563eb;
 }
 
+.preview-unsupported .preview-file-icon {
+  color: #ef4444;
+}
+
 .preview-unsupported h3 {
   color: #1f2937;
   margin: 0;

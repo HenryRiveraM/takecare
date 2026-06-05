@@ -1,64 +1,92 @@
-/* You can add global styles to this file, and also import other style files */
-/* MANROPE FONT */
-/* MANROPE FONT */
-
-
-/* MANROPE FONT */
-
 :root {
-  --primary: #8ca39c;
-  --primary-dark: #5a7d73;
-  --primary-light: #e6f0ed;
+  color-scheme: light;
 
-  --background: #fff6f6;
-  --white: #ffffff;
-  --border: #f1e8e8;
+  --primary: #78a99a;
+  --primary-dark: #547a70;
+  --primary-light: #e9f4f0;
+  --accent: #f5a3a3;
+  --accent-dark: #df7f7f;
+
+  --background: #f8faf9;
+  --background-soft: #fff7f7;
+  --surface: #ffffff;
+  --surface-soft: #fffafa;
+  --text: #1f2937;
+  --text-muted: #64748b;
+  --border: #e7eeee;
+  --border-strong: #d8e3df;
+
+  --success: #16a34a;
+  --success-bg: #ecfdf5;
+  --warning: #d97706;
+  --warning-bg: #fff7ed;
+  --danger: #dc2626;
+  --danger-bg: #fff1f2;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 4px 16px rgba(31, 41, 55, 0.06);
+  --shadow-md: 0 12px 30px rgba(31, 41, 55, 0.08);
+  --shadow-lg: 0 24px 60px rgba(31, 41, 55, 0.12);
+  --focus-ring: 0 0 0 4px rgba(120, 169, 154, 0.18);
 }
 
 @font-face {
     font-family: 'Manrope';
     src: url('assets/fonts/Manrope/static/Manrope-Regular.ttf') format('truetype');
     font-weight: 400;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Manrope';
     src: url('assets/fonts/Manrope/static/Manrope-Light.ttf') format('truetype');
     font-weight: 300;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Manrope';
     src: url('assets/fonts/Manrope/static/Manrope-Medium.ttf') format('truetype');
     font-weight: 500;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Manrope';
     src: url('assets/fonts/Manrope/static/Manrope-SemiBold.ttf') format('truetype');
     font-weight: 600;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Manrope';
     src: url('assets/fonts/Manrope/static/Manrope-Bold.ttf') format('truetype');
     font-weight: 700;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Manrope';
     src: url('assets/fonts/Manrope/static/Manrope-ExtraBold.ttf') format('truetype');
     font-weight: 800;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Manrope';
     src: url('assets/fonts/Manrope/static/Manrope-ExtraLight.ttf') format('truetype');
     font-weight: 200;
+    font-display: swap;
 }
 
-body{
+body {
     font-family: 'Manrope', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.5;
 }
 
 html, body {
@@ -73,9 +101,152 @@ app-root {
   height: 100%;
 }
 
+a,
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a,
+select,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+button,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+img {
+  max-width: 100%;
+}
+
 body.dashboard-active {
   overflow: hidden;
 }
 
-/* Theme follows the device preference; there is intentionally no manual toggle. */
+.tc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
 
+.tc-empty-state,
+.tc-status-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-muted);
+}
+
+.status-card,
+.appointments-state,
+.loading-message,
+.empty-message {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text-muted);
+  box-shadow: var(--shadow-sm);
+}
+
+.status-card.error,
+.appointments-state.error,
+.error-message {
+  border-color: #fecdd3;
+  background: var(--danger-bg);
+  color: #be123c;
+}
+
+.empty-state {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, var(--surface), var(--surface-soft));
+  box-shadow: var(--shadow-sm);
+}
+
+.empty-state h2,
+.empty-state h3 {
+  color: var(--text);
+}
+
+.empty-state p {
+  color: var(--text-muted);
+}
+
+.loading-message,
+.appointments-state:not(.error) {
+  position: relative;
+}
+
+.loading-message::after {
+  content: "";
+  display: block;
+  width: min(220px, 70%);
+  height: 8px;
+  margin: 14px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #edf3f1, #ffffff, #edf3f1);
+  background-size: 200% 100%;
+  animation: tc-loading-bar 1.2s ease-in-out infinite;
+}
+
+@keyframes tc-loading-bar {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.tc-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #edf3f1;
+  border-radius: var(--radius-md);
+}
+
+.tc-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+  animation: tc-skeleton 1.2s infinite;
+}
+
+@keyframes tc-skeleton {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

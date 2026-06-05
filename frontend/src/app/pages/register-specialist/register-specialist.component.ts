@@ -368,11 +368,6 @@ export class RegisterSpecialistComponent implements OnInit {
         );
       }
 
-      console.log('registerForm.valid:', this.registerForm.valid);
-      console.log('Especialidades seleccionadas:', this.especialidadesOpciones.filter(opt => opt.seleccionado).map(opt => opt.nombre));
-      console.log('Archivos seleccionados:', this.fileList);
-      console.log('Carnet seleccionado:', this.carnetFile);
-
       return;
     }
 
@@ -382,20 +377,14 @@ export class RegisterSpecialistComponent implements OnInit {
       const selectedSpecialties = this.especialidadesOpciones
         .filter(opt => opt.seleccionado)
         .map(opt => opt.nombre);
-
-      console.log('📤 Iniciando subida de carnet a Cloudinary...');
       const carnetUpload = await this.cloudinaryUploadService.uploadImage(
         this.carnetFile!.file,
         'specialists/ci'
       );
-      console.log('✅ Carnet subido correctamente:', carnetUpload);
-
-      console.log('📤 Iniciando subida de certificación PDF a Cloudinary...');
       const certificationUpload = await this.cloudinaryUploadService.uploadAuto(
         this.fileList[0].file,
         'specialists/certifications'
       );
-      console.log('✅ Certificación subida correctamente:', certificationUpload);
 
       const dataParaBackend: SpecialistRegisterRequest = {
         names: this.registerForm.value.nombre.trim(),
@@ -416,12 +405,9 @@ export class RegisterSpecialistComponent implements OnInit {
         dataParaBackend.secondLastname = secondLastname;
       }
 
-      console.log('Payload enviado: ', dataParaBackend);
-
       this.api.registerSpecialist(dataParaBackend).subscribe({
         next: (res) => {
           this.isLoading = false;
-          console.log('✅ REGISTRO DE ESPECIALISTA EXITOSO', res);
           this.showToast(
             'success',
             this.translate.instant('registerSpecialist.toast.successTitle'),

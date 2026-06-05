@@ -348,7 +348,6 @@ export class RegisterPatientComponent {
       this.api.registerPatient(data).subscribe({
         next: (res) => {
           this.loading = false;
-          console.log('✅ REGISTRO EXITOSO', res);
           this.showToast(
             'success',
             this.translate.instant('registerPatient.toast.successTitle'),

@@ -55,18 +55,18 @@
           </thead>
           <tbody>
             <tr *ngFor="let patient of filteredPatients">
-              <td>{{ patient.names }}</td>
-              <td>{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
-              <td>{{ patient.email }}</td>
-              <td>{{ patient.birthDate | localizedDate }}</td>
-              <td>{{ patient.strikes }}</td>
-              <td class="col-status">
+              <td [attr.data-label]="'admin.table.names' | translate">{{ patient.names }}</td>
+              <td [attr.data-label]="'admin.table.lastnames' | translate">{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
+              <td [attr.data-label]="'admin.table.email' | translate">{{ patient.email }}</td>
+              <td [attr.data-label]="'admin.table.birthDate' | translate">{{ patient.birthDate | localizedDate }}</td>
+              <td [attr.data-label]="'admin.table.strikes' | translate">{{ patient.strikes }}</td>
+              <td class="col-status" [attr.data-label]="'admin.table.status' | translate">
                 <span class="status"
                       [ngClass]="patient.status === 1 ? 'status-active' : 'status-suspended'">
                   {{ (patient.status === 1 ? 'admin.userStatus.active' : 'admin.userStatus.suspended') | translate }}
                 </span>
               </td>
-              <td class="col-action">
+              <td class="col-action" [attr.data-label]="'admin.table.action' | translate">
                 <button type="button"
                         [ngClass]="patient.status === 1 ? 'delete-button' : 'activate-button'"
                         (click)="togglePatientStatus(patient)">
@@ -122,18 +122,18 @@
           </thead>
           <tbody>
             <tr *ngFor="let specialist of filteredSpecialists">
-              <td>{{ specialist.names || '-' }}</td>
-              <td>{{ (specialist.firstLastname || '') + (specialist.secondLastname ? ' ' + specialist.secondLastname : '') || '-' }}</td>
-              <td>{{ specialist.email || '-' }}</td>
-              <td>{{ specialist.birthDate | localizedDate }}</td>
-              <td>{{ specialist.strikes }}</td>
-              <td class="col-status">
+              <td [attr.data-label]="'admin.table.names' | translate">{{ specialist.names || '-' }}</td>
+              <td [attr.data-label]="'admin.table.lastnames' | translate">{{ (specialist.firstLastname || '') + (specialist.secondLastname ? ' ' + specialist.secondLastname : '') || '-' }}</td>
+              <td [attr.data-label]="'admin.table.email' | translate">{{ specialist.email || '-' }}</td>
+              <td [attr.data-label]="'admin.table.birthDate' | translate">{{ specialist.birthDate | localizedDate }}</td>
+              <td [attr.data-label]="'admin.table.strikes' | translate">{{ specialist.strikes }}</td>
+              <td class="col-status" [attr.data-label]="'admin.table.status' | translate">
                 <span class="status"
                       [ngClass]="specialist.status === 1 ? 'status-active' : 'status-suspended'">
                   {{ (specialist.status === 1 ? 'admin.userStatus.active' : 'admin.userStatus.suspended') | translate }}
                 </span>
               </td>
-              <td class="col-action">
+              <td class="col-action" [attr.data-label]="'admin.table.action' | translate">
                 <button type="button"
                         [ngClass]="specialist.status === 1 ? 'delete-button' : 'activate-button'"
                         (click)="toggleSpecialistStatus(specialist)">

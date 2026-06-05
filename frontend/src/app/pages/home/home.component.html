@@ -1,7 +1,7 @@
 <div class="home">
 
     <!-- HERO -->
-    <section class="hero">
+    <section class="hero" id="inicio">
 
         <div class="hero-text">
 
@@ -14,14 +14,14 @@
             </p>
 
             <div class="hero-buttons">
-                <button class="btn-primary">{{ 'home.hero.primaryButton' | translate }}</button>
-                <button class="btn-secondary">{{ 'home.hero.secondaryButton' | translate }}</button>
+                <a routerLink="/register-role" class="btn-primary">{{ 'home.hero.primaryButton' | translate }}</a>
+                <a href="#nosotros" class="btn-secondary">{{ 'home.hero.secondaryButton' | translate }}</a>
             </div>
 
         </div>
 
         <div class="hero-image">
-            <img src="../../../assets/images/therapy.png" alt="therapy">
+            <img src="../../../assets/images/therapy.png" [alt]="'home.hero.imageAlt' | translate">
         </div>
 
     </section>
@@ -49,29 +49,54 @@
 
 
     <!-- FEATURES -->
-    <section class="features">
+    <section class="features" id="nosotros">
 
         <h2>{{ 'home.features.title' | translate }}</h2>
+        <p class="section-intro">{{ 'home.features.subtitle' | translate }}</p>
 
         <div class="features-grid">
 
             <div class="feature-card">
+                <span class="material-symbols-outlined">verified_user</span>
                 <h3>{{ 'home.features.card1.title' | translate }}</h3>
                 <p>{{ 'home.features.card1.text' | translate }}</p>
             </div>
 
             <div class="feature-card">
+                <span class="material-symbols-outlined">lock</span>
                 <h3>{{ 'home.features.card2.title' | translate }}</h3>
                 <p>{{ 'home.features.card2.text' | translate }}</p>
             </div>
 
             <div class="feature-card">
+                <span class="material-symbols-outlined">calendar_month</span>
                 <h3>{{ 'home.features.card3.title' | translate }}</h3>
                 <p>{{ 'home.features.card3.text' | translate }}</p>
             </div>
 
         </div>
 
+    </section>
+
+    <section class="trust-section">
+        <div>
+            <span class="tag">{{ 'home.trust.tag' | translate }}</span>
+            <h2>{{ 'home.trust.title' | translate }}</h2>
+            <p>{{ 'home.trust.text' | translate }}</p>
+        </div>
+
+        <div class="trust-list">
+            <div>
+                <span class="material-symbols-outlined">how_to_reg</span>
+                <strong>{{ 'home.trust.item1.title' | translate }}</strong>
+                <p>{{ 'home.trust.item1.text' | translate }}</p>
+            </div>
+            <div>
+                <span class="material-symbols-outlined">health_and_safety</span>
+                <strong>{{ 'home.trust.item2.title' | translate }}</strong>
+                <p>{{ 'home.trust.item2.text' | translate }}</p>
+            </div>
+        </div>
     </section>
 
 
