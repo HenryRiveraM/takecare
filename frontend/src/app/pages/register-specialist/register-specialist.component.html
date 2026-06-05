@@ -30,6 +30,14 @@
                 {{ 'registerSpecialist.helperRequired' | translate }}
             </div>
 
+            <div class="validation-summary" *ngIf="submitted && (registerForm.invalid || fileList.length === 0 || !tieneEspecialidadSeleccionada() || !carnetFile)">
+                <span class="material-symbols-outlined">error</span>
+                <div>
+                    <strong>{{ 'registerSpecialist.errors.summary.title' | translate }}</strong>
+                    <p>{{ 'registerSpecialist.errors.summary.message' | translate }}</p>
+                </div>
+            </div>
+
             <form [formGroup]="registerForm" class="form-grid" (ngSubmit)="onSubmit()">
         
                 <div class="field col-3">
@@ -68,7 +76,10 @@
                     <label>{{ 'registerSpecialist.fields.birthDate' | translate }} <span class="required">*</span></label>
                     <input type="date" formControlName="fechaNacimiento" [max]="maxDateAdult">
                     <small class="error-msg" *ngIf="(f['fechaNacimiento'].touched || submitted) && f['fechaNacimiento'].invalid">
-                        {{ 'registerSpecialist.errors.birthDate.required' | translate }}
+                        <span *ngIf="hasError('fechaNacimiento', 'required')">{{ 'registerSpecialist.errors.birthDate.required' | translate }}</span>
+                        <span *ngIf="hasError('fechaNacimiento', 'invalidDate')">{{ 'registerSpecialist.errors.birthDate.invalid' | translate }}</span>
+                        <span *ngIf="hasError('fechaNacimiento', 'futureDate')">{{ 'registerSpecialist.errors.birthDate.future' | translate }}</span>
+                        <span *ngIf="hasError('fechaNacimiento', 'underage')">{{ 'registerSpecialist.errors.birthDate.underage' | translate }}</span>
                     </small>
                 </div>
 
@@ -115,10 +126,17 @@
                         <span *ngIf="f['password'].errors?.['required']">
                             {{ 'registerSpecialist.errors.password.required' | translate }}
                         </span>
-                        <span *ngIf="f['password'].errors?.['minlength'] || f['password'].errors?.['maxlength'] || f['password'].errors?.['range']">
-                            {{ 'registerSpecialist.errors.password.range' | translate }}
+                        <span *ngIf="f['password'].errors?.['minlength']">
+                            {{ 'registerSpecialist.errors.password.minlength' | translate }}
+                        </span>
+                        <span *ngIf="f['password'].errors?.['maxlength']">
+                            {{ 'registerSpecialist.errors.password.maxlength' | translate }}
+                        </span>
+                        <span *ngIf="f['password'].errors?.['passwordStrength']">
+                            {{ 'registerSpecialist.errors.password.strength' | translate }}
                         </span>
                     </small>
+                    <small class="helper-msg">{{ 'registerSpecialist.passwordRequirements' | translate }}</small>
                 </div>
 
                 <div class="field col-2">
@@ -128,7 +146,7 @@
                     </label>
 
                     <div class="password-input-wrapper">
-                        <input [type]="showPasswordConfirm ? 'text' : 'password'" formControlName="passwordConfirm"[placeholder]="'registerSpecialist.placeholders.passwordConfirm' | translate">
+                        <input [type]="showPasswordConfirm ? 'text' : 'password'" formControlName="passwordConfirm" [placeholder]="'registerSpecialist.placeholders.passwordConfirm' | translate">
                         <button type="button" class="password-toggle" (click)="showPasswordConfirm = !showPasswordConfirm"
                             [attr.aria-label]="(showPasswordConfirm ? 'registerSpecialist.accessibility.hidePasswordConfirm' : 'registerSpecialist.accessibility.showPasswordConfirm') | translate"
                             [attr.title]="(showPasswordConfirm ? 'registerSpecialist.accessibility.hidePasswordConfirm' : 'registerSpecialist.accessibility.showPasswordConfirm') | translate"
@@ -143,12 +161,15 @@
                         <span *ngIf="f['passwordConfirm'].errors?.['required']">
                             {{ 'registerSpecialist.errors.passwordConfirm.required' | translate }}
                         </span>
-                        <span *ngIf="f['passwordConfirm'].errors?.['minlength'] || f['passwordConfirm'].errors?.['maxlength'] || f['passwordConfirm'].errors?.['range']">
-                            {{ 'registerSpecialist.errors.passwordConfirm.range' | translate }}
+                        <span *ngIf="f['passwordConfirm'].errors?.['minlength']">
+                            {{ 'registerSpecialist.errors.passwordConfirm.minlength' | translate }}
+                        </span>
+                        <span *ngIf="f['passwordConfirm'].errors?.['maxlength']">
+                            {{ 'registerSpecialist.errors.passwordConfirm.maxlength' | translate }}
                         </span>
                     </small>
 
-                    <small class="error-msg" *ngIf="(f['passwordConfirm'].touched || submitted) && registerForm.hasError('passwordMismatch')">
+                    <small class="error-msg" *ngIf="hasPasswordMismatch()">
                         {{ 'registerSpecialist.errors.passwordConfirm.mismatch' | translate }}
                     </small>
                 </div>
@@ -164,12 +185,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="upload-zone carnet-zone" *ngIf="!carnetFile">
-                        <label class="upload-button">
-                            <span>{{ 'registerSpecialist.uploads.idPhoto' | translate }}</span>
-                            <input type="file" (change)="onCarnetSelected($event)" accept="image/*" style="display: none;">
-                        </label>
-                    </div>
+                    <label
+                        class="upload-zone carnet-zone"
+                        *ngIf="!carnetFile"
+                        for="specialist-carnet-input">
+                        <span class="upload-icon material-symbols-outlined">add_photo_alternate</span>
+                        <span class="upload-copy">
+                            <span class="upload-button">{{ 'registerSpecialist.uploads.idPhoto' | translate }}</span>
+                            <small>{{ 'registerSpecialist.uploadHelp.idPhoto' | translate }}</small>
+                        </span>
+                        <input id="specialist-carnet-input" #carnetInput type="file" (change)="onCarnetSelected($event)" accept="image/jpeg,image/png,image/webp" class="file-input-hidden">
+                    </label>
                     <small class="error-msg" *ngIf="submitted && !carnetFile">
                         {{ 'registerSpecialist.errors.idPhoto.required' | translate }}
                     </small>
@@ -190,12 +216,21 @@
 
                 <div class="full-width">
                     <label>{{ 'registerSpecialist.fields.certifications' | translate }}</label>
-                    <div class="upload-zone" [class.dragging]="isDragging" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
-                        <label class="upload-button">
-                            <span>{{ 'registerSpecialist.uploads.certifications' | translate }}</span>
-                            <input type="file" (change)="onFileSelected($event)" accept=".pdf,application/pdf" multiple style="display: none;">
-                        </label>
-                    </div>
+                    <label
+                        class="upload-zone"
+                        [class.dragging]="isDragging"
+                        [class.success]="fileList.length > 0"
+                        for="specialist-certifications-input"
+                        (dragover)="onDragOver($event)"
+                        (dragleave)="onDragLeave($event)"
+                        (drop)="onDrop($event)">
+                        <span class="upload-icon material-symbols-outlined">upload_file</span>
+                        <span class="upload-copy">
+                            <span class="upload-button">{{ 'registerSpecialist.uploads.certifications' | translate }}</span>
+                            <small>{{ 'registerSpecialist.uploadHelp.certifications' | translate }}</small>
+                        </span>
+                        <input id="specialist-certifications-input" #certificationsInput type="file" (change)="onFileSelected($event)" accept=".pdf,application/pdf" class="file-input-hidden">
+                    </label>
 
                     <div class="files-container" *ngIf="fileList.length > 0">
                         <div class="file-item" *ngFor="let item of fileList; let i = index">
@@ -233,7 +268,7 @@
                     </small>
                 </div>
 
-                <button type="submit" class="btn-complete" [class.is-loading]="isLoading" [disabled]="registerForm.invalid || fileList.length === 0 || !tieneEspecialidadSeleccionada() || !carnetFile || isLoading">
+                <button type="submit" class="btn-complete" [class.is-loading]="isLoading" [disabled]="isLoading">
                     <span class="button-label">
                         {{ 'registerSpecialist.actions.complete' | translate }}
                     </span>

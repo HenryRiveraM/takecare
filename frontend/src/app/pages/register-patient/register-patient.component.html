@@ -32,6 +32,14 @@
           {{ 'registerPatient.helperRequired' | translate }}
         </p>
 
+        <div class="validation-summary" *ngIf="submitted && form.invalid">
+          <span class="material-symbols-outlined">error</span>
+          <div>
+            <strong>{{ 'registerPatient.errors.summary.title' | translate }}</strong>
+            <p>{{ 'registerPatient.errors.summary.message' | translate }}</p>
+          </div>
+        </div>
+
         <h3 class="section-title">{{ 'registerPatient.sections.personalInfo' | translate }}</h3>
         
         <div class="grid">
@@ -82,17 +90,20 @@
           <div class="field">
             <label>{{ 'registerPatient.fields.birthDate' | translate }}<span class="required">*</span></label>
             <input type="date" formControlName="birth_date" [max]="maxDateAdult">
-            <small class="error-msg" *ngIf="form.get('birth_date')?.touched && form.get('birth_date')?.invalid">
-              {{ 'registerPatient.errors.birthDate.required' | translate }}
+            <small class="error-msg" *ngIf="isInvalid('birth_date')">
+              <span *ngIf="hasError('birth_date', 'required')">{{ 'registerPatient.errors.birthDate.required' | translate }}</span>
+              <span *ngIf="hasError('birth_date', 'invalidDate')">{{ 'registerPatient.errors.birthDate.invalid' | translate }}</span>
+              <span *ngIf="hasError('birth_date', 'futureDate')">{{ 'registerPatient.errors.birthDate.future' | translate }}</span>
+              <span *ngIf="hasError('birth_date', 'underage')">{{ 'registerPatient.errors.birthDate.underage' | translate }}</span>
             </small>
           </div>
 
           <div class="field">
             <label>{{ 'registerPatient.fields.email' | translate }}<span class="required">*</span></label>
-            <input formControlName="email" [placeholder]="'registerPatient.placeholders.email' | translate">
-            <small class="error-msg" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
-              <span *ngIf="form.get('email')?.errors?.['required']">{{ 'registerPatient.errors.email.required' | translate }}</span>
-              <span *ngIf="form.get('email')?.errors?.['email']">{{ 'registerPatient.errors.email.invalid' | translate }}</span>
+            <input type="email" formControlName="email" [placeholder]="'registerPatient.placeholders.email' | translate">
+            <small class="error-msg" *ngIf="isInvalid('email')">
+              <span *ngIf="hasError('email', 'required')">{{ 'registerPatient.errors.email.required' | translate }}</span>
+              <span *ngIf="hasError('email', 'email') || hasError('email', 'pattern')">{{ 'registerPatient.errors.email.invalid' | translate }}</span>
             </small>
           </div>
         </div>
@@ -107,15 +118,21 @@
             <button 
               type="button" 
               class="password-toggle"
-              (click)="showPassword = !showPassword">
+              (click)="showPassword = !showPassword"
+              [attr.aria-label]="(showPassword ? 'registerPatient.accessibility.hidePassword' : 'registerPatient.accessibility.showPassword') | translate"
+              [attr.title]="(showPassword ? 'registerPatient.accessibility.hidePassword' : 'registerPatient.accessibility.showPassword') | translate"
+              [attr.aria-pressed]="showPassword">
               <span class="material-symbols-outlined">
                 {{ showPassword ? 'visibility_off' : 'visibility' }}
               </span>
             </button>
           </div>
-          <small class="error-msg" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
-            <span *ngIf="form.get('password')?.errors?.['required']">{{ 'registerPatient.errors.password.required' | translate }}</span>
-            <span *ngIf="form.get('password')?.errors?.['minlength']">{{ 'registerPatient.errors.password.minlength' | translate }}</span>
+          <small class="helper-msg">{{ 'registerPatient.passwordRequirements' | translate }}</small>
+          <small class="error-msg" *ngIf="isInvalid('password')">
+            <span *ngIf="hasError('password', 'required')">{{ 'registerPatient.errors.password.required' | translate }}</span>
+            <span *ngIf="hasError('password', 'minlength')">{{ 'registerPatient.errors.password.minlength' | translate }}</span>
+            <span *ngIf="hasError('password', 'maxlength')">{{ 'registerPatient.errors.password.maxlength' | translate }}</span>
+            <span *ngIf="hasError('password', 'passwordStrength')">{{ 'registerPatient.errors.password.strength' | translate }}</span>
           </small>
         </div>
 
@@ -144,16 +161,19 @@
           </button>
         </div>
 
-        <small class="error-msg" *ngIf="form.get('passwordConfirm')?.touched && form.get('passwordConfirm')?.invalid">
-          <span *ngIf="form.get('passwordConfirm')?.errors?.['required']">
+        <small class="error-msg" *ngIf="isInvalid('passwordConfirm')">
+          <span *ngIf="hasError('passwordConfirm', 'required')">
             {{ 'registerPatient.errors.passwordConfirm.required' | translate }}
           </span>
-          <span *ngIf="form.get('passwordConfirm')?.errors?.['minlength']">
+          <span *ngIf="hasError('passwordConfirm', 'minlength')">
             {{ 'registerPatient.errors.passwordConfirm.minlength' | translate }}
+          </span>
+          <span *ngIf="hasError('passwordConfirm', 'maxlength')">
+            {{ 'registerPatient.errors.passwordConfirm.maxlength' | translate }}
           </span>
         </small>
 
-        <small class="error-msg" *ngIf="form.get('passwordConfirm')?.touched && !passwordsMatch()">
+        <small class="error-msg" *ngIf="hasPasswordMismatch()">
           {{ 'registerPatient.errors.passwordConfirm.mismatch' | translate }}
         </small>
       </div>
@@ -168,18 +188,30 @@
             <label>{{ 'registerPatient.fields.ciPhoto' | translate }}<span class="required">*</span></label>
             <div class="upload" [class.active]="documentoNombre" (click)="fileInput.click()">
               <input type="file" hidden #fileInput accept="image/*" (change)="onFileSelected($event, 'documento')">
-              <img src="assets/icons/upload.svg" [alt]="'registerPatient.uploads.document' | translate">
-              <p>{{ documentoNombre || ('registerPatient.uploads.document' | translate) }}</p>
+              <span class="upload-icon material-symbols-outlined">add_photo_alternate</span>
+              <span class="upload-copy">
+                <span class="upload-title">{{ documentoNombre || ('registerPatient.uploads.document' | translate) }}</span>
+                <small>{{ 'registerPatient.uploadHelp.document' | translate }}</small>
+              </span>
             </div>
+            <small class="error-msg" *ngIf="isInvalid('documento')">
+              {{ 'registerPatient.errors.ciPhoto.required' | translate }}
+            </small>
           </div>
 
           <div class="field">
             <label>{{ 'registerPatient.fields.selfie' | translate }}<span class="required">*</span></label>
             <div class="upload" [class.active]="selfieNombre" (click)="selfieInput.click()">
               <input type="file" hidden #selfieInput accept="image/*" (change)="onFileSelected($event, 'selfie')">
-              <img src="assets/icons/user.svg" [alt]="'registerPatient.uploads.selfie' | translate">
-              <p>{{ selfieNombre || ('registerPatient.uploads.selfie' | translate) }}</p>
+              <span class="upload-icon material-symbols-outlined">person_add</span>
+              <span class="upload-copy">
+                <span class="upload-title">{{ selfieNombre || ('registerPatient.uploads.selfie' | translate) }}</span>
+                <small>{{ 'registerPatient.uploadHelp.selfie' | translate }}</small>
+              </span>
             </div>
+            <small class="error-msg" *ngIf="isInvalid('selfie')">
+              {{ 'registerPatient.errors.selfie.required' | translate }}
+            </small>
           </div>
         </div>
 
@@ -200,7 +232,7 @@
         </div>
 
         <div class="actions">
-          <button class="primary" type="submit" [disabled]="form.invalid || loading">
+          <button class="primary" type="submit" [disabled]="loading">
             <span *ngIf="!loading"> {{ 'registerPatient.actions.createAccount' | translate }}</span>
             <span *ngIf="loading" class="loader" aria-hidden="true">
             </span>

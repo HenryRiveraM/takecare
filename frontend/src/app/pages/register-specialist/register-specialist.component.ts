@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, AbstractControl, ValidationErrors } from '@angular/forms';import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ApiService, SpecialistRegisterRequest } from '../../services/api.service';
 import { CloudinaryUploadService } from '../../services/cloudinary-upload.service';
@@ -13,6 +14,9 @@ import { CloudinaryUploadService } from '../../services/cloudinary-upload.servic
   styleUrl: './register-specialist.component.css'
 })
 export class RegisterSpecialistComponent implements OnInit {
+  @ViewChild('carnetInput') carnetInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('certificationsInput') certificationsInput?: ElementRef<HTMLInputElement>;
+
   registerForm!: FormGroup;
   submitted = false;
   isDragging = false;
@@ -72,7 +76,7 @@ export class RegisterSpecialistComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(30),
         Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)]],
-      fechaNacimiento: ['', Validators.required],
+      fechaNacimiento: ['', [Validators.required, this.adultDateValidator]],
       email: ['', [
         Validators.required,
         Validators.email,
@@ -81,7 +85,8 @@ export class RegisterSpecialistComponent implements OnInit {
       password: ['', [
         Validators.required, 
         Validators.minLength(8), 
-        Validators.maxLength(50)]],
+        Validators.maxLength(50),
+        this.passwordStrengthValidator]],
       passwordConfirm: ['', [
         Validators.required,
         Validators.minLength(8),
@@ -100,6 +105,20 @@ export class RegisterSpecialistComponent implements OnInit {
 
   get f() { return this.registerForm.controls; }
 
+  hasError(field: string, error: string): boolean {
+    const control = this.registerForm.get(field);
+    return !!(control && (control.touched || this.submitted) && control.hasError(error));
+  }
+
+  hasPasswordMismatch(): boolean {
+    const confirmControl = this.registerForm.get('passwordConfirm');
+    return !!(
+      this.registerForm.hasError('passwordMismatch') &&
+      confirmControl?.value &&
+      (confirmControl.touched || this.submitted)
+    );
+  }
+
   passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
     const password = group.get('password')?.value;
     const passwordConfirm = group.get('passwordConfirm')?.value;
@@ -109,6 +128,45 @@ export class RegisterSpecialistComponent implements OnInit {
     }
 
     return password === passwordConfirm ? null : { passwordMismatch: true };
+  }
+
+  private passwordStrengthValidator(control: AbstractControl): ValidationErrors | null {
+    const value = String(control.value || '');
+
+    if (!value) {
+      return null;
+    }
+
+    const hasUppercase = /[A-ZÁÉÍÓÚÑ]/.test(value);
+    const hasLowercase = /[a-záéíóúñ]/.test(value);
+    const hasNumber = /\d/.test(value);
+
+    return hasUppercase && hasLowercase && hasNumber ? null : { passwordStrength: true };
+  }
+
+  private adultDateValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value) {
+      return null;
+    }
+
+    const birthDate = new Date(`${value}T00:00:00`);
+    if (Number.isNaN(birthDate.getTime())) {
+      return { invalidDate: true };
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (birthDate > today) {
+      return { futureDate: true };
+    }
+
+    const adultDate = new Date(today);
+    adultDate.setFullYear(adultDate.getFullYear() - 18);
+
+    return birthDate <= adultDate ? null : { underage: true };
   }
 
   showToast(type: 'error' | 'success' | 'warning', title: string, message: string): void {
@@ -185,21 +243,25 @@ export class RegisterSpecialistComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    const files = event.target.files || event.dataTransfer?.files;
+    const input = event.target as HTMLInputElement;
+    const files = input.files || event.dataTransfer?.files;
     this.addFiles(files);
+    input.value = '';
   }
 
-  addFiles(files: FileList) {
-    const file = files[0];
+  addFiles(files: FileList | null | undefined) {
+    const file = files?.[0];
     if (!file) return;
 
     if (file.type !== 'application/pdf') {
       this.showToast('warning', this.translate.instant('registerSpecialist.toast.invalidFileTitle'), this.translate.instant('registerSpecialist.toast.invalidPdfMessage'));
+      this.resetFileInput(this.certificationsInput);
       return;
     }
 
     if (file.size > 8 * 1024 * 1024) {
       this.showToast('warning', this.translate.instant('registerSpecialist.toast.fileTooLargeTitle'), this.translate.instant('registerSpecialist.toast.pdfTooLargeMessage'));
+      this.resetFileInput(this.certificationsInput);
       return;
     }
 
@@ -209,19 +271,23 @@ export class RegisterSpecialistComponent implements OnInit {
 
   removeFile(index: number): void {
     this.fileList.splice(index, 1);
+    this.resetFileInput(this.certificationsInput);
   }
 
   onCarnetSelected(event: any): void {
-    const file = event.target.files[0];
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
       this.showToast('warning', this.translate.instant('registerSpecialist.toast.invalidFileTitle'), this.translate.instant('registerSpecialist.toast.invalidIdPhotoMessage'));
+      this.resetFileInput(this.carnetInput);
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
       this.showToast('warning', this.translate.instant('registerSpecialist.toast.fileTooLargeTitle'), this.translate.instant('registerSpecialist.toast.idPhotoTooLargeMessage'));
+      this.resetFileInput(this.carnetInput);
       return;
     }
 
@@ -235,6 +301,7 @@ export class RegisterSpecialistComponent implements OnInit {
 
   removeCarnet(): void {
     this.carnetFile = null;
+    this.resetFileInput(this.carnetInput);
   }
 
   tieneEspecialidadSeleccionada(): boolean {
@@ -243,19 +310,28 @@ export class RegisterSpecialistComponent implements OnInit {
 
   onDragOver(event: DragEvent): void {
     event.preventDefault();
+    event.stopPropagation();
     this.isDragging = true;
   }
 
   onDragLeave(event: DragEvent): void {
     event.preventDefault();
+    event.stopPropagation();
     this.isDragging = false;
   }
 
   onDrop(event: DragEvent): void {
     event.preventDefault();
+    event.stopPropagation();
     this.isDragging = false;
     if (event.dataTransfer?.files) {
       this.addFiles(event.dataTransfer.files);
+    }
+  }
+
+  private resetFileInput(input?: ElementRef<HTMLInputElement>): void {
+    if (input?.nativeElement) {
+      input.nativeElement.value = '';
     }
   }
 
