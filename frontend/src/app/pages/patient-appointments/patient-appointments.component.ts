@@ -152,20 +152,19 @@ export class PatientAppointmentsComponent implements OnInit {
 
     const appointmentId = this.appointmentToCancel.id;
     this.cancellingId = appointmentId;
-    this.errorMsg = '';
-    this.successMsg = '';
 
     this.sessionService.cancelSession(appointmentId, { patientId: this.patientId }).subscribe({
       next: () => {
         this.cancellingId = null;
-        this.successMsg = this.translate.instant('patientAppointments.messages.cancelSuccess');
         this.closeCancelConfirm();
+        this.showToastMessage(this.translate.instant('patientAppointments.messages.cancelSuccess'), 'success');
         this.loadAppointments();
       },
       error: (error) => {
         this.cancellingId = null;
-        this.errorMsg = error.error?.message || this.translate.instant('patientAppointments.messages.cancelError');
         this.closeCancelConfirm();
+        const msg = error.error?.message || this.translate.instant('patientAppointments.messages.cancelError');
+        this.showToastMessage(msg, 'error');
       }
     });
   }
@@ -313,7 +312,19 @@ export class PatientAppointmentsComponent implements OnInit {
   }
 
   canCancel(session: SessionResponse): boolean {
-    return session.status === 1 || session.status === 2;
+    if (session.status !== 1 && session.status !== 2) {
+      return false;
+    }
+    if (!session.scheduleDate || !session.startTime) {
+      return false;
+    }
+    const sessionStart = new Date(`${session.scheduleDate}T${session.startTime}`);
+    if (Number.isNaN(sessionStart.getTime())) {
+      return false;
+    }
+    const now = new Date();
+    const minCancelTime = now.getTime() + (24 * 60 * 60 * 1000); // +24 hours
+    return sessionStart.getTime() >= minCancelTime;
   }
 
   getStatusLabel(status: number): string {

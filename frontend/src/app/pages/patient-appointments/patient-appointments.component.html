@@ -38,6 +38,12 @@
         {{ toastMessage }}
       </div>
 
+      <!-- Banner de políticas de cancelación -->
+      <div class="policy-banner" *ngIf="!loading && !errorMsg">
+        <i class="fas fa-info-circle policy-icon"></i>
+        <p class="policy-text">{{ 'patientAppointments.policyInfo' | translate }}</p>
+      </div>
+
       <div class="empty-state" *ngIf="!loading && !errorMsg && appointments.length === 0">
         <i class="fas fa-calendar-times empty-icon"></i>
         <h3>{{ 'patientAppointments.empty.title' | translate }}</h3>

@@ -59,6 +59,12 @@
         {{ toastMessage | translate }} 
       </div>
 
+      <!-- Banner de políticas de cancelación -->
+      <div class="policy-banner" *ngIf="!loading && !errorMsg">
+        <i class="fas fa-info-circle policy-icon"></i>
+        <p class="policy-text">{{ 'appointments.policyInfo' | translate }}</p>
+      </div>
+
       <div class="empty-state" *ngIf="!loading && !errorMsg && filteredAppointments.length === 0">
         <i class="fas fa-calendar-times empty-icon"></i>
         <h3>{{ 'appointments.empty.title' | translate }}</h3>
@@ -122,6 +128,15 @@
                 (click)="openConfirmDialog(apt, 'accept')"
                 [disabled]="apt.loading">
                 <i class="fas fa-check"></i> {{ 'appointments.actions.accept' | translate }}
+              </button>
+            </div>
+
+            <div class="card-actions" *ngIf="canCancel(apt)">
+              <button
+                class="btn-reject"
+                (click)="openConfirmDialog(apt, 'cancel')"
+                [disabled]="apt.loading">
+                <i class="fas fa-ban"></i> {{ 'appointments.actions.cancel' | translate }}
               </button>
             </div>
 
@@ -290,19 +305,23 @@
   <div class="confirm-dialog" (click)="$event.stopPropagation()">
 
     <div class="confirm-icon" [class]="confirmDialog.action === 'accept' ? 'icon-accept' : 'icon-reject'">
-      <i [class]="confirmDialog.action === 'accept' ? 'fas fa-check' : 'fas fa-times'"></i>
+      <i [class]="confirmDialog.action === 'accept' ? 'fas fa-check' : (confirmDialog.action === 'cancel' ? 'fas fa-ban' : 'fas fa-times')"></i>
     </div>
 
     <h3 class="confirm-title">
       {{ confirmDialog.action === 'accept'
         ? ('appointments.confirm.acceptTitle' | translate)
-        : ('appointments.confirm.rejectTitle' | translate) }}
+        : (confirmDialog.action === 'cancel'
+            ? ('appointments.confirm.cancelTitle' | translate)
+            : ('appointments.confirm.rejectTitle' | translate)) }}
     </h3>
 
     <p class="confirm-message">
       {{ confirmDialog.action === 'accept'
         ? ('appointments.confirm.acceptMessage' | translate)
-        : ('appointments.confirm.rejectMessage' | translate) }}
+        : (confirmDialog.action === 'cancel'
+            ? ('appointments.confirm.cancelMessage' | translate)
+            : ('appointments.confirm.rejectMessage' | translate)) }}
       <strong>{{ confirmDialog.appointment?.patientName || '' | translate }}</strong>
     </p>
 
@@ -330,7 +349,9 @@
         (click)="confirmAction()">
         {{ confirmDialog.action === 'accept'
           ? ('appointments.confirm.confirmAccept' | translate)
-          : ('appointments.confirm.confirmReject' | translate) }}
+          : (confirmDialog.action === 'cancel'
+              ? ('appointments.confirm.confirmCancel' | translate)
+              : ('appointments.confirm.confirmReject' | translate)) }}
       </button>
     </div>
 

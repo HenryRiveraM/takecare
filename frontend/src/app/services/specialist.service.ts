@@ -21,6 +21,11 @@ export interface SpecialistDirectoryItem {
   shift?: string;
   reputationAverage?: number;
   certificationImg?: string;
+  availableSchedules?: Array<{
+    dayOfWeek: number;
+    startTime: string;
+    endTime: string;
+  }>;
 }
 
 export interface SpecialistLocationRequest {
@@ -141,7 +146,8 @@ export class SpecialistService {
       specialties,
       shift: specialist.shift,
       reputationAverage: specialist.reputationAverage,
-      certificationImg: specialist.certificationImg
+      certificationImg: specialist.certificationImg,
+      availableSchedules: specialist.availableSchedules
     };
   }
 

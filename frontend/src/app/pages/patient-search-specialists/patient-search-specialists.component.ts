@@ -24,6 +24,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
   searchTerm = '';
   selectedCategory = '';
   selectedSchedule = '';
+  onlyWithAvailability = false;
 
   loading = false;
   errorMsg = '';
@@ -226,6 +227,7 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     this.searchTerm = '';
     this.selectedCategory = '';
     this.selectedSchedule = '';
+    this.onlyWithAvailability = false;
     this.onSearch();
   }
 
@@ -284,13 +286,8 @@ export class PatientSearchSpecialistsComponent implements OnInit {
     });
   }
 
-  private applyAllFilters(): void {
+  applyAllFilters(): void {
     const term = this.searchTerm.toLowerCase().trim();
-
-    if (!term) {
-      this.filteredSpecialists = [...this.specialists];
-      return;
-    }
 
     this.filteredSpecialists = this.specialists.filter(s => {
       const matchesTerm = !term || [
@@ -308,8 +305,10 @@ export class PatientSearchSpecialistsComponent implements OnInit {
         this.getSpecialtiesLabel(s).toLowerCase().includes(this.selectedCategory.toLowerCase());
       const matchesSchedule = !this.selectedSchedule || 
         (s as any).shift === this.selectedSchedule;
+      const matchesAvailability = !this.onlyWithAvailability || 
+        (s.availableSchedules && s.availableSchedules.length > 0);
 
-      return matchesTerm && matchesCategory && matchesSchedule;
+      return matchesTerm && matchesCategory && matchesSchedule && matchesAvailability;
     });
   }
 

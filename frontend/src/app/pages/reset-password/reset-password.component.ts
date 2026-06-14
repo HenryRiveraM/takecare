@@ -19,6 +19,8 @@ export class ResetPasswordComponent implements OnInit {
   isSuccess = false;
   errorMsg = '';
   token = '';
+  showPassword = false;
+  showPasswordConfirm = false;
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +38,15 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     this.resetForm = this.fb.group({
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(50),
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).*$/)
+        ]
+      ],
       confirmPassword: ['', [Validators.required]]
     }, {
       validators: this.passwordMatchValidator

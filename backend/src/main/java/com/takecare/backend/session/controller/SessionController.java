@@ -81,13 +81,14 @@ public class SessionController {
             @PathVariable Integer id,
             @Valid @RequestBody CancelSessionRequestDTO request
     ) {
-        logger.info("PATCH session cancel - id={} patientId={}",
-                id, request.getPatientId());
+        logger.info("PATCH session cancel - id={} patientId={} specialistId={}",
+                id, request.getPatientId(), request.getSpecialistId());
 
         try {
             SessionStatusResponseDTO response = sessionService.cancelSession(
                     id,
-                    request.getPatientId()
+                    request.getPatientId(),
+                    request.getSpecialistId()
             );
 
             return ResponseEntity.ok(response);

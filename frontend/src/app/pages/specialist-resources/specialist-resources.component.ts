@@ -47,6 +47,8 @@ export class SpecialistResourcesComponent implements OnInit {
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
   private toastTimer: any;
+  showConfirmDelete = false;
+  resourceToDelete: Resource | null = null;
  
   form: ResourceForm = { title: '', description: '' };
   selectedFile: File | null = null;
@@ -197,17 +199,29 @@ export class SpecialistResourcesComponent implements OnInit {
   }
  
   deleteResource(resource: Resource): void {
-    if (!confirm(this.translate.instant('resources.confirmations.delete'))) {
-      return;
-    }
+    this.resourceToDelete = resource;
+    this.showConfirmDelete = true;
+  }
+
+  closeConfirmDelete(): void {
+    this.showConfirmDelete = false;
+    this.resourceToDelete = null;
+  }
+
+  executeDeleteResource(): void {
+    if (!this.resourceToDelete) return;
+    const resource = this.resourceToDelete;
+    this.showConfirmDelete = false;
 
     this.resourcesService.deleteResource(this.user.id, resource.id).subscribe({
       next: () => {
         this.resources = this.resources.filter(r => r.id !== resource.id);
         this.showToastMessage('resources.toast.deleted', 'success');
+        this.resourceToDelete = null;
       },
       error: () => {
         this.showToastMessage('resources.toast.error', 'error');
+        this.resourceToDelete = null;
       }
     });
   }

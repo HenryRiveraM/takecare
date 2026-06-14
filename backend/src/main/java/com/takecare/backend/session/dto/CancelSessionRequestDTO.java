@@ -1,6 +1,5 @@
 package com.takecare.backend.session.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class CancelSessionRequestDTO {
 
-    @NotNull(message = "patientId es obligatorio")
     private Integer patientId;
+    private Integer specialistId;
 }

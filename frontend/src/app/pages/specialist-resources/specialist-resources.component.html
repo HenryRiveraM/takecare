@@ -206,4 +206,23 @@
 
     </div>
   </div>
+
+  <!-- Custom Confirm Delete Dialog -->
+  <div class="confirm-overlay" *ngIf="showConfirmDelete" (click)="closeConfirmDelete()">
+    <div class="confirm-dialog" (click)="$event.stopPropagation()">
+      <div class="confirm-icon icon-reject">
+        <i class="fas fa-trash-alt"></i>
+      </div>
+      <h3 class="confirm-title">{{ 'resources.confirmations.deleteTitle' | translate }}</h3>
+      <p class="confirm-message">{{ 'resources.confirmations.deleteMessage' | translate }}</p>
+      <div class="confirm-actions">
+        <button type="button" class="btn-secondary" (click)="closeConfirmDelete()">
+          {{ 'resources.confirmations.cancel' | translate }}
+        </button>
+        <button type="button" class="btn-confirm-delete" (click)="executeDeleteResource()">
+          {{ 'resources.confirmations.deleteConfirm' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

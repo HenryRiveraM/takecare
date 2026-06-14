@@ -441,6 +441,25 @@
       <div class="toast-icon">✓</div>
       <div class="toast-text">{{ notification.message }}</div>
     </div>
+
+    <!-- Custom Confirm Dialog -->
+    <div class="confirm-overlay" *ngIf="showConfirm" (click)="closeConfirm()">
+      <div class="confirm-dialog" (click)="$event.stopPropagation()">
+        <div class="confirm-icon" [ngClass]="confirmIconClass">
+          <span class="material-symbols-outlined">{{ confirmIcon }}</span>
+        </div>
+        <h3 class="confirm-title">{{ confirmTitle }}</h3>
+        <p class="confirm-message">{{ confirmMessage }}</p>
+        <div class="confirm-actions">
+          <button type="button" class="btn-secondary-cancel" (click)="closeConfirm()">
+            {{ 'admin.actions.cancel' | translate }}
+          </button>
+          <button type="button" [ngClass]="confirmBtnClass" (click)="executeConfirm()">
+            {{ confirmBtnText }}
+          </button>
+        </div>
+      </div>
+    </div>
   </section>
   </main>
 </div>

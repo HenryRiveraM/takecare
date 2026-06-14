@@ -28,7 +28,8 @@
     <article
       class="notification-card"
       [class.unread]="notification.status === 0"
-      *ngFor="let notification of notifications; trackBy: trackByNotificationId">
+      *ngFor="let notification of notifications; trackBy: trackByNotificationId"
+      (click)="markAsReadAndRedirect(notification)">
       <div class="notification-head">
         <div class="notification-icon">
           <span class="material-symbols-outlined">
@@ -51,12 +52,8 @@
       <p class="notification-description">{{ notification.description }}</p>
 
       <div class="notification-actions">
-        <button type="button" class="action-button" (click)="toggleReadStatus(notification)">
-          {{
-            notification.status === 0
-              ? ((translationKey + '.actions.markRead') | translate)
-              : ((translationKey + '.actions.markUnread') | translate)
-          }}
+        <button type="button" class="action-button">
+          {{ (translationKey + '.actions.viewAppointment') | translate }}
         </button>
       </div>
     </article>

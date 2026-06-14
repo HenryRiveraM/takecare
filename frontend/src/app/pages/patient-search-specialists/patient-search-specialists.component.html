@@ -37,6 +37,11 @@
             </option>
           </select>
 
+          <label class="filter-checkbox-label">
+            <input type="checkbox" [(ngModel)]="onlyWithAvailability" (change)="applyAllFilters()" />
+            <span>{{ 'patientSearch.filters.onlyAvailable' | translate }}</span>
+          </label>
+          
           <button type="button" class="btn-primary" (click)="onSearch()">
             {{ 'patientSearch.searchButton' | translate }}
           </button>

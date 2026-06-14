@@ -138,7 +138,11 @@
       "suspendPatient": "Are you sure you want to suspend this patient? They will not be able to use their account until you activate it again.",
       "activatePatient": "Are you sure you want to activate this patient?",
       "suspendSpecialist": "Are you sure you want to suspend this specialist? They will not be able to use their account until you activate it again.",
-      "activateSpecialist": "Are you sure you want to activate this specialist?"
+      "activateSpecialist": "Are you sure you want to activate this specialist?",
+      "suspendPatientTitle": "Confirm Suspension",
+      "activatePatientTitle": "Confirm Activation",
+      "suspendSpecialistTitle": "Confirm Suspension",
+      "activateSpecialistTitle": "Confirm Activation"
     },
     "loading": {
       "patients": "Loading patients...",
@@ -269,7 +273,9 @@
       },
       "confirmations": {
         "accept": "Are you sure you want to accept this report? A strike will be added to the reported user.",
-        "finish": "Are you sure you want to finish this report without a penalty?"
+        "finish": "Are you sure you want to finish this report without a penalty?",
+        "acceptTitle": "Confirm Report Acceptance",
+        "finishTitle": "Confirm Report Completion"
       },
       "notifications": {
         "accepted": "Report accepted. A strike was added to the reported user.",
@@ -446,7 +452,8 @@
       "thursday": "Thursday",
       "friday": "Friday",
       "saturday": "Saturday",
-      "sunday": "Sunday"
+      "sunday": "Sunday",
+      "onlyAvailable": "Only with available schedules"
     },
     "schedule": {
       "title": "Available schedules",
@@ -544,7 +551,7 @@
     "title": "Reset Password",
     "subtitle": "Enter your new password below to update your account securely.",
     "passwordLabel": "New Password",
-    "passwordPlaceholder": "Min. 6 characters",
+    "passwordPlaceholder": "Min. 8, max. 50 characters",
     "confirmPasswordLabel": "Confirm Password",
     "confirmPasswordPlaceholder": "Repeat the password",
     "saving": "Saving...",
@@ -553,9 +560,12 @@
     "successTitle": "Password updated!",
     "successText": "Your password has been successfully updated. You will be redirected to the sign in page in a few seconds.",
     "redirecting": "Redirecting...",
+    "passwordInfo": "Password must be between 8 and 50 characters, including at least one uppercase letter, one number, and one special character.",
     "errors": {
       "required": "Password is required.",
-      "minlength": "Password must be at least 6 characters long.",
+      "minlength": "Password must be at least 8 characters long.",
+      "maxlength": "Password must not exceed 50 characters.",
+      "pattern": "Password must include at least one uppercase letter, one number, and one special character.",
       "confirmRequired": "Confirm your password.",
       "mismatch": "Passwords do not match."
     }
@@ -934,6 +944,12 @@
       "saturday": "Saturday",
       "sunday": "Sunday"
     },
+    "confirm": {
+      "deleteTitle": "Delete this schedule?",
+      "deleteMessage": "Are you sure you want to delete this schedule from your calendar? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Yes, delete"
+    },
     "messages": {
       "notEditable": "This schedule cannot be changed because it has already been booked or has started.",
       "loadError": "Could not load schedules.",
@@ -944,7 +960,10 @@
       "selectToDelete": "Select a schedule to delete.",
       "deleteBlocked": "You can only delete available schedules that have not started yet.",
       "confirmDelete": "Are you sure you want to delete this schedule?",
-      "deleteError": "Could not delete the schedule."
+      "deleteError": "Could not delete the schedule.",
+      "deleteSuccess": "Schedule deleted successfully.",
+      "createSuccess": "Schedule created successfully.",
+      "updateSuccess": "Schedule updated successfully."
     }
   },
 
@@ -1017,7 +1036,8 @@
     },
     "actions": {
       "markRead": "Mark as read",
-      "markUnread": "Mark as unread"
+      "markUnread": "Mark as unread",
+      "viewAppointment": "Mark as read and view appointment"
     },
     "states": {
       "loading": "Loading notifications...",
@@ -1038,7 +1058,8 @@
     },
     "actions": {
       "markRead": "Mark as read",
-      "markUnread": "Mark as unread"
+      "markUnread": "Mark as unread",
+      "viewAppointment": "Mark as read and view appointment"
     },
     "states": {
       "loading": "Loading notifications...",
@@ -1168,6 +1189,7 @@
     "title": "Appointments Panel",
     "subtitle": "Manage your patients' requests",
     "loading": "Loading appointments...",
+    "policyInfo": "Appointments can be cancelled up to 24 hours in advance.",
 
     "filters": {
       "pending": "Pending",
@@ -1186,17 +1208,21 @@
 
     "actions": {
       "accept": "Accept",
-      "reject": "Reject"
+      "reject": "Reject",
+      "cancel": "Cancel appointment"
     },
 
     "confirm": {
       "acceptTitle": "Accept this appointment?",
       "rejectTitle": "Reject this appointment?",
+      "cancelTitle": "Cancel this appointment?",
       "acceptMessage": "You are about to accept the appointment of",
       "rejectMessage": "You are about to reject the appointment of",
+      "cancelMessage": "You are about to cancel the scheduled appointment of",
       "cancel": "Cancel",
       "confirmAccept": "Yes, accept",
       "confirmReject": "Yes, reject",
+      "confirmCancel": "Yes, cancel",
       "descriptionLabel": "Instructions for the patient",
       "descriptionPlaceholder": "E.g. virtual meeting link, previous instructions, or important appointment details."
     },
@@ -1204,6 +1230,8 @@
     "toast": {
       "accepted": "✅ Appointment accepted successfully",
       "rejected": "❌ Appointment rejected",
+      "cancelled": "✅ Appointment cancelled successfully",
+      "cancelError": "Could not cancel the appointment.",
       "statusError": "Could not update the appointment status."
     },
 
@@ -1380,7 +1408,11 @@
     },
 
     "confirmations": {
-      "delete": "Are you sure you want to delete this resource? This action cannot be undone from the interface."
+      "delete": "Are you sure you want to delete this resource? This action cannot be undone from the interface.",
+      "deleteTitle": "Delete this resource?",
+      "deleteMessage": "Are you sure you want to delete this resource? This action cannot be undone.",
+      "cancel": "Cancel",
+      "deleteConfirm": "Yes, delete"
     },
 
     "empty": {
@@ -1404,6 +1436,7 @@
     "title": "Appointment requests",
     "subtitle": "Check the status of your requested appointments and cancel those that still apply.",
     "loading": "Loading your appointments...",
+    "policyInfo": "Appointments can be cancelled up to 24 hours in advance.",
 
     "card": {
       "requestedBy": "Appointment requested by",

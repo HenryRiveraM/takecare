@@ -21,6 +21,19 @@ export class PatientProfileComponent implements OnInit {
   isLoading = false;
   userDataBackup: PatientProfile | null = null;
 
+  showToast = false;
+  toastMessage = '';
+  toastType: 'success' | 'error' = 'success';
+  private toastTimer: any;
+
+  showToastMessage(messageKey: string, type: 'success' | 'error'): void {
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+    this.toastMessage = messageKey;
+    this.toastType = type;
+    this.showToast = true;
+    this.toastTimer = setTimeout(() => { this.showToast = false; }, 3000);
+  }
+
   constructor(
     private fb: FormBuilder,
     private patientService: PatientService,
@@ -66,14 +79,14 @@ export class PatientProfileComponent implements OnInit {
           this.userDataBackup = profile;
         } else {
           console.error('Error: perfil vacío');
-          alert(this.translate.instant('patientProfile.messages.loadError'));
+          this.showToastMessage('patientProfile.messages.loadError', 'error');
         }
         this.isLoading = false;
       },
       error: (error) => {
         console.error('Error de conexión:', error);
         this.isLoading = false;
-        alert(this.translate.instant('patientProfile.messages.connectionError'));
+        this.showToastMessage('patientProfile.messages.connectionError', 'error');
       }
     });
   }
@@ -101,21 +114,21 @@ export class PatientProfileComponent implements OnInit {
             this.userDataBackup = formData;
             this.isEditing = false;
             this.isLoading = false;
-            alert(this.translate.instant('patientProfile.messages.updateSuccess'));
+            this.showToastMessage('patientProfile.messages.updateSuccess', 'success');
           } else {
             console.error('Error: perfil actualizado inválido');
-            alert(this.translate.instant('patientProfile.messages.updateError'));
+            this.showToastMessage('patientProfile.messages.updateError', 'error');
             this.isLoading = false;
           }
         },
         error: (error: any) => {
           console.error('Error de conexión:', error);
           this.isLoading = false;
-          alert(this.translate.instant('patientProfile.messages.updateConnectionError'));
+          this.showToastMessage('patientProfile.messages.updateConnectionError', 'error');
         }
       });
     } else {
-      alert(this.translate.instant('patientProfile.messages.requiredFields'));
+      this.showToastMessage('patientProfile.messages.requiredFields', 'error');
     }
   }
 

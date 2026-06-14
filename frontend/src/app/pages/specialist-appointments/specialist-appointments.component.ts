@@ -18,7 +18,7 @@ import {
 } from '../../services/session.service';
  
 export type AppointmentStatus = 'pending' | 'accepted' | 'rejected' | 'cancelled' | 'finished';
-export type DialogAction = 'accept' | 'reject';
+export type DialogAction = 'accept' | 'reject' | 'cancel';
  
 export interface Appointment {
   id: number;
@@ -288,9 +288,29 @@ export class SpecialistAppointmentsComponent implements OnInit {
 
     if (action === 'accept') {
       this.acceptAppointment(appointment, description);
-    } else {
+    } else if (action === 'reject') {
       this.rejectAppointment(appointment);
+    } else if (action === 'cancel') {
+      this.cancelAppointment(appointment);
     }
+  }
+
+  cancelAppointment(appointment: Appointment): void {
+    appointment.loading = true;
+    this.sessionService.cancelSession(appointment.id, { specialistId: this.specialistId }).subscribe({
+      next: () => {
+        appointment.status = 'cancelled';
+        appointment.loading = false;
+        this.showToastMessage('appointments.toast.cancelled', 'success');
+        this.loadAppointments();
+      },
+      error: (error: any) => {
+        console.error('Error al cancelar cita:', error);
+        appointment.loading = false;
+        const errMsg = error.error?.message || 'appointments.toast.cancelError';
+        this.showToastMessage(errMsg, 'error');
+      }
+    });
   }
 
   acceptAppointment(appointment: Appointment, description: string = ''): void {
@@ -569,7 +589,7 @@ export class SpecialistAppointmentsComponent implements OnInit {
     return time;
   }
  
-  private hasSessionEnded(appointment: Appointment): boolean {
+  hasSessionEnded(appointment: Appointment): boolean {
     const sessionDate = new Date(appointment.date);
     if (Number.isNaN(sessionDate.getTime())) return false;
  
@@ -586,6 +606,30 @@ export class SpecialistAppointmentsComponent implements OnInit {
     if (!range.includes('-')) return '';
     const parts = range.split('-').map(v => v.trim());
     return parts[1] || '';
+  }
+
+  canCancel(appointment: Appointment): boolean {
+    if (appointment.status !== 'accepted') return false;
+
+    const sessionDate = new Date(appointment.date);
+    if (Number.isNaN(sessionDate.getTime())) return false;
+
+    const startTimeStr = this.extractStartTime(appointment.time);
+    if (!startTimeStr) return false;
+
+    const [hours, minutes] = startTimeStr.split(':').map(Number);
+    const sessionStart = new Date(sessionDate);
+    sessionStart.setHours(hours || 0, minutes || 0, 0, 0);
+
+    const now = new Date();
+    const minCancelTime = now.getTime() + (24 * 60 * 60 * 1000); // +24 hours
+    return sessionStart.getTime() >= minCancelTime;
+  }
+
+  private extractStartTime(range: string): string {
+    if (!range) return '';
+    const parts = range.split('-').map(v => v.trim());
+    return parts[0] || '';
   }
 
   private readRequestedAppointmentId(): number | null {

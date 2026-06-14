@@ -1,5 +1,14 @@
 <div class="profile-page animate__fadeIn">
   
+  <!-- Friendly Toast Notification -->
+  <div class="toast"
+    [class.show]="showToast"
+    [class.toast-success]="toastType === 'success'"
+    [class.toast-error]="toastType === 'error'">
+    <i [class]="toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+    {{ toastMessage | translate }}
+  </div>
+
   <app-sidebar></app-sidebar>
 
   <div class="sidebar-overlay" 

@@ -120,6 +120,6 @@ class UserVerificationServiceTest {
         assertThatThrownBy(() -> userVerificationService.verifyUser(1, request))
                 .isInstanceOf(RuntimeException.class);
 
-        assertThat(mockUser.getAccountVerified()).isEqualTo(0);
+        assertThat(mockUser.getAccountVerified()).isEqualTo((byte) 0);
     }
 }

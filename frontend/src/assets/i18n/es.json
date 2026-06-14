@@ -139,7 +139,11 @@
       "suspendPatient": "¿Seguro que deseas suspender a este paciente? No podrá usar su cuenta hasta que lo actives nuevamente.",
       "activatePatient": "¿Seguro que deseas activar a este paciente?",
       "suspendSpecialist": "¿Seguro que deseas suspender a este especialista? No podrá usar su cuenta hasta que lo actives nuevamente.",
-      "activateSpecialist": "¿Seguro que deseas activar a este especialista?"
+      "activateSpecialist": "¿Seguro que deseas activar a este especialista?",
+      "suspendPatientTitle": "Confirmar suspensión",
+      "activatePatientTitle": "Confirmar activación",
+      "suspendSpecialistTitle": "Confirmar suspensión",
+      "activateSpecialistTitle": "Confirmar activación"
     },
     "loading": {
       "patients": "Cargando pacientes...",
@@ -273,7 +277,9 @@
       },
       "confirmations": {
         "accept": "¿Seguro que deseas aceptar este reporte? Se agregará un strike al usuario reportado.",
-        "finish": "¿Seguro que deseas finalizar este reporte sin penalización?"
+        "finish": "¿Seguro que deseas finalizar este reporte sin penalización?",
+        "acceptTitle": "Confirmar aceptación de reporte",
+        "finishTitle": "Confirmar finalización de reporte"
       },
       "notifications": {
         "accepted": "Reporte aceptado. Se agregó un strike al usuario reportado.",
@@ -450,7 +456,8 @@
       "thursday": "Jueves",
       "friday": "Viernes",
       "saturday": "Sábado",
-      "sunday": "Domingo"
+      "sunday": "Domingo",
+      "onlyAvailable": "Solo con horarios disponibles"
     },
     "schedule": {
       "title": "Horarios disponibles",
@@ -548,7 +555,7 @@
     "title": "Restablecer contraseña",
     "subtitle": "Ingresa tu nueva contraseña para actualizar tu cuenta de forma segura.",
     "passwordLabel": "Nueva Contraseña",
-    "passwordPlaceholder": "Mín. 6 caracteres",
+    "passwordPlaceholder": "Mín. 8, máx. 50 caracteres",
     "confirmPasswordLabel": "Confirmar Contraseña",
     "confirmPasswordPlaceholder": "Repite la contraseña",
     "saving": "Guardando...",
@@ -557,9 +564,12 @@
     "successTitle": "¡Contraseña actualizada!",
     "successText": "Tu contraseña ha sido actualizada con éxito. Serás redirigido al inicio de sesión en unos segundos.",
     "redirecting": "Redirigiendo...",
+    "passwordInfo": "La contraseña debe tener entre 8 y 50 caracteres, incluyendo al menos una mayúscula, un número y un carácter especial.",
     "errors": {
       "required": "La contraseña es obligatoria.",
-      "minlength": "La contraseña debe tener al menos 6 caracteres.",
+      "minlength": "La contraseña debe tener al menos 8 caracteres.",
+      "maxlength": "La contraseña no debe superar los 50 caracteres.",
+      "pattern": "La contraseña debe incluir al menos una mayúscula, un número y un carácter especial.",
       "confirmRequired": "Confirma tu contraseña.",
       "mismatch": "Las contraseñas no coinciden."
     }
@@ -938,6 +948,12 @@
       "saturday": "Sábado",
       "sunday": "Domingo"
     },
+    "confirm": {
+      "deleteTitle": "¿Eliminar este horario?",
+      "deleteMessage": "Confirmas que deseas eliminar este horario de tu agenda. Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "delete": "Sí, eliminar"
+    },
     "messages": {
       "notEditable": "Este horario no puede modificarse porque ya fue reservado o ya empezó.",
       "loadError": "No se pudieron cargar los horarios.",
@@ -948,7 +964,10 @@
       "selectToDelete": "Selecciona un horario para eliminar.",
       "deleteBlocked": "Solo puedes eliminar horarios disponibles que todavía no han empezado.",
       "confirmDelete": "¿Seguro que deseas eliminar este horario?",
-      "deleteError": "No se pudo eliminar el horario."
+      "deleteError": "No se pudo eliminar el horario.",
+      "deleteSuccess": "Horario eliminado correctamente.",
+      "createSuccess": "Horario creado correctamente.",
+      "updateSuccess": "Horario actualizado correctamente."
     }
   },
 
@@ -1021,7 +1040,8 @@
     },
     "actions": {
       "markRead": "Marcar como leída",
-      "markUnread": "Marcar como no leída"
+      "markUnread": "Marcar como no leída",
+      "viewAppointment": "Marcar como leída y ver cita"
     },
     "states": {
       "loading": "Cargando notificaciones...",
@@ -1042,7 +1062,8 @@
     },
     "actions": {
       "markRead": "Marcar como leída",
-      "markUnread": "Marcar como no leída"
+      "markUnread": "Marcar como no leída",
+      "viewAppointment": "Marcar como leída y ver cita"
     },
     "states": {
       "loading": "Cargando notificaciones...",
@@ -1172,6 +1193,7 @@
     "title": "Panel de Citas",
     "subtitle": "Gestiona las solicitudes de tus pacientes",
     "loading": "Cargando citas...",
+    "policyInfo": "Las citas se pueden cancelar con un mínimo de 24 horas de anticipación.",
 
     "filters": {
       "pending": "Pendientes",
@@ -1190,17 +1212,21 @@
 
     "actions": {
       "accept": "Aceptar",
-      "reject": "Rechazar"
+      "reject": "Rechazar",
+      "cancel": "Cancelar cita"
     },
 
     "confirm": {
       "acceptTitle": "¿Aceptar esta cita?",
       "rejectTitle": "¿Rechazar esta cita?",
+      "cancelTitle": "¿Cancelar esta cita?",
       "acceptMessage": "Confirmas que deseas aceptar la cita de",
       "rejectMessage": "Confirmas que deseas rechazar la cita de",
+      "cancelMessage": "Confirmas que deseas cancelar la cita agendada de",
       "cancel": "Cancelar",
       "confirmAccept": "Sí, aceptar",
       "confirmReject": "Sí, rechazar",
+      "confirmCancel": "Sí, cancelar",
       "descriptionLabel": "Indicación para el paciente",
       "descriptionPlaceholder": "Ej. Enlace de reunión virtual, indicaciones previas o detalles importantes para la cita."
     },
@@ -1208,6 +1234,8 @@
     "toast": {
       "accepted": "✅ Cita aceptada correctamente",
       "rejected": "❌ Cita rechazada",
+      "cancelled": "✅ Cita cancelada correctamente",
+      "cancelError": "No se pudo cancelar la cita.",
       "statusError": "No se pudo actualizar el estado de la cita."
     },
 
@@ -1384,7 +1412,11 @@
     },
 
     "confirmations": {
-      "delete": "¿Seguro que deseas eliminar este recurso? Esta acción no se puede deshacer desde la interfaz."
+      "delete": "¿Seguro que deseas eliminar este recurso? Esta acción no se puede deshacer desde la interfaz.",
+      "deleteTitle": "¿Eliminar este recurso?",
+      "deleteMessage": "Confirmas que deseas eliminar este recurso. Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "deleteConfirm": "Sí, eliminar"
     },
 
     "empty": {
@@ -1408,6 +1440,7 @@
     "title": "Solicitudes de cita",
     "subtitle": "Revisa el estado de tus citas solicitadas y cancela aquellas que aún correspondan.",
     "loading": "Cargando tus citas...",
+    "policyInfo": "Las citas se pueden cancelar con un mínimo de 24 horas de anticipación.",
 
     "card": {
       "requestedBy": "Cita solicitada por",

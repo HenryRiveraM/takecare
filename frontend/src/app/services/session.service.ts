@@ -40,7 +40,8 @@ export interface SessionStatusResponse {
 }
  
 export interface CancelSessionRequest {
-  patientId: number;
+  patientId?: number;
+  specialistId?: number;
 }
  
 export interface UpdateSessionStatusRequest {

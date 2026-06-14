@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.takecare.backend.specialistschedule.repository.SpecialistScheduleRepository;
 import com.takecare.backend.specialistschedule.model.SpecialistSchedule;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,17 +84,31 @@ public class SpecialistSearchService {
 
     private SpecialistFilterResponseDTO toDTO(Specialist s, Byte dayOfWeek) {
         List<SpecialistSchedule> schedules = dayOfWeek != null
-                ? scheduleRepository.findBySpecialistIdAndDayOfWeekAndStatus(
+                ? scheduleRepository.findBySpecialistIdAndDayOfWeekAndStatusAndActivo(
                         s.getId(),
                         dayOfWeek,
-                        STATUS_AVAILABLE
+                        STATUS_AVAILABLE,
+                        (byte) 1
                 )
-                : scheduleRepository.findBySpecialistIdAndStatus(
+                : scheduleRepository.findBySpecialistIdAndStatusAndActivo(
                         s.getId(),
-                        STATUS_AVAILABLE
+                        STATUS_AVAILABLE,
+                        (byte) 1
                 );
 
+        LocalDate today = LocalDate.now();
+        LocalTime nowTime = LocalTime.now();
+
         List<SpecialistFilterResponseDTO.ScheduleDTO> scheduleDTOs = schedules.stream()
+                .filter(sc -> {
+                    if (sc.getScheduleDate().isBefore(today)) {
+                        return false;
+                    }
+                    if (sc.getScheduleDate().isEqual(today)) {
+                        return sc.getStartTime().isAfter(nowTime);
+                    }
+                    return true;
+                })
                 .map(sc -> SpecialistFilterResponseDTO.ScheduleDTO.builder()
                         .dayOfWeek(sc.getDayOfWeek())
                         .startTime(sc.getStartTime())

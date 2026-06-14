@@ -26,6 +26,7 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
         JOIN com.takecare.backend.specialistschedule.model.SpecialistSchedule sc
           ON sc.specialist.id = s.id
         WHERE sc.status = 0
+          AND (sc.activo = 1 OR sc.activo IS NULL)
           AND sc.dayOfWeek = :dayOfWeek
     """)
     List<Specialist> findByAvailability(@Param("dayOfWeek") Byte dayOfWeek);
@@ -37,6 +38,7 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
           ON sc.specialist.id = s.id
         WHERE LOWER(sp.name) = LOWER(:category)
           AND sc.status = 0
+          AND (sc.activo = 1 OR sc.activo IS NULL)
           AND sc.dayOfWeek = :dayOfWeek
     """)
     List<Specialist> findBySpecialityNameAndAvailability(
@@ -50,7 +52,7 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
         LEFT JOIN s.specialties sp
         LEFT JOIN com.takecare.backend.specialistschedule.model.SpecialistSchedule sc
           ON sc.specialist.id = s.id
-        WHERE (:dayOfWeek IS NULL OR (sc.status = 0 AND sc.dayOfWeek = :dayOfWeek))
+        WHERE (:dayOfWeek IS NULL OR (sc.status = 0 AND (sc.activo = 1 OR sc.activo IS NULL) AND sc.dayOfWeek = :dayOfWeek))
           AND (
             :name IS NULL
             OR LOWER(CONCAT(
@@ -82,7 +84,7 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Integer>
             LEFT JOIN s.specialties sp
             LEFT JOIN com.takecare.backend.specialistschedule.model.SpecialistSchedule sc
               ON sc.specialist.id = s.id
-            WHERE (:dayOfWeek IS NULL OR (sc.status = 0 AND sc.dayOfWeek = :dayOfWeek))
+            WHERE (:dayOfWeek IS NULL OR (sc.status = 0 AND (sc.activo = 1 OR sc.activo IS NULL) AND sc.dayOfWeek = :dayOfWeek))
               AND (
                     LOWER(CONCAT(
                         COALESCE(s.names, ''), ' ',

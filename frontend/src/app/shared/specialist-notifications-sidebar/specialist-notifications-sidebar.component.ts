@@ -7,6 +7,7 @@ import {
   SpecialistNotificationsService
 } from '../../services/specialist-notifications.service';
 import { LanguageService } from '../../services/language.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-specialist-notifications-sidebar',
@@ -26,10 +27,11 @@ export class SpecialistNotificationsSidebarComponent implements OnChanges {
 
   constructor(
     private notificationsService: SpecialistNotificationsService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private router: Router
   ) {
     this.notificationsService.notificationsStream().subscribe((notifications) => {
-      this.notifications = notifications;
+      this.notifications = notifications.filter(n => n.status === 0);
     });
 
     this.notificationsService.loadingStream().subscribe((loading) => {
@@ -48,15 +50,19 @@ export class SpecialistNotificationsSidebarComponent implements OnChanges {
     this.closePanel.emit();
   }
 
-  toggleReadStatus(notification: SpecialistNotification): void {
+  markAsReadAndRedirect(notification: SpecialistNotification): void {
     if (!this.userId) {
       return;
     }
 
-    const shouldMarkAsRead = notification.status === 0;
     this.notificationsService
-      .setReadStatus(notification.id, this.userId, shouldMarkAsRead, this.audience)
+      .setReadStatus(notification.id, this.userId, true, this.audience)
       .subscribe({
+        next: () => {
+          const targetRoute = this.audience === 'patient' ? '/patient/appointments' : '/specialist/appointments';
+          this.router.navigate([targetRoute]);
+          this.close();
+        },
         error: (error) => {
           console.error('Error updating notification status:', error);
         }

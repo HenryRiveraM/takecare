@@ -31,7 +31,7 @@ public class SpecialistScheduleService {
     private SpecialistRepository specialistRepository;
 
     public List<SpecialistSchedule> getAvailableSchedules(Integer specialistId) {
-        return scheduleRepository.findBySpecialistIdAndStatus(specialistId, STATUS_AVAILABLE);
+        return scheduleRepository.findBySpecialistIdAndStatusAndActivo(specialistId, STATUS_AVAILABLE, (byte) 1);
     }
 
     @Transactional
@@ -68,7 +68,7 @@ public class SpecialistScheduleService {
     }
 
     public List<SpecialistScheduleResponseDTO> getAllSchedulesBySpecialist(Integer specialistId) {
-        return scheduleRepository.findBySpecialistId(specialistId)
+        return scheduleRepository.findBySpecialistIdAndActivo(specialistId, (byte) 1)
                 .stream()
                 .sorted(Comparator.comparing(SpecialistSchedule::getScheduleDate)
                             .thenComparing(SpecialistSchedule::getStartTime)
@@ -82,10 +82,11 @@ public class SpecialistScheduleService {
             LocalDate startDate,
             LocalDate endDate
     ) {
-        return scheduleRepository.findBySpecialistIdAndScheduleDateBetween(
+        return scheduleRepository.findBySpecialistIdAndScheduleDateBetweenAndActivo(
                         specialistId,
                         startDate,
-                        endDate
+                        endDate,
+                        (byte) 1
                 )
                 .stream()
                 .sorted(
@@ -98,7 +99,7 @@ public class SpecialistScheduleService {
 
     public List<SpecialistScheduleGroupDTO> getSchedulesGroupedByDay(Integer specialistId) {
 
-        List<SpecialistSchedule> schedules = scheduleRepository.findBySpecialistId(specialistId);
+        List<SpecialistSchedule> schedules = scheduleRepository.findBySpecialistIdAndActivo(specialistId, (byte) 1);
 
         Map<Byte, List<SpecialistScheduleResponseDTO>> groupedSchedules = schedules.stream()
                 .sorted(Comparator.comparing(SpecialistSchedule::getScheduleDate)
@@ -141,7 +142,8 @@ public class SpecialistScheduleService {
         SpecialistSchedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
 
-        scheduleRepository.delete(schedule);
+        schedule.setActivo((byte) 0);
+        scheduleRepository.save(schedule);
     }
 
     private void validateSchedule(SpecialistScheduleDTO dto) {
@@ -171,11 +173,12 @@ public class SpecialistScheduleService {
 
     private void validateDuplicatedSchedule(Integer specialistId, SpecialistScheduleDTO dto) {
 
-        boolean exists = scheduleRepository.existsBySpecialistIdAndScheduleDateAndStartTimeAndEndTime(
+        boolean exists = scheduleRepository.existsBySpecialistIdAndScheduleDateAndStartTimeAndEndTimeAndActivo(
                 specialistId,
                 dto.getScheduleDate(),
                 dto.getStartTime(),
-                dto.getEndTime()
+                dto.getEndTime(),
+                (byte) 1
         );
 
         if (exists) {
@@ -189,12 +192,13 @@ public class SpecialistScheduleService {
             SpecialistScheduleDTO dto
     ) {
 
-    boolean exists = scheduleRepository.existsBySpecialistIdAndScheduleDateAndStartTimeAndEndTimeAndIdNot(
+    boolean exists = scheduleRepository.existsBySpecialistIdAndScheduleDateAndStartTimeAndEndTimeAndIdNotAndActivo(
                 specialistId,
                 dto.getScheduleDate(),
                 dto.getStartTime(),
                 dto.getEndTime(),
-                scheduleId
+                scheduleId,
+                (byte) 1
         );
 
         if (exists) {

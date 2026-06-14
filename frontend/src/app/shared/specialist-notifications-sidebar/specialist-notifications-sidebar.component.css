@@ -120,6 +120,19 @@
 
 .notification-card {
   padding: 18px;
+  cursor: pointer;
+  transition: all 0.22s ease-in-out;
+}
+
+.notification-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(245, 163, 163, 0.12), 0 4px 12px rgba(0, 0, 0, 0.03);
+  border-color: rgba(245, 163, 163, 0.45);
+}
+
+.notification-card:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 20px rgba(245, 163, 163, 0.08);
 }
 
 .notification-card.unread {

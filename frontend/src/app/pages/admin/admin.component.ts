@@ -54,6 +54,15 @@ export class AdminComponent implements OnInit {
 
   notification: { message: string; type: 'success' | 'error' } | null = null;
 
+  showConfirm = false;
+  confirmTitle = '';
+  confirmMessage = '';
+  confirmBtnText = '';
+  confirmBtnClass = '';
+  confirmIcon = '';
+  confirmIconClass = '';
+  private confirmAction: (() => void) | null = null;
+
   constructor(
     private adminService: AdminService,
     private translate: TranslateService,
@@ -347,32 +356,45 @@ export class AdminComponent implements OnInit {
       ? 'admin.reports.confirmations.accept'
       : 'admin.reports.confirmations.finish';
 
-    if (!confirm(this.translate.instant(confirmationKey))) {
-      return;
-    }
+    const titleKey = status === 'ACCEPTED'
+      ? 'admin.reports.confirmations.acceptTitle'
+      : 'admin.reports.confirmations.finishTitle';
 
-    this.processingReportId = report.id;
-    this.errorMsg = '';
+    const btnTextKey = status === 'ACCEPTED'
+      ? 'admin.reports.actions.accept'
+      : 'admin.reports.actions.finish';
 
-    this.adminService.updateReportStatus(report.id, status).subscribe({
-      next: (updatedReport) => {
-        this.reports = this.reports.map(item => item.id === updatedReport.id ? updatedReport : item);
-        this.processingReportId = null;
-        this.showNotification(
-          this.translate.instant(
-            status === 'ACCEPTED'
-              ? 'admin.reports.notifications.accepted'
-              : 'admin.reports.notifications.finished'
-          )
-        );
-      },
-      error: (err: HttpErrorResponse) => {
-        this.processingReportId = null;
-        this.errorMsg = this.translate.instant('admin.errors.updateReport');
-        this.showNotification(this.errorMsg, 'error');
-        console.error(err);
-      }
-    });
+    this.confirmTitle = this.translate.instant(titleKey);
+    this.confirmMessage = this.translate.instant(confirmationKey);
+    this.confirmBtnText = this.translate.instant(btnTextKey);
+    this.confirmBtnClass = status === 'ACCEPTED' ? 'btn-confirm-delete' : 'btn-confirm-approve';
+    this.confirmIcon = status === 'ACCEPTED' ? 'gavel' : 'done_all';
+    this.confirmIconClass = status === 'ACCEPTED' ? 'icon-reject' : 'icon-approve';
+    this.confirmAction = () => {
+      this.processingReportId = report.id;
+      this.errorMsg = '';
+
+      this.adminService.updateReportStatus(report.id, status).subscribe({
+        next: (updatedReport) => {
+          this.reports = this.reports.map(item => item.id === updatedReport.id ? updatedReport : item);
+          this.processingReportId = null;
+          this.showNotification(
+            this.translate.instant(
+              status === 'ACCEPTED'
+                ? 'admin.reports.notifications.accepted'
+                : 'admin.reports.notifications.finished'
+            )
+          );
+        },
+        error: (err: HttpErrorResponse) => {
+          this.processingReportId = null;
+          this.errorMsg = this.translate.instant('admin.errors.updateReport');
+          this.showNotification(this.errorMsg, 'error');
+          console.error(err);
+        }
+      });
+    };
+    this.showConfirm = true;
   }
 
   processValidation(user: PendingValidationUser, status: 'approved' | 'rejected'): void {
@@ -407,25 +429,38 @@ export class AdminComponent implements OnInit {
       ? 'admin.confirmations.activatePatient'
       : 'admin.confirmations.suspendPatient';
 
-    if (!confirm(this.translate.instant(confirmationKey))) {
-      return;
-    }
+    const titleKey = newStatus === 1
+      ? 'admin.confirmations.activatePatientTitle'
+      : 'admin.confirmations.suspendPatientTitle';
 
-    this.adminService.updateUserStatus(patient.id, newStatus).subscribe({
-      next: () => {
-        patient.status = newStatus;
-        this.showNotification(
-          newStatus === 1
-            ? this.translate.instant('admin.notifications.patientActivated')
-            : this.translate.instant('admin.notifications.patientSuspended')
-        );
-      },
-      error: (err) => {
-        console.error(err);
-        this.errorMsg = this.translate.instant('admin.errors.suspendUser');
-        this.showNotification(this.translate.instant('admin.errors.suspendUser'), 'error');
-      }
-    });
+    const btnTextKey = newStatus === 1
+      ? 'admin.actions.activate'
+      : 'admin.actions.suspend';
+
+    this.confirmTitle = this.translate.instant(titleKey);
+    this.confirmMessage = this.translate.instant(confirmationKey);
+    this.confirmBtnText = this.translate.instant(btnTextKey);
+    this.confirmBtnClass = newStatus === 1 ? 'btn-confirm-approve' : 'btn-confirm-delete';
+    this.confirmIcon = newStatus === 1 ? 'person' : 'person_off';
+    this.confirmIconClass = newStatus === 1 ? 'icon-approve' : 'icon-reject';
+    this.confirmAction = () => {
+      this.adminService.updateUserStatus(patient.id, newStatus).subscribe({
+        next: () => {
+          patient.status = newStatus;
+          this.showNotification(
+            newStatus === 1
+              ? this.translate.instant('admin.notifications.patientActivated')
+              : this.translate.instant('admin.notifications.patientSuspended')
+          );
+        },
+        error: (err) => {
+          console.error(err);
+          this.errorMsg = this.translate.instant('admin.errors.suspendUser');
+          this.showNotification(this.translate.instant('admin.errors.suspendUser'), 'error');
+        }
+      });
+    };
+    this.showConfirm = true;
   }
 
   toggleSpecialistStatus(specialist: Specialist): void {
@@ -434,25 +469,50 @@ export class AdminComponent implements OnInit {
       ? 'admin.confirmations.activateSpecialist'
       : 'admin.confirmations.suspendSpecialist';
 
-    if (!confirm(this.translate.instant(confirmationKey))) {
-      return;
-    }
+    const titleKey = newStatus === 1
+      ? 'admin.confirmations.activateSpecialistTitle'
+      : 'admin.confirmations.suspendSpecialistTitle';
 
-    this.adminService.updateUserStatus(specialist.id, newStatus).subscribe({
-      next: () => {
-        specialist.status = newStatus;
-        this.showNotification(
-          newStatus === 1
-            ? this.translate.instant('admin.notifications.specialistActivated')
-            : this.translate.instant('admin.notifications.specialistSuspended')
-        );
-      },
-      error: (err) => {
-        console.error(err);
-        this.errorMsg = this.translate.instant('admin.errors.suspendUser');
-        this.showNotification(this.translate.instant('admin.errors.suspendUser'), 'error');
-      }
-    });
+    const btnTextKey = newStatus === 1
+      ? 'admin.actions.activate'
+      : 'admin.actions.suspend';
+
+    this.confirmTitle = this.translate.instant(titleKey);
+    this.confirmMessage = this.translate.instant(confirmationKey);
+    this.confirmBtnText = this.translate.instant(btnTextKey);
+    this.confirmBtnClass = newStatus === 1 ? 'btn-confirm-approve' : 'btn-confirm-delete';
+    this.confirmIcon = newStatus === 1 ? 'person' : 'person_off';
+    this.confirmIconClass = newStatus === 1 ? 'icon-approve' : 'icon-reject';
+    this.confirmAction = () => {
+      this.adminService.updateUserStatus(specialist.id, newStatus).subscribe({
+        next: () => {
+          specialist.status = newStatus;
+          this.showNotification(
+            newStatus === 1
+              ? this.translate.instant('admin.notifications.specialistActivated')
+              : this.translate.instant('admin.notifications.specialistSuspended')
+          );
+        },
+        error: (err) => {
+          console.error(err);
+          this.errorMsg = this.translate.instant('admin.errors.suspendUser');
+          this.showNotification(this.translate.instant('admin.errors.suspendUser'), 'error');
+        }
+      });
+    };
+    this.showConfirm = true;
+  }
+
+  closeConfirm(): void {
+    this.showConfirm = false;
+    this.confirmAction = null;
+  }
+
+  executeConfirm(): void {
+    if (this.confirmAction) {
+      this.confirmAction();
+    }
+    this.closeConfirm();
   }
 
   getAge(birthDate: string): number {

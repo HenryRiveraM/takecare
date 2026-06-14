@@ -36,4 +36,7 @@ public class SpecialistSchedule {
 
     @Column(name = "status")
     private Byte status = 0; //0 disponible, 1 no disponible
+
+    @Column(name = "activo", nullable = false, columnDefinition = "tinyint default 1")
+    private Byte activo = 1; //1 activo, 0 inactivo/eliminado lógicamente
 }

@@ -176,12 +176,26 @@ public class SessionService {
     @Transactional
     public SessionStatusResponseDTO cancelSession(
             Integer sessionId,
-            Integer patientId
+            Integer patientId,
+            Integer specialistId
     ) {
-        Session session = sessionRepository.findByIdAndPatientId(sessionId, patientId)
-                .orElseThrow(() -> new NoSuchElementException(
-                        "Cita no encontrada o no pertenece al paciente indicado"
-                ));
+        if (patientId == null && specialistId == null) {
+            throw new IllegalArgumentException("Debe indicar el paciente o el especialista para realizar la cancelación");
+        }
+
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new NoSuchElementException("Cita no encontrada"));
+
+        // Validar propiedad de la cita
+        if (patientId != null && !session.getPatient().getId().equals(patientId)) {
+            throw new NoSuchElementException("La cita no pertenece al paciente indicado");
+        }
+        if (specialistId != null && 
+                (session.getSchedule() == null || 
+                 session.getSchedule().getSpecialist() == null || 
+                 !session.getSchedule().getSpecialist().getId().equals(specialistId))) {
+            throw new NoSuchElementException("La cita no pertenece al especialista indicado");
+        }
 
         if (SESSION_FINISHED.equals(session.getStatus())) {
             throw new IllegalStateException("No se puede cancelar una cita finalizada");
@@ -196,6 +210,16 @@ public class SessionService {
         }
 
         SpecialistSchedule schedule = session.getSchedule();
+        if (schedule == null) {
+            throw new IllegalStateException("La cita no tiene un horario asociado");
+        }
+
+        // Regla de las 24 horas
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime sessionStart = LocalDateTime.of(schedule.getScheduleDate(), schedule.getStartTime());
+        if (sessionStart.isBefore(now.plusHours(24))) {
+            throw new IllegalStateException("No se puede cancelar la cita si faltan menos de 24 horas para la hora de la sesión");
+        }
 
         session.setStatus(SESSION_CANCELLED);
         schedule.setStatus(SCHEDULE_AVAILABLE);
@@ -203,13 +227,27 @@ public class SessionService {
         Session saved = sessionRepository.save(session);
         scheduleRepository.save(schedule);
 
-        String notificationDescription = "El paciente canceló la cita";
+        String notificationDescription = (patientId != null) 
+                ? "El paciente canceló la cita" 
+                : "El especialista canceló la cita";
 
         notificationService.createForSession(
                 saved,
                 notificationDescription,
                 NOTIFICATION_TYPE_SESSION_RESPONSE
         );
+
+        if (specialistId != null) {
+            String specialistName = buildFullName(
+                    schedule.getSpecialist().getNames(),
+                    schedule.getSpecialist().getFirstLastname(),
+                    schedule.getSpecialist().getSecondLastname()
+            );
+            notificationService.createForPatientSession(
+                    saved,
+                    "Tu cita agendada fue cancelada por el especialista " + specialistName
+            );
+        }
 
         return buildSessionStatusResponse(saved, notificationDescription);
     }
@@ -301,7 +339,7 @@ public class SessionService {
 
     private void validateScheduleForSession(SpecialistSchedule schedule) {
 
-        if (!SCHEDULE_AVAILABLE.equals(schedule.getStatus())) {
+        if (!SCHEDULE_AVAILABLE.equals(schedule.getStatus()) || (schedule.getActivo() != null && schedule.getActivo() == 0)) {
             throw new RuntimeException("Este horario no está disponible");
         }
 

@@ -168,3 +168,31 @@
     </div>
   </div>
 </div>
+
+<!-- Friendly Toast Notification -->
+<div class="toast"
+  [class.show]="showToast"
+  [class.toast-success]="toastType === 'success'"
+  [class.toast-error]="toastType === 'error'">
+  <i [class]="toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+  {{ toastMessage | translate }}
+</div>
+
+<!-- Custom Confirm Delete Dialog -->
+<div class="confirm-overlay" *ngIf="showConfirmDelete" (click)="closeConfirmDelete()">
+  <div class="confirm-dialog" (click)="$event.stopPropagation()">
+    <div class="confirm-icon icon-reject">
+      <span class="material-symbols-outlined">event_busy</span>
+    </div>
+    <h3 class="confirm-title">{{ 'specialistSchedule.confirm.deleteTitle' | translate }}</h3>
+    <p class="confirm-message">{{ 'specialistSchedule.confirm.deleteMessage' | translate }}</p>
+    <div class="confirm-actions">
+      <button type="button" class="btn-secondary" (click)="closeConfirmDelete()">
+        {{ 'specialistSchedule.confirm.cancel' | translate }}
+      </button>
+      <button type="button" class="btn-confirm-delete" (click)="executeDeleteSchedule()">
+        {{ 'specialistSchedule.confirm.delete' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

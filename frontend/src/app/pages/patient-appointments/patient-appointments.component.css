@@ -610,3 +610,28 @@
   .toast { bottom: 15px; right: 15px; left: 15px; }
   .sidebar-overlay { z-index: 1050; }
 }
+
+.policy-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #f0f7f4;
+  border: 1px solid #cce3db;
+  border-radius: 16px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+}
+
+.policy-icon {
+  color: #72a092;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.policy-text {
+  margin: 0;
+  color: #3a5c53;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
