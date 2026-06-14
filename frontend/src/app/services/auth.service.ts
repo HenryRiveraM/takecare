@@ -37,6 +37,23 @@ export class AuthService {
     );
   }
 
+  forgotPassword(email: string): Observable<string> {
+    const frontendUrl = window.location.origin;
+    return this.http.post(
+      `${this.apiUrl}/api/v1/auth/forgot-password`,
+      { email, frontendUrl },
+      { responseType: 'text' }
+    );
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<string> {
+    return this.http.post(
+      `${this.apiUrl}/api/v1/auth/reset-password`,
+      { token, newPassword },
+      { responseType: 'text' }
+    );
+  }
+
   saveUser(user: LoginResponse): void {
     localStorage.setItem('user', JSON.stringify(user));
   }

@@ -540,6 +540,26 @@
       "email": "Enter a valid email address, for example name@domain.com."
     }
   },
+  "resetPassword": {
+    "title": "Reset Password",
+    "subtitle": "Enter your new password below to update your account securely.",
+    "passwordLabel": "New Password",
+    "passwordPlaceholder": "Min. 6 characters",
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPasswordPlaceholder": "Repeat the password",
+    "saving": "Saving...",
+    "submit": "Reset password",
+    "backToLogin": "Back to sign in",
+    "successTitle": "Password updated!",
+    "successText": "Your password has been successfully updated. You will be redirected to the sign in page in a few seconds.",
+    "redirecting": "Redirecting...",
+    "errors": {
+      "required": "Password is required.",
+      "minlength": "Password must be at least 6 characters long.",
+      "confirmRequired": "Confirm your password.",
+      "mismatch": "Passwords do not match."
+    }
+  },
   "registerPatient": {
     "title": "Patient Registration",
     "subtitle": "Create your account to begin your mental health care process.",

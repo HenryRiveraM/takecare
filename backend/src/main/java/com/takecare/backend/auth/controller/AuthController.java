@@ -31,21 +31,26 @@ public class AuthController {
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(
             @RequestBody ForgotPasswordRequestDTO request) {
-
-        passwordRecoveryService.generateResetToken(request.getEmail());
-        return ResponseEntity.ok("Se envió el enlace de recuperación");
+        try {
+            passwordRecoveryService.generateResetToken(request.getEmail(), request.getFrontendUrl());
+            return ResponseEntity.ok("Se envió el enlace de recuperación");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(
             @RequestBody ResetPasswordRequestDTO request) {
-
-        passwordRecoveryService.resetPassword(
-                request.getToken(),
-                request.getNewPassword()
-        );
-
-        return ResponseEntity.ok("Contraseña actualizada");
+        try {
+            passwordRecoveryService.resetPassword(
+                    request.getToken(),
+                    request.getNewPassword()
+            );
+            return ResponseEntity.ok("Contraseña actualizada");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")

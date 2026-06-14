@@ -4,6 +4,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 // REGISTRO
 import { RegisterRoleComponent } from './pages/register-role/register-role.component';
@@ -57,6 +58,12 @@ export const routes: Routes = [
   {
     path: 'recover-password',
     component: RecoverPasswordComponent,
+    canActivate: [guestGuard],
+    data: { showNavbar: false }
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
     canActivate: [guestGuard],
     data: { showNavbar: false }
   },

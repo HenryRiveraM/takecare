@@ -544,6 +544,26 @@
       "email": "Ingresa un correo válido, por ejemplo nombre@dominio.com."
     }
   },
+  "resetPassword": {
+    "title": "Restablecer contraseña",
+    "subtitle": "Ingresa tu nueva contraseña para actualizar tu cuenta de forma segura.",
+    "passwordLabel": "Nueva Contraseña",
+    "passwordPlaceholder": "Mín. 6 caracteres",
+    "confirmPasswordLabel": "Confirmar Contraseña",
+    "confirmPasswordPlaceholder": "Repite la contraseña",
+    "saving": "Guardando...",
+    "submit": "Restablecer contraseña",
+    "backToLogin": "Volver al inicio de sesión",
+    "successTitle": "¡Contraseña actualizada!",
+    "successText": "Tu contraseña ha sido actualizada con éxito. Serás redirigido al inicio de sesión en unos segundos.",
+    "redirecting": "Redirigiendo...",
+    "errors": {
+      "required": "La contraseña es obligatoria.",
+      "minlength": "La contraseña debe tener al menos 6 caracteres.",
+      "confirmRequired": "Confirma tu contraseña.",
+      "mismatch": "Las contraseñas no coinciden."
+    }
+  },
 
   
   "registerPatient": {
