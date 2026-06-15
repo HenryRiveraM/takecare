@@ -334,7 +334,8 @@
       "history": "My History",
       "editProfile": "Edit profile",
       "documents": "Library",
-      "files": "My files"
+      "files": "My files",
+      "carePlans": "Care plans"
     },
     "searchPlaceholder": "Search specialists...",
     "newAppointment": "New Appointment",
@@ -975,7 +976,8 @@
       "messages": "Messages",
       "editProfile": "Edit profile",
       "appointments": "Appointments",
-      "resources": "Resources"
+      "resources": "Resources",
+      "carePlans": "Care plans"
     },
     "searchPlaceholder": "Search patients...",
     "newSession": "New session",
@@ -1018,9 +1020,139 @@
     "lastSession": "Last session",
     "nextSession": "Next session",
     "notAvailable": "No record",
+    "actions": {
+      "viewPlans": "View plans"
+    },
     "errors": {
       "noSpecialist": "Could not identify the current specialist.",
       "load": "Could not load your patients."
+    }
+  },
+
+  "carePlans": {
+    "title": "Care plans",
+    "subtitle": "Manage the follow-up plans assigned to the patient.",
+    "generalSubtitle": "Review and manage the follow-up plans assigned to your patients.",
+    "patientSubtitle": "Review your plans, activities, and follow-up progress.",
+    "patient": "Patient",
+    "patientFallback": "Selected patient",
+    "generalLabel": "All your patients",
+    "totalLabel": "General list",
+    "counter": "Plans",
+    "searchPlaceholder": "Search by patient, title, or status...",
+    "loading": "Loading care plans...",
+    "empty": "There are no care plans registered for this patient.",
+    "emptyGeneral": "There are no registered care plans.",
+    "emptySearch": "No plans matched that search.",
+    "notAvailable": "No record",
+    "actions": {
+      "backToPatients": "Back to patients",
+      "new": "New plan",
+      "create": "Create plan",
+      "save": "Save plan",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "detail": "View detail",
+      "viewDetails": "View details",
+      "edit": "Edit plan",
+      "delete": "Delete",
+      "addActivity": "Add activity",
+      "removeActivity": "Remove activity"
+    },
+    "fields": {
+      "title": "Plan title",
+      "patient": "Patient",
+      "status": "Status",
+      "progress": "Progress",
+      "reviewDate": "Review date",
+      "followUpSession": "Follow-up appointment",
+      "dayOfWeek": "Day of week",
+      "reviewStartTime": "Start time",
+      "reviewEndTime": "End time",
+      "completed": "completed",
+      "createdDate": "Created date",
+      "therapeuticObjectives": "Therapeutic objectives",
+      "generalRecommendations": "General recommendations",
+      "professionalObservations": "Professional observations",
+      "activities": "Activities",
+      "activity": "Activity",
+      "activityTitle": "Activity title",
+      "activityDescription": "Activity description",
+      "itemType": "Activity type",
+      "dueDate": "Due date",
+      "checklist": "Checklist"
+    },
+    "form": {
+      "createTitle": "Create care plan",
+      "createSubtitle": "Define objectives, recommendations, and follow-up activities for the patient.",
+      "editTitle": "Edit plan",
+      "editSubtitle": "Update the general information and status of the plan.",
+      "selectSchedule": "Select an available schedule"
+    },
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "itemTypes": {
+      "objective": "Objective",
+      "activity": "Activity",
+      "recommendation": "Recommendation"
+    },
+    "status": {
+      "active": "Active",
+      "paused": "Paused",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "unknown": "No status"
+    },
+    "itemStatus": {
+      "pending": "Pending activity",
+      "completed": "Completed activity",
+      "cancelled": "Cancelled activity"
+    },
+    "validation": {
+      "titleRequired": "Title is required.",
+      "objectivesRequired": "Therapeutic objectives are required.",
+      "recommendationsRequired": "General recommendations are required.",
+      "progressRange": "Progress must be between 0 and 100.",
+      "reviewScheduleRequired": "Select a review schedule.",
+      "reviewDateRequired": "Review date is required.",
+      "reviewStartTimeRequired": "Start time is required.",
+      "reviewEndTimeRequired": "End time is required.",
+      "reviewEndAfterStart": "End time must be later than start time.",
+      "reviewDateNotPast": "Review date must be today or later.",
+      "reviewDateAtLeast24h": "The review appointment must be scheduled at least 24 hours in advance.",
+      "itemDueDateNotPast": "Activity due date must be today or later.",
+      "itemsRequired": "Add at least one activity.",
+      "itemTitleRequired": "Each activity must have a title."
+    },
+    "toast": {
+      "created": "Plan created successfully and follow-up appointment scheduled.",
+      "createError": "Could not create the plan.",
+      "updated": "Plan updated successfully.",
+      "updateError": "Could not update the plan.",
+      "detailError": "Could not load plan detail.",
+      "itemCompleted": "Activity completed successfully.",
+      "itemPending": "Activity marked as pending.",
+      "itemError": "Could not update the activity.",
+      "deleted": "Plan deleted successfully.",
+      "deleteError": "Could not delete the plan.",
+      "followUpScheduled": "A follow-up appointment was scheduled."
+    },
+    "delete": {
+      "title": "Delete care plan",
+      "message": "Are you sure you want to delete this plan?",
+      "warning": "This action cannot be undone."
+    },
+    "errors": {
+      "noSpecialist": "Could not identify the current specialist.",
+      "noPatient": "Could not identify the selected patient.",
+      "load": "Could not load care plans."
     }
   },
 

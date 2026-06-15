@@ -338,7 +338,8 @@
       "history": "Mi Historial",
       "editProfile": "Editar perfil",
       "documents": "Biblioteca",
-      "files": "Mis archivos"
+      "files": "Mis archivos",
+      "carePlans": "Planes de atencion"
     },
     "searchPlaceholder": "Buscar especialistas...",
     "newAppointment": "Nueva Cita",
@@ -979,7 +980,8 @@
       "messages": "Mensajes",
       "editProfile": "Editar perfil",
       "appointments": "Citas",
-      "resources": "Recursos"
+      "resources": "Recursos",
+      "carePlans": "Planes de atencion"
     },
     "searchPlaceholder": "Buscar pacientes...",
     "newSession": "Nueva sesión",
@@ -1022,9 +1024,139 @@
     "lastSession": "Última sesión",
     "nextSession": "Próxima sesión",
     "notAvailable": "Sin registro",
+    "actions": {
+      "viewPlans": "Ver planes"
+    },
     "errors": {
       "noSpecialist": "No se pudo identificar al especialista actual.",
       "load": "No se pudieron cargar tus pacientes."
+    }
+  },
+
+  "carePlans": {
+    "title": "Planes de atencion",
+    "subtitle": "Gestiona los planes de seguimiento asignados al paciente.",
+    "generalSubtitle": "Consulta y gestiona los planes de seguimiento asignados a tus pacientes.",
+    "patientSubtitle": "Revisa tus planes, actividades y progreso de seguimiento.",
+    "patient": "Paciente",
+    "patientFallback": "Paciente seleccionado",
+    "generalLabel": "Todos tus pacientes",
+    "totalLabel": "Listado general",
+    "counter": "Planes",
+    "searchPlaceholder": "Buscar por paciente, titulo o estado...",
+    "loading": "Cargando planes de atencion...",
+    "empty": "No existen planes registrados para este paciente.",
+    "emptyGeneral": "No existen planes de atencion registrados.",
+    "emptySearch": "No se encontraron planes con esa busqueda.",
+    "notAvailable": "Sin registro",
+    "actions": {
+      "backToPatients": "Volver a pacientes",
+      "new": "Nuevo plan",
+      "create": "Crear plan",
+      "save": "Guardar plan",
+      "saving": "Guardando...",
+      "cancel": "Cancelar",
+      "detail": "Ver detalle",
+      "viewDetails": "Ver detalles",
+      "edit": "Editar plan",
+      "delete": "Eliminar",
+      "addActivity": "Agregar actividad",
+      "removeActivity": "Eliminar actividad"
+    },
+    "fields": {
+      "title": "Titulo del plan",
+      "patient": "Paciente",
+      "status": "Estado",
+      "progress": "Progreso",
+      "reviewDate": "Fecha de control",
+      "followUpSession": "Cita de seguimiento",
+      "dayOfWeek": "Dia de la semana",
+      "reviewStartTime": "Hora de inicio",
+      "reviewEndTime": "Hora de fin",
+      "completed": "completado",
+      "createdDate": "Fecha de creacion",
+      "therapeuticObjectives": "Objetivos terapeuticos",
+      "generalRecommendations": "Recomendaciones generales",
+      "professionalObservations": "Observaciones profesionales",
+      "activities": "Actividades",
+      "activity": "Actividad",
+      "activityTitle": "Titulo de actividad",
+      "activityDescription": "Descripcion de actividad",
+      "itemType": "Tipo de actividad",
+      "dueDate": "Fecha limite",
+      "checklist": "Checklist"
+    },
+    "form": {
+      "createTitle": "Crear plan de atencion",
+      "createSubtitle": "Define objetivos, recomendaciones y actividades de seguimiento para el paciente.",
+      "editTitle": "Editar plan",
+      "editSubtitle": "Actualiza la informacion general y el estado del plan.",
+      "selectSchedule": "Selecciona un horario disponible"
+    },
+    "days": {
+      "monday": "Lunes",
+      "tuesday": "Martes",
+      "wednesday": "Miercoles",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sabado",
+      "sunday": "Domingo"
+    },
+    "itemTypes": {
+      "objective": "Objetivo",
+      "activity": "Actividad",
+      "recommendation": "Recomendacion"
+    },
+    "status": {
+      "active": "Activo",
+      "paused": "Pausado",
+      "completed": "Completado",
+      "cancelled": "Cancelado",
+      "unknown": "Sin estado"
+    },
+    "itemStatus": {
+      "pending": "Actividad pendiente",
+      "completed": "Actividad completada",
+      "cancelled": "Actividad cancelada"
+    },
+    "validation": {
+      "titleRequired": "El titulo es obligatorio.",
+      "objectivesRequired": "Los objetivos terapeuticos son obligatorios.",
+      "recommendationsRequired": "Las recomendaciones generales son obligatorias.",
+      "progressRange": "El progreso debe estar entre 0 y 100.",
+      "reviewScheduleRequired": "Debes seleccionar un horario de control.",
+      "reviewDateRequired": "La fecha de control es obligatoria.",
+      "reviewStartTimeRequired": "La hora de inicio es obligatoria.",
+      "reviewEndTimeRequired": "La hora de fin es obligatoria.",
+      "reviewEndAfterStart": "La hora de fin debe ser mayor que la hora de inicio.",
+      "reviewDateNotPast": "La fecha de control debe ser igual o posterior a hoy.",
+      "reviewDateAtLeast24h": "La cita de control debe agendarse con al menos 24 horas de anticipacion.",
+      "itemDueDateNotPast": "La fecha limite de la actividad debe ser igual o posterior a hoy.",
+      "itemsRequired": "Debes agregar al menos una actividad.",
+      "itemTitleRequired": "Cada actividad debe tener titulo."
+    },
+    "toast": {
+      "created": "Plan creado correctamente y cita de seguimiento agendada.",
+      "createError": "No se pudo crear el plan.",
+      "updated": "Plan actualizado correctamente.",
+      "updateError": "No se pudo actualizar el plan.",
+      "detailError": "No se pudo cargar el detalle del plan.",
+      "itemCompleted": "Actividad completada correctamente.",
+      "itemPending": "Actividad marcada como pendiente.",
+      "itemError": "No se pudo actualizar la actividad.",
+      "deleted": "Plan eliminado correctamente.",
+      "deleteError": "No se pudo eliminar el plan.",
+      "followUpScheduled": "Se agendo una cita de seguimiento."
+    },
+    "delete": {
+      "title": "Eliminar plan de atencion",
+      "message": "Esta seguro de que desea eliminar este plan?",
+      "warning": "Esta accion no se puede deshacer."
+    },
+    "errors": {
+      "noSpecialist": "No se pudo identificar al especialista actual.",
+      "noPatient": "No se pudo identificar al paciente seleccionado.",
+      "load": "No se pudieron cargar los planes de atencion."
     }
   },
 

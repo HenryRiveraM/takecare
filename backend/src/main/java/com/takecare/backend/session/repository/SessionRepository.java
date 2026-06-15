@@ -3,6 +3,7 @@ package com.takecare.backend.session.repository;
 import java.util.List;
 import java.util.Optional;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -65,7 +66,42 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
         join fetch s.patient p
         where s.status = :status
         """)
-        List<Session> findByStatus(@Param("status") Integer status);
+    List<Session> findByStatus(@Param("status") Integer status);
+
+    @Query("""
+        select count(s) > 0
+        from Session s
+        join s.schedule sc
+        join sc.specialist sp
+        join s.patient p
+        where sp.id = :specialistId
+          and p.id = :patientId
+          and s.status in :statuses
+        """)
+    boolean existsRelationshipBySpecialistAndPatientAndStatuses(
+            @Param("specialistId") Integer specialistId,
+            @Param("patientId") Integer patientId,
+            @Param("statuses") List<Integer> statuses
+    );
+
+    @Query("""
+        select count(s) > 0
+        from Session s
+        join s.schedule sc
+        join sc.specialist sp
+        where sp.id = :specialistId
+          and sc.scheduleDate = :scheduleDate
+          and s.status in :statuses
+          and sc.startTime < :endTime
+          and sc.endTime > :startTime
+        """)
+    boolean existsOverlappingSessionForSpecialist(
+            @Param("specialistId") Integer specialistId,
+            @Param("scheduleDate") LocalDate scheduleDate,
+            @Param("startTime") LocalTime startTime,
+            @Param("endTime") LocalTime endTime,
+            @Param("statuses") List<Integer> statuses
+    );
         
         @Query("""
         select s

@@ -1,0 +1,137 @@
+<div class="care-plans-page">
+  <app-sidebar></app-sidebar>
+
+  <div class="sidebar-overlay" *ngIf="sidebarService.isOpen()" (click)="sidebarService.close()"></div>
+
+  <div class="main">
+    <header class="top-bar">
+      <div>
+        <h1 class="page-title">{{ 'carePlans.title' | translate }}</h1>
+        <p class="page-subtitle">{{ 'carePlans.patientSubtitle' | translate }}</p>
+      </div>
+
+      <div class="counter">
+        <strong>{{ loading ? '...' : totalCarePlans }}</strong>
+        <span>{{ 'carePlans.counter' | translate }}</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="status-card" *ngIf="loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        {{ 'carePlans.loading' | translate }}
+      </section>
+
+      <section class="status-card error" *ngIf="!loading && errorMsg">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ errorMsg | translate }}
+      </section>
+
+      <section class="empty-state" *ngIf="!loading && !errorMsg && !carePlans.length">
+        <i class="fas fa-clipboard-list"></i>
+        <p>{{ 'carePlans.empty' | translate }}</p>
+      </section>
+
+      <section class="plans-layout" *ngIf="!loading && !errorMsg && carePlans.length">
+        <div class="plans-grid">
+          <article
+            class="plan-card"
+            *ngFor="let plan of carePlans"
+            [class.selected]="selectedPlan?.id === plan.id"
+            (click)="selectPlan(plan)">
+            <span class="status-pill" [attr.data-status]="plan.status">
+              {{ getStatusLabel(plan.status) | translate }}
+            </span>
+            <h2>{{ plan.title }}</h2>
+            <div class="progress-row">
+              <span>{{ 'carePlans.fields.progress' | translate }}</span>
+              <strong>{{ plan.progressPercentage }}%</strong>
+            </div>
+            <div class="progress-bar">
+              <span [style.width.%]="plan.progressPercentage"></span>
+            </div>
+          </article>
+        </div>
+
+        <aside class="detail-panel" *ngIf="selectedPlan">
+          <div class="detail-heading">
+            <span class="status-pill" [attr.data-status]="selectedPlan.status">
+              {{ getStatusLabel(selectedPlan.status) | translate }}
+            </span>
+            <strong>{{ selectedPlan.progressPercentage }}%</strong>
+          </div>
+
+          <h2>{{ selectedPlan.title }}</h2>
+          <div class="progress-bar large">
+            <span [style.width.%]="selectedPlan.progressPercentage"></span>
+          </div>
+
+          <div class="dates-row">
+            <div>
+              <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>
+              <strong *ngIf="selectedPlan.reviewDate; else noDate">
+                {{ asLocalDate(selectedPlan.reviewDate) | date:'mediumDate' }}
+              </strong>
+            </div>
+            <div>
+              <span>{{ 'carePlans.fields.followUpSession' | translate }}</span>
+              <strong>{{ selectedPlan.reviewStartTime ? (selectedPlan.reviewStartTime | slice:0:5) : ('carePlans.notAvailable' | translate) }}</strong>
+            </div>
+          </div>
+
+          <div class="detail-block">
+            <span>{{ 'carePlans.fields.therapeuticObjectives' | translate }}</span>
+            <p>{{ selectedPlan.therapeuticObjectives }}</p>
+          </div>
+
+          <div class="detail-block">
+            <span>{{ 'carePlans.fields.generalRecommendations' | translate }}</span>
+            <p>{{ selectedPlan.generalRecommendations }}</p>
+          </div>
+
+          <div class="detail-block">
+            <span>{{ 'carePlans.fields.professionalObservations' | translate }}</span>
+            <p>{{ selectedPlan.professionalObservations || ('carePlans.notAvailable' | translate) }}</p>
+          </div>
+
+          <div class="detail-block">
+            <span>{{ 'carePlans.fields.checklist' | translate }}</span>
+            <ul class="checklist">
+              <li *ngFor="let item of selectedPlan.items" [class.completed]="item.status === 'COMPLETED'">
+                <label>
+                  <input
+                    type="checkbox"
+                    [checked]="item.status === 'COMPLETED'"
+                    [disabled]="updatingItemId === item.id || item.status === 'CANCELLED'"
+                    (change)="toggleItem(item)">
+                  <span></span>
+                  <div>
+                    <strong>{{ item.title }}</strong>
+                    <p>{{ item.description || ('carePlans.notAvailable' | translate) }}</p>
+                    <small *ngIf="item.dueDate">
+                      {{ 'carePlans.fields.dueDate' | translate }}:
+                      {{ asLocalDate(item.dueDate) | date:'mediumDate' }}
+                    </small>
+                  </div>
+                </label>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <ng-template #noDate>
+    <strong class="muted">{{ 'carePlans.notAvailable' | translate }}</strong>
+  </ng-template>
+
+  <div
+    class="toast"
+    [class.show]="showToast"
+    [class.toast-success]="toastType === 'success'"
+    [class.toast-error]="toastType === 'error'">
+    <i [class]="toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+    {{ toastMessage | translate }}
+  </div>
+</div>

@@ -73,6 +73,14 @@
             </div>
           </div>
 
+          <a
+            class="plans-action"
+            [routerLink]="['/specialist/patients', patient.patientId, 'care-plans']"
+            [queryParams]="{ patientName: patient.fullName }">
+            <i class="fas fa-clipboard-list"></i>
+            {{ 'specialistPatients.actions.viewPlans' | translate }}
+          </a>
+
           <ng-template #notAvailable>
             <strong class="muted">{{ 'specialistPatients.notAvailable' | translate }}</strong>
           </ng-template>

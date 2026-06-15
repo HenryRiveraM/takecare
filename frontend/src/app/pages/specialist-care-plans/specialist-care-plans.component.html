@@ -1,0 +1,406 @@
+<div class="care-plans-page">
+  <app-sidebar></app-sidebar>
+
+  <div
+    class="sidebar-overlay"
+    *ngIf="sidebarService.isOpen()"
+    (click)="sidebarService.close()">
+  </div>
+
+  <div class="main">
+    <header class="top-bar">
+      <div>
+        <a class="back-link" routerLink="/specialist/patients" *ngIf="isPatientScoped">
+          <i class="fas fa-arrow-left"></i>
+          {{ 'carePlans.actions.backToPatients' | translate }}
+        </a>
+        <h1 class="page-title">{{ 'carePlans.title' | translate }}</h1>
+        <p class="page-subtitle">
+          {{ (isPatientScoped ? 'carePlans.subtitle' : 'carePlans.generalSubtitle') | translate }}
+        </p>
+      </div>
+
+      <button class="primary-action" type="button" (click)="openCreateForm()">
+        <i class="fas fa-plus"></i>
+        {{ 'carePlans.actions.new' | translate }}
+      </button>
+    </header>
+
+    <main class="content">
+      <section class="patient-strip" *ngIf="isPatientScoped">
+        <div>
+          <span>{{ 'carePlans.patient' | translate }}</span>
+          <strong>{{ patientName | translate }}</strong>
+        </div>
+        <div class="counter">
+          <strong>{{ loading ? '...' : totalCarePlans }}</strong>
+          <span>{{ 'carePlans.counter' | translate }}</span>
+        </div>
+      </section>
+
+      <section class="search-panel" *ngIf="!loading && !errorMsg && carePlans.length">
+        <i class="fas fa-search"></i>
+        <input
+          type="search"
+          [(ngModel)]="searchTerm"
+          [placeholder]="'carePlans.searchPlaceholder' | translate">
+      </section>
+
+      <section class="status-card" *ngIf="loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        {{ 'carePlans.loading' | translate }}
+      </section>
+
+      <section class="status-card error" *ngIf="!loading && errorMsg">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ errorMsg | translate }}
+      </section>
+
+      <section class="empty-state" *ngIf="!loading && !errorMsg && !carePlans.length">
+        <i class="fas fa-clipboard-list"></i>
+        <p>{{ (isPatientScoped ? 'carePlans.empty' : 'carePlans.emptyGeneral') | translate }}</p>
+      </section>
+
+      <section class="plans-list full-list" *ngIf="!loading && !errorMsg && carePlans.length && !isPatientScoped">
+        <article
+          class="full-plan-card"
+          *ngFor="let plan of filteredCarePlans"
+          [attr.id]="'care-plan-' + plan.id"
+          [class.highlighted-plan]="highlightedPlanId === plan.id">
+          <header class="full-card-header">
+            <div>
+              <span class="status-pill" [attr.data-status]="plan.status">
+                {{ getStatusLabel(plan.status) | translate }}
+              </span>
+              <h2>{{ plan.title }}</h2>
+              <p *ngIf="plan.patientName">{{ 'carePlans.fields.patient' | translate }}: {{ plan.patientName }}</p>
+            </div>
+
+            <div class="card-actions top-actions">
+              <button type="button" class="icon-button danger" (click)="openDeleteConfirm(plan, $event)" [title]="'carePlans.actions.delete' | translate">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button type="button" class="icon-button" (click)="openEditForm(plan)" [title]="'carePlans.actions.edit' | translate">
+                <i class="fas fa-pen"></i>
+              </button>
+            </div>
+          </header>
+
+          <section class="full-progress">
+            <div class="detail-progress">
+              <span>{{ 'carePlans.fields.progress' | translate }}</span>
+              <strong>{{ plan.progressPercentage }}%</strong>
+            </div>
+            <div class="progress-bar large">
+              <span [style.width.%]="plan.progressPercentage"></span>
+            </div>
+          </section>
+
+          <section class="full-content-grid">
+            <div class="detail-block">
+              <span>{{ 'carePlans.fields.therapeuticObjectives' | translate }}</span>
+              <p>{{ plan.therapeuticObjectives || ('carePlans.notAvailable' | translate) }}</p>
+            </div>
+
+            <div class="detail-block">
+              <span>{{ 'carePlans.fields.generalRecommendations' | translate }}</span>
+              <p>{{ plan.generalRecommendations || ('carePlans.notAvailable' | translate) }}</p>
+            </div>
+
+            <div class="detail-block wide">
+              <span>{{ 'carePlans.fields.professionalObservations' | translate }}</span>
+              <p>{{ plan.professionalObservations || ('carePlans.notAvailable' | translate) }}</p>
+            </div>
+          </section>
+
+          <section class="dates-row full-dates">
+            <div>
+              <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>
+              <strong *ngIf="plan.reviewDate; else noDate">
+                {{ asLocalDate(plan.reviewDate) | date:'mediumDate' }}
+              </strong>
+            </div>
+            <div>
+              <span>{{ 'carePlans.fields.followUpSession' | translate }}</span>
+              <strong>
+                {{ plan.reviewStartTime ? (plan.reviewStartTime | slice:0:5) : ('carePlans.notAvailable' | translate) }}
+                <ng-container *ngIf="plan.reviewEndTime"> - {{ plan.reviewEndTime | slice:0:5 }}</ng-container>
+              </strong>
+            </div>
+            <div>
+              <span>{{ 'carePlans.fields.createdDate' | translate }}</span>
+              <strong>{{ plan.createdDate | date:'mediumDate' }}</strong>
+            </div>
+          </section>
+
+          <section class="detail-block activities-block">
+            <span>{{ 'carePlans.fields.activities' | translate }}</span>
+            <ul class="items-list" *ngIf="plan.items?.length; else noActivities">
+              <li *ngFor="let item of plan.items" [class.completed]="item.status === 'COMPLETED'">
+                <i [class]="item.status === 'COMPLETED' ? 'fas fa-check-circle' : 'far fa-circle'"></i>
+                <div>
+                  <strong>{{ item.title }}</strong>
+                  <p>{{ item.description || ('carePlans.notAvailable' | translate) }}</p>
+                </div>
+              </li>
+            </ul>
+          </section>
+        </article>
+
+        <section class="empty-state inline" *ngIf="carePlans.length && !filteredCarePlans.length">
+          <i class="fas fa-search"></i>
+          <p>{{ 'carePlans.emptySearch' | translate }}</p>
+        </section>
+      </section>
+
+      <section class="summary-list" *ngIf="!loading && !errorMsg && carePlans.length && isPatientScoped">
+        <div class="summary-grid">
+          <article
+            class="summary-plan-card"
+            *ngFor="let plan of filteredCarePlans"
+            (click)="selectPlan(plan)">
+            <section class="summary-block summary-title">
+              <span class="status-pill" [attr.data-status]="plan.status">
+                {{ getStatusLabel(plan.status) | translate }}
+              </span>
+              <h2>{{ plan.title }}</h2>
+            </section>
+
+            <section class="summary-block">
+              <div class="detail-progress">
+                <span>{{ 'carePlans.fields.progress' | translate }}</span>
+                <strong>{{ plan.progressPercentage }}%</strong>
+              </div>
+              <div class="progress-bar">
+                <span [style.width.%]="plan.progressPercentage"></span>
+              </div>
+            </section>
+
+            <section class="summary-block summary-dates">
+              <div>
+                <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>
+                <strong *ngIf="plan.reviewDate; else noDate">
+                  {{ asLocalDate(plan.reviewDate) | date:'mediumDate' }}
+                </strong>
+              </div>
+              <div>
+                <span>{{ 'carePlans.fields.followUpSession' | translate }}</span>
+                <strong>
+                  {{ plan.reviewStartTime ? (plan.reviewStartTime | slice:0:5) : ('carePlans.notAvailable' | translate) }}
+                  <ng-container *ngIf="plan.reviewEndTime"> - {{ plan.reviewEndTime | slice:0:5 }}</ng-container>
+                </strong>
+              </div>
+            </section>
+
+            <div class="card-actions">
+              <button type="button" class="detail-action" (click)="goToPlanDetails(plan, $event)">
+                <i class="fas fa-eye"></i>
+                {{ 'carePlans.actions.viewDetails' | translate }}
+              </button>
+              <button type="button" class="icon-button danger" (click)="openDeleteConfirm(plan, $event)" [title]="'carePlans.actions.delete' | translate">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button type="button" class="icon-button" (click)="openEditForm(plan); $event.stopPropagation()" [title]="'carePlans.actions.edit' | translate">
+                <i class="fas fa-pen"></i>
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <section class="empty-state inline" *ngIf="carePlans.length && !filteredCarePlans.length">
+          <i class="fas fa-search"></i>
+          <p>{{ 'carePlans.emptySearch' | translate }}</p>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <ng-template #noDate>
+    <strong class="muted">{{ 'carePlans.notAvailable' | translate }}</strong>
+  </ng-template>
+
+  <ng-template #noActivities>
+    <p class="muted-block">{{ 'carePlans.notAvailable' | translate }}</p>
+  </ng-template>
+
+  <div class="modal-backdrop" *ngIf="showForm" (click)="closeForm()"></div>
+  <section class="modal" *ngIf="showForm" role="dialog" aria-modal="true">
+    <header class="modal-header">
+      <div class="modal-title-group">
+        <div class="modal-icon">
+          <i class="fas fa-clipboard-list"></i>
+        </div>
+        <div>
+          <h2>
+            {{ (formMode === 'create' ? 'carePlans.form.createTitle' : 'carePlans.form.editTitle') | translate }}
+          </h2>
+          <p *ngIf="formMode === 'create'">{{ 'carePlans.form.createSubtitle' | translate }}</p>
+          <p *ngIf="formMode === 'edit'">{{ 'carePlans.form.editSubtitle' | translate }}</p>
+        </div>
+      </div>
+      <button type="button" class="icon-button" (click)="closeForm()" [title]="'carePlans.actions.cancel' | translate">
+        <i class="fas fa-times"></i>
+      </button>
+    </header>
+
+    <form class="plan-form" (ngSubmit)="savePlan()" #planForm="ngForm">
+      <label>
+        <span>{{ 'carePlans.fields.title' | translate }}</span>
+        <input name="title" [(ngModel)]="form.title" [maxlength]="limits.title" required>
+        <small class="char-counter">{{ form.title.length }}/{{ limits.title }}</small>
+      </label>
+
+      <label>
+        <span>{{ 'carePlans.fields.therapeuticObjectives' | translate }}</span>
+        <textarea name="therapeuticObjectives" [(ngModel)]="form.therapeuticObjectives" rows="4" [maxlength]="limits.therapeuticObjectives" required></textarea>
+        <small class="char-counter">{{ form.therapeuticObjectives.length }}/{{ limits.therapeuticObjectives }}</small>
+      </label>
+
+      <label>
+        <span>{{ 'carePlans.fields.generalRecommendations' | translate }}</span>
+        <textarea name="generalRecommendations" [(ngModel)]="form.generalRecommendations" rows="4" [maxlength]="limits.generalRecommendations" required></textarea>
+        <small class="char-counter">{{ form.generalRecommendations.length }}/{{ limits.generalRecommendations }}</small>
+      </label>
+
+      <label>
+        <span>{{ 'carePlans.fields.professionalObservations' | translate }}</span>
+        <textarea name="professionalObservations" [(ngModel)]="form.professionalObservations" rows="3" [maxlength]="limits.professionalObservations"></textarea>
+        <small class="char-counter">{{ form.professionalObservations.length }}/{{ limits.professionalObservations }}</small>
+      </label>
+
+      <div class="form-grid">
+        <label *ngIf="formMode === 'create'">
+          <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>
+          <input type="date" name="reviewDate" [(ngModel)]="form.reviewDate" [min]="minReviewDate" required>
+        </label>
+
+        <label *ngIf="formMode === 'create'">
+          <span>{{ 'carePlans.fields.dayOfWeek' | translate }}</span>
+          <input [value]="getReviewDayLabel() | translate" readonly>
+        </label>
+
+        <label *ngIf="formMode === 'create'">
+          <span>{{ 'carePlans.fields.reviewStartTime' | translate }}</span>
+          <input type="time" name="reviewStartTime" [(ngModel)]="form.reviewStartTime" required>
+        </label>
+
+        <label *ngIf="formMode === 'create'">
+          <span>{{ 'carePlans.fields.reviewEndTime' | translate }}</span>
+          <input type="time" name="reviewEndTime" [(ngModel)]="form.reviewEndTime" required>
+        </label>
+
+        <label *ngIf="formMode === 'edit'">
+          <span>{{ 'carePlans.fields.status' | translate }}</span>
+          <select name="status" [(ngModel)]="form.status">
+            <option *ngFor="let status of statuses" [ngValue]="status.value">
+              {{ status.label | translate }}
+            </option>
+          </select>
+        </label>
+
+        <div class="readonly-progress" *ngIf="formMode === 'edit'">
+          <span>{{ 'carePlans.fields.progress' | translate }}</span>
+          <strong>{{ form.progressPercentage }}% {{ 'carePlans.fields.completed' | translate }}</strong>
+          <div class="progress-bar">
+            <span [style.width.%]="form.progressPercentage"></span>
+          </div>
+        </div>
+      </div>
+
+      <section class="items-editor" *ngIf="formMode === 'create'">
+        <div class="items-editor-header">
+          <h3>{{ 'carePlans.fields.activities' | translate }}</h3>
+          <button type="button" class="ghost-action compact" (click)="addFormItem()">
+            <i class="fas fa-plus"></i>
+            {{ 'carePlans.actions.addActivity' | translate }}
+          </button>
+        </div>
+
+        <article class="item-editor" *ngFor="let item of form.items; let index = index">
+          <div class="item-editor-top">
+            <strong>{{ 'carePlans.fields.activity' | translate }} {{ index + 1 }}</strong>
+            <button
+              type="button"
+              class="icon-button"
+              (click)="removeFormItem(index)"
+              [disabled]="form.items.length === 1"
+              [title]="'carePlans.actions.removeActivity' | translate">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+
+          <label>
+            <span>{{ 'carePlans.fields.activityTitle' | translate }}</span>
+            <input name="itemTitle{{ index }}" [(ngModel)]="item.title" [maxlength]="limits.itemTitle" required>
+            <small class="char-counter">{{ item.title.length }}/{{ limits.itemTitle }}</small>
+          </label>
+
+          <label>
+            <span>{{ 'carePlans.fields.activityDescription' | translate }}</span>
+            <textarea name="itemDescription{{ index }}" [(ngModel)]="item.description" rows="2" [maxlength]="limits.itemDescription"></textarea>
+            <small class="char-counter">{{ item.description.length }}/{{ limits.itemDescription }}</small>
+          </label>
+
+          <div class="form-grid item-grid">
+            <label>
+              <span>{{ 'carePlans.fields.itemType' | translate }}</span>
+              <select name="itemType{{ index }}" [(ngModel)]="item.itemType" required>
+                <option *ngFor="let type of itemTypes" [ngValue]="type.value">
+                  {{ type.label | translate }}
+                </option>
+              </select>
+            </label>
+
+            <label>
+              <span>{{ 'carePlans.fields.dueDate' | translate }}</span>
+              <input type="date" name="itemDueDate{{ index }}" [(ngModel)]="item.dueDate" [min]="today">
+            </label>
+          </div>
+        </article>
+      </section>
+
+      <div class="form-error" *ngIf="formError">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ formError | translate }}
+      </div>
+
+      <footer class="modal-actions">
+        <button type="button" class="ghost-action" (click)="closeForm()">
+          {{ 'carePlans.actions.cancel' | translate }}
+        </button>
+        <button type="submit" class="primary-action" [disabled]="saving">
+          <i class="fas" [class.fa-spinner]="saving" [class.fa-spin]="saving" [class.fa-save]="!saving"></i>
+          {{ (saving ? 'carePlans.actions.saving' : 'carePlans.actions.save') | translate }}
+        </button>
+      </footer>
+    </form>
+  </section>
+
+  <div class="modal-backdrop" *ngIf="confirmDeletePlan" (click)="closeDeleteConfirm()"></div>
+  <section class="confirm-modal" *ngIf="confirmDeletePlan" role="dialog" aria-modal="true">
+    <div class="confirm-icon">
+      <i class="fas fa-trash"></i>
+    </div>
+    <h2>{{ 'carePlans.delete.title' | translate }}</h2>
+    <p>{{ 'carePlans.delete.message' | translate }}</p>
+    <p class="confirm-warning">{{ 'carePlans.delete.warning' | translate }}</p>
+    <footer class="modal-actions">
+      <button type="button" class="ghost-action" (click)="closeDeleteConfirm()">
+        {{ 'carePlans.actions.cancel' | translate }}
+      </button>
+      <button type="button" class="danger-action" (click)="deleteSelectedPlan()">
+        <i class="fas fa-trash"></i>
+        {{ 'carePlans.actions.delete' | translate }}
+      </button>
+    </footer>
+  </section>
+
+  <div
+    class="toast"
+    [class.show]="showToast"
+    [class.toast-success]="toastType === 'success'"
+    [class.toast-error]="toastType === 'error'">
+    <i [class]="toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+    {{ toastMessage | translate }}
+  </div>
+</div>

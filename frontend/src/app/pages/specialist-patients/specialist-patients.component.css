@@ -215,6 +215,28 @@
   color: #97a7a3;
 }
 
+.plans-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 42px;
+  margin-top: 16px;
+  border-radius: 12px;
+  background: #72a092;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.plans-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(114, 160, 146, 0.22);
+}
+
 .sidebar-overlay {
   position: fixed;
   inset: 0;
