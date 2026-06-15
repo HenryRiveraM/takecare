@@ -24,6 +24,7 @@ import { SpecialistScheduleManagementComponent } from './pages/specialist-schedu
 import { SpecialistAppointmentsComponent } from './pages/specialist-appointments/specialist-appointments.component';
 import { SpecialistResourcesComponent } from './pages/specialist-resources/specialist-resources.component';
 import { SpecialistPatientsComponent } from './pages/specialist-patients/specialist-patients.component';
+import { SpecialistCarePlansComponent } from './pages/specialist-care-plans/specialist-care-plans.component';
 
 // PACIENTE
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
@@ -33,6 +34,7 @@ import { PatientSearchSpecialistsComponent } from './pages/patient-search-specia
 import { PatientDocumentsComponent } from './pages/patient-documents/patient-documents.component';
 import { PatientSpecialistProfileComponent } from './pages/patient-specialist-profile/patient-specialist-profile.component';
 import { PatientFilesComponent } from './pages/patient-files/patient-files.component';
+import { PatientCarePlansComponent } from './pages/patient-care-plans/patient-care-plans.component';
 
 
 // OTROS
@@ -131,6 +133,10 @@ export const routes: Routes = [
       {
         path: 'appointments',
         component: PatientAppointmentsComponent
+      },
+      {
+        path: 'care-plans',
+        component: PatientCarePlansComponent
       }
     ]
   },
@@ -164,6 +170,14 @@ export const routes: Routes = [
       {
         path: 'patients',
         component: SpecialistPatientsComponent
+      },
+      {
+        path: 'care-plans',
+        component: SpecialistCarePlansComponent
+      },
+      {
+        path: 'patients/:patientId/care-plans',
+        component: SpecialistCarePlansComponent
       }
     ]
   },
