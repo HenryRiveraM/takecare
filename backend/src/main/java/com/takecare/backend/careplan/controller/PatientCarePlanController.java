@@ -16,25 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-/**
- * Controlador REST de consulta de planes de cuidado para el paciente (HU32).
- *
- * <p>Expone los siguientes endpoints:</p>
- * <ul>
- *   <li>{@code GET /api/v1/patients/{patientId}/care-plans/active} – plan activo del paciente.</li>
- *   <li>{@code GET /api/v1/patients/{patientId}/care-plans}        – historial completo de planes.</li>
- * </ul>
- *
- * <p>La validación de identidad se realiza comparando el {@code patientId} del path con el
- * header {@code X-Patient-Id}, que el frontend inyecta a partir del token de sesión.
- * Si no coinciden se devuelve {@code 403 Forbidden} y se registra el intento en el logger.</p>
- *
- * <p>Principios SOLID:</p>
- * <ul>
- *   <li>SRP – este controlador sólo gestiona las rutas de consulta del paciente.</li>
- *   <li>DIP – depende de la abstracción {@link PatientCarePlanQueryService}.</li>
- * </ul>
- */
 @RestController
 @RequestMapping("/api/v1/patients/{patientId}/care-plans")
 public class PatientCarePlanController {
