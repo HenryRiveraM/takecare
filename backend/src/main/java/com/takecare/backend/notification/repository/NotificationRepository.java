@@ -55,12 +55,19 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Query("""
             select n
             from Notification n
-            join fetch n.session s
-            join fetch s.patient p
-            join fetch s.schedule sc
-            join fetch sc.specialist sp
-            where p.id = :patientId
-              and n.type = 3
+            left join fetch n.session s
+            left join fetch s.patient sp
+            left join fetch s.schedule sc
+            left join fetch sc.specialist spec
+            where (
+                  (n.type = 3 and s.patient.id = :patientId)
+               or (n.type in (4, 5) and n.carePlanId is not null
+                   and exists (
+                       select cp from CarePlan cp
+                       where cp.id = n.carePlanId
+                         and cp.patient.id = :patientId
+                   ))
+            )
             order by n.createdDate desc
             """)
     List<Notification> findAllByPatientIdOrderByCreatedDateDesc(@Param("patientId") Integer patientId);
@@ -68,13 +75,20 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Query("""
             select n
             from Notification n
-            join fetch n.session s
-            join fetch s.patient p
-            join fetch s.schedule sc
-            join fetch sc.specialist sp
+            left join fetch n.session s
+            left join fetch s.patient sp
+            left join fetch s.schedule sc
+            left join fetch sc.specialist spec
             where n.id = :notificationId
-              and p.id = :patientId
-              and n.type = 3
+              and (
+                  (n.type = 3 and s.patient.id = :patientId)
+               or (n.type in (4, 5) and n.carePlanId is not null
+                   and exists (
+                       select cp from CarePlan cp
+                       where cp.id = n.carePlanId
+                         and cp.patient.id = :patientId
+                   ))
+              )
             """)
     Optional<Notification> findByIdAndPatientId(
             @Param("notificationId") Integer notificationId,
@@ -84,11 +98,26 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Query("""
             select count(n)
             from Notification n
-            join n.session s
-            join s.patient p
-            where p.id = :patientId
-              and n.type = 3
-              and n.status = 0
+            left join n.session s
+            where n.status = 0
+              and (
+                  (n.type = 3 and s.patient.id = :patientId)
+               or (n.type in (4, 5) and n.carePlanId is not null
+                   and exists (
+                       select cp from CarePlan cp
+                       where cp.id = n.carePlanId
+                         and cp.patient.id = :patientId
+                   ))
+              )
             """)
     long countUnreadByPatientId(@Param("patientId") Integer patientId);
+
+    @Query("""
+            select n
+            from Notification n
+            where n.type = 5
+              and n.carePlanItemId = :itemId
+              and n.status = 0
+            """)
+    List<Notification> findUnreadRemindersByItemId(@Param("itemId") Long itemId);
 }
