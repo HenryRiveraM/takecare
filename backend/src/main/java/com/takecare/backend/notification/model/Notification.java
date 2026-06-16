@@ -27,8 +27,14 @@ public class Notification {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "session_id", nullable = false)
+    @JoinColumn(name = "session_id", nullable = true)
     private Session session;
+
+    @Column(name = "care_plan_id")
+    private Long carePlanId;
+
+    @Column(name = "care_plan_item_id")
+    private Long carePlanItemId;
 
     @Column(name = "description", length = 100)
     private String description;

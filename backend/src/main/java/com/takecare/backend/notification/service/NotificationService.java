@@ -22,8 +22,11 @@ public class NotificationService {
 
     private static final Byte STATUS_UNREAD = 0;
     private static final Byte STATUS_READ = 1;
+
     private static final Byte TYPE_NEW_SESSION = 1;
     private static final Byte TYPE_PATIENT_SESSION_RESPONSE = 3;
+    private static final Byte TYPE_CARE_PLAN_CREATED = 4;
+    private static final Byte TYPE_ITEM_REMINDER = 5;
 
     private static final String EVENT_NOTIFICATION_CREATED = "NOTIFICATION_CREATED";
     private static final String EVENT_NOTIFICATION_STATUS_UPDATED = "NOTIFICATION_STATUS_UPDATED";
@@ -66,9 +69,7 @@ public class NotificationService {
     }
 
     @Transactional
-    public NotificationResponseDto createForSession(Session session,
-                                                    String description,
-                                                    Byte type) {
+    public NotificationResponseDto createForSession(Session session, String description, Byte type) {
         Notification notification = new Notification();
         notification.setSession(session);
         notification.setDescription(normalizeDescription(description));
@@ -84,7 +85,6 @@ public class NotificationService {
                 response.getId(), response.getSpecialistId());
 
         publishNotificationEvent(response.getSpecialistId(), EVENT_NOTIFICATION_CREATED, response);
-
         return response;
     }
 
@@ -109,14 +109,56 @@ public class NotificationService {
                 response.getId(), response.getPatientId(), response.getSessionId());
 
         publishPatientNotificationEvent(response.getPatientId(), EVENT_NOTIFICATION_CREATED, response);
-
         return response;
     }
 
     @Transactional
-    public NotificationResponseDto updateReadStatus(Integer specialistId,
-                                                    Integer notificationId,
-                                                    boolean read) {
+    public NotificationResponseDto createForCarePlan(Integer patientId, Long carePlanId, String description) {
+        Notification notification = new Notification();
+        notification.setSession(null);
+        notification.setCarePlanId(carePlanId);
+        notification.setDescription(normalizeDescription(description));
+        notification.setType(TYPE_CARE_PLAN_CREATED);
+        notification.setStatus(STATUS_UNREAD);
+        notification.setCreatedDate(LocalDateTime.now());
+        notification.setReadDate(null);
+
+        Notification saved = notificationRepository.save(notification);
+        NotificationResponseDto response = toResponseDto(saved);
+        response.setPatientId(patientId);
+
+        logger.info("Care plan notification created. notificationId={}, patientId={}, carePlanId={}",
+                saved.getId(), patientId, carePlanId);
+
+        publishPatientNotificationEvent(patientId, EVENT_NOTIFICATION_CREATED, response);
+        return response;
+    }
+
+    @Transactional
+    public NotificationResponseDto createItemReminder(Integer patientId, Long carePlanId, Long itemId, String description) {
+        Notification notification = new Notification();
+        notification.setSession(null);
+        notification.setCarePlanId(carePlanId);
+        notification.setCarePlanItemId(itemId);
+        notification.setDescription(normalizeDescription(description));
+        notification.setType(TYPE_ITEM_REMINDER);
+        notification.setStatus(STATUS_UNREAD);
+        notification.setCreatedDate(LocalDateTime.now());
+        notification.setReadDate(null);
+
+        Notification saved = notificationRepository.save(notification);
+        NotificationResponseDto response = toResponseDto(saved);
+        response.setPatientId(patientId);
+
+        logger.info("Item reminder notification created. notificationId={}, patientId={}, carePlanId={}, itemId={}",
+                saved.getId(), patientId, carePlanId, itemId);
+
+        publishPatientNotificationEvent(patientId, EVENT_NOTIFICATION_CREATED, response);
+        return response;
+    }
+
+    @Transactional
+    public NotificationResponseDto updateReadStatus(Integer specialistId, Integer notificationId, boolean read) {
         Notification notification = notificationRepository.findByIdAndSpecialistId(notificationId, specialistId)
                 .orElseThrow(() -> new RuntimeException("Notificación no encontrada para el especialista"));
 
@@ -129,16 +171,13 @@ public class NotificationService {
         logger.info("Notification id: {} updated to status: {}", notificationId, response.getStatus());
 
         publishNotificationEvent(specialistId, EVENT_NOTIFICATION_STATUS_UPDATED, response);
-
         return response;
     }
 
     @Transactional
-    public NotificationResponseDto updatePatientReadStatus(Integer patientId,
-                                                           Integer notificationId,
-                                                           boolean read) {
+    public NotificationResponseDto updatePatientReadStatus(Integer patientId, Integer notificationId, boolean read) {
         Notification notification = notificationRepository.findByIdAndPatientId(notificationId, patientId)
-                .orElseThrow(() -> new RuntimeException("NotificaciÃ³n no encontrada para el paciente"));
+                .orElseThrow(() -> new RuntimeException("Notificación no encontrada para el paciente"));
 
         notification.setStatus(read ? STATUS_READ : STATUS_UNREAD);
         notification.setReadDate(read ? LocalDateTime.now() : null);
@@ -150,13 +189,10 @@ public class NotificationService {
                 notificationId, patientId, response.getStatus());
 
         publishPatientNotificationEvent(patientId, EVENT_NOTIFICATION_STATUS_UPDATED, response);
-
         return response;
     }
 
-    private void publishNotificationEvent(Integer specialistId,
-                                          String eventType,
-                                          NotificationResponseDto notification) {
+    private void publishNotificationEvent(Integer specialistId, String eventType, NotificationResponseDto notification) {
         if (specialistId == null) {
             logger.warn("Skipping socket publish because specialistId is null");
             return;
@@ -169,13 +205,10 @@ public class NotificationService {
 
         String topic = "/topic/notifications/specialist/" + specialistId;
         messagingTemplate.convertAndSend(topic, event);
-
         logger.info("Notification event {} sent to topic {}", eventType, topic);
     }
 
-    private void publishPatientNotificationEvent(Integer patientId,
-                                                 String eventType,
-                                                 NotificationResponseDto notification) {
+    private void publishPatientNotificationEvent(Integer patientId, String eventType, NotificationResponseDto notification) {
         if (patientId == null) {
             logger.warn("Skipping patient socket publish because patientId is null");
             return;
@@ -224,13 +257,9 @@ public class NotificationService {
 
     private String normalizeDescription(String description) {
         if (description == null || description.isBlank()) {
-            return "Nueva cita agendada";
+            return "Nueva notificacion";
         }
-
         String normalized = description.trim().replaceAll("\\s+", " ");
-        if (normalized.length() > 100) {
-            return normalized.substring(0, 100);
-        }
-        return normalized;
+        return normalized.length() > 100 ? normalized.substring(0, 100) : normalized;
     }
 }
