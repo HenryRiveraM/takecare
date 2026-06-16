@@ -61,7 +61,8 @@ public class SupportMaterialController {
         try {
             logger.info("GET /api/v1/specialists/{}/support-materials", specialistId);
             SupportMaterialListResponseDto response = materialService.getSupportMaterialsBySpecialist(specialistId);
-            logger.info("GET /api/v1/specialists/{}/support-materials | total={}", specialistId, response.totalDocuments());
+            logger.info("GET /api/v1/specialists/{}/support-materials | total={}", specialistId,
+                    response.totalDocuments());
             return ResponseEntity.ok(response);
         } catch (NoSuchElementException e) {
             logger.warn("GET /api/v1/specialists/{}/support-materials | specialist not found", specialistId);
@@ -94,9 +95,12 @@ public class SupportMaterialController {
             String contentDisposition = "inline; filename=\"" + filename + "\"";
 
             String contentType = "application/octet-stream";
-            if (filename.endsWith(".pdf")) contentType = "application/pdf";
-            else if (filename.endsWith(".doc")) contentType = "application/msword";
-            else if (filename.endsWith(".docx")) contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            if (filename.endsWith(".pdf"))
+                contentType = "application/pdf";
+            else if (filename.endsWith(".doc"))
+                contentType = "application/msword";
+            else if (filename.endsWith(".docx"))
+                contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
@@ -127,9 +131,12 @@ public class SupportMaterialController {
             String contentDisposition = "attachment; filename=\"" + filename + "\"";
 
             String contentType = "application/octet-stream";
-            if (filename.endsWith(".pdf")) contentType = "application/pdf";
-            else if (filename.endsWith(".doc")) contentType = "application/msword";
-            else if (filename.endsWith(".docx")) contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            if (filename.endsWith(".pdf"))
+                contentType = "application/pdf";
+            else if (filename.endsWith(".doc"))
+                contentType = "application/msword";
+            else if (filename.endsWith(".docx"))
+                contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
