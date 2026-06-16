@@ -112,25 +112,6 @@ public class CarePlanController {
         }
     }
 
-    @GetMapping("/patients/{patientId}/care-plans")
-    public ResponseEntity<?> listPatientCarePlans(
-            @PathVariable Integer patientId
-    ) {
-        logger.info("GET care plans by patient. patientId={}", patientId);
-
-        try {
-            CarePlanListResponseDTO response = carePlanService.listCarePlansByPatient(patientId);
-            return ResponseEntity.ok(response);
-        } catch (NoSuchElementException e) {
-            logger.warn("GET patient care plans - not found: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
-        } catch (RuntimeException e) {
-            logger.error("GET patient care plans - unexpected error", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("message", "Error inesperado al consultar planes"));
-        }
-    }
-
     @GetMapping("/care-plans/{planId}")
     public ResponseEntity<?> getCarePlan(
             @PathVariable Long planId,
@@ -173,6 +154,9 @@ public class CarePlanController {
         } catch (SecurityException e) {
             logger.warn("PATCH care plan - forbidden: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", e.getMessage()));
+        } catch (IllegalStateException e) {
+            logger.warn("PATCH care plan - conflict: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", e.getMessage()));
         } catch (IllegalArgumentException e) {
             logger.warn("PATCH care plan - validation error: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
@@ -203,6 +187,35 @@ public class CarePlanController {
             logger.error("DELETE care plan - unexpected error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("message", "Error inesperado al eliminar el plan"));
+        }
+    }
+
+    @PatchMapping("/care-plans/{planId}/archive")
+    public ResponseEntity<?> archiveCarePlan(
+            @PathVariable Long planId,
+            @RequestParam(required = false) Integer specialistId
+    ) {
+        logger.info("PATCH archive care plan. planId={}, specialistId={}", planId, specialistId);
+
+        try {
+            carePlanService.archiveCarePlan(planId, specialistId);
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Plan archivado correctamente"
+            ));
+        } catch (NoSuchElementException e) {
+            logger.warn("PATCH archive care plan - not found: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
+        } catch (SecurityException e) {
+            logger.warn("PATCH archive care plan - forbidden: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", e.getMessage()));
+        } catch (IllegalStateException e) {
+            logger.warn("PATCH archive care plan - validation error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
+        } catch (RuntimeException e) {
+            logger.error("PATCH archive care plan - unexpected error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Error inesperado al archivar el plan"));
         }
     }
 

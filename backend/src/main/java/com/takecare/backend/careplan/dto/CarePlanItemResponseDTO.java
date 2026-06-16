@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class CarePlanItemResponseDTO {
     private Long id;
+    private Long planId;
     private String title;
     private String description;
     private String itemType;
@@ -18,4 +19,5 @@ public class CarePlanItemResponseDTO {
     private LocalDateTime completedDate;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private Integer planProgressPercentage;
 }

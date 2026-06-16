@@ -339,7 +339,7 @@
       "editProfile": "Editar perfil",
       "documents": "Biblioteca",
       "files": "Mis archivos",
-      "carePlans": "Planes de atencion"
+      "carePlans": "Mi seguimiento"
     },
     "searchPlaceholder": "Buscar especialistas...",
     "newAppointment": "Nueva Cita",
@@ -1035,9 +1035,20 @@
 
   "carePlans": {
     "title": "Planes de atencion",
+    "followUpTitle": "Mi seguimiento",
     "subtitle": "Gestiona los planes de seguimiento asignados al paciente.",
     "generalSubtitle": "Consulta y gestiona los planes de seguimiento asignados a tus pacientes.",
     "patientSubtitle": "Revisa tus planes, actividades y progreso de seguimiento.",
+    "followUpSubtitle": "Revisa tu plan, tus actividades asignadas y tu progreso terapeutico.",
+    "followUpSelectPlan": "Seleccionar plan",
+    "followUpActivities": "Actividades asignadas",
+    "followUpEmptyTitle": "No tienes planes de seguimiento asignados.",
+    "followUpEmptyText": "Cuando tu especialista cree un plan de atencion, aparecera en esta seccion.",
+    "followUpLocked": {
+      "paused": "Este plan esta pausado. No puedes completar actividades por el momento.",
+      "completed": "Este plan fue completado. Ya no puedes modificar actividades.",
+      "cancelled": "Este plan fue cancelado."
+    },
     "patient": "Paciente",
     "patientFallback": "Paciente seleccionado",
     "generalLabel": "Todos tus pacientes",
@@ -1060,13 +1071,17 @@
       "viewDetails": "Ver detalles",
       "edit": "Editar plan",
       "delete": "Eliminar",
+      "archive": "Archivar plan",
+      "hideFromView": "Ocultar de mi vista",
       "addActivity": "Agregar actividad",
       "removeActivity": "Eliminar actividad"
     },
     "fields": {
       "title": "Titulo del plan",
       "patient": "Paciente",
+      "specialist": "Especialista",
       "status": "Estado",
+      "planStatus": "Estado del plan",
       "progress": "Progreso",
       "reviewDate": "Fecha de control",
       "followUpSession": "Cita de seguimiento",
@@ -1074,6 +1089,7 @@
       "reviewStartTime": "Hora de inicio",
       "reviewEndTime": "Hora de fin",
       "completed": "completado",
+      "completedDate": "Fecha de completado",
       "createdDate": "Fecha de creacion",
       "therapeuticObjectives": "Objetivos terapeuticos",
       "generalRecommendations": "Recomendaciones generales",
@@ -1114,10 +1130,49 @@
       "cancelled": "Cancelado",
       "unknown": "Sin estado"
     },
+    "messages": {
+      "completedLocked": "Este plan ya fue completado y no puede modificarse.",
+      "completedCannotReactivate": "Un plan completado no puede reactivarse ni modificarse.",
+      "completedReadOnly": "Este plan fue completado. Ya no puedes modificar actividades.",
+      "archiveOnlyCompleted": "Solo se pueden archivar planes completados.",
+      "carePlanUpdatedTitle": "Plan de atencion actualizado",
+      "carePlanUpdatedText": "Tu plan de atencion fue actualizado"
+    },
     "itemStatus": {
       "pending": "Actividad pendiente",
       "completed": "Actividad completada",
       "cancelled": "Actividad cancelada"
+    },
+    "activities": {
+      "new": "Nueva actividad",
+      "create": "Crear actividad",
+      "edit": "Editar actividad",
+      "cancel": "Cancelar actividad",
+      "restore": "Restaurar actividad",
+      "confirmCancel": "¿Desea cancelar esta actividad?",
+      "viewCancelled": "Ver actividades canceladas",
+      "cancelledTitle": "Actividades canceladas",
+      "completedByPatient": "Actividad completada por el paciente",
+      "subtitle": "Gestiona las tareas asignadas y el progreso automatico del plan.",
+      "empty": "No existen actividades registradas",
+      "validation": {
+        "titleRequired": "El titulo de la actividad es obligatorio.",
+        "dueDateNotPast": "La fecha limite no puede ser anterior a hoy."
+      },
+      "toast": {
+        "created": "Actividad creada correctamente.",
+        "updated": "Actividad actualizada correctamente.",
+        "cancelled": "Actividad cancelada correctamente.",
+        "restored": "Actividad restaurada correctamente.",
+        "completed": "Actividad completada.",
+        "pending": "Actividad pendiente.",
+        "progressUpdated": "Progreso actualizado.",
+        "createError": "No se pudo crear la actividad.",
+        "updateError": "No se pudo actualizar la actividad.",
+        "cancelError": "No se pudo cancelar la actividad.",
+        "restoreError": "No se pudo restaurar la actividad.",
+        "completedLocked": "No se puede modificar una actividad que ya fue completada por el paciente."
+      }
     },
     "validation": {
       "titleRequired": "El titulo es obligatorio.",
@@ -1139,19 +1194,31 @@
       "created": "Plan creado correctamente y cita de seguimiento agendada.",
       "createError": "No se pudo crear el plan.",
       "updated": "Plan actualizado correctamente.",
+      "updatedWithReview": "Plan actualizado y cita de seguimiento reprogramada.",
       "updateError": "No se pudo actualizar el plan.",
+      "statusUpdated": "Estado del plan actualizado correctamente.",
+      "statusUpdateError": "No se pudo actualizar el estado del plan.",
+      "scheduleConflict": "Ya existe una cita en ese horario.",
+      "inactivePlanActivityError": "No puedes modificar actividades porque el plan no esta activo.",
       "detailError": "No se pudo cargar el detalle del plan.",
       "itemCompleted": "Actividad completada correctamente.",
       "itemPending": "Actividad marcada como pendiente.",
       "itemError": "No se pudo actualizar la actividad.",
       "deleted": "Plan eliminado correctamente.",
       "deleteError": "No se pudo eliminar el plan.",
+      "archived": "Plan archivado correctamente.",
+      "archiveError": "No se pudo archivar el plan.",
+      "completedPlanLocked": "Este plan ya fue completado y no puede modificarse.",
       "followUpScheduled": "Se agendo una cita de seguimiento."
     },
     "delete": {
       "title": "Eliminar plan de atencion",
       "message": "Esta seguro de que desea eliminar este plan?",
-      "warning": "Esta accion no se puede deshacer."
+      "warning": "Al eliminar este plan tambien se cancelara la cita de seguimiento asociada. Desea continuar?"
+    },
+    "archive": {
+      "title": "Archivar plan",
+      "message": "Este plan completado se ocultara de tu vista principal. Deseas continuar?"
     },
     "errors": {
       "noSpecialist": "No se pudo identificar al especialista actual.",
@@ -1173,7 +1240,9 @@
     "actions": {
       "markRead": "Marcar como leída",
       "markUnread": "Marcar como no leída",
-      "viewAppointment": "Marcar como leída y ver cita"
+      "viewAppointment": "Marcar como leída y ver cita",
+      "viewPlan": "Marcar como leída y Ver plan",
+      "viewFollowUp": "Ver seguimiento"
     },
     "states": {
       "loading": "Cargando notificaciones...",
@@ -1195,7 +1264,9 @@
     "actions": {
       "markRead": "Marcar como leída",
       "markUnread": "Marcar como no leída",
-      "viewAppointment": "Marcar como leída y ver cita"
+      "viewAppointment": "Marcar como leída y ver cita",
+      "viewPlan": "Marcar como leída y Ver plan",
+      "viewFollowUp": "Ver seguimiento"
     },
     "states": {
       "loading": "Cargando notificaciones...",

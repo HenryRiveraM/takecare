@@ -2,6 +2,9 @@ package com.takecare.backend.careplan.service;
 
 import com.takecare.backend.careplan.dto.CarePlanItemRequestDTO;
 import com.takecare.backend.careplan.dto.CarePlanItemResponseDTO;
+import com.takecare.backend.careplan.dto.CarePlanActivityListResponseDTO;
+import com.takecare.backend.careplan.dto.CarePlanActivityProgressResponseDTO;
+import com.takecare.backend.careplan.dto.CarePlanActivityRequestDTO;
 import com.takecare.backend.careplan.dto.CarePlanListResponseDTO;
 import com.takecare.backend.careplan.dto.CarePlanResponseDTO;
 import com.takecare.backend.careplan.dto.CarePlanSummaryDTO;
@@ -35,6 +38,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 public class CarePlanService {
@@ -44,12 +48,18 @@ public class CarePlanService {
     private static final Integer SESSION_ACCEPTED = 2;
     private static final Integer SESSION_FINISHED = 4;
     private static final Integer SESSION_PENDING = 1;
+    private static final Integer SESSION_CANCELLED = 5;
     private static final Integer SESSION_TYPE_PRESENTIAL = 2;
+    private static final Byte SCHEDULE_AVAILABLE = 0;
     private static final Byte SCHEDULE_UNAVAILABLE = 1;
     private static final int OBJECTIVES_MAX_LENGTH = 1000;
     private static final int RECOMMENDATIONS_MAX_LENGTH = 1000;
     private static final int OBSERVATIONS_MAX_LENGTH = 700;
     private static final int ITEM_DESCRIPTION_MAX_LENGTH = 500;
+    private static final String COMPLETED_PLAN_LOCK_MESSAGE = "Este plan ya fue completado y no puede modificarse.";
+    private static final String COMPLETED_PLAN_REACTIVATE_MESSAGE = "Un plan completado no puede reactivarse ni modificarse.";
+    private static final String COMPLETED_ACTIVITY_LOCK_MESSAGE =
+            "No se puede modificar una actividad que ya fue completada por el paciente.";
 
     private final CarePlanRepository carePlanRepository;
     private final CarePlanItemRepository carePlanItemRepository;
@@ -113,6 +123,8 @@ public class CarePlanService {
         carePlan.setReviewSession(reviewSession);
         carePlan.setStatus(CarePlanStatus.ACTIVE);
         carePlan.setProgressPercentage(0);
+        carePlan.setArchivedBySpecialist(false);
+        carePlan.setArchivedDate(null);
         carePlan.setCreatedDate(LocalDateTime.now());
 
         CarePlan saved = carePlanRepository.save(carePlan);
@@ -128,8 +140,9 @@ public class CarePlanService {
         recalculateProgress(saved);
         carePlanRepository.save(saved);
 
-        notificationService.createForPatientSession(
+        notificationService.createForCarePlan(
                 reviewSession,
+                saved.getId(),
                 "Se agendo una cita de seguimiento para tu plan de atencion el "
                         + reviewSchedule.getScheduleDate()
                         + " de "
@@ -158,7 +171,10 @@ public class CarePlanService {
         validateSpecialistPatientRelationship(specialistId, patientId);
 
         return buildListResponse(carePlanRepository
-                .findBySpecialistIdAndPatientIdOrderByCreatedDateDesc(specialistId, patientId));
+                .findBySpecialistIdAndPatientIdOrderByCreatedDateDesc(specialistId, patientId)
+                .stream()
+                .filter(plan -> !Boolean.TRUE.equals(plan.getArchivedBySpecialist()))
+                .toList());
     }
 
     @Transactional(readOnly = true)
@@ -169,7 +185,10 @@ public class CarePlanService {
             throw new NoSuchElementException("Especialista no encontrado");
         }
 
-        return buildListResponse(carePlanRepository.findBySpecialistIdOrderByCreatedDateDesc(specialistId));
+        return buildListResponse(carePlanRepository.findBySpecialistIdOrderByCreatedDateDesc(specialistId)
+                .stream()
+                .filter(plan -> !Boolean.TRUE.equals(plan.getArchivedBySpecialist()))
+                .toList());
     }
 
     @Transactional(readOnly = true)
@@ -203,11 +222,14 @@ public class CarePlanService {
 
         CarePlan carePlan = findPlan(planId);
         validateSpecialistOwner(carePlan, specialistId);
+        validateCompletedPlanAllowsUpdate(carePlan, request);
 
+        CarePlanSnapshot snapshot = CarePlanSnapshot.from(carePlan);
         applyUpdates(carePlan, request);
         carePlan.setUpdatedDate(LocalDateTime.now());
 
         CarePlan saved = carePlanRepository.save(carePlan);
+        notifyPatientForCarePlanChanges(saved, snapshot);
         logger.info("Care plan updated successfully. carePlanId={}, status={}, progress={}",
                 saved.getId(), saved.getStatus(), saved.getProgressPercentage());
 
@@ -220,6 +242,8 @@ public class CarePlanService {
 
         CarePlan carePlan = findPlan(planId);
         validateSpecialistOwner(carePlan, specialistId);
+        validatePlanNotCompletedForMutation(carePlan);
+        cancelReviewSessionForDeletedPlan(carePlan);
 
         carePlanItemRepository.deleteByCarePlanId(planId);
         carePlanRepository.delete(carePlan);
@@ -228,9 +252,31 @@ public class CarePlanService {
     }
 
     @Transactional
+    public void archiveCarePlan(Long planId, Integer specialistId) {
+        logger.info("Archiving completed care plan. carePlanId={}, specialistId={}", planId, specialistId);
+
+        CarePlan carePlan = findPlan(planId);
+        validateSpecialistOwner(carePlan, specialistId);
+
+        if (carePlan.getStatus() != CarePlanStatus.COMPLETED) {
+            logger.warn("Care plan archive blocked because plan is not completed. carePlanId={}, status={}",
+                    carePlan.getId(), carePlan.getStatus());
+            throw new IllegalStateException("Solo se pueden archivar planes completados.");
+        }
+
+        carePlan.setArchivedBySpecialist(true);
+        carePlan.setArchivedDate(LocalDateTime.now());
+        carePlan.setUpdatedDate(LocalDateTime.now());
+        carePlanRepository.save(carePlan);
+
+        logger.info("Completed care plan archived. carePlanId={}, specialistId={}", planId, specialistId);
+    }
+
+    @Transactional
     public CarePlanItemResponseDTO addItem(Long planId, Integer specialistId, CarePlanItemRequestDTO request) {
         CarePlan carePlan = findPlan(planId);
         validateSpecialistOwner(carePlan, specialistId);
+        validatePlanNotCompletedForMutation(carePlan);
         validateItemRequest(request);
 
         CarePlanItem item = buildItem(carePlan, request);
@@ -242,10 +288,63 @@ public class CarePlanService {
     }
 
     @Transactional
+    public CarePlanItemResponseDTO createActivity(
+            Long planId,
+            Integer specialistId,
+            CarePlanActivityRequestDTO request
+    ) {
+        logger.info("Creating care plan activity. carePlanId={}, specialistId={}", planId, specialistId);
+
+        CarePlan carePlan = findPlan(planId);
+        validateSpecialistOwner(carePlan, specialistId);
+        validatePlanNotCompletedForMutation(carePlan);
+        validatePlanAllowsActivities(carePlan);
+        validateActivityRequest(request);
+
+        CarePlanItem activity = new CarePlanItem();
+        activity.setCarePlan(carePlan);
+        activity.setTitle(request.getTitle().trim());
+        activity.setDescription(cleanNullableText(request.getDescription()));
+        activity.setItemType(CarePlanItemType.ACTIVITY);
+        activity.setStatus(CarePlanItemStatus.PENDING);
+        activity.setDueDate(request.getDueDate());
+        activity.setCompletedDate(null);
+        activity.setCreatedDate(LocalDateTime.now());
+
+        CarePlanItem saved = carePlanItemRepository.save(activity);
+        recalculateAndSave(carePlan);
+
+        logger.info("Care plan activity created. carePlanId={}, activityId={}", planId, saved.getId());
+        return toItemResponse(saved);
+    }
+
+    @Transactional(readOnly = true)
+    public CarePlanActivityListResponseDTO listActivities(Long planId, Integer specialistId, Integer patientId) {
+        logger.info("Listing care plan activities. carePlanId={}, specialistId={}, patientId={}",
+                planId, specialistId, patientId);
+
+        CarePlan carePlan = findPlan(planId);
+        validateViewPermission(carePlan, specialistId, patientId);
+
+        List<CarePlanItemResponseDTO> activities = carePlanItemRepository
+                .findByCarePlanIdOrderByCreatedDateAsc(planId)
+                .stream()
+                .map(this::toItemResponse)
+                .toList();
+
+        CarePlanActivityListResponseDTO response = new CarePlanActivityListResponseDTO();
+        response.setTotalActivities(activities.size());
+        response.setActivities(activities);
+        return response;
+    }
+
+    @Transactional
     public CarePlanItemResponseDTO updateItem(Long itemId, Integer specialistId, UpdateCarePlanItemRequestDTO request) {
         CarePlanItem item = findItem(itemId);
         CarePlan carePlan = item.getCarePlan();
         validateSpecialistOwner(carePlan, specialistId);
+        validatePlanNotCompletedForMutation(carePlan);
+        validateActivityNotCompletedForSpecialistMutation(item, request);
 
         applyItemUpdates(item, request);
         item.setUpdatedDate(LocalDateTime.now());
@@ -257,10 +356,45 @@ public class CarePlanService {
     }
 
     @Transactional
+    public CarePlanItemResponseDTO updateActivity(
+            Long activityId,
+            Integer specialistId,
+            UpdateCarePlanItemRequestDTO request
+    ) {
+        logger.info("Updating care plan activity. activityId={}, specialistId={}", activityId, specialistId);
+
+        CarePlanItem item = findItem(activityId);
+        CarePlan carePlan = item.getCarePlan();
+        validateSpecialistOwner(carePlan, specialistId);
+        validatePlanNotCompletedForMutation(carePlan);
+        validatePlanAllowsActivities(carePlan);
+        validateActivityNotCompletedForSpecialistMutation(item, request);
+
+        if (request.getStatus() != null) {
+            CarePlanItemStatus status = parseItemStatus(request.getStatus());
+            if (status == CarePlanItemStatus.CANCELLED) {
+                logger.info("Cancelling care plan activity. activityId={}, carePlanId={}", activityId, carePlan.getId());
+            } else if (item.getStatus() == CarePlanItemStatus.CANCELLED && status == CarePlanItemStatus.PENDING) {
+                logger.info("Restoring care plan activity. activityId={}, carePlanId={}", activityId, carePlan.getId());
+            }
+        }
+
+        applyItemUpdates(item, request);
+        item.setUpdatedDate(LocalDateTime.now());
+        CarePlanItem saved = carePlanItemRepository.save(item);
+        recalculateAndSave(carePlan);
+
+        logger.info("Care plan activity updated. activityId={}, status={}", activityId, saved.getStatus());
+        return toItemResponse(saved);
+    }
+
+    @Transactional
     public CarePlanResponseDTO completeItem(Long itemId, Integer patientId, Integer specialistId) {
         CarePlanItem item = findItem(itemId);
         CarePlan carePlan = item.getCarePlan();
         validateItemActionPermission(carePlan, patientId, specialistId);
+        validatePlanNotCompletedForMutation(carePlan);
+        validatePlanActiveForActivityAction(carePlan);
 
         item.setStatus(CarePlanItemStatus.COMPLETED);
         item.setCompletedDate(LocalDateTime.now());
@@ -273,10 +407,36 @@ public class CarePlanService {
     }
 
     @Transactional
+    public CarePlanActivityProgressResponseDTO completeActivity(
+            Long activityId,
+            Integer patientId,
+            Integer specialistId
+    ) {
+        CarePlanItem item = findItem(activityId);
+        CarePlan carePlan = item.getCarePlan();
+        validateItemActionPermission(carePlan, patientId, specialistId);
+        validatePlanNotCompletedForMutation(carePlan);
+        validatePlanActiveForActivityAction(carePlan);
+
+        item.setStatus(CarePlanItemStatus.COMPLETED);
+        if (item.getCompletedDate() == null) {
+            item.setCompletedDate(LocalDateTime.now());
+        }
+        item.setUpdatedDate(LocalDateTime.now());
+        CarePlanItem saved = carePlanItemRepository.save(item);
+
+        logger.info("Care plan activity completed. activityId={}, carePlanId={}", activityId, carePlan.getId());
+        recalculateAndSave(carePlan);
+        return toProgressResponse(saved);
+    }
+
+    @Transactional
     public CarePlanResponseDTO markItemPending(Long itemId, Integer patientId, Integer specialistId) {
         CarePlanItem item = findItem(itemId);
         CarePlan carePlan = item.getCarePlan();
         validateItemActionPermission(carePlan, patientId, specialistId);
+        validatePlanNotCompletedForMutation(carePlan);
+        validatePlanActiveForActivityAction(carePlan);
 
         item.setStatus(CarePlanItemStatus.PENDING);
         item.setCompletedDate(null);
@@ -288,8 +448,31 @@ public class CarePlanService {
         return toResponse(carePlan);
     }
 
+    @Transactional
+    public CarePlanActivityProgressResponseDTO markActivityPending(
+            Long activityId,
+            Integer patientId,
+            Integer specialistId
+    ) {
+        CarePlanItem item = findItem(activityId);
+        CarePlan carePlan = item.getCarePlan();
+        validateItemActionPermission(carePlan, patientId, specialistId);
+        validatePlanNotCompletedForMutation(carePlan);
+        validatePlanActiveForActivityAction(carePlan);
+
+        item.setStatus(CarePlanItemStatus.PENDING);
+        item.setCompletedDate(null);
+        item.setUpdatedDate(LocalDateTime.now());
+        CarePlanItem saved = carePlanItemRepository.save(item);
+
+        logger.info("Care plan activity marked pending. activityId={}, carePlanId={}", activityId, carePlan.getId());
+        recalculateAndSave(carePlan);
+        return toProgressResponse(saved);
+    }
+
     private CarePlanListResponseDTO buildListResponse(List<CarePlan> carePlans) {
         List<CarePlanSummaryDTO> plans = carePlans.stream()
+                .sorted(this::compareCarePlansForList)
                 .map(this::toSummary)
                 .toList();
 
@@ -297,6 +480,39 @@ public class CarePlanService {
         response.setTotalCarePlans(plans.size());
         response.setCarePlans(plans);
         return response;
+    }
+
+    private int compareCarePlansForList(CarePlan first, CarePlan second) {
+        int statusComparison = Integer.compare(statusOrder(first.getStatus()), statusOrder(second.getStatus()));
+        if (statusComparison != 0) {
+            return statusComparison;
+        }
+
+        LocalDateTime firstDate = first.getUpdatedDate() != null ? first.getUpdatedDate() : first.getCreatedDate();
+        LocalDateTime secondDate = second.getUpdatedDate() != null ? second.getUpdatedDate() : second.getCreatedDate();
+
+        if (firstDate == null && secondDate == null) {
+            return 0;
+        }
+        if (firstDate == null) {
+            return 1;
+        }
+        if (secondDate == null) {
+            return -1;
+        }
+        return secondDate.compareTo(firstDate);
+    }
+
+    private int statusOrder(CarePlanStatus status) {
+        if (status == null) {
+            return 99;
+        }
+        return switch (status) {
+            case ACTIVE -> 0;
+            case PAUSED -> 1;
+            case CANCELLED -> 2;
+            case COMPLETED -> 3;
+        };
     }
 
     private CarePlan findPlan(Long planId) {
@@ -393,6 +609,197 @@ public class CarePlanService {
         }
     }
 
+    private void validateReviewTimeAvailabilityForUpdate(
+            CarePlan carePlan,
+            LocalDate reviewDate,
+            LocalTime reviewStartTime,
+            LocalTime reviewEndTime
+    ) {
+        Integer specialistId = carePlan.getSpecialist() != null ? carePlan.getSpecialist().getId() : null;
+        Integer excludedSessionId = carePlan.getReviewSession() != null ? carePlan.getReviewSession().getId() : null;
+
+        logger.info("Validating review time update. carePlanId={}, specialistId={}, excludedSessionId={}, date={}, start={}, end={}",
+                carePlan.getId(), specialistId, excludedSessionId, reviewDate, reviewStartTime, reviewEndTime);
+
+        if (reviewDate == null) {
+            throw new IllegalArgumentException("La fecha de control es obligatoria");
+        }
+        if (reviewStartTime == null) {
+            throw new IllegalArgumentException("La hora de inicio de control es obligatoria");
+        }
+        if (reviewEndTime == null) {
+            throw new IllegalArgumentException("La hora de fin de control es obligatoria");
+        }
+        if (!reviewEndTime.isAfter(reviewStartTime)) {
+            throw new IllegalArgumentException("La hora de fin debe ser mayor que la hora de inicio");
+        }
+
+        validateNotPastDate(reviewDate, "La fecha de control no puede ser anterior a la fecha actual.");
+
+        boolean hasConflict = excludedSessionId == null
+                ? sessionRepository.existsOverlappingSessionForSpecialist(
+                        specialistId,
+                        reviewDate,
+                        reviewStartTime,
+                        reviewEndTime,
+                        List.of(SESSION_PENDING, SESSION_ACCEPTED, SESSION_FINISHED)
+                )
+                : sessionRepository.existsOverlappingSessionForSpecialistExcludingSession(
+                        specialistId,
+                        reviewDate,
+                        reviewStartTime,
+                        reviewEndTime,
+                        List.of(SESSION_PENDING, SESSION_ACCEPTED, SESSION_FINISHED),
+                        excludedSessionId
+                );
+
+        if (hasConflict) {
+            logger.warn("Review session update conflict. carePlanId={}, specialistId={}, date={}, start={}, end={}",
+                    carePlan.getId(), specialistId, reviewDate, reviewStartTime, reviewEndTime);
+            throw new IllegalStateException("El especialista ya tiene una cita registrada en ese horario.");
+        }
+    }
+
+    private void validateReviewScheduleConflict(
+            CarePlan carePlan,
+            LocalDate reviewDate,
+            LocalTime reviewStartTime,
+            LocalTime reviewEndTime
+    ) {
+        validateReviewTimeAvailabilityForUpdate(carePlan, reviewDate, reviewStartTime, reviewEndTime);
+    }
+
+    private void replaceOrCreateReviewSession(CarePlan carePlan, SpecialistSchedule newSchedule) {
+        logger.info("Replacing review session schedule. carePlanId={}, scheduleId={}",
+                carePlan.getId(), newSchedule.getId());
+
+        newSchedule.setStatus(SCHEDULE_UNAVAILABLE);
+        scheduleRepository.save(newSchedule);
+
+        Session currentSession = carePlan.getReviewSession();
+        if (currentSession == null) {
+            Session reviewSession = createReviewSession(carePlan.getPatient(), newSchedule);
+            carePlan.setReviewSession(reviewSession);
+        } else {
+            SpecialistSchedule previousSchedule = currentSession.getSchedule();
+            if (previousSchedule != null && !previousSchedule.getId().equals(newSchedule.getId())) {
+                previousSchedule.setStatus(SCHEDULE_AVAILABLE);
+                scheduleRepository.save(previousSchedule);
+            }
+            currentSession.setSchedule(newSchedule);
+            currentSession.setStatus(SESSION_ACCEPTED);
+            currentSession.setDescription("Cita de seguimiento reprogramada por plan de atencion");
+            carePlan.setReviewSession(sessionRepository.save(currentSession));
+        }
+
+        carePlan.setReviewDate(newSchedule.getScheduleDate());
+    }
+
+    private void cancelReviewSessionForDeletedPlan(CarePlan carePlan) {
+        Session reviewSession = carePlan.getReviewSession();
+        if (reviewSession == null) {
+            logger.info("Care plan has no review session to cancel. carePlanId={}", carePlan.getId());
+            return;
+        }
+
+        logger.info("Cancelling review session for deleted care plan. carePlanId={}, sessionId={}",
+                carePlan.getId(), reviewSession.getId());
+
+        reviewSession.setStatus(SESSION_CANCELLED);
+        reviewSession.setDescription("Cita de seguimiento cancelada por eliminacion de plan de atencion");
+        sessionRepository.save(reviewSession);
+
+        if (reviewSession.getSchedule() != null) {
+            SpecialistSchedule schedule = reviewSession.getSchedule();
+            schedule.setStatus(SCHEDULE_AVAILABLE);
+            scheduleRepository.save(schedule);
+            logger.info("Review session schedule released. carePlanId={}, scheduleId={}",
+                    carePlan.getId(), schedule.getId());
+        }
+
+        notificationService.createForCarePlan(
+                reviewSession,
+                carePlan.getId(),
+                "El plan de atencion '" + carePlan.getTitle()
+                        + "' fue cancelado y la cita de seguimiento asociada fue anulada."
+        );
+        logger.info("Patient notified about care plan deletion. carePlanId={}, patientId={}, sessionId={}",
+                carePlan.getId(),
+                carePlan.getPatient() != null ? carePlan.getPatient().getId() : null,
+                reviewSession.getId());
+    }
+
+    private void notifyReviewSessionUpdated(CarePlan carePlan, SpecialistSchedule schedule) {
+        Session reviewSession = carePlan.getReviewSession();
+        if (reviewSession == null) {
+            logger.warn("Skipping review session update notification because session is null. carePlanId={}",
+                    carePlan.getId());
+            return;
+        }
+
+        notificationService.createForCarePlan(
+                reviewSession,
+                carePlan.getId(),
+                "La cita de seguimiento de tu plan '" + carePlan.getTitle()
+                        + "' fue actualizada para el " + schedule.getScheduleDate()
+                        + " de " + schedule.getStartTime()
+                        + " a " + schedule.getEndTime() + "."
+        );
+        logger.info("Patient notified about review session update. carePlanId={}, patientId={}, sessionId={}",
+                carePlan.getId(),
+                carePlan.getPatient() != null ? carePlan.getPatient().getId() : null,
+                reviewSession.getId());
+    }
+
+    private void notifyPatientForCarePlanChanges(CarePlan carePlan, CarePlanSnapshot snapshot) {
+        if (carePlan.getPatient() == null || snapshot == null) {
+            return;
+        }
+
+        boolean statusChanged = !Objects.equals(snapshot.status(), carePlan.getStatus());
+        boolean contentChanged = !Objects.equals(snapshot.title(), carePlan.getTitle())
+                || !Objects.equals(snapshot.therapeuticObjectives(), carePlan.getTherapeuticObjectives())
+                || !Objects.equals(snapshot.generalRecommendations(), carePlan.getGeneralRecommendations())
+                || !Objects.equals(snapshot.professionalObservations(), carePlan.getProfessionalObservations());
+
+        if (statusChanged) {
+            notifyPatientForCarePlan(carePlan, buildStatusNotificationMessage(carePlan));
+            logger.info("Patient notified about care plan status change. carePlanId={}, patientId={}, status={}",
+                    carePlan.getId(), carePlan.getPatient().getId(), carePlan.getStatus());
+        }
+
+        if (contentChanged) {
+            notifyPatientForCarePlan(
+                    carePlan,
+                    "Tu plan de atencion '" + carePlan.getTitle() + "' fue actualizado por tu especialista."
+            );
+            logger.info("Patient notified about care plan content update. carePlanId={}, patientId={}",
+                    carePlan.getId(), carePlan.getPatient().getId());
+        }
+    }
+
+    private void notifyPatientForCarePlan(CarePlan carePlan, String message) {
+        Session reviewSession = carePlan.getReviewSession();
+        if (reviewSession == null) {
+            logger.warn("Skipping care plan notification because review session is null. carePlanId={}, patientId={}",
+                    carePlan.getId(),
+                    carePlan.getPatient() != null ? carePlan.getPatient().getId() : null);
+            return;
+        }
+
+        notificationService.createForCarePlan(reviewSession, carePlan.getId(), message);
+    }
+
+    private String buildStatusNotificationMessage(CarePlan carePlan) {
+        String title = carePlan.getTitle();
+        return switch (carePlan.getStatus()) {
+            case ACTIVE -> "Tu plan de atencion '" + title + "' fue activado nuevamente.";
+            case PAUSED -> "Tu plan de atencion '" + title + "' fue pausado temporalmente.";
+            case COMPLETED -> "Tu plan de atencion '" + title + "' fue marcado como completado por tu especialista.";
+            case CANCELLED -> "Tu plan de atencion '" + title + "' fue cancelado.";
+        };
+    }
+
     private void validateSpecialistPatientRelationship(Integer specialistId, Integer patientId) {
         logger.info("Validating specialist-patient relationship. specialistId={}, patientId={}",
                 specialistId, patientId);
@@ -450,6 +857,62 @@ public class CarePlanService {
         }
     }
 
+    private void validatePlanActiveForActivityAction(CarePlan carePlan) {
+        if (carePlan.getStatus() != CarePlanStatus.ACTIVE) {
+            logger.warn("Care plan activity action blocked because plan is not active. carePlanId={}, status={}",
+                    carePlan.getId(), carePlan.getStatus());
+            throw new SecurityException("No puedes modificar actividades porque el plan no esta activo.");
+        }
+    }
+
+    private void validateCompletedPlanAllowsUpdate(CarePlan carePlan, UpdateCarePlanRequestDTO request) {
+        if (carePlan.getStatus() != CarePlanStatus.COMPLETED) {
+            return;
+        }
+
+        if (request != null && request.getStatus() != null) {
+            CarePlanStatus requestedStatus = parseStatus(request.getStatus());
+            if (requestedStatus != CarePlanStatus.COMPLETED) {
+                logger.warn("Care plan reactivation blocked because plan is completed. carePlanId={}, requestedStatus={}",
+                        carePlan.getId(), requestedStatus);
+                throw new SecurityException(COMPLETED_PLAN_REACTIVATE_MESSAGE);
+            }
+        }
+
+        validatePlanNotCompletedForMutation(carePlan);
+    }
+
+    private void validatePlanNotCompletedForMutation(CarePlan carePlan) {
+        if (carePlan.getStatus() == CarePlanStatus.COMPLETED) {
+            logger.warn("Care plan mutation blocked because plan is completed. carePlanId={}", carePlan.getId());
+            throw new SecurityException(COMPLETED_PLAN_LOCK_MESSAGE);
+        }
+    }
+
+    private void validateActivityNotCompletedForSpecialistMutation(
+            CarePlanItem item,
+            UpdateCarePlanItemRequestDTO request
+    ) {
+        if (item.getStatus() != CarePlanItemStatus.COMPLETED) {
+            return;
+        }
+
+        CarePlanItemStatus requestedStatus = request != null && request.getStatus() != null
+                ? parseItemStatus(request.getStatus())
+                : null;
+        if (requestedStatus == CarePlanItemStatus.CANCELLED) {
+            logger.warn("Care plan activity cancel blocked because activity is completed. activityId={}, carePlanId={}",
+                    item.getId(), item.getCarePlan() != null ? item.getCarePlan().getId() : null);
+        } else {
+            logger.warn("Care plan activity edit blocked because activity is completed. activityId={}, carePlanId={}, requestedStatus={}",
+                    item.getId(),
+                    item.getCarePlan() != null ? item.getCarePlan().getId() : null,
+                    requestedStatus);
+        }
+
+        throw new SecurityException(COMPLETED_ACTIVITY_LOCK_MESSAGE);
+    }
+
     private void validateCreateRequest(CreateCarePlanRequestDTO request) {
         if (isBlank(request.getTitle())) {
             throw new IllegalArgumentException("El titulo del plan es obligatorio");
@@ -487,6 +950,26 @@ public class CarePlanService {
         parseItemType(request.getItemType());
         if (request.getDueDate() != null) {
             validateNotPastDate(request.getDueDate(), "La fecha limite de la actividad no puede ser anterior a la fecha actual.");
+        }
+    }
+
+    private void validateActivityRequest(CarePlanActivityRequestDTO request) {
+        if (isBlank(request.getTitle())) {
+            throw new IllegalArgumentException("El titulo de la actividad es obligatorio");
+        }
+        if (request.getTitle().trim().length() > 150) {
+            throw new IllegalArgumentException("El titulo de la actividad no puede exceder 150 caracteres");
+        }
+        validateMaxLength(request.getDescription(), ITEM_DESCRIPTION_MAX_LENGTH,
+                "La descripcion de la actividad no puede exceder 500 caracteres");
+        if (request.getDueDate() != null) {
+            validateNotPastDate(request.getDueDate(), "La fecha limite de la actividad no puede ser anterior a la fecha actual.");
+        }
+    }
+
+    private void validatePlanAllowsActivities(CarePlan carePlan) {
+        if (carePlan.getStatus() == CarePlanStatus.CANCELLED) {
+            throw new IllegalStateException("No se pueden agregar actividades a un plan cancelado");
         }
     }
 
@@ -539,34 +1022,93 @@ public class CarePlanService {
         }
 
         if (request.getStatus() != null) {
-            carePlan.setStatus(parseStatus(request.getStatus()));
+            CarePlanStatus status = parseStatus(request.getStatus());
+            carePlan.setStatus(status);
             logger.info("Care plan status updated. carePlanId={}, status={}",
                     carePlan.getId(), carePlan.getStatus());
+            if (status == CarePlanStatus.COMPLETED) {
+                logger.info("Care plan marked as completed. carePlanId={}, specialistId={}",
+                        carePlan.getId(),
+                        carePlan.getSpecialist() != null ? carePlan.getSpecialist().getId() : null);
+            }
+            if (status == CarePlanStatus.CANCELLED) {
+                cancelReviewSessionForDeletedPlan(carePlan);
+            }
         }
 
         if (request.getProgressPercentage() != null) {
             throw new IllegalArgumentException("El progreso se calcula automaticamente segun las actividades del plan");
         }
 
-        if (request.getReviewDate() != null) {
-            validateNotPastDate(request.getReviewDate(), "La fecha de control no puede ser anterior a la fecha actual.");
-            carePlan.setReviewDate(request.getReviewDate());
+        applyReviewSessionUpdates(carePlan, request);
+    }
+
+    private void applyReviewSessionUpdates(CarePlan carePlan, UpdateCarePlanRequestDTO request) {
+        boolean hasReviewTimeChange = request.getReviewScheduleId() != null
+                || request.getReviewDate() != null
+                || request.getReviewStartTime() != null
+                || request.getReviewEndTime() != null;
+
+        if (!hasReviewTimeChange) {
+            return;
+        }
+
+        if (carePlan.getStatus() == CarePlanStatus.CANCELLED) {
+            throw new IllegalStateException("No se puede reprogramar la cita de seguimiento de un plan cancelado");
         }
 
         if (request.getReviewScheduleId() != null) {
             SpecialistSchedule schedule = scheduleRepository.findById(request.getReviewScheduleId())
                     .orElseThrow(() -> new NoSuchElementException("Horario de control no encontrado"));
-            Session reviewSession = createReviewSession(carePlan.getPatient(), schedule);
-            carePlan.setReviewSession(reviewSession);
-            carePlan.setReviewDate(schedule.getScheduleDate());
-            notificationService.createForPatientSession(
-                    reviewSession,
-                    "Se reagendo una cita de seguimiento para tu plan de atencion el "
-                            + schedule.getScheduleDate()
-                            + " a las "
-                            + schedule.getStartTime()
-            );
+            validateReviewScheduleConflict(carePlan, schedule.getScheduleDate(), schedule.getStartTime(), schedule.getEndTime());
+            replaceOrCreateReviewSession(carePlan, schedule);
+            notifyReviewSessionUpdated(carePlan, schedule);
+            return;
         }
+
+        Session currentSession = carePlan.getReviewSession();
+        SpecialistSchedule currentSchedule = currentSession != null ? currentSession.getSchedule() : null;
+
+        LocalDate reviewDate = request.getReviewDate() != null
+                ? request.getReviewDate()
+                : currentSchedule != null ? currentSchedule.getScheduleDate() : carePlan.getReviewDate();
+        LocalTime startTime = request.getReviewStartTime() != null
+                ? request.getReviewStartTime()
+                : currentSchedule != null ? currentSchedule.getStartTime() : null;
+        LocalTime endTime = request.getReviewEndTime() != null
+                ? request.getReviewEndTime()
+                : currentSchedule != null ? currentSchedule.getEndTime() : null;
+
+        validateReviewTimeAvailabilityForUpdate(carePlan, reviewDate, startTime, endTime);
+
+        Session reviewSession = currentSession;
+        SpecialistSchedule schedule = currentSchedule;
+
+        if (schedule == null) {
+            schedule = new SpecialistSchedule();
+            schedule.setSpecialist(carePlan.getSpecialist());
+            schedule.setActivo((byte) 1);
+        }
+
+        schedule.setScheduleDate(reviewDate);
+        schedule.setDayOfWeek((byte) reviewDate.getDayOfWeek().getValue());
+        schedule.setStartTime(startTime);
+        schedule.setEndTime(endTime);
+        schedule.setStatus(SCHEDULE_UNAVAILABLE);
+        SpecialistSchedule savedSchedule = scheduleRepository.save(schedule);
+
+        if (reviewSession == null) {
+            reviewSession = createReviewSession(carePlan.getPatient(), savedSchedule);
+        } else {
+            reviewSession.setSchedule(savedSchedule);
+            reviewSession.setStatus(SESSION_ACCEPTED);
+            reviewSession.setDescription("Cita de seguimiento reprogramada por plan de atencion");
+            reviewSession = sessionRepository.save(reviewSession);
+        }
+
+        carePlan.setReviewSession(reviewSession);
+        carePlan.setReviewDate(savedSchedule.getScheduleDate());
+        notifyReviewSessionUpdated(carePlan, savedSchedule);
     }
 
     private void applyItemUpdates(CarePlanItem item, UpdateCarePlanItemRequestDTO request) {
@@ -673,6 +1215,8 @@ public class CarePlanService {
         dto.setReviewDate(carePlan.getReviewDate());
         dto.setCreatedDate(carePlan.getCreatedDate());
         dto.setUpdatedDate(carePlan.getUpdatedDate());
+        dto.setArchivedBySpecialist(Boolean.TRUE.equals(carePlan.getArchivedBySpecialist()));
+        dto.setArchivedDate(carePlan.getArchivedDate());
 
         if (carePlan.getReviewSession() != null) {
             Session session = carePlan.getReviewSession();
@@ -709,12 +1253,18 @@ public class CarePlanService {
             dto.setReviewEndTime(carePlan.getReviewSession().getSchedule().getEndTime());
         }
         dto.setCreatedDate(carePlan.getCreatedDate());
+        dto.setArchivedBySpecialist(Boolean.TRUE.equals(carePlan.getArchivedBySpecialist()));
+        dto.setArchivedDate(carePlan.getArchivedDate());
         return dto;
     }
 
     private CarePlanItemResponseDTO toItemResponse(CarePlanItem item) {
         CarePlanItemResponseDTO dto = new CarePlanItemResponseDTO();
         dto.setId(item.getId());
+        if (item.getCarePlan() != null) {
+            dto.setPlanId(item.getCarePlan().getId());
+            dto.setPlanProgressPercentage(item.getCarePlan().getProgressPercentage());
+        }
         dto.setTitle(item.getTitle());
         dto.setDescription(item.getDescription());
         dto.setItemType(item.getItemType() != null ? item.getItemType().name() : null);
@@ -723,6 +1273,15 @@ public class CarePlanService {
         dto.setCompletedDate(item.getCompletedDate());
         dto.setCreatedDate(item.getCreatedDate());
         dto.setUpdatedDate(item.getUpdatedDate());
+        return dto;
+    }
+
+    private CarePlanActivityProgressResponseDTO toProgressResponse(CarePlanItem item) {
+        CarePlanActivityProgressResponseDTO dto = new CarePlanActivityProgressResponseDTO();
+        dto.setActivityId(item.getId());
+        dto.setStatus(item.getStatus() != null ? item.getStatus().name() : null);
+        dto.setCompletedDate(item.getCompletedDate());
+        dto.setPlanProgressPercentage(item.getCarePlan() != null ? item.getCarePlan().getProgressPercentage() : 0);
         return dto;
     }
 
@@ -747,5 +1306,23 @@ public class CarePlanService {
         String secondLastname = patient.getSecondLastname() != null ? patient.getSecondLastname().trim() : "";
         String fullName = (names + " " + firstLastname + " " + secondLastname).trim().replaceAll("\\s+", " ");
         return fullName.isBlank() ? null : fullName;
+    }
+
+    private record CarePlanSnapshot(
+            String title,
+            String therapeuticObjectives,
+            String generalRecommendations,
+            String professionalObservations,
+            CarePlanStatus status
+    ) {
+        static CarePlanSnapshot from(CarePlan carePlan) {
+            return new CarePlanSnapshot(
+                    carePlan.getTitle(),
+                    carePlan.getTherapeuticObjectives(),
+                    carePlan.getGeneralRecommendations(),
+                    carePlan.getProfessionalObservations(),
+                    carePlan.getStatus()
+            );
+        }
     }
 }

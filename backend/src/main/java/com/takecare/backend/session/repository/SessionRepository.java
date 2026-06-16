@@ -102,6 +102,27 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
             @Param("endTime") LocalTime endTime,
             @Param("statuses") List<Integer> statuses
     );
+
+    @Query("""
+        select count(s) > 0
+        from Session s
+        join s.schedule sc
+        join sc.specialist sp
+        where sp.id = :specialistId
+          and sc.scheduleDate = :scheduleDate
+          and s.status in :statuses
+          and s.id <> :excludedSessionId
+          and sc.startTime < :endTime
+          and sc.endTime > :startTime
+        """)
+    boolean existsOverlappingSessionForSpecialistExcludingSession(
+            @Param("specialistId") Integer specialistId,
+            @Param("scheduleDate") LocalDate scheduleDate,
+            @Param("startTime") LocalTime startTime,
+            @Param("endTime") LocalTime endTime,
+            @Param("statuses") List<Integer> statuses,
+            @Param("excludedSessionId") Integer excludedSessionId
+    );
         
         @Query("""
         select s

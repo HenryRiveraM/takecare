@@ -9,6 +9,6 @@ import java.util.List;
 @Setter
 public class PatientCarePlanListResponseDTO {
 
-    private Integer total;
+    private Integer totalCarePlans;
     private List<PatientCarePlanSummaryDTO> carePlans;
 }

@@ -2,15 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 
 import {
   CarePlan,
+  CarePlanActivityPayload,
+  CarePlanItem,
   CarePlanItemType,
   CarePlanService,
   CarePlanStatus,
   CreateCarePlanPayload,
+  UpdateCarePlanItemPayload,
   UpdateCarePlanPayload
 } from '../../services/care-plan.service';
 import { AuthService } from '../../services/auth.service';
@@ -18,6 +21,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 
 type FormMode = 'create' | 'edit';
+type ActivityFormMode = 'create' | 'edit';
 
 interface CarePlanForm {
   title: string;
@@ -36,6 +40,12 @@ interface CarePlanItemForm {
   title: string;
   description: string;
   itemType: CarePlanItemType;
+  dueDate: string;
+}
+
+interface ActivityForm {
+  title: string;
+  description: string;
   dueDate: string;
 }
 
@@ -66,14 +76,28 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
 
   showForm = false;
   formMode: FormMode = 'create';
+  showActivityForm = false;
+  activityFormMode: ActivityFormMode = 'create';
+  activityForm: ActivityForm = this.emptyActivityForm();
+  activityFormError = '';
+  activitySaving = false;
+  editingActivity: CarePlanItem | null = null;
+  activityPlan: CarePlan | null = null;
+  showCancelledActivities = false;
   showToast = false;
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
   today = this.formatLocalDate(new Date());
   minReviewDate = this.formatLocalDate(this.addDays(new Date(), 1));
   confirmDeletePlan: CarePlan | null = null;
+  confirmArchivePlan: CarePlan | null = null;
   private toastTimer: any;
   private highlightTimer: any;
+  private editReviewSnapshot = {
+    reviewDate: '',
+    reviewStartTime: '',
+    reviewEndTime: ''
+  };
 
   readonly limits = {
     title: 150,
@@ -104,7 +128,8 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private carePlanService: CarePlanService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -142,6 +167,11 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
   }
 
   openEditForm(plan: CarePlan): void {
+    if (this.isPlanCompleted(plan)) {
+      this.showToastMessage('carePlans.toast.completedPlanLocked', 'error');
+      return;
+    }
+
     if (!plan.therapeuticObjectives || !plan.generalRecommendations) {
       this.carePlanService.getCarePlanById(plan.id, this.specialistId).subscribe({
         next: detail => this.openEditForm(detail),
@@ -151,14 +181,18 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
     }
 
     this.formMode = 'edit';
+    const reviewDate = plan.reviewDate || '';
+    const reviewStartTime = plan.reviewStartTime?.substring(0, 5) || '';
+    const reviewEndTime = plan.reviewEndTime?.substring(0, 5) || '';
+    this.editReviewSnapshot = { reviewDate, reviewStartTime, reviewEndTime };
     this.form = {
       title: plan.title || '',
       therapeuticObjectives: plan.therapeuticObjectives || '',
       generalRecommendations: plan.generalRecommendations || '',
       professionalObservations: plan.professionalObservations || '',
-      reviewDate: plan.reviewDate || '',
-      reviewStartTime: plan.reviewStartTime?.substring(0, 5) || '',
-      reviewEndTime: plan.reviewEndTime?.substring(0, 5) || '',
+      reviewDate,
+      reviewStartTime,
+      reviewEndTime,
       status: plan.status || 'ACTIVE',
       progressPercentage: plan.progressPercentage ?? 0,
       items: []
@@ -172,6 +206,58 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
     this.showForm = false;
     this.saving = false;
     this.formError = '';
+  }
+
+  openCreateActivityForm(plan: CarePlan): void {
+    if (this.isPlanCompleted(plan)) {
+      this.showToastMessage('carePlans.toast.completedPlanLocked', 'error');
+      return;
+    }
+
+    this.activityPlan = plan;
+    this.editingActivity = null;
+    this.activityFormMode = 'create';
+    this.activityForm = this.emptyActivityForm();
+    this.activityFormError = '';
+    this.showActivityForm = true;
+  }
+
+  openEditActivityForm(plan: CarePlan, activity: CarePlanItem): void {
+    if (this.isPlanCompleted(plan)) {
+      this.showToastMessage('carePlans.toast.completedPlanLocked', 'error');
+      return;
+    }
+    if (this.isActivityCompleted(activity)) {
+      this.showToastMessage('carePlans.activities.toast.completedLocked', 'error');
+      return;
+    }
+
+    this.activityPlan = plan;
+    this.editingActivity = activity;
+    this.activityFormMode = 'edit';
+    this.activityForm = {
+      title: activity.title || '',
+      description: activity.description || '',
+      dueDate: activity.dueDate || ''
+    };
+    this.activityFormError = '';
+    this.showActivityForm = true;
+  }
+
+  closeActivityForm(): void {
+    this.showActivityForm = false;
+    this.activitySaving = false;
+    this.activityFormError = '';
+    this.editingActivity = null;
+    this.activityPlan = null;
+  }
+
+  activeActivities(plan: CarePlan | null): CarePlanItem[] {
+    return (plan?.items || []).filter(item => item.status === 'PENDING' || item.status === 'COMPLETED');
+  }
+
+  cancelledActivities(plan: CarePlan | null): CarePlanItem[] {
+    return (plan?.items || []).filter(item => item.status === 'CANCELLED');
   }
 
   selectPlan(plan: CarePlan): void {
@@ -236,6 +322,13 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.isPlanCompleted(this.selectedPlan)) {
+      this.saving = false;
+      this.formError = 'carePlans.messages.completedLocked';
+      this.showToastMessage('carePlans.toast.completedPlanLocked', 'error');
+      return;
+    }
+
     const payload: UpdateCarePlanPayload = {
       title: this.form.title.trim(),
       therapeuticObjectives: this.form.therapeuticObjectives.trim(),
@@ -244,13 +337,22 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
       status: this.form.status
     };
 
+    if (this.hasReviewChanged()) {
+      payload.reviewDate = this.form.reviewDate;
+      payload.reviewStartTime = this.form.reviewStartTime;
+      payload.reviewEndTime = this.form.reviewEndTime;
+    }
+
     this.carePlanService.updateCarePlan(this.selectedPlan.id, this.specialistId, payload).subscribe({
       next: plan => {
         this.saving = false;
         this.closeForm();
         this.selectedPlan = plan;
         this.carePlans = this.carePlans.map(item => item.id === plan.id ? plan : item);
-        this.showToastMessage('carePlans.toast.updated', 'success');
+        this.showToastMessage(
+          this.hasReviewChanged() ? 'carePlans.toast.updatedWithReview' : 'carePlans.toast.updated',
+          'success'
+        );
       },
       error: error => this.handleSaveError(error, 'carePlans.toast.updateError')
     });
@@ -298,13 +400,132 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
     this.form.items.splice(index, 1);
   }
 
+  saveActivity(): void {
+    if (!this.validateActivityForm() || !this.activityPlan) {
+      return;
+    }
+
+    this.activitySaving = true;
+
+    const payload: CarePlanActivityPayload = {
+      title: this.activityForm.title.trim(),
+      description: this.cleanOptional(this.activityForm.description),
+      dueDate: this.activityForm.dueDate || null
+    };
+
+    if (this.activityFormMode === 'create') {
+      this.carePlanService.createActivity(this.activityPlan.id, this.specialistId, payload).subscribe({
+        next: activity => {
+          this.activitySaving = false;
+          this.upsertActivity(this.activityPlan!.id, activity);
+          this.closeActivityForm();
+          this.showToastMessage('carePlans.activities.toast.created', 'success');
+        },
+        error: error => this.handleActivityError(error, 'carePlans.activities.toast.createError')
+      });
+      return;
+    }
+
+    if (!this.editingActivity) {
+      this.activitySaving = false;
+      return;
+    }
+
+    const updatePayload: UpdateCarePlanItemPayload = {
+      ...payload,
+      status: this.editingActivity.status
+    };
+
+    this.carePlanService.updateActivity(this.editingActivity.id, this.specialistId, updatePayload).subscribe({
+      next: activity => {
+        this.activitySaving = false;
+        this.upsertActivity(this.activityPlan!.id, activity);
+        this.closeActivityForm();
+        this.showToastMessage('carePlans.activities.toast.updated', 'success');
+      },
+      error: error => this.handleActivityError(error, 'carePlans.activities.toast.updateError')
+    });
+  }
+
+  cancelActivity(plan: CarePlan, activity: CarePlanItem, event?: Event): void {
+    event?.stopPropagation();
+    if (this.isPlanCompleted(plan)) {
+      this.showToastMessage('carePlans.toast.completedPlanLocked', 'error');
+      return;
+    }
+    if (this.isActivityCompleted(activity)) {
+      this.showToastMessage('carePlans.activities.toast.completedLocked', 'error');
+      return;
+    }
+
+    if (plan.status === 'CANCELLED') {
+      this.showToastMessage('carePlans.activities.toast.cancelError', 'error');
+      return;
+    }
+
+    if (!window.confirm(this.translate.instant('carePlans.activities.confirmCancel'))) {
+      return;
+    }
+
+    const payload: UpdateCarePlanItemPayload = {
+      status: 'CANCELLED'
+    };
+
+    this.carePlanService.updateActivity(activity.id, this.specialistId, payload).subscribe({
+      next: updatedActivity => {
+        this.upsertActivity(plan.id, updatedActivity);
+        this.showToastMessage('carePlans.activities.toast.cancelled', 'success');
+      },
+      error: error => this.showToastMessage(error?.error?.message || 'carePlans.activities.toast.updateError', 'error')
+    });
+  }
+
+  restoreActivity(plan: CarePlan, activity: CarePlanItem, event?: Event): void {
+    event?.stopPropagation();
+    if (this.isPlanCompleted(plan)) {
+      this.showToastMessage('carePlans.toast.completedPlanLocked', 'error');
+      return;
+    }
+
+    if (plan.status === 'CANCELLED') {
+      this.showToastMessage('carePlans.activities.toast.restoreError', 'error');
+      return;
+    }
+
+    const payload: UpdateCarePlanItemPayload = {
+      status: 'PENDING'
+    };
+
+    this.carePlanService.updateActivity(activity.id, this.specialistId, payload).subscribe({
+      next: updatedActivity => {
+        this.upsertActivity(plan.id, updatedActivity);
+        this.showToastMessage('carePlans.activities.toast.restored', 'success');
+      },
+      error: error => this.showToastMessage(error?.error?.message || 'carePlans.activities.toast.restoreError', 'error')
+    });
+  }
+
   openDeleteConfirm(plan: CarePlan, event?: Event): void {
     event?.stopPropagation();
+    if (this.isPlanCompleted(plan)) {
+      this.openArchiveConfirm(plan, event);
+      return;
+    }
+
     this.confirmDeletePlan = plan;
   }
 
   closeDeleteConfirm(): void {
     this.confirmDeletePlan = null;
+  }
+
+  openArchiveConfirm(plan: CarePlan, event?: Event): void {
+    event?.stopPropagation();
+    this.confirmArchivePlan = plan;
+  }
+
+  closeArchiveConfirm(): void {
+    this.confirmArchivePlan = null;
   }
 
   deleteSelectedPlan(): void {
@@ -462,13 +683,125 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
       }
     }
 
+    if (this.formMode === 'edit' && this.hasReviewChanged()) {
+      if (!this.form.reviewDate || !this.form.reviewStartTime || !this.form.reviewEndTime) {
+        this.formError = 'carePlans.validation.reviewScheduleRequired';
+        return false;
+      }
+
+      if (this.form.reviewDate < this.today) {
+        this.formError = 'carePlans.validation.reviewDateNotPast';
+        return false;
+      }
+
+      if (this.form.reviewEndTime <= this.form.reviewStartTime) {
+        this.formError = 'carePlans.validation.reviewEndAfterStart';
+        return false;
+      }
+    }
+
     return true;
+  }
+
+  archiveSelectedPlan(): void {
+    if (!this.confirmArchivePlan) {
+      return;
+    }
+
+    const planId = this.confirmArchivePlan.id;
+    this.carePlanService.archiveCarePlan(planId, this.specialistId).subscribe({
+      next: () => {
+        this.carePlans = this.carePlans.filter(plan => plan.id !== planId);
+        this.totalCarePlans = this.carePlans.length;
+        if (this.selectedPlan?.id === planId) {
+          this.selectedPlan = this.carePlans[0] || null;
+        }
+        this.closeArchiveConfirm();
+        this.showToastMessage('carePlans.toast.archived', 'success');
+      },
+      error: error => {
+        this.closeArchiveConfirm();
+        this.showToastMessage(error?.error?.message || 'carePlans.toast.archiveError', 'error');
+      }
+    });
+  }
+
+  isPlanCompleted(plan: CarePlan | null): boolean {
+    return String(plan?.status || '').toUpperCase() === 'COMPLETED';
+  }
+
+  canManagePlan(plan: CarePlan | null): boolean {
+    return !this.isPlanCompleted(plan);
+  }
+
+  isActivityCompleted(activity: CarePlanItem | null): boolean {
+    return String(activity?.status || '').toUpperCase() === 'COMPLETED';
+  }
+
+  canManageActivity(activity: CarePlanItem | null): boolean {
+    return !this.isActivityCompleted(activity);
+  }
+
+  private hasReviewChanged(): boolean {
+    return this.form.reviewDate !== this.editReviewSnapshot.reviewDate
+      || this.form.reviewStartTime !== this.editReviewSnapshot.reviewStartTime
+      || this.form.reviewEndTime !== this.editReviewSnapshot.reviewEndTime;
   }
 
   private handleSaveError(error: any, fallbackKey: string): void {
     this.saving = false;
-    this.formError = error?.error?.message || fallbackKey;
+    const toastKey = error?.status === 409 ? 'carePlans.toast.scheduleConflict' : fallbackKey;
+    this.formError = error?.error?.message || toastKey;
+    this.showToastMessage(toastKey, 'error');
+  }
+
+  private handleActivityError(error: any, fallbackKey: string): void {
+    this.activitySaving = false;
+    this.activityFormError = error?.error?.message || fallbackKey;
     this.showToastMessage(fallbackKey, 'error');
+  }
+
+  private validateActivityForm(): boolean {
+    this.activityFormError = '';
+
+    if (!this.activityForm.title.trim()) {
+      this.activityFormError = 'carePlans.activities.validation.titleRequired';
+      return false;
+    }
+
+    if (this.activityForm.dueDate && this.activityForm.dueDate < this.today) {
+      this.activityFormError = 'carePlans.activities.validation.dueDateNotPast';
+      return false;
+    }
+
+    return true;
+  }
+
+  private upsertActivity(planId: number, activity: CarePlanItem): void {
+    const nextProgress = activity.planProgressPercentage;
+
+    const updatePlan = (plan: CarePlan): CarePlan => {
+      if (plan.id !== planId) {
+        return plan;
+      }
+
+      const items = plan.items || [];
+      const exists = items.some(item => item.id === activity.id);
+      const nextItems = exists
+        ? items.map(item => item.id === activity.id ? activity : item)
+        : [...items, activity];
+
+      return {
+        ...plan,
+        progressPercentage: nextProgress ?? plan.progressPercentage,
+        items: nextItems
+      };
+    };
+
+    this.carePlans = this.carePlans.map(updatePlan);
+    if (this.selectedPlan?.id === planId) {
+      this.selectedPlan = updatePlan(this.selectedPlan);
+    }
   }
 
   private showToastMessage(messageKey: string, type: 'success' | 'error'): void {
@@ -546,6 +879,14 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
           dueDate: ''
         }
       ]
+    };
+  }
+
+  private emptyActivityForm(): ActivityForm {
+    return {
+      title: '',
+      description: '',
+      dueDate: ''
     };
   }
 }

@@ -69,4 +69,10 @@ public class CarePlan {
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
+
+    @Column(name = "archived_by_specialist", nullable = false)
+    private Boolean archivedBySpecialist = false;
+
+    @Column(name = "archived_date")
+    private LocalDateTime archivedDate;
 }

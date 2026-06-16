@@ -10,6 +10,8 @@ export interface SpecialistNotification {
   sessionId: number;
   specialistId: number;
   patientId?: number;
+  carePlanId?: number | null;
+  carePlanItemId?: number | null;
   description: string;
   type: number;
   status: number;
