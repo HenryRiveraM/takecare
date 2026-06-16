@@ -27,5 +27,7 @@ public class CarePlanResponseDTO {
     private LocalTime reviewEndTime;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private Boolean archivedBySpecialist;
+    private LocalDateTime archivedDate;
     private List<CarePlanItemResponseDTO> items;
 }

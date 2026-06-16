@@ -135,6 +135,31 @@ public class NotificationService {
     }
 
     @Transactional
+    public NotificationResponseDto createForCarePlan(Session session, Long carePlanId, String description) {
+        if (session == null || session.getPatient() == null) {
+            throw new RuntimeException("No se puede notificar un plan sin paciente asociado");
+        }
+
+        Notification notification = new Notification();
+        notification.setSession(session);
+        notification.setCarePlanId(carePlanId);
+        notification.setDescription(normalizeDescription(description));
+        notification.setType(TYPE_CARE_PLAN_CREATED);
+        notification.setStatus(STATUS_UNREAD);
+        notification.setCreatedDate(LocalDateTime.now());
+        notification.setReadDate(null);
+
+        Notification saved = notificationRepository.save(notification);
+        NotificationResponseDto response = toResponseDto(saved);
+
+        logger.info("Care plan notification created. notificationId={}, patientId={}, carePlanId={}, sessionId={}",
+                saved.getId(), response.getPatientId(), carePlanId, session.getId());
+
+        publishPatientNotificationEvent(response.getPatientId(), EVENT_NOTIFICATION_CREATED, response);
+        return response;
+    }
+
+    @Transactional
     public NotificationResponseDto createItemReminder(Integer patientId, Long carePlanId, Long itemId, String description) {
         Notification notification = new Notification();
         notification.setSession(null);
@@ -236,6 +261,8 @@ public class NotificationService {
         dto.setDescription(notification.getDescription());
         dto.setType(notification.getType());
         dto.setStatus(notification.getStatus());
+        dto.setCarePlanId(notification.getCarePlanId());
+        dto.setCarePlanItemId(notification.getCarePlanItemId());
         dto.setCreatedDate(notification.getCreatedDate());
         dto.setReadDate(notification.getReadDate());
 

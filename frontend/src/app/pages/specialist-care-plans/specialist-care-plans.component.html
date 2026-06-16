@@ -77,12 +77,23 @@
             </div>
 
             <div class="card-actions top-actions">
-              <button type="button" class="icon-button danger" (click)="openDeleteConfirm(plan, $event)" [title]="'carePlans.actions.delete' | translate">
-                <i class="fas fa-trash"></i>
+              <button
+                *ngIf="isPlanCompleted(plan); else editablePlanActions"
+                type="button"
+                class="detail-action archive-action"
+                (click)="openArchiveConfirm(plan, $event)"
+                [title]="'carePlans.actions.archive' | translate">
+                <i class="fas fa-box-archive"></i>
+                {{ 'carePlans.actions.hideFromView' | translate }}
               </button>
-              <button type="button" class="icon-button" (click)="openEditForm(plan)" [title]="'carePlans.actions.edit' | translate">
-                <i class="fas fa-pen"></i>
-              </button>
+              <ng-template #editablePlanActions>
+                <button type="button" class="icon-button danger" (click)="openDeleteConfirm(plan, $event)" [title]="'carePlans.actions.delete' | translate">
+                  <i class="fas fa-trash"></i>
+                </button>
+                <button type="button" class="icon-button" (click)="openEditForm(plan)" [title]="'carePlans.actions.edit' | translate">
+                  <i class="fas fa-pen"></i>
+                </button>
+              </ng-template>
             </div>
           </header>
 
@@ -134,16 +145,90 @@
           </section>
 
           <section class="detail-block activities-block">
-            <span>{{ 'carePlans.fields.activities' | translate }}</span>
-            <ul class="items-list" *ngIf="plan.items?.length; else noActivities">
-              <li *ngFor="let item of plan.items" [class.completed]="item.status === 'COMPLETED'">
+            <div class="activities-heading">
+              <span>{{ 'carePlans.fields.activities' | translate }}</span>
+              <button
+                *ngIf="canManagePlan(plan)"
+                type="button"
+                class="ghost-action compact"
+                (click)="openCreateActivityForm(plan)">
+                <i class="fas fa-plus"></i>
+                {{ 'carePlans.activities.new' | translate }}
+              </button>
+            </div>
+            <p class="plan-lock-message" *ngIf="isPlanCompleted(plan)">
+              <i class="fas fa-lock"></i>
+              {{ 'carePlans.messages.completedLocked' | translate }}
+            </p>
+            <ul class="items-list" *ngIf="activeActivities(plan).length; else noActivities">
+              <li
+                *ngFor="let item of activeActivities(plan)"
+                [class.completed]="item.status === 'COMPLETED'">
                 <i [class]="item.status === 'COMPLETED' ? 'fas fa-check-circle' : 'far fa-circle'"></i>
                 <div>
                   <strong>{{ item.title }}</strong>
                   <p>{{ item.description || ('carePlans.notAvailable' | translate) }}</p>
+                  <small *ngIf="item.dueDate">
+                    {{ 'carePlans.fields.dueDate' | translate }}:
+                    {{ asLocalDate(item.dueDate) | date:'mediumDate' }}
+                  </small>
+                  <span class="activity-status-badge completed-badge" *ngIf="isActivityCompleted(item)">
+                    <i class="fas fa-check"></i>
+                    {{ 'carePlans.activities.completedByPatient' | translate }}
+                  </span>
+                  <small *ngIf="isActivityCompleted(item) && item.completedDate">
+                    {{ 'carePlans.fields.completedDate' | translate }}:
+                    {{ item.completedDate | date:'mediumDate' }}
+                  </small>
+                </div>
+                <div class="activity-actions" *ngIf="canManagePlan(plan) && canManageActivity(item)">
+                  <button
+                    type="button"
+                    class="icon-button"
+                    (click)="openEditActivityForm(plan, item)"
+                    [title]="'carePlans.activities.edit' | translate">
+                    <i class="fas fa-pen"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="icon-button danger"
+                    (click)="cancelActivity(plan, item, $event)"
+                    [disabled]="item.status === 'CANCELLED'"
+                    [title]="'carePlans.activities.cancel' | translate">
+                    <i class="fas fa-ban"></i>
+                  </button>
                 </div>
               </li>
             </ul>
+
+            <div class="cancelled-activities" *ngIf="cancelledActivities(plan).length">
+              <button type="button" class="ghost-action compact" (click)="showCancelledActivities = !showCancelledActivities">
+                <i [class]="showCancelledActivities ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+                {{ 'carePlans.activities.viewCancelled' | translate }}
+              </button>
+
+              <section class="cancelled-panel" *ngIf="showCancelledActivities">
+                <h3>{{ 'carePlans.activities.cancelledTitle' | translate }}</h3>
+                <ul class="items-list cancelled-list">
+                  <li *ngFor="let item of cancelledActivities(plan)" class="cancelled">
+                    <i class="fas fa-ban"></i>
+                    <div>
+                      <strong>{{ item.title }}</strong>
+                      <p>{{ item.description || ('carePlans.notAvailable' | translate) }}</p>
+                    </div>
+                    <div class="activity-actions" *ngIf="canManagePlan(plan)">
+                      <button
+                        type="button"
+                        class="ghost-action compact"
+                        (click)="restoreActivity(plan, item, $event)">
+                        <i class="fas fa-rotate-left"></i>
+                        {{ 'carePlans.activities.restore' | translate }}
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+              </section>
+            </div>
           </section>
         </article>
 
@@ -197,12 +282,6 @@
                 <i class="fas fa-eye"></i>
                 {{ 'carePlans.actions.viewDetails' | translate }}
               </button>
-              <button type="button" class="icon-button danger" (click)="openDeleteConfirm(plan, $event)" [title]="'carePlans.actions.delete' | translate">
-                <i class="fas fa-trash"></i>
-              </button>
-              <button type="button" class="icon-button" (click)="openEditForm(plan); $event.stopPropagation()" [title]="'carePlans.actions.edit' | translate">
-                <i class="fas fa-pen"></i>
-              </button>
             </div>
           </article>
         </div>
@@ -220,7 +299,7 @@
   </ng-template>
 
   <ng-template #noActivities>
-    <p class="muted-block">{{ 'carePlans.notAvailable' | translate }}</p>
+    <p class="muted-block">{{ 'carePlans.activities.empty' | translate }}</p>
   </ng-template>
 
   <div class="modal-backdrop" *ngIf="showForm" (click)="closeForm()"></div>
@@ -269,24 +348,29 @@
       </label>
 
       <div class="form-grid">
-        <label *ngIf="formMode === 'create'">
+        <label>
           <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>
-          <input type="date" name="reviewDate" [(ngModel)]="form.reviewDate" [min]="minReviewDate" required>
+          <input
+            type="date"
+            name="reviewDate"
+            [(ngModel)]="form.reviewDate"
+            [min]="formMode === 'create' ? minReviewDate : null"
+            [required]="formMode === 'create'">
         </label>
 
-        <label *ngIf="formMode === 'create'">
+        <label>
           <span>{{ 'carePlans.fields.dayOfWeek' | translate }}</span>
           <input [value]="getReviewDayLabel() | translate" readonly>
         </label>
 
-        <label *ngIf="formMode === 'create'">
+        <label>
           <span>{{ 'carePlans.fields.reviewStartTime' | translate }}</span>
-          <input type="time" name="reviewStartTime" [(ngModel)]="form.reviewStartTime" required>
+          <input type="time" name="reviewStartTime" [(ngModel)]="form.reviewStartTime" [required]="formMode === 'create'">
         </label>
 
-        <label *ngIf="formMode === 'create'">
+        <label>
           <span>{{ 'carePlans.fields.reviewEndTime' | translate }}</span>
-          <input type="time" name="reviewEndTime" [(ngModel)]="form.reviewEndTime" required>
+          <input type="time" name="reviewEndTime" [(ngModel)]="form.reviewEndTime" [required]="formMode === 'create'">
         </label>
 
         <label *ngIf="formMode === 'edit'">
@@ -376,6 +460,60 @@
     </form>
   </section>
 
+  <div class="modal-backdrop" *ngIf="showActivityForm" (click)="closeActivityForm()"></div>
+  <section class="modal compact-modal" *ngIf="showActivityForm" role="dialog" aria-modal="true">
+    <header class="modal-header">
+      <div class="modal-title-group">
+        <div class="modal-icon">
+          <i class="fas fa-list-check"></i>
+        </div>
+        <div>
+          <h2>
+            {{ (activityFormMode === 'create' ? 'carePlans.activities.create' : 'carePlans.activities.edit') | translate }}
+          </h2>
+          <p>{{ 'carePlans.activities.subtitle' | translate }}</p>
+        </div>
+      </div>
+      <button type="button" class="icon-button" (click)="closeActivityForm()" [title]="'carePlans.actions.cancel' | translate">
+        <i class="fas fa-times"></i>
+      </button>
+    </header>
+
+    <form class="plan-form" (ngSubmit)="saveActivity()" #activityNgForm="ngForm">
+      <label>
+        <span>{{ 'carePlans.fields.activityTitle' | translate }}</span>
+        <input name="activityTitle" [(ngModel)]="activityForm.title" [maxlength]="limits.itemTitle" required>
+        <small class="char-counter">{{ activityForm.title.length }}/{{ limits.itemTitle }}</small>
+      </label>
+
+      <label>
+        <span>{{ 'carePlans.fields.activityDescription' | translate }}</span>
+        <textarea name="activityDescription" [(ngModel)]="activityForm.description" rows="3" [maxlength]="limits.itemDescription"></textarea>
+        <small class="char-counter">{{ activityForm.description.length }}/{{ limits.itemDescription }}</small>
+      </label>
+
+      <label>
+        <span>{{ 'carePlans.fields.dueDate' | translate }}</span>
+        <input type="date" name="activityDueDate" [(ngModel)]="activityForm.dueDate" [min]="today">
+      </label>
+
+      <div class="form-error" *ngIf="activityFormError">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ activityFormError | translate }}
+      </div>
+
+      <footer class="modal-actions">
+        <button type="button" class="ghost-action" (click)="closeActivityForm()">
+          {{ 'carePlans.actions.cancel' | translate }}
+        </button>
+        <button type="submit" class="primary-action" [disabled]="activitySaving">
+          <i class="fas" [class.fa-spinner]="activitySaving" [class.fa-spin]="activitySaving" [class.fa-save]="!activitySaving"></i>
+          {{ (activitySaving ? 'carePlans.actions.saving' : 'carePlans.actions.save') | translate }}
+        </button>
+      </footer>
+    </form>
+  </section>
+
   <div class="modal-backdrop" *ngIf="confirmDeletePlan" (click)="closeDeleteConfirm()"></div>
   <section class="confirm-modal" *ngIf="confirmDeletePlan" role="dialog" aria-modal="true">
     <div class="confirm-icon">
@@ -391,6 +529,24 @@
       <button type="button" class="danger-action" (click)="deleteSelectedPlan()">
         <i class="fas fa-trash"></i>
         {{ 'carePlans.actions.delete' | translate }}
+      </button>
+    </footer>
+  </section>
+
+  <div class="modal-backdrop" *ngIf="confirmArchivePlan" (click)="closeArchiveConfirm()"></div>
+  <section class="confirm-modal" *ngIf="confirmArchivePlan" role="dialog" aria-modal="true">
+    <div class="confirm-icon archive-icon">
+      <i class="fas fa-box-archive"></i>
+    </div>
+    <h2>{{ 'carePlans.archive.title' | translate }}</h2>
+    <p>{{ 'carePlans.archive.message' | translate }}</p>
+    <footer class="modal-actions">
+      <button type="button" class="ghost-action" (click)="closeArchiveConfirm()">
+        {{ 'carePlans.actions.cancel' | translate }}
+      </button>
+      <button type="button" class="primary-action" (click)="archiveSelectedPlan()">
+        <i class="fas fa-box-archive"></i>
+        {{ 'carePlans.actions.archive' | translate }}
       </button>
     </footer>
   </section>

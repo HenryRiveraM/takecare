@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 import { CarePlan, CarePlanItem, CarePlanService, CarePlanStatus } from '../../services/care-plan.service';
@@ -21,6 +22,8 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
   patientId = 0;
   carePlans: CarePlan[] = [];
   selectedPlan: CarePlan | null = null;
+  selectedPlanId: number | null = null;
+  highlightedPlanId: number | null = null;
   totalCarePlans = 0;
   loading = false;
   updatingItemId: number | null = null;
@@ -30,16 +33,30 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
   private toastTimer: any;
+  private highlightTimer: any;
+  private queryParamsSubscription?: Subscription;
 
   constructor(
     public sidebarService: SidebarService,
     private authService: AuthService,
-    private carePlanService: CarePlanService
+    private carePlanService: CarePlanService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     document.body.classList.add('dashboard-active');
     this.patientId = Number(this.authService.getUser()?.id || 0);
+    this.queryParamsSubscription = this.route.queryParamMap.subscribe(params => {
+      this.highlightedPlanId = Number(params.get('highlightPlanId') || 0) || null;
+      if (this.highlightedPlanId && this.carePlans.length) {
+        const highlightedPlan = this.carePlans.find(plan => plan.id === this.highlightedPlanId);
+        if (highlightedPlan) {
+          this.selectPlan(highlightedPlan);
+        }
+        this.applyHighlight();
+      }
+    });
 
     if (!this.patientId) {
       this.errorMsg = 'carePlans.errors.noPatient';
@@ -52,36 +69,40 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     document.body.classList.remove('dashboard-active');
     if (this.toastTimer) clearTimeout(this.toastTimer);
+    if (this.highlightTimer) clearTimeout(this.highlightTimer);
+    this.queryParamsSubscription?.unsubscribe();
   }
 
   selectPlan(plan: CarePlan): void {
-    this.carePlanService.getCarePlanById(plan.id, undefined, this.patientId).subscribe({
-      next: response => {
-        this.selectedPlan = response;
-        this.carePlans = this.carePlans.map(item => item.id === response.id ? response : item);
-      },
-      error: error => this.showToastMessage(error?.error?.message || 'carePlans.toast.detailError', 'error')
-    });
+    this.selectedPlan = plan;
+    this.selectedPlanId = plan.id;
+  }
+
+  selectPlanById(planId: number | string | null): void {
+    const nextPlanId = Number(planId || 0);
+    const plan = this.carePlans.find(item => item.id === nextPlanId);
+    if (plan) {
+      this.selectPlan(plan);
+    }
   }
 
   toggleItem(item: CarePlanItem): void {
-    if (!this.selectedPlan || this.updatingItemId) {
+    if (!this.selectedPlan || this.updatingItemId || !this.canModifySelectedPlan()) {
       return;
     }
 
     this.updatingItemId = item.id;
     const request = item.status === 'COMPLETED'
-      ? this.carePlanService.markCarePlanItemPending(item.id, this.patientId)
-      : this.carePlanService.completeCarePlanItem(item.id, this.patientId);
+      ? this.carePlanService.markActivityPending(item.id, this.patientId)
+      : this.carePlanService.completeActivity(item.id, this.patientId);
 
     request.subscribe({
-      next: plan => {
+      next: response => {
         this.updatingItemId = null;
-        this.selectedPlan = plan;
-        this.carePlans = this.carePlans.map(existing => existing.id === plan.id ? plan : existing);
+        this.applyActivityProgress(item.id, response.status, response.completedDate, response.planProgressPercentage);
         const message = item.status === 'COMPLETED'
-          ? 'carePlans.toast.itemPending'
-          : 'carePlans.toast.itemCompleted';
+          ? 'carePlans.activities.toast.pending'
+          : 'carePlans.activities.toast.completed';
         this.showToastMessage(message, 'success');
       },
       error: error => {
@@ -105,6 +126,28 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
     return value ? new Date(`${value}T00:00:00`) : null;
   }
 
+  activeActivities(plan: CarePlan | null): CarePlanItem[] {
+    return (plan?.items || []).filter(item => item.status === 'PENDING' || item.status === 'COMPLETED');
+  }
+
+  getSpecialistName(plan: CarePlan | null): string {
+    return plan?.specialistName || 'carePlans.notAvailable';
+  }
+
+  canModifySelectedPlan(): boolean {
+    return String(this.selectedPlan?.status || '').toUpperCase() === 'ACTIVE';
+  }
+
+  getPlanLockMessage(): string {
+    const status = String(this.selectedPlan?.status || '').toUpperCase();
+    const messages: Record<string, string> = {
+      PAUSED: 'carePlans.followUpLocked.paused',
+      COMPLETED: 'carePlans.followUpLocked.completed',
+      CANCELLED: 'carePlans.followUpLocked.cancelled'
+    };
+    return messages[status] || '';
+  }
+
   private loadCarePlans(): void {
     this.loading = true;
     this.errorMsg = '';
@@ -115,7 +158,12 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
         this.totalCarePlans = response.totalCarePlans || 0;
         this.loading = false;
         if (this.carePlans.length) {
-          this.selectPlan(this.carePlans[0]);
+          const highlightedPlan = this.highlightedPlanId
+            ? this.carePlans.find(plan => plan.id === this.highlightedPlanId)
+            : null;
+          const activePlan = this.carePlans.find(plan => String(plan.status).toUpperCase() === 'ACTIVE');
+          this.selectPlan(highlightedPlan || activePlan || this.carePlans[0]);
+          this.applyHighlight();
         }
       },
       error: error => {
@@ -125,11 +173,57 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
     });
   }
 
+  private applyActivityProgress(
+    activityId: number,
+    status: CarePlanItem['status'],
+    completedDate: string | null,
+    progressPercentage: number
+  ): void {
+    if (!this.selectedPlan) {
+      return;
+    }
+
+    const updatedPlan = {
+      ...this.selectedPlan,
+      progressPercentage,
+      items: (this.selectedPlan.items || []).map(item =>
+        item.id === activityId ? { ...item, status, completedDate } : item
+      )
+    };
+
+    this.selectedPlan = updatedPlan;
+    this.carePlans = this.carePlans.map(plan =>
+      plan.id === updatedPlan.id ? updatedPlan : plan
+    );
+  }
+
   private showToastMessage(messageKey: string, type: 'success' | 'error'): void {
     if (this.toastTimer) clearTimeout(this.toastTimer);
     this.toastMessage = messageKey;
     this.toastType = type;
     this.showToast = true;
     this.toastTimer = setTimeout(() => { this.showToast = false; }, 3000);
+  }
+
+  private applyHighlight(): void {
+    if (!this.highlightedPlanId) {
+      return;
+    }
+
+    setTimeout(() => {
+      const element = document.getElementById(`patient-care-plan-${this.highlightedPlanId}`);
+      element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+
+    if (this.highlightTimer) clearTimeout(this.highlightTimer);
+    this.highlightTimer = setTimeout(() => {
+      this.highlightedPlanId = null;
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { highlightPlanId: null },
+        queryParamsHandling: 'merge',
+        replaceUrl: true
+      });
+    }, 3000);
   }
 }

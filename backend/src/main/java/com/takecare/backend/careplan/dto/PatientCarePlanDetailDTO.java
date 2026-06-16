@@ -13,9 +13,12 @@ import java.util.List;
 public class PatientCarePlanDetailDTO {
 
     private Long id;
+    private Integer specialistId;
+    private String specialistName;
     private String title;
     private String therapeuticObjectives;
     private String generalRecommendations;
+    private String professionalObservations;
     private String status;
     private Integer progressPercentage;
     private LocalDate reviewDate;

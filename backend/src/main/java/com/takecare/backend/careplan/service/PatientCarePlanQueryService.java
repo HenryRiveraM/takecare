@@ -9,6 +9,7 @@ import com.takecare.backend.careplan.model.CarePlanItem;
 import com.takecare.backend.careplan.model.CarePlanStatus;
 import com.takecare.backend.careplan.repository.CarePlanItemRepository;
 import com.takecare.backend.careplan.repository.CarePlanRepository;
+import com.takecare.backend.user.model.Specialist;
 import com.takecare.backend.user.repository.PatientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,9 +86,12 @@ public class PatientCarePlanQueryService {
     private PatientCarePlanDetailDTO toDetailDTO(CarePlan carePlan) {
         PatientCarePlanDetailDTO dto = new PatientCarePlanDetailDTO();
         dto.setId(carePlan.getId());
+        dto.setSpecialistId(carePlan.getSpecialist() != null ? carePlan.getSpecialist().getId() : null);
+        dto.setSpecialistName(buildSpecialistName(carePlan.getSpecialist()));
         dto.setTitle(carePlan.getTitle());
         dto.setTherapeuticObjectives(carePlan.getTherapeuticObjectives());
         dto.setGeneralRecommendations(carePlan.getGeneralRecommendations());
+        dto.setProfessionalObservations(carePlan.getProfessionalObservations());
         dto.setStatus(carePlan.getStatus() != null ? carePlan.getStatus().name() : null);
         dto.setProgressPercentage(carePlan.getProgressPercentage());
         dto.setCreatedDate(carePlan.getCreatedDate());
@@ -110,8 +114,12 @@ public class PatientCarePlanQueryService {
     private PatientCarePlanSummaryDTO toSummaryDTO(CarePlan carePlan) {
         PatientCarePlanSummaryDTO dto = new PatientCarePlanSummaryDTO();
         dto.setId(carePlan.getId());
+        dto.setSpecialistId(carePlan.getSpecialist() != null ? carePlan.getSpecialist().getId() : null);
+        dto.setSpecialistName(buildSpecialistName(carePlan.getSpecialist()));
         dto.setTitle(carePlan.getTitle());
+        dto.setTherapeuticObjectives(carePlan.getTherapeuticObjectives());
         dto.setGeneralRecommendations(carePlan.getGeneralRecommendations());
+        dto.setProfessionalObservations(carePlan.getProfessionalObservations());
         dto.setStatus(carePlan.getStatus() != null ? carePlan.getStatus().name() : null);
         dto.setProgressPercentage(carePlan.getProgressPercentage());
         dto.setCreatedDate(carePlan.getCreatedDate());
@@ -125,12 +133,16 @@ public class PatientCarePlanQueryService {
             dto.setReviewDate(carePlan.getReviewDate());
         }
 
+        dto.setItems(carePlanItemRepository.findByCarePlanIdOrderByCreatedDateAsc(carePlan.getId())
+                .stream()
+                .map(this::toItemDTO)
+                .toList());
         return dto;
     }
 
     private PatientCarePlanListResponseDTO toListResponseDTO(List<CarePlan> plans) {
         PatientCarePlanListResponseDTO response = new PatientCarePlanListResponseDTO();
-        response.setTotal(plans.size());
+        response.setTotalCarePlans(plans.size());
         response.setCarePlans(plans.stream().map(this::toSummaryDTO).toList());
         return response;
     }
@@ -147,5 +159,17 @@ public class PatientCarePlanQueryService {
         dto.setCreatedDate(item.getCreatedDate());
         dto.setUpdatedDate(item.getUpdatedDate());
         return dto;
+    }
+
+    private String buildSpecialistName(Specialist specialist) {
+        if (specialist == null) {
+            return null;
+        }
+
+        String names = specialist.getNames() != null ? specialist.getNames().trim() : "";
+        String firstLastname = specialist.getFirstLastname() != null ? specialist.getFirstLastname().trim() : "";
+        String secondLastname = specialist.getSecondLastname() != null ? specialist.getSecondLastname().trim() : "";
+        String fullName = (names + " " + firstLastname + " " + secondLastname).trim().replaceAll("\\s+", " ");
+        return fullName.isBlank() ? null : fullName;
     }
 }

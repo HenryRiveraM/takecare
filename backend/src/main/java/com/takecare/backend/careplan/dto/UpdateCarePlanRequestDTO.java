@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -28,6 +29,10 @@ public class UpdateCarePlanRequestDTO {
     private Integer progressPercentage;
 
     private LocalDate reviewDate;
+
+    private LocalTime reviewStartTime;
+
+    private LocalTime reviewEndTime;
 
     private Integer reviewScheduleId;
 }

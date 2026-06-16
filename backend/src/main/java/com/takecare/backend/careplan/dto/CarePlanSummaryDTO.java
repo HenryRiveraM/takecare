@@ -22,4 +22,6 @@ public class CarePlanSummaryDTO {
     private LocalTime reviewStartTime;
     private LocalTime reviewEndTime;
     private LocalDateTime createdDate;
+    private Boolean archivedBySpecialist;
+    private LocalDateTime archivedDate;
 }

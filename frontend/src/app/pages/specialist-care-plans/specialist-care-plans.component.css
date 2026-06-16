@@ -399,6 +399,12 @@
   cursor: pointer;
 }
 
+.archive-action {
+  background: #fff1f3;
+  color: #8a3f4a;
+  border: 1px solid #f6c8d0;
+}
+
 .icon-button {
   display: inline-flex;
   align-items: center;
@@ -458,6 +464,27 @@
   gap: 12px;
 }
 
+.plan-lock-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid #f6c8d0;
+  border-radius: 12px;
+  background: #fff7f8;
+  color: #8a3f4a;
+  font-weight: 800;
+}
+
+.activities-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .muted-block {
   margin: 0;
   color: #97a7a3;
@@ -474,8 +501,9 @@
 
 .items-list li {
   display: grid;
-  grid-template-columns: 22px minmax(0, 1fr);
+  grid-template-columns: 22px minmax(0, 1fr) auto;
   gap: 10px;
+  align-items: start;
   padding: 12px;
   border-radius: 12px;
   background: #f8faf9;
@@ -483,6 +511,11 @@
 
 .items-list li.completed {
   background: #eef8f2;
+}
+
+.items-list li.cancelled {
+  background: #f8eeee;
+  opacity: 0.78;
 }
 
 .items-list i {
@@ -500,6 +533,73 @@
   margin: 3px 0 0;
   color: #6d817c;
   font-size: 0.84rem;
+}
+
+.items-list small {
+  display: block;
+  margin-top: 5px;
+  color: #7a8f8a;
+  font-weight: 700;
+}
+
+.activity-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin-top: 8px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 900;
+}
+
+.completed-badge {
+  background: #e7f8ef;
+  color: #23754c;
+}
+
+.completed-badge i {
+  color: #23754c;
+}
+
+.activity-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.activity-actions .icon-button {
+  width: 34px;
+  height: 34px;
+}
+
+.cancelled-activities {
+  display: grid;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.cancelled-panel {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #f1d5d5;
+  border-radius: 12px;
+  background: #fff7f7;
+}
+
+.cancelled-panel h3 {
+  margin: 0;
+  color: #7f1d1d;
+  font-size: 0.95rem;
+}
+
+.cancelled-list {
+  margin-top: 0;
+}
+
+.cancelled-list .ghost-action {
+  white-space: nowrap;
 }
 
 .dates-row div {
@@ -526,6 +626,10 @@
   border-radius: 18px;
   background: white;
   box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+}
+
+.compact-modal {
+  max-width: 560px;
 }
 
 .modal-header {
@@ -560,6 +664,11 @@
   background: #e9f4ef;
   color: #3a5c53;
   font-size: 1.1rem;
+}
+
+.confirm-icon.archive-icon {
+  background: #fff1f3;
+  color: #8a3f4a;
 }
 
 .modal-header h2 {

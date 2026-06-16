@@ -14,6 +14,12 @@ export interface CarePlanItemPayload {
   dueDate?: string | null;
 }
 
+export interface CarePlanActivityPayload {
+  title: string;
+  description?: string | null;
+  dueDate?: string | null;
+}
+
 export interface CreateCarePlanPayload {
   title: string;
   therapeuticObjectives: string;
@@ -32,6 +38,8 @@ export interface UpdateCarePlanPayload {
   professionalObservations?: string | null;
   status?: CarePlanStatus;
   reviewDate?: string | null;
+  reviewStartTime?: string | null;
+  reviewEndTime?: string | null;
   reviewScheduleId?: number | null;
 }
 
@@ -45,6 +53,7 @@ export interface UpdateCarePlanItemPayload {
 
 export interface CarePlanItem {
   id: number;
+  planId?: number;
   title: string;
   description?: string | null;
   itemType: CarePlanItemType;
@@ -53,11 +62,13 @@ export interface CarePlanItem {
   completedDate: string | null;
   createdDate?: string;
   updatedDate?: string | null;
+  planProgressPercentage?: number | null;
 }
 
 export interface CarePlan {
   id: number;
   specialistId: number;
+  specialistName?: string | null;
   patientId: number;
   patientName?: string | null;
   title: string;
@@ -72,12 +83,31 @@ export interface CarePlan {
   reviewEndTime?: string | null;
   createdDate: string;
   updatedDate?: string | null;
+  archivedBySpecialist?: boolean;
+  archivedDate?: string | null;
   items?: CarePlanItem[];
 }
 
 export interface CarePlanListResponse {
   totalCarePlans: number;
   carePlans: CarePlan[];
+}
+
+export interface CarePlanActivityListResponse {
+  totalActivities: number;
+  activities: CarePlanItem[];
+}
+
+export interface CarePlanActivityProgressResponse {
+  activityId: number;
+  status: CarePlanItemStatus;
+  completedDate: string | null;
+  planProgressPercentage: number;
+}
+
+export interface ArchiveCarePlanResponse {
+  success: boolean;
+  message: string;
 }
 
 @Injectable({
@@ -113,7 +143,10 @@ export class CarePlanService {
   }
 
   getPatientCarePlans(patientId: number): Observable<CarePlanListResponse> {
-    return this.http.get<CarePlanListResponse>(`${this.baseUrl}/api/v1/patients/${patientId}/care-plans`);
+    return this.http.get<CarePlanListResponse>(
+      `${this.baseUrl}/api/v1/patients/${patientId}/care-plans`,
+      { headers: { 'X-Patient-Id': String(patientId) } }
+    );
   }
 
   getCarePlanById(planId: number, specialistId?: number, patientId?: number): Observable<CarePlan> {
@@ -138,6 +171,15 @@ export class CarePlanService {
     return this.http.delete<void>(`${this.baseUrl}/api/v1/care-plans/${planId}`, { params });
   }
 
+  archiveCarePlan(planId: number, specialistId: number): Observable<ArchiveCarePlanResponse> {
+    const params = new HttpParams().set('specialistId', specialistId);
+    return this.http.patch<ArchiveCarePlanResponse>(
+      `${this.baseUrl}/api/v1/care-plans/${planId}/archive`,
+      {},
+      { params }
+    );
+  }
+
   addCarePlanItem(
     planId: number,
     specialistId: number,
@@ -145,6 +187,23 @@ export class CarePlanService {
   ): Observable<CarePlanItem> {
     const params = new HttpParams().set('specialistId', specialistId);
     return this.http.post<CarePlanItem>(`${this.baseUrl}/api/v1/care-plans/${planId}/items`, payload, { params });
+  }
+
+  createActivity(
+    planId: number,
+    specialistId: number,
+    payload: CarePlanActivityPayload
+  ): Observable<CarePlanItem> {
+    const params = new HttpParams().set('specialistId', specialistId);
+    return this.http.post<CarePlanItem>(`${this.baseUrl}/api/v1/care-plans/${planId}/activities`, payload, { params });
+  }
+
+  getActivities(planId: number, specialistId?: number, patientId?: number): Observable<CarePlanActivityListResponse> {
+    let params = new HttpParams();
+    if (specialistId) params = params.set('specialistId', specialistId);
+    if (patientId) params = params.set('patientId', patientId);
+
+    return this.http.get<CarePlanActivityListResponse>(`${this.baseUrl}/api/v1/care-plans/${planId}/activities`, { params });
   }
 
   updateCarePlanItem(
@@ -156,6 +215,15 @@ export class CarePlanService {
     return this.http.patch<CarePlanItem>(`${this.baseUrl}/api/v1/care-plan-items/${itemId}`, payload, { params });
   }
 
+  updateActivity(
+    activityId: number,
+    specialistId: number,
+    payload: UpdateCarePlanItemPayload
+  ): Observable<CarePlanItem> {
+    const params = new HttpParams().set('specialistId', specialistId);
+    return this.http.patch<CarePlanItem>(`${this.baseUrl}/api/v1/care-plan-activities/${activityId}`, payload, { params });
+  }
+
   completeCarePlanItem(itemId: number, patientId: number): Observable<CarePlan> {
     const params = new HttpParams().set('patientId', patientId);
     return this.http.patch<CarePlan>(`${this.baseUrl}/api/v1/care-plan-items/${itemId}/complete`, {}, { params });
@@ -164,5 +232,23 @@ export class CarePlanService {
   markCarePlanItemPending(itemId: number, patientId: number): Observable<CarePlan> {
     const params = new HttpParams().set('patientId', patientId);
     return this.http.patch<CarePlan>(`${this.baseUrl}/api/v1/care-plan-items/${itemId}/pending`, {}, { params });
+  }
+
+  completeActivity(activityId: number, patientId: number): Observable<CarePlanActivityProgressResponse> {
+    const params = new HttpParams().set('patientId', patientId);
+    return this.http.patch<CarePlanActivityProgressResponse>(
+      `${this.baseUrl}/api/v1/care-plan-activities/${activityId}/complete`,
+      {},
+      { params }
+    );
+  }
+
+  markActivityPending(activityId: number, patientId: number): Observable<CarePlanActivityProgressResponse> {
+    const params = new HttpParams().set('patientId', patientId);
+    return this.http.patch<CarePlanActivityProgressResponse>(
+      `${this.baseUrl}/api/v1/care-plan-activities/${activityId}/pending`,
+      {},
+      { params }
+    );
   }
 }
