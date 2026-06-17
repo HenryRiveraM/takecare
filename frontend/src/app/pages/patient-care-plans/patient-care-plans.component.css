@@ -461,6 +461,17 @@
   z-index: 1500;
 }
 
+.dashboard-wrapper {
+  margin: 0 24px 20px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-wrapper {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}
+
 @media (max-width: 980px) {
   .detail-grid {
     grid-template-columns: 1fr;

@@ -107,6 +107,11 @@
             </div>
           </section>
 
+          <app-care-plan-progress-dashboard
+            [plan]="plan"
+            [patientId]="plan.patientId">
+          </app-care-plan-progress-dashboard>
+
           <section class="full-content-grid">
             <div class="detail-block">
               <span>{{ 'carePlans.fields.therapeuticObjectives' | translate }}</span>

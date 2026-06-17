@@ -9,11 +9,12 @@ import { AuthService } from '../../services/auth.service';
 import { CarePlan, CarePlanItem, CarePlanService, CarePlanStatus } from '../../services/care-plan.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { CarePlanProgressDashboardComponent } from '../../shared/care-plan-progress-dashboard/care-plan-progress-dashboard.component';
 
 @Component({
   selector: 'app-patient-care-plans',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent],
+  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent, CarePlanProgressDashboardComponent],
   templateUrl: './patient-care-plans.component.html',
   styleUrls: ['./patient-care-plans.component.css']
 })
@@ -148,7 +149,7 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
     return messages[status] || '';
   }
 
-  private loadCarePlans(): void {
+  /*private loadCarePlans(): void {
     this.loading = true;
     this.errorMsg = '';
 
@@ -171,7 +172,65 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     });
-  }
+  }*/
+
+  private loadCarePlans(): void {
+    this.loading = true;
+    this.errorMsg = '';
+
+    // TODO: descomentar cuando puedas probar contra el backend real
+    // this.carePlanService.getPatientCarePlans(this.patientId).subscribe({
+    //   next: response => {
+    //     this.carePlans = response.carePlans || [];
+    //     this.totalCarePlans = response.totalCarePlans || 0;
+    //     this.loading = false;
+    //     if (this.carePlans.length) {
+    //       const highlightedPlan = this.highlightedPlanId
+    //         ? this.carePlans.find(plan => plan.id === this.highlightedPlanId)
+    //         : null;
+    //       const activePlan = this.carePlans.find(plan => String(plan.status).toUpperCase() === 'ACTIVE');
+  //       this.selectPlan(highlightedPlan || activePlan || this.carePlans[0]);
+  //       this.applyHighlight();
+  //     }
+  //   },
+  //   error: error => {
+  //     this.errorMsg = error?.error?.message || 'carePlans.errors.load';
+  //     this.loading = false;
+  //   }
+  // });
+
+  // 🔧 MOCK TEMPORAL — quitar cuando puedas probar contra el backend real
+  setTimeout(() => {
+    const mockPlan: CarePlan = {
+      id: 1,
+      specialistId: 100,
+      specialistName: 'Dra. María Sánchez',
+      patientId: this.patientId,
+      patientName: 'Juan Pérez',
+      title: 'Plan de manejo de ansiedad',
+      therapeuticObjectives: 'Reducir episodios de ansiedad mediante técnicas de respiración y mindfulness.',
+      generalRecommendations: 'Practicar ejercicios de respiración diariamente y mantener rutina de sueño.',
+      professionalObservations: 'Buena adherencia al plan en las primeras semanas.',
+      status: 'ACTIVE',
+      progressPercentage: 50,
+      reviewDate: '2026-06-25',
+      reviewStartTime: '10:00:00',
+      reviewEndTime: '11:00:00',
+      createdDate: '2026-05-01T10:00:00',
+      items: [
+        { id: 1, title: 'Meditar 10 minutos diarios', description: 'Sesión guiada por la mañana', itemType: 'ACTIVITY', status: 'COMPLETED', dueDate: '2026-06-01', completedDate: '2026-06-01' },
+        { id: 2, title: 'Registrar diario emocional', description: 'Anotar estado de ánimo cada noche', itemType: 'ACTIVITY', status: 'PENDING', dueDate: '2026-06-01', completedDate: null },
+        { id: 3, title: 'Ejercicio de respiración 4-7-8', description: 'Practicar antes de dormir', itemType: 'ACTIVITY', status: 'PENDING', dueDate: '2026-06-20', completedDate: null },
+        { id: 4, title: 'Identificar lista de triggers', description: 'Situaciones que generan ansiedad', itemType: 'OBJECTIVE', status: 'COMPLETED', dueDate: '2026-06-10', completedDate: '2026-06-09' }
+      ]
+    };
+
+    this.carePlans = [mockPlan];
+    this.totalCarePlans = 1;
+    this.loading = false;
+    this.selectPlan(mockPlan);
+  }, 500);
+}
 
   private applyActivityProgress(
     activityId: number,

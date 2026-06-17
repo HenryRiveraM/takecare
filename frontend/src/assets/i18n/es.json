@@ -1224,6 +1224,20 @@
       "noSpecialist": "No se pudo identificar al especialista actual.",
       "noPatient": "No se pudo identificar al paciente seleccionado.",
       "load": "No se pudieron cargar los planes de atencion."
+    },
+    "dashboard": {
+      "title": "Panel de progreso",
+      "rangeLabel": "Promedio de los últimos {{days}} días",
+      "loadingEmotional": "Cargando estado emocional...",
+      "mood": "Ánimo promedio",
+      "anxiety": "Ansiedad promedio",
+      "stress": "Estrés promedio",
+      "emotionalEmpty": "Aún no hay registros emocionales",
+      "emotionalError": "No se pudo cargar el estado emocional",
+      "completed": "Cumplidas",
+      "overdue": "Vencidas",
+      "pending": "Pendientes",
+      "noTasks": "Este plan aún no tiene actividades"
     }
   },
 

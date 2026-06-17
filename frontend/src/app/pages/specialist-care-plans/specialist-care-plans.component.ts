@@ -19,6 +19,7 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { CarePlanProgressDashboardComponent } from '../../shared/care-plan-progress-dashboard/care-plan-progress-dashboard.component';
 
 type FormMode = 'create' | 'edit';
 type ActivityFormMode = 'create' | 'edit';
@@ -52,7 +53,7 @@ interface ActivityForm {
 @Component({
   selector: 'app-specialist-care-plans',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent],
+  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent, CarePlanProgressDashboardComponent],
   templateUrl: './specialist-care-plans.component.html',
   styleUrls: ['./specialist-care-plans.component.css']
 })
@@ -576,7 +577,7 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
     return keys[date.getDay()];
   }
 
-  private loadCarePlans(): void {
+  /*private loadCarePlans(): void {
     this.loading = true;
     this.errorMsg = '';
 
@@ -616,6 +617,70 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     });
+  }*/
+
+  private loadCarePlans(): void {
+    this.loading = true;
+    this.errorMsg = '';
+
+    // TODO: descomentar cuando puedas probar contra el backend real
+    // const request$ = this.isPatientScoped
+    //   ? this.carePlanService.getCarePlansByPatient(this.specialistId, this.patientId)
+    //   : this.carePlanService.getCarePlansBySpecialist(this.specialistId);
+    // request$.subscribe({ ... }); // lógica original aquí
+
+    // 🔧 MOCK TEMPORAL — quitar cuando puedas probar contra el backend real
+    setTimeout(() => {
+      const mockPlans: CarePlan[] = [
+        {
+          id: 1,
+          specialistId: this.specialistId || 100,
+          patientId: 1,
+          patientName: 'Juan Pérez',
+          title: 'Plan de manejo de ansiedad',
+          therapeuticObjectives: 'Reducir episodios de ansiedad mediante técnicas de respiración y mindfulness.',
+          generalRecommendations: 'Practicar ejercicios de respiración diariamente y mantener rutina de sueño.',
+          professionalObservations: 'Buena adherencia al plan en las primeras semanas.',
+          status: 'ACTIVE',
+          progressPercentage: 50,
+          reviewDate: '2026-06-25',
+          reviewStartTime: '10:00:00',
+          reviewEndTime: '11:00:00',
+          createdDate: '2026-05-01T10:00:00',
+          items: [
+            { id: 1, title: 'Meditar 10 minutos diarios', description: 'Sesión guiada por la mañana', itemType: 'ACTIVITY', status: 'COMPLETED', dueDate: '2026-06-01', completedDate: '2026-06-01' },
+            { id: 2, title: 'Registrar diario emocional', description: 'Anotar estado de ánimo cada noche', itemType: 'ACTIVITY', status: 'PENDING', dueDate: '2026-06-01', completedDate: null },
+            { id: 3, title: 'Ejercicio de respiración 4-7-8', description: 'Practicar antes de dormir', itemType: 'ACTIVITY', status: 'PENDING', dueDate: '2026-06-20', completedDate: null },
+            { id: 4, title: 'Identificar lista de triggers', description: 'Situaciones que generan ansiedad', itemType: 'OBJECTIVE', status: 'COMPLETED', dueDate: '2026-06-10', completedDate: '2026-06-09' }
+          ]
+        },
+        {
+          id: 2,
+          specialistId: this.specialistId || 100,
+          patientId: 2,
+          patientName: 'Ana Torres',
+          title: 'Plan de seguimiento depresivo',
+          therapeuticObjectives: 'Mejorar el estado de ánimo general y reducir aislamiento.',
+          generalRecommendations: 'Mantener contacto social semanal y actividad física ligera.',
+          professionalObservations: null,
+          status: 'ACTIVE',
+          progressPercentage: 20,
+          reviewDate: '2026-07-01',
+          reviewStartTime: '09:00:00',
+          reviewEndTime: '10:00:00',
+          createdDate: '2026-06-01T09:00:00',
+          items: [
+            { id: 5, title: 'Salir a caminar 20 minutos', description: '', itemType: 'ACTIVITY', status: 'PENDING', dueDate: '2026-06-10', completedDate: null },
+            { id: 6, title: 'Llamar a un familiar', description: '', itemType: 'ACTIVITY', status: 'PENDING', dueDate: '2026-06-22', completedDate: null }
+          ]
+        }
+      ];
+
+      this.totalCarePlans = mockPlans.length;
+      this.carePlans = mockPlans;
+      this.loading = false;
+      this.selectedPlan = mockPlans[0];
+    }, 500);
   }
 
   private validateForm(): boolean {
