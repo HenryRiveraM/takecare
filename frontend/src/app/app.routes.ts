@@ -35,6 +35,7 @@ import { PatientDocumentsComponent } from './pages/patient-documents/patient-doc
 import { PatientSpecialistProfileComponent } from './pages/patient-specialist-profile/patient-specialist-profile.component';
 import { PatientFilesComponent } from './pages/patient-files/patient-files.component';
 import { PatientCarePlansComponent } from './pages/patient-care-plans/patient-care-plans.component';
+import { PatientEmotionalRecordsComponent } from './pages/patient-emotional-records/patient-emotional-records.component';
 
 
 // OTROS
@@ -137,6 +138,10 @@ export const routes: Routes = [
       {
         path: 'care-plans',
         component: PatientCarePlansComponent
+      },
+      {
+        path: 'emotional-records',
+        component: PatientEmotionalRecordsComponent
       }
     ]
   },

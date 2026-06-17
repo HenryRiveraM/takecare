@@ -335,7 +335,8 @@
       "editProfile": "Edit profile",
       "documents": "Library",
       "files": "My files",
-      "carePlans": "My follow-up"
+      "carePlans": "My follow-up",
+      "emotionalLog": "Emotional log"
     },
     "searchPlaceholder": "Search specialists...",
     "newAppointment": "New Appointment",
@@ -369,6 +370,79 @@
       "title": "Upcoming consultations",
       "text": "Your scheduled session details will appear here.",
       "link": "Explore specialists to get started!"
+    }
+  },
+
+  "emotionalLog": {
+    "tag": "Emotional record",
+    "title": "Emotional log",
+    "subtitle": "Record how you feel today and review your evolution clearly.",
+    "recordsCount": "records",
+    "loading": "Loading your emotional history...",
+    "hero": {
+      "tag": "A moment for you",
+      "title": "Your emotional state deserves follow-up too",
+      "text": "This space helps you recognize mood, energy, anxiety, and rest patterns. Share whatever feels useful for your process."
+    },
+    "form": {
+      "title": "Record mood",
+      "subtitle": "Complete the form calmly. You can create an entry for each moment you want to remember.",
+      "moodLabel": "How do you feel?",
+      "moodHelper": "Choose the option that best represents your current state.",
+      "energy": "Energy",
+      "energyHelp": "1 is very low and 5 is very high.",
+      "anxiety": "Anxiety",
+      "anxietyHelp": "1 is very calm and 5 is very intense.",
+      "sleep": "Rest",
+      "sleepHelp": "1 is poor rest and 5 is restorative rest.",
+      "notes": "Personal notes",
+      "notesPlaceholder": "Example: Today I felt calmer after walking and talking with someone I trust.",
+      "save": "Save record",
+      "saving": "Saving..."
+    },
+    "moods": {
+      "veryGood": "Very good",
+      "good": "Good",
+      "neutral": "Neutral",
+      "sad": "Sad",
+      "anxious": "Anxious",
+      "unknown": "No status"
+    },
+    "moodHelpers": {
+      "veryGood": "I feel stable and encouraged.",
+      "good": "I am doing well, with something to take care of.",
+      "neutral": "I do not notice a strong change.",
+      "sad": "I feel low or sensitive.",
+      "anxious": "I feel tension, alertness, or worry."
+    },
+    "summary": {
+      "title": "Visual summary",
+      "text": "Averages from your loaded records to spot quick trends.",
+      "energy": "Energy",
+      "anxiety": "Anxiety",
+      "sleep": "Rest"
+    },
+    "history": {
+      "title": "Record history",
+      "subtitle": "Your most recent entries appear first.",
+      "energy": "Energy",
+      "anxiety": "Anxiety",
+      "sleep": "Rest",
+      "noNotes": "No additional notes."
+    },
+    "empty": {
+      "title": "You do not have records yet",
+      "text": "When you save your first emotional state, it will appear here as part of your history."
+    },
+    "toast": {
+      "saved": "Emotional record saved successfully."
+    },
+    "errors": {
+      "noPatient": "Could not identify the current patient.",
+      "load": "Could not load emotional history. If the backend does not have this endpoint yet, the screen is already ready to connect.",
+      "save": "Could not save the emotional record.",
+      "formInvalid": "Select a mood before saving.",
+      "moodRequired": "Select how you feel to continue."
     }
   },
 
