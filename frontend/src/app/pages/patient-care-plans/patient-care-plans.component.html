@@ -93,6 +93,13 @@
             <p>{{ 'carePlans.followUpOverview.progressHelp' | translate }}</p>
           </div>
 
+          <section class="dashboard-wrapper">
+            <app-care-plan-progress-dashboard
+              [plan]="selectedPlan"
+              [patientId]="patientId">
+            </app-care-plan-progress-dashboard>
+          </section>
+
           <section class="dates-row">
             <div>
               <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>

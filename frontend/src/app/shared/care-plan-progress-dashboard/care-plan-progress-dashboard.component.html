@@ -1,0 +1,88 @@
+<section class="progress-dashboard">
+  <div class="dashboard-heading-row">
+    <h3 class="dashboard-heading">
+        <i class="fas fa-chart-line"></i>
+        {{ 'carePlans.dashboard.title' | translate }}
+    </h3>
+    <span class="dashboard-range" *ngIf="emotionalSummary">
+        {{ 'carePlans.dashboard.rangeLabel' | translate: { count: emotionalSummary.totalRecords } }}
+    </span>
+  </div>
+
+  <div class="emotional-cards">
+    <div class="status-card-mini" *ngIf="loadingEmotional">
+      <i class="fas fa-spinner fa-spin"></i>
+      {{ 'carePlans.dashboard.loadingEmotional' | translate }}
+    </div>
+
+    <ng-container *ngIf="!loadingEmotional && emotionalSummary">
+      <article class="emotion-card" [attr.data-level]="getMoodLevel(emotionalSummary.averageMood)">
+        <i class="fas fa-face-smile"></i>
+        <div>
+          <span>{{ 'carePlans.dashboard.mood' | translate }}</span>
+          <strong>{{ emotionalSummary.averageMood | number:'1.1-1' }}/{{ emotionalScaleMax }}</strong>
+        </div>
+      </article>
+
+      <article class="emotion-card" [attr.data-level]="getRiskLevel(emotionalSummary.averageAnxiety)">
+        <i class="fas fa-wind"></i>
+        <div>
+          <span>{{ 'carePlans.dashboard.anxiety' | translate }}</span>
+          <strong>{{ emotionalSummary.averageAnxiety | number:'1.1-1' }}/{{ emotionalScaleMax }}</strong>
+        </div>
+      </article>
+
+      <article class="emotion-card" [attr.data-level]="getRiskLevel(emotionalSummary.averageStress)">
+        <i class="fas fa-bolt"></i>
+        <div>
+          <span>{{ 'carePlans.dashboard.stress' | translate }}</span>
+          <strong>{{ emotionalSummary.averageStress | number:'1.1-1' }}/{{ emotionalScaleMax }}</strong>
+        </div>
+      </article>
+    </ng-container>
+
+    <div class="status-card-mini muted" *ngIf="!loadingEmotional && !emotionalSummary">
+      <i class="fas fa-circle-info"></i>
+      {{ (emotionalErrorMsg || 'carePlans.dashboard.emotionalEmpty') | translate }}
+    </div>
+  </div>
+
+  <div class="tasks-summary">
+    <div class="tasks-bar-row">
+      <span class="tasks-label">
+        <i class="fas fa-circle-check"></i>
+        {{ 'carePlans.dashboard.completed' | translate }}
+        <strong>{{ taskSummary.completed }}</strong>
+      </span>
+      <div class="tasks-bar">
+        <span class="bar-fill completed" [style.width.%]="taskPercentage(taskSummary.completed)"></span>
+      </div>
+    </div>
+
+    <div class="tasks-bar-row">
+      <span class="tasks-label">
+        <i class="fas fa-triangle-exclamation"></i>
+        {{ 'carePlans.dashboard.overdue' | translate }}
+        <strong>{{ taskSummary.overdue }}</strong>
+      </span>
+      <div class="tasks-bar">
+        <span class="bar-fill overdue" [style.width.%]="taskPercentage(taskSummary.overdue)"></span>
+      </div>
+    </div>
+
+    <div class="tasks-bar-row">
+      <span class="tasks-label">
+        <i class="fas fa-clock"></i>
+        {{ 'carePlans.dashboard.pending' | translate }}
+        <strong>{{ taskSummary.pending }}</strong>
+      </span>
+      <div class="tasks-bar">
+        <span class="bar-fill pending" [style.width.%]="taskPercentage(taskSummary.pending)"></span>
+      </div>
+    </div>
+
+    <p class="tasks-empty" *ngIf="!taskSummary.total">
+      {{ 'carePlans.dashboard.noTasks' | translate }}
+    </p>
+  </div>
+</section>

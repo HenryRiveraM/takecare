@@ -1363,6 +1363,20 @@
       "noSpecialist": "Could not identify the current specialist.",
       "noPatient": "Could not identify the selected patient.",
       "load": "Could not load care plans."
+    },
+    "dashboard": {
+      "title": "Progress dashboard",
+      "rangeLabel": "Average over the last {{count}} days",
+      "loadingEmotional": "Loading emotional state...",
+      "mood": "Average mood",
+      "anxiety": "Average anxiety",
+      "stress": "Average stress",
+      "emotionalEmpty": "No emotional records yet",
+      "emotionalError": "Couldn't load emotional state",
+      "completed": "Completed",
+      "overdue": "Overdue",
+      "pending": "Pending",
+      "noTasks": "This plan has no activities yet"
     }
   },
 

@@ -38,11 +38,9 @@ export class EmotionalRecordService {
           if (Array.isArray(response)) {
             return response;
           }
-
           if (Array.isArray(response?.data)) {
             return response.data;
           }
-
           return [];
         })
       );
@@ -56,7 +54,6 @@ export class EmotionalRecordService {
           if ('data' in Object(response)) {
             return (response as { data?: EmotionalRecord | null }).data || payload;
           }
-
           return response as EmotionalRecord;
         })
       );
@@ -72,11 +69,9 @@ export class EmotionalRecordService {
           if (Array.isArray(response)) {
             return response;
           }
-
           if (Array.isArray(response?.data)) {
             return response.data;
           }
-
           return [];
         })
       );

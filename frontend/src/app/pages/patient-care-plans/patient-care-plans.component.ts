@@ -9,11 +9,12 @@ import { AuthService } from '../../services/auth.service';
 import { CarePlan, CarePlanItem, CarePlanService, CarePlanStatus } from '../../services/care-plan.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { CarePlanProgressDashboardComponent } from '../../shared/care-plan-progress-dashboard/care-plan-progress-dashboard.component';
 
 @Component({
   selector: 'app-patient-care-plans',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent],
+  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent, CarePlanProgressDashboardComponent],
   templateUrl: './patient-care-plans.component.html',
   styleUrls: ['./patient-care-plans.component.css']
 })

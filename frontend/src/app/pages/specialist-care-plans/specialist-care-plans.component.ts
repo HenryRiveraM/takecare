@@ -19,6 +19,7 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { CarePlanProgressDashboardComponent } from '../../shared/care-plan-progress-dashboard/care-plan-progress-dashboard.component';
 
 type FormMode = 'create' | 'edit';
 type ActivityFormMode = 'create' | 'edit';
@@ -52,7 +53,7 @@ interface ActivityForm {
 @Component({
   selector: 'app-specialist-care-plans',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent],
+  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent, CarePlanProgressDashboardComponent],
   templateUrl: './specialist-care-plans.component.html',
   styleUrls: ['./specialist-care-plans.component.css']
 })
