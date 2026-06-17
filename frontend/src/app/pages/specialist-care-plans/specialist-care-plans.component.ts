@@ -578,7 +578,7 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
     return keys[date.getDay()];
   }
 
-  /*private loadCarePlans(): void {
+  private loadCarePlans(): void {
     this.loading = true;
     this.errorMsg = '';
 
@@ -618,61 +618,6 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     });
-  }*/
-
-  private loadCarePlans(): void {
-    this.loading = true;
-    this.errorMsg = '';
-
-    // TODO: descomentar la llamada real y quitar este mock después de probar
-    setTimeout(() => {
-      const mockPlans: CarePlan[] = [
-        {
-          id: 1,
-          specialistId: this.specialistId || 100,
-          patientId: 1,
-          patientName: 'Juan Pérez',
-          title: 'Plan de manejo de ansiedad',
-          therapeuticObjectives: 'Reducir episodios de ansiedad mediante técnicas de respiración y mindfulness.',
-          generalRecommendations: 'Practicar ejercicios de respiración diariamente.',
-          professionalObservations: 'Buena adherencia al plan.',
-          status: 'ACTIVE',
-          progressPercentage: 50,
-          reviewDate: '2026-06-25',
-          reviewStartTime: '10:00:00',
-          reviewEndTime: '11:00:00',
-          createdDate: '2026-05-01T10:00:00',
-          items: [
-            { id: 1, title: 'Meditar 10 minutos diarios', description: '', itemType: 'ACTIVITY', status: 'COMPLETED', dueDate: '2026-06-01', completedDate: '2026-06-01' },
-            { id: 2, title: 'Registrar diario emocional', description: '', itemType: 'ACTIVITY', status: 'PENDING', dueDate: '2026-06-01', completedDate: null }
-          ]
-        },
-        {
-          id: 2,
-          specialistId: this.specialistId || 100,
-          patientId: 2,
-          patientName: 'Ana Torres',
-          title: 'Plan de seguimiento depresivo',
-          therapeuticObjectives: 'Mejorar el estado de ánimo general.',
-          generalRecommendations: 'Mantener contacto social semanal.',
-          professionalObservations: null,
-          status: 'ACTIVE',
-          progressPercentage: 20,
-          reviewDate: '2026-07-01',
-          reviewStartTime: '09:00:00',
-          reviewEndTime: '10:00:00',
-          createdDate: '2026-06-01T09:00:00',
-          items: [
-            { id: 5, title: 'Salir a caminar 20 minutos', description: '', itemType: 'ACTIVITY', status: 'PENDING', dueDate: '2026-06-10', completedDate: null }
-          ]
-        }
-      ];
-
-      this.totalCarePlans = mockPlans.length;
-      this.carePlans = mockPlans;
-      this.loading = false;
-      this.selectedPlan = mockPlans[0];
-    }, 500);
   }
 
   private validateForm(): boolean {

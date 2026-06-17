@@ -168,7 +168,7 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
     return messages[status] || '';
   }
 
-  /*private loadCarePlans(): void {
+  private loadCarePlans(): void {
     this.loading = true;
     this.errorMsg = '';
 
@@ -191,43 +191,6 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     });
-  }*/
-
-  private loadCarePlans(): void {
-    this.loading = true;
-    this.errorMsg = '';
-
-    // TODO: descomentar la llamada real y quitar este mock después de probar la bitácora
-    // this.carePlanService.getPatientCarePlans(this.patientId).subscribe({ ... });
-
-    setTimeout(() => {
-      const mockPlan: CarePlan = {
-        id: 1,
-        specialistId: 100,
-        specialistName: 'Dra. María Sánchez',
-        patientId: this.patientId,
-        patientName: 'Juan Pérez',
-        title: 'Plan de manejo de ansiedad',
-        therapeuticObjectives: 'Reducir episodios de ansiedad mediante técnicas de respiración y mindfulness.',
-        generalRecommendations: 'Practicar ejercicios de respiración diariamente.',
-        professionalObservations: 'Buena adherencia al plan.',
-        status: 'ACTIVE',
-        progressPercentage: 50,
-        reviewDate: '2026-06-25',
-        reviewStartTime: '10:00:00',
-        reviewEndTime: '11:00:00',
-        createdDate: '2026-05-01T10:00:00',
-        items: [
-          { id: 1, title: 'Meditar 10 minutos diarios', description: '', itemType: 'ACTIVITY', status: 'COMPLETED', dueDate: '2026-06-01', completedDate: '2026-06-01' },
-          { id: 2, title: 'Registrar diario emocional', description: '', itemType: 'ACTIVITY', status: 'PENDING', dueDate: '2026-06-01', completedDate: null }
-        ]
-      };
-
-      this.carePlans = [mockPlan];
-      this.totalCarePlans = 1;
-      this.loading = false;
-      this.selectPlan(mockPlan);
-    }, 500);
   }
 
   private applyActivityProgress(
