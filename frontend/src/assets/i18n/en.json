@@ -1051,7 +1051,8 @@
       "editProfile": "Edit profile",
       "appointments": "Appointments",
       "resources": "Resources",
-      "carePlans": "Care plans"
+      "carePlans": "Care plans",
+      "alerts": "Preventive alerts"
     },
     "searchPlaceholder": "Search patients...",
     "newSession": "New session",
@@ -1080,6 +1081,66 @@
     "section": {
       "title": "Upcoming appointments",
       "text": "The specialist's sessions will be displayed here."
+    }
+  },
+
+  "specialistAlerts": {
+    "tag": "Preventive alerts",
+    "title": "Specialist alerts dashboard",
+    "subtitle": "Review important patient signals without creating unnecessary alarm.",
+    "loading": "Loading preventive alerts...",
+    "hero": {
+      "tag": "Clinical follow-up",
+      "title": "Detect critical patterns early",
+      "text": "This dashboard classifies alerts by priority and suggests preventive messages to guide each patient's follow-up."
+    },
+    "summary": {
+      "high": "High priority",
+      "medium": "Medium priority",
+      "low": "Low priority",
+      "pending": "Pending review"
+    },
+    "board": {
+      "title": "Patient alerts",
+      "subtitle": "Prioritize review by severity and mark each alert as reviewed when finished."
+    },
+    "filters": {
+      "status": "Status",
+      "priority": "Priority",
+      "pending": "Pending",
+      "reviewed": "Reviewed",
+      "allStatuses": "All statuses",
+      "allPriorities": "All priorities"
+    },
+    "priorities": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "status": {
+      "reviewed": "Reviewed"
+    },
+    "fields": {
+      "patient": "Patient",
+      "recommendation": "Preventive recommendation",
+      "source": "Source"
+    },
+    "actions": {
+      "viewPatients": "View patients",
+      "markReviewed": "Mark as reviewed",
+      "alreadyReviewed": "Already reviewed"
+    },
+    "empty": {
+      "title": "No alerts to show",
+      "text": "When the system detects preventive patterns, they will appear here with their priority."
+    },
+    "toast": {
+      "reviewed": "Alert marked as reviewed."
+    },
+    "errors": {
+      "noSpecialist": "Could not identify the current specialist.",
+      "load": "Could not load alerts. If the backend does not have this endpoint yet, the dashboard is already ready to connect.",
+      "review": "Could not mark the alert as reviewed."
     }
   },
 
