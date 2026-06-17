@@ -113,6 +113,13 @@
             [specialistId]="specialistId">
           </app-care-plan-progress-dashboard>
 
+          <app-care-plan-logbook
+            [planId]="plan.id"
+            [currentUserId]="specialistId"
+            currentUserRole="SPECIALIST"
+            [currentUserName]="currentSpecialistName">
+          </app-care-plan-logbook>
+
           <section class="full-content-grid">
             <div class="detail-block">
               <span>{{ 'carePlans.fields.therapeuticObjectives' | translate }}</span>

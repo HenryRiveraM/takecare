@@ -100,6 +100,15 @@
             </app-care-plan-progress-dashboard>
           </section>
 
+          <section class="logbook-wrapper">
+            <app-care-plan-logbook
+              [planId]="selectedPlan.id"
+              [currentUserId]="patientId"
+              currentUserRole="PATIENT"
+              [currentUserName]="currentPatientName">
+            </app-care-plan-logbook>
+          </section>
+          
           <section class="dates-row">
             <div>
               <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>

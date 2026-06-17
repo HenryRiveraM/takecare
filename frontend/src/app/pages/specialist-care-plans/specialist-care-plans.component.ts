@@ -20,6 +20,7 @@ import { AuthService } from '../../services/auth.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { CarePlanProgressDashboardComponent } from '../../shared/care-plan-progress-dashboard/care-plan-progress-dashboard.component';
+import { CarePlanLogbookComponent } from '../../shared/care-plan-logbook/care-plan-logbook.component';
 
 type FormMode = 'create' | 'edit';
 type ActivityFormMode = 'create' | 'edit';
@@ -53,7 +54,7 @@ interface ActivityForm {
 @Component({
   selector: 'app-specialist-care-plans',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent, CarePlanProgressDashboardComponent],
+  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent, CarePlanProgressDashboardComponent, CarePlanLogbookComponent],
   templateUrl: './specialist-care-plans.component.html',
   styleUrls: ['./specialist-care-plans.component.css']
 })
@@ -889,5 +890,9 @@ export class SpecialistCarePlansComponent implements OnInit, OnDestroy {
       description: '',
       dueDate: ''
     };
+  }
+
+  get currentSpecialistName(): string {
+    return this.authService.getUser()?.names || '';
   }
 }

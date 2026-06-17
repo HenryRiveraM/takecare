@@ -59,8 +59,8 @@ export class SpecialistNotificationsSidebarComponent implements OnChanges {
       .setReadStatus(notification.id, this.userId, true, this.audience)
       .subscribe({
         next: () => {
-          if (this.isPatientCarePlanNotification(notification)) {
-            this.router.navigate(['/patient/care-plans'], {
+          if (this.isCarePlanNotification(notification)) {
+            this.router.navigate([this.getCarePlanRoute()], {
               queryParams: { highlightPlanId: notification.carePlanId }
             });
           } else {
@@ -80,15 +80,19 @@ export class SpecialistNotificationsSidebarComponent implements OnChanges {
   }
 
   getActionLabel(notification: SpecialistNotification): string {
-    if (this.isPatientCarePlanNotification(notification)) {
+    if (this.isCarePlanNotification(notification)) {
       return this.translationKey + '.actions.viewPlan';
     }
 
     return this.translationKey + '.actions.viewAppointment';
   }
 
-  isPatientCarePlanNotification(notification: SpecialistNotification): boolean {
-    return this.audience === 'patient' && !!notification.carePlanId;
+  isCarePlanNotification(notification: SpecialistNotification): boolean {
+    return !!notification.carePlanId;
+  }
+
+  private getCarePlanRoute(): string {
+    return this.audience === 'patient' ? '/patient/care-plans' : '/specialist/care-plans';
   }
 
   trackByNotificationId(_: number, notification: SpecialistNotification): number {
