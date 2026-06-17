@@ -1175,6 +1175,15 @@
     "followUpActivities": "Assigned activities",
     "followUpEmptyTitle": "You do not have assigned follow-up plans.",
     "followUpEmptyText": "When your specialist creates a care plan, it will appear in this section.",
+    "followUpNoActivitiesTitle": "This plan does not have activities yet",
+    "followUpNoActivitiesText": "When your specialist adds activities, you will be able to mark them as completed here.",
+    "followUpOverview": {
+      "activePlan": "Active plan",
+      "progress": "Plan progress",
+      "completed": "Completed activities",
+      "pending": "Pending",
+      "progressHelp": "Progress updates according to the completed activities in the plan."
+    },
     "followUpLocked": {
       "paused": "This plan is paused. You cannot complete activities right now.",
       "completed": "This plan has been completed. You can no longer modify activities.",

@@ -43,6 +43,25 @@
           </select>
         </label>
 
+        <section class="overview-grid" aria-live="polite">
+          <article class="overview-card">
+            <span>{{ 'carePlans.followUpOverview.activePlan' | translate }}</span>
+            <strong>{{ selectedPlan.title }}</strong>
+          </article>
+          <article class="overview-card">
+            <span>{{ 'carePlans.followUpOverview.progress' | translate }}</span>
+            <strong>{{ getProgressPercentage(selectedPlan) }}%</strong>
+          </article>
+          <article class="overview-card">
+            <span>{{ 'carePlans.followUpOverview.completed' | translate }}</span>
+            <strong>{{ completedActivities(selectedPlan) }}/{{ activeActivities(selectedPlan).length }}</strong>
+          </article>
+          <article class="overview-card">
+            <span>{{ 'carePlans.followUpOverview.pending' | translate }}</span>
+            <strong>{{ pendingActivities(selectedPlan) }}</strong>
+          </article>
+        </section>
+
         <article
           class="detail-panel"
           [attr.id]="'patient-care-plan-' + selectedPlan.id"
@@ -66,11 +85,12 @@
           <div class="progress-summary">
             <div>
               <span>{{ 'carePlans.fields.progress' | translate }}</span>
-              <strong>{{ selectedPlan.progressPercentage }}%</strong>
+              <strong>{{ getProgressPercentage(selectedPlan) }}%</strong>
             </div>
             <div class="progress-bar large">
-              <span [style.width.%]="selectedPlan.progressPercentage"></span>
+              <span [style.width.%]="getProgressPercentage(selectedPlan)"></span>
             </div>
+            <p>{{ 'carePlans.followUpOverview.progressHelp' | translate }}</p>
           </div>
 
           <section class="dates-row">
@@ -111,7 +131,12 @@
               <i class="fas fa-lock"></i>
               {{ getPlanLockMessage() | translate }}
             </p>
-            <ul class="checklist">
+            <div class="activities-empty" *ngIf="!activeActivities(selectedPlan).length">
+              <i class="fas fa-list-check"></i>
+              <h3>{{ 'carePlans.followUpNoActivitiesTitle' | translate }}</h3>
+              <p>{{ 'carePlans.followUpNoActivitiesText' | translate }}</p>
+            </div>
+            <ul class="checklist" *ngIf="activeActivities(selectedPlan).length">
               <li
                 *ngFor="let item of activeActivities(selectedPlan)"
                 [class.completed]="item.status === 'COMPLETED'"

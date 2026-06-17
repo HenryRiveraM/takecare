@@ -1179,6 +1179,15 @@
     "followUpActivities": "Actividades asignadas",
     "followUpEmptyTitle": "No tienes planes de seguimiento asignados.",
     "followUpEmptyText": "Cuando tu especialista cree un plan de atencion, aparecera en esta seccion.",
+    "followUpNoActivitiesTitle": "Este plan aun no tiene actividades",
+    "followUpNoActivitiesText": "Cuando tu especialista agregue actividades, podras marcarlas como completadas desde aqui.",
+    "followUpOverview": {
+      "activePlan": "Plan activo",
+      "progress": "Progreso del plan",
+      "completed": "Actividades completadas",
+      "pending": "Pendientes",
+      "progressHelp": "El progreso se actualiza segun las actividades completadas del plan."
+    },
     "followUpLocked": {
       "paused": "Este plan esta pausado. No puedes completar actividades por el momento.",
       "completed": "Este plan fue completado. Ya no puedes modificar actividades.",
