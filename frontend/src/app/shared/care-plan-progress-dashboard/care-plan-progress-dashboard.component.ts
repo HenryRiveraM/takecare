@@ -98,7 +98,7 @@ export class CarePlanProgressDashboardComponent implements OnChanges {
     return 'good';
   }
 
-  /*private loadEmotionalSummary(): void {
+  private loadEmotionalSummary(): void {
     this.loadingEmotional = true;
     this.emotionalErrorMsg = '';
 
@@ -117,43 +117,7 @@ export class CarePlanProgressDashboardComponent implements OnChanges {
         this.loadingEmotional = false;
       }
     });
-  }*/
-
-  private loadEmotionalSummary(): void {
-    this.loadingEmotional = true;
-    this.emotionalErrorMsg = '';
-
-    const request$ = this.specialistId
-        ? this.emotionalRecordService.getRecordsForSpecialist(this.specialistId, this.patientId)
-        : this.emotionalRecordService.getRecords(this.patientId);
-
-    request$.subscribe({
-        next: records => {
-        this.emotionalSummary = this.computeAverages(records);
-        this.loadingEmotional = false;
-        },
-        error: () => {
-        // 🔧 FALLBACK TEMPORAL — solo se activa si no hay backend disponible.
-        // Quitar este bloque y descomentar el de abajo cuando puedas probar contra el backend real.
-        this.emotionalSummary = this.computeAverages(this.mockEmotionalRecords());
-        this.loadingEmotional = false;
-
-        // this.emotionalSummary = null;
-        // this.emotionalErrorMsg = 'carePlans.dashboard.emotionalError';
-        // this.loadingEmotional = false;
-        }
-    });
-    }
-
-    // 🔧 quitar junto con el bloque anterior
-    private mockEmotionalRecords(): EmotionalRecord[] {
-    return [
-        { moodLevel: 4, anxietyLevel: 2, stressLevel: 3 },
-        { moodLevel: 3, anxietyLevel: 3, stressLevel: 4 },
-        { moodLevel: 5, anxietyLevel: 1, stressLevel: 2 },
-        { moodLevel: 2, anxietyLevel: 4, stressLevel: 4 }
-    ];
-    }
+  }
 
   private computeAverages(records: EmotionalRecord[]): EmotionalAverages | null {
     if (!records.length) {
