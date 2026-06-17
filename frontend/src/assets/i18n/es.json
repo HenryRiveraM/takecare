@@ -339,7 +339,8 @@
       "editProfile": "Editar perfil",
       "documents": "Biblioteca",
       "files": "Mis archivos",
-      "carePlans": "Mi seguimiento"
+      "carePlans": "Mi seguimiento",
+      "emotionalLog": "Bitácora emocional"
     },
     "searchPlaceholder": "Buscar especialistas...",
     "newAppointment": "Nueva Cita",
@@ -373,6 +374,79 @@
       "title": "Próximas consultas",
       "text": "Aquí aparecerán los detalles de tus sesiones agendadas.",
       "link": "¡Explora especialistas para comenzar!"
+    }
+  },
+
+  "emotionalLog": {
+    "tag": "Registro emocional",
+    "title": "Bitácora emocional",
+    "subtitle": "Registra cómo te sientes hoy y revisa tu evolución de forma clara.",
+    "recordsCount": "registros",
+    "loading": "Cargando tu historial emocional...",
+    "hero": {
+      "tag": "Un momento para ti",
+      "title": "Tu estado emocional también merece seguimiento",
+      "text": "Este espacio te ayuda a reconocer patrones de ánimo, energía, ansiedad y descanso. Comparte lo que consideres útil para tu proceso."
+    },
+    "form": {
+      "title": "Registrar estado de ánimo",
+      "subtitle": "Completa el formulario con calma. Puedes registrar una entrada por cada momento que quieras recordar.",
+      "moodLabel": "¿Cómo te sientes?",
+      "moodHelper": "Elige la opción que mejor representa tu estado actual.",
+      "energy": "Energía",
+      "energyHelp": "1 es muy baja y 5 es muy alta.",
+      "anxiety": "Ansiedad",
+      "anxietyHelp": "1 es muy tranquila y 5 es muy intensa.",
+      "sleep": "Descanso",
+      "sleepHelp": "1 es descanso deficiente y 5 es descanso reparador.",
+      "notes": "Notas personales",
+      "notesPlaceholder": "Ej. Hoy me sentí más tranquilo después de caminar y hablar con alguien de confianza.",
+      "save": "Guardar registro",
+      "saving": "Guardando..."
+    },
+    "moods": {
+      "veryGood": "Muy bien",
+      "good": "Bien",
+      "neutral": "Neutral",
+      "sad": "Triste",
+      "anxious": "Con ansiedad",
+      "unknown": "Sin estado"
+    },
+    "moodHelpers": {
+      "veryGood": "Me siento estable y con ánimo.",
+      "good": "Estoy bien, aunque con algo por atender.",
+      "neutral": "No identifico un cambio fuerte.",
+      "sad": "Me siento bajo o sensible.",
+      "anxious": "Siento tensión, alerta o preocupación."
+    },
+    "summary": {
+      "title": "Resumen visual",
+      "text": "Promedios de tus registros cargados para mirar tendencias rápidas.",
+      "energy": "Energía",
+      "anxiety": "Ansiedad",
+      "sleep": "Descanso"
+    },
+    "history": {
+      "title": "Historial de registros",
+      "subtitle": "Tus entradas más recientes aparecen primero.",
+      "energy": "Energía",
+      "anxiety": "Ansiedad",
+      "sleep": "Descanso",
+      "noNotes": "Sin notas adicionales."
+    },
+    "empty": {
+      "title": "Aún no tienes registros",
+      "text": "Cuando guardes tu primer estado emocional, aparecerá aquí como parte de tu historial."
+    },
+    "toast": {
+      "saved": "Registro emocional guardado correctamente."
+    },
+    "errors": {
+      "noPatient": "No se pudo identificar al paciente actual.",
+      "load": "No se pudo cargar el historial emocional. Si el backend aún no tiene este endpoint, la pantalla ya queda lista para conectarse.",
+      "save": "No se pudo guardar el registro emocional.",
+      "formInvalid": "Selecciona un estado de ánimo antes de guardar.",
+      "moodRequired": "Selecciona cómo te sientes para continuar."
     }
   },
 

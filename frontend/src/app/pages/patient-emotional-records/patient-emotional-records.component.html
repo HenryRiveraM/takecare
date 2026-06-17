@@ -1,0 +1,191 @@
+<div class="emotional-log-page">
+  <app-sidebar></app-sidebar>
+
+  <div class="sidebar-overlay" *ngIf="sidebarService.isOpen()" (click)="sidebarService.close()"></div>
+
+  <div class="main">
+    <header class="top-bar">
+      <div>
+        <span class="eyebrow">{{ 'emotionalLog.tag' | translate }}</span>
+        <h1 class="page-title">{{ 'emotionalLog.title' | translate }}</h1>
+        <p class="page-subtitle">{{ 'emotionalLog.subtitle' | translate }}</p>
+      </div>
+
+      <div class="counter-card">
+        <strong>{{ loading ? '...' : records.length }}</strong>
+        <span>{{ 'emotionalLog.recordsCount' | translate }}</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="hero-card">
+        <div>
+          <span class="hero-pill">{{ 'emotionalLog.hero.tag' | translate }}</span>
+          <h2>{{ 'emotionalLog.hero.title' | translate }}</h2>
+          <p>{{ 'emotionalLog.hero.text' | translate }}</p>
+        </div>
+        <span class="material-symbols-outlined hero-icon" aria-hidden="true">self_improvement</span>
+      </section>
+
+      <section class="log-grid">
+        <form class="record-form" [formGroup]="emotionalForm" (ngSubmit)="saveRecord()">
+          <div class="form-heading">
+            <div>
+              <h2>{{ 'emotionalLog.form.title' | translate }}</h2>
+              <p>{{ 'emotionalLog.form.subtitle' | translate }}</p>
+            </div>
+          </div>
+
+          <fieldset class="mood-fieldset">
+            <legend>{{ 'emotionalLog.form.moodLabel' | translate }}</legend>
+            <p class="helper">{{ 'emotionalLog.form.moodHelper' | translate }}</p>
+
+            <div class="mood-grid">
+              <button
+                type="button"
+                class="mood-option"
+                *ngFor="let mood of moodOptions"
+                [class.selected]="emotionalForm.controls.mood.value === mood.value"
+                (click)="selectMood(mood.value)">
+                <span class="material-symbols-outlined" aria-hidden="true">{{ mood.icon }}</span>
+                <strong>{{ mood.labelKey | translate }}</strong>
+                <small>{{ mood.helperKey | translate }}</small>
+              </button>
+            </div>
+
+            <small class="field-error" *ngIf="emotionalForm.controls.mood.touched && emotionalForm.controls.mood.invalid">
+              {{ 'emotionalLog.errors.moodRequired' | translate }}
+            </small>
+          </fieldset>
+
+          <div class="sliders-card">
+            <label class="slider-row">
+              <span>
+                <strong>{{ 'emotionalLog.form.energy' | translate }}</strong>
+                <small>{{ 'emotionalLog.form.energyHelp' | translate }}</small>
+              </span>
+              <input type="range" min="1" max="5" formControlName="energyLevel">
+              <b>{{ emotionalForm.controls.energyLevel.value }}</b>
+            </label>
+
+            <label class="slider-row">
+              <span>
+                <strong>{{ 'emotionalLog.form.anxiety' | translate }}</strong>
+                <small>{{ 'emotionalLog.form.anxietyHelp' | translate }}</small>
+              </span>
+              <input type="range" min="1" max="5" formControlName="anxietyLevel">
+              <b>{{ emotionalForm.controls.anxietyLevel.value }}</b>
+            </label>
+
+            <label class="slider-row">
+              <span>
+                <strong>{{ 'emotionalLog.form.sleep' | translate }}</strong>
+                <small>{{ 'emotionalLog.form.sleepHelp' | translate }}</small>
+              </span>
+              <input type="range" min="1" max="5" formControlName="sleepQuality">
+              <b>{{ emotionalForm.controls.sleepQuality.value }}</b>
+            </label>
+          </div>
+
+          <label class="notes-field">
+            <span>{{ 'emotionalLog.form.notes' | translate }}</span>
+            <textarea
+              rows="4"
+              maxlength="280"
+              formControlName="notes"
+              [placeholder]="'emotionalLog.form.notesPlaceholder' | translate">
+            </textarea>
+            <small>
+              {{ emotionalForm.controls.notes.value.length }}/280
+            </small>
+          </label>
+
+          <button type="submit" class="save-button" [disabled]="saving">
+            <i class="fas" [class.fa-spinner]="saving" [class.fa-spin]="saving" [class.fa-check]="!saving"></i>
+            {{ (saving ? 'emotionalLog.form.saving' : 'emotionalLog.form.save') | translate }}
+          </button>
+        </form>
+
+        <aside class="summary-panel">
+          <h2>{{ 'emotionalLog.summary.title' | translate }}</h2>
+          <p>{{ 'emotionalLog.summary.text' | translate }}</p>
+
+          <div class="summary-metrics">
+            <div>
+              <span>{{ 'emotionalLog.summary.energy' | translate }}</span>
+              <strong>{{ getAverage('energyLevel') || '-' }}</strong>
+            </div>
+            <div>
+              <span>{{ 'emotionalLog.summary.anxiety' | translate }}</span>
+              <strong>{{ getAverage('anxietyLevel') || '-' }}</strong>
+            </div>
+            <div>
+              <span>{{ 'emotionalLog.summary.sleep' | translate }}</span>
+              <strong>{{ getAverage('sleepQuality') || '-' }}</strong>
+            </div>
+          </div>
+
+          <section class="status-card" *ngIf="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            {{ 'emotionalLog.loading' | translate }}
+          </section>
+
+          <section class="status-card error" *ngIf="!loading && errorMsg">
+            <i class="fas fa-exclamation-circle"></i>
+            {{ errorMsg | translate }}
+          </section>
+
+          <section class="empty-state" *ngIf="!loading && !errorMsg && !records.length">
+            <span class="material-symbols-outlined" aria-hidden="true">history</span>
+            <h3>{{ 'emotionalLog.empty.title' | translate }}</h3>
+            <p>{{ 'emotionalLog.empty.text' | translate }}</p>
+          </section>
+        </aside>
+      </section>
+
+      <section class="history-section" *ngIf="!loading && !errorMsg && records.length">
+        <div class="section-heading">
+          <h2>{{ 'emotionalLog.history.title' | translate }}</h2>
+          <p>{{ 'emotionalLog.history.subtitle' | translate }}</p>
+        </div>
+
+        <div class="history-list">
+          <article class="history-card" *ngFor="let record of records; trackBy: trackByRecord">
+            <div class="history-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ getMoodIcon(record.mood) }}</span>
+            </div>
+
+            <div class="history-content">
+              <div class="history-header">
+                <h3>{{ getMoodLabel(record.mood) | translate }}</h3>
+                <time *ngIf="getRecordDate(record)">
+                  {{ getRecordDate(record) | date:'medium' }}
+                </time>
+              </div>
+
+              <p *ngIf="record.notes; else noNotes">{{ record.notes }}</p>
+              <ng-template #noNotes>
+                <p class="muted">{{ 'emotionalLog.history.noNotes' | translate }}</p>
+              </ng-template>
+
+              <div class="history-metrics">
+                <span>{{ 'emotionalLog.history.energy' | translate }}: <strong>{{ record.energyLevel }}/5</strong></span>
+                <span>{{ 'emotionalLog.history.anxiety' | translate }}: <strong>{{ record.anxietyLevel }}/5</strong></span>
+                <span>{{ 'emotionalLog.history.sleep' | translate }}: <strong>{{ record.sleepQuality }}/5</strong></span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div
+    class="toast"
+    [class.show]="showToast"
+    [class.toast-success]="toastType === 'success'"
+    [class.toast-error]="toastType === 'error'">
+    <i [class]="toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+    {{ toastMessage | translate }}
+  </div>
+</div>
