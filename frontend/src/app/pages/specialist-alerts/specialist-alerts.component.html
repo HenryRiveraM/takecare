@@ -1,0 +1,164 @@
+<div class="specialist-alerts-page">
+  <app-sidebar></app-sidebar>
+
+  <div class="sidebar-overlay" *ngIf="sidebarService.isOpen()" (click)="sidebarService.close()"></div>
+
+  <div class="main">
+    <header class="top-bar">
+      <div>
+        <span class="eyebrow">{{ 'specialistAlerts.tag' | translate }}</span>
+        <h1>{{ 'specialistAlerts.title' | translate }}</h1>
+        <p>{{ 'specialistAlerts.subtitle' | translate }}</p>
+      </div>
+
+      <a class="secondary-action" routerLink="/specialist/patients">
+        <i class="fas fa-users"></i>
+        {{ 'specialistAlerts.actions.viewPatients' | translate }}
+      </a>
+    </header>
+
+    <main class="content">
+      <section class="hero-panel">
+        <div>
+          <span class="hero-pill">{{ 'specialistAlerts.hero.tag' | translate }}</span>
+          <h2>{{ 'specialistAlerts.hero.title' | translate }}</h2>
+          <p>{{ 'specialistAlerts.hero.text' | translate }}</p>
+        </div>
+        <span class="material-symbols-outlined hero-icon" aria-hidden="true">clinical_notes</span>
+      </section>
+
+      <section class="summary-grid" aria-live="polite">
+        <article class="summary-card high">
+          <span class="material-symbols-outlined" aria-hidden="true">priority_high</span>
+          <strong>{{ loading ? '...' : highCount }}</strong>
+          <p>{{ 'specialistAlerts.summary.high' | translate }}</p>
+        </article>
+        <article class="summary-card medium">
+          <span class="material-symbols-outlined" aria-hidden="true">error</span>
+          <strong>{{ loading ? '...' : mediumCount }}</strong>
+          <p>{{ 'specialistAlerts.summary.medium' | translate }}</p>
+        </article>
+        <article class="summary-card low">
+          <span class="material-symbols-outlined" aria-hidden="true">info</span>
+          <strong>{{ loading ? '...' : lowCount }}</strong>
+          <p>{{ 'specialistAlerts.summary.low' | translate }}</p>
+        </article>
+        <article class="summary-card pending">
+          <span class="material-symbols-outlined" aria-hidden="true">task_alt</span>
+          <strong>{{ loading ? '...' : pendingCount }}</strong>
+          <p>{{ 'specialistAlerts.summary.pending' | translate }}</p>
+        </article>
+      </section>
+
+      <section class="alerts-board">
+        <div class="board-header">
+          <div>
+            <h2>{{ 'specialistAlerts.board.title' | translate }}</h2>
+            <p>{{ 'specialistAlerts.board.subtitle' | translate }}</p>
+          </div>
+
+          <div class="filters">
+            <label>
+              <span>{{ 'specialistAlerts.filters.status' | translate }}</span>
+              <select [(ngModel)]="statusFilter">
+                <option value="pending">{{ 'specialistAlerts.filters.pending' | translate }}</option>
+                <option value="reviewed">{{ 'specialistAlerts.filters.reviewed' | translate }}</option>
+                <option value="all">{{ 'specialistAlerts.filters.allStatuses' | translate }}</option>
+              </select>
+            </label>
+
+            <label>
+              <span>{{ 'specialistAlerts.filters.priority' | translate }}</span>
+              <select [(ngModel)]="priorityFilter">
+                <option value="all">{{ 'specialistAlerts.filters.allPriorities' | translate }}</option>
+                <option value="HIGH">{{ 'specialistAlerts.priorities.high' | translate }}</option>
+                <option value="MEDIUM">{{ 'specialistAlerts.priorities.medium' | translate }}</option>
+                <option value="LOW">{{ 'specialistAlerts.priorities.low' | translate }}</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="status-card" *ngIf="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          {{ 'specialistAlerts.loading' | translate }}
+        </div>
+
+        <div class="status-card error" *ngIf="!loading && errorMsg">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ errorMsg | translate }}
+        </div>
+
+        <div class="empty-state" *ngIf="!loading && !errorMsg && !filteredAlerts.length">
+          <span class="material-symbols-outlined" aria-hidden="true">verified</span>
+          <h3>{{ 'specialistAlerts.empty.title' | translate }}</h3>
+          <p>{{ 'specialistAlerts.empty.text' | translate }}</p>
+        </div>
+
+        <div class="alerts-list" *ngIf="!loading && !errorMsg && filteredAlerts.length">
+          <article
+            class="alert-card"
+            *ngFor="let alert of filteredAlerts; trackBy: trackByAlert"
+            [attr.data-priority]="alert.priority"
+            [class.reviewed]="alert.reviewed">
+            <div class="alert-icon">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ getPriorityIcon(alert.priority) }}</span>
+            </div>
+
+            <div class="alert-content">
+              <div class="alert-topline">
+                <span class="priority-pill" [attr.data-priority]="alert.priority">
+                  {{ getPriorityLabel(alert.priority) | translate }}
+                </span>
+                <span class="reviewed-pill" *ngIf="alert.reviewed">
+                  {{ 'specialistAlerts.status.reviewed' | translate }}
+                </span>
+                <time *ngIf="getAlertDate(alert)">
+                  {{ getAlertDate(alert) | date:'medium' }}
+                </time>
+              </div>
+
+              <h3>{{ alert.title }}</h3>
+              <p>{{ alert.message }}</p>
+
+              <div class="patient-line">
+                <i class="fas fa-user"></i>
+                <span>{{ 'specialistAlerts.fields.patient' | translate }}:</span>
+                <strong>{{ alert.patientName }}</strong>
+              </div>
+
+              <div class="alert-footer">
+                <small *ngIf="alert.alertType">
+                  {{ 'specialistAlerts.fields.alertType' | translate }}: {{ alert.alertType }}
+                </small>
+
+                <button
+                  type="button"
+                  class="review-button"
+                  [disabled]="alert.reviewed || reviewingId === alert.id"
+                  (click)="markAsReviewed(alert)">
+                  <i
+                    class="fas"
+                    [class.fa-spinner]="reviewingId === alert.id"
+                    [class.fa-spin]="reviewingId === alert.id"
+                    [class.fa-check]="reviewingId !== alert.id">
+                  </i>
+                  {{ (alert.reviewed ? 'specialistAlerts.actions.alreadyReviewed' : 'specialistAlerts.actions.markReviewed') | translate }}
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div
+    class="toast"
+    [class.show]="showToast"
+    [class.toast-success]="toastType === 'success'"
+    [class.toast-error]="toastType === 'error'">
+    <i [class]="toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i>
+    {{ toastMessage | translate }}
+  </div>
+</div>

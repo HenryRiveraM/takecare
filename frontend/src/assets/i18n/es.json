@@ -339,7 +339,8 @@
       "editProfile": "Editar perfil",
       "documents": "Biblioteca",
       "files": "Mis archivos",
-      "carePlans": "Mi seguimiento"
+      "carePlans": "Mi seguimiento",
+      "emotionalLog": "Bitácora emocional"
     },
     "searchPlaceholder": "Buscar especialistas...",
     "newAppointment": "Nueva Cita",
@@ -373,6 +374,79 @@
       "title": "Próximas consultas",
       "text": "Aquí aparecerán los detalles de tus sesiones agendadas.",
       "link": "¡Explora especialistas para comenzar!"
+    }
+  },
+
+  "emotionalLog": {
+    "tag": "Registro emocional",
+    "title": "Bitácora emocional",
+    "subtitle": "Registra cómo te sientes hoy y revisa tu evolución de forma clara.",
+    "recordsCount": "registros",
+    "loading": "Cargando tu historial emocional...",
+    "hero": {
+      "tag": "Un momento para ti",
+      "title": "Tu estado emocional también merece seguimiento",
+      "text": "Este espacio te ayuda a reconocer patrones de ánimo, ansiedad y estrés. Comparte lo que consideres útil para tu proceso."
+    },
+    "form": {
+      "title": "Registrar estado de ánimo",
+      "subtitle": "Completa el formulario con calma. Puedes registrar una entrada por cada momento que quieras recordar.",
+      "moodLabel": "¿Cómo te sientes?",
+      "moodHelper": "Elige la opción que mejor representa tu estado actual.",
+      "moodLevel": "Nivel de ánimo",
+      "moodLevelHelp": "1 es muy bajo y 5 es muy alto.",
+      "anxiety": "Ansiedad",
+      "anxietyHelp": "1 es muy tranquila y 5 es muy intensa.",
+      "stress": "Estrés",
+      "stressHelp": "1 es muy bajo y 5 es muy intenso.",
+      "notes": "Notas personales",
+      "notesPlaceholder": "Ej. Hoy me sentí más tranquilo después de caminar y hablar con alguien de confianza.",
+      "save": "Guardar registro",
+      "saving": "Guardando..."
+    },
+    "moods": {
+      "veryGood": "Muy bien",
+      "good": "Bien",
+      "neutral": "Neutral",
+      "sad": "Triste",
+      "anxious": "Con ansiedad",
+      "unknown": "Sin estado"
+    },
+    "moodHelpers": {
+      "veryGood": "Me siento estable y con ánimo.",
+      "good": "Estoy bien, aunque con algo por atender.",
+      "neutral": "No identifico un cambio fuerte.",
+      "sad": "Me siento bajo o sensible.",
+      "anxious": "Siento tensión, alerta o preocupación."
+    },
+    "summary": {
+      "title": "Resumen visual",
+      "text": "Promedios de tus registros cargados para mirar tendencias rápidas.",
+      "mood": "Ánimo",
+      "anxiety": "Ansiedad",
+      "stress": "Estrés"
+    },
+    "history": {
+      "title": "Historial de registros",
+      "subtitle": "Tus entradas más recientes aparecen primero.",
+      "mood": "Ánimo",
+      "anxiety": "Ansiedad",
+      "stress": "Estrés",
+      "noNotes": "Sin notas adicionales."
+    },
+    "empty": {
+      "title": "Aún no tienes registros",
+      "text": "Cuando guardes tu primer estado emocional, aparecerá aquí como parte de tu historial."
+    },
+    "toast": {
+      "saved": "Registro emocional guardado correctamente."
+    },
+    "errors": {
+      "noPatient": "No se pudo identificar al paciente actual.",
+      "load": "No se pudo cargar el historial emocional.",
+      "save": "No se pudo guardar el registro emocional.",
+      "formInvalid": "Selecciona un estado de ánimo antes de guardar.",
+      "moodRequired": "Selecciona cómo te sientes para continuar."
     }
   },
 
@@ -981,7 +1055,8 @@
       "editProfile": "Editar perfil",
       "appointments": "Citas",
       "resources": "Recursos",
-      "carePlans": "Planes de atencion"
+      "carePlans": "Planes de atencion",
+      "alerts": "Alertas preventivas"
     },
     "searchPlaceholder": "Buscar pacientes...",
     "newSession": "Nueva sesión",
@@ -1010,6 +1085,65 @@
     "section": {
       "title": "Próximas citas",
       "text": "Aquí se mostrarán las sesiones del especialista."
+    }
+  },
+
+  "specialistAlerts": {
+    "tag": "Alertas preventivas",
+    "title": "Tablero de alertas del especialista",
+    "subtitle": "Revisa señales importantes detectadas en tus pacientes sin generar alarma innecesaria.",
+    "loading": "Cargando alertas preventivas...",
+    "hero": {
+      "tag": "Seguimiento clinico",
+      "title": "Detecta patrones criticos a tiempo",
+      "text": "Este tablero clasifica alertas por prioridad y propone mensajes preventivos para orientar el seguimiento de cada paciente."
+    },
+    "summary": {
+      "high": "Prioridad alta",
+      "medium": "Prioridad media",
+      "low": "Prioridad baja",
+      "pending": "Pendientes por revisar"
+    },
+    "board": {
+      "title": "Alertas de pacientes",
+      "subtitle": "Prioriza la revision segun la severidad y marca cada alerta como revisada cuando termines."
+    },
+    "filters": {
+      "status": "Estado",
+      "priority": "Prioridad",
+      "pending": "Pendientes",
+      "reviewed": "Revisadas",
+      "allStatuses": "Todos los estados",
+      "allPriorities": "Todas las prioridades"
+    },
+    "priorities": {
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    },
+    "status": {
+      "reviewed": "Revisada"
+    },
+    "fields": {
+      "patient": "Paciente",
+      "alertType": "Tipo de alerta"
+    },
+    "actions": {
+      "viewPatients": "Ver pacientes",
+      "markReviewed": "Marcar como revisada",
+      "alreadyReviewed": "Ya revisada"
+    },
+    "empty": {
+      "title": "No hay alertas para mostrar",
+      "text": "Cuando el sistema detecte patrones preventivos, apareceran aqui con su prioridad."
+    },
+    "toast": {
+      "reviewed": "Alerta marcada como revisada."
+    },
+    "errors": {
+      "noSpecialist": "No se pudo identificar al especialista actual.",
+      "load": "No se pudieron cargar las alertas preventivas.",
+      "review": "No se pudo marcar la alerta como revisada."
     }
   },
 
@@ -1044,6 +1178,15 @@
     "followUpActivities": "Actividades asignadas",
     "followUpEmptyTitle": "No tienes planes de seguimiento asignados.",
     "followUpEmptyText": "Cuando tu especialista cree un plan de atencion, aparecera en esta seccion.",
+    "followUpNoActivitiesTitle": "Este plan aun no tiene actividades",
+    "followUpNoActivitiesText": "Cuando tu especialista agregue actividades, podras marcarlas como completadas desde aqui.",
+    "followUpOverview": {
+      "activePlan": "Plan activo",
+      "progress": "Progreso del plan",
+      "completed": "Actividades completadas",
+      "pending": "Pendientes",
+      "progressHelp": "El progreso se actualiza segun las actividades completadas del plan."
+    },
     "followUpLocked": {
       "paused": "Este plan esta pausado. No puedes completar actividades por el momento.",
       "completed": "Este plan fue completado. Ya no puedes modificar actividades.",
@@ -1227,7 +1370,7 @@
     },
     "dashboard": {
       "title": "Panel de progreso",
-      "rangeLabel": "Promedio de los últimos {{days}} días",
+      "rangeLabel": "Promedio de los últimos {{count}} días",
       "loadingEmotional": "Cargando estado emocional...",
       "mood": "Ánimo promedio",
       "anxiety": "Ansiedad promedio",

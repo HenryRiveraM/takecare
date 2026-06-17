@@ -131,6 +131,24 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
     return (plan?.items || []).filter(item => item.status === 'PENDING' || item.status === 'COMPLETED');
   }
 
+  completedActivities(plan: CarePlan | null): number {
+    return this.activeActivities(plan).filter(item => item.status === 'COMPLETED').length;
+  }
+
+  pendingActivities(plan: CarePlan | null): number {
+    return this.activeActivities(plan).filter(item => item.status === 'PENDING').length;
+  }
+
+  getProgressPercentage(plan: CarePlan | null): number {
+    const progress = Number(plan?.progressPercentage ?? 0);
+
+    if (!Number.isFinite(progress)) {
+      return 0;
+    }
+
+    return Math.min(100, Math.max(0, Math.round(progress)));
+  }
+
   getSpecialistName(plan: CarePlan | null): string {
     return plan?.specialistName || 'carePlans.notAvailable';
   }

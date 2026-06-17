@@ -1,11 +1,11 @@
 <section class="progress-dashboard">
   <div class="dashboard-heading-row">
     <h3 class="dashboard-heading">
-      <i class="fas fa-chart-line"></i>
-      {{ 'carePlans.dashboard.title' | translate }}
+        <i class="fas fa-chart-line"></i>
+        {{ 'carePlans.dashboard.title' | translate }}
     </h3>
     <span class="dashboard-range" *ngIf="emotionalSummary">
-      {{ 'carePlans.dashboard.rangeLabel' | translate: { days: emotionalSummary.rangeDays } }}
+        {{ 'carePlans.dashboard.rangeLabel' | translate: { count: emotionalSummary.totalRecords } }}
     </span>
   </div>
 

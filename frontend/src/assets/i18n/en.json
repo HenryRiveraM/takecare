@@ -335,7 +335,8 @@
       "editProfile": "Edit profile",
       "documents": "Library",
       "files": "My files",
-      "carePlans": "My follow-up"
+      "carePlans": "My follow-up",
+      "emotionalLog": "Emotional log"
     },
     "searchPlaceholder": "Search specialists...",
     "newAppointment": "New Appointment",
@@ -369,6 +370,79 @@
       "title": "Upcoming consultations",
       "text": "Your scheduled session details will appear here.",
       "link": "Explore specialists to get started!"
+    }
+  },
+
+  "emotionalLog": {
+    "tag": "Emotional record",
+    "title": "Emotional log",
+    "subtitle": "Record how you feel today and review your evolution clearly.",
+    "recordsCount": "records",
+    "loading": "Loading your emotional history...",
+    "hero": {
+      "tag": "A moment for you",
+      "title": "Your emotional state deserves follow-up too",
+      "text": "This space helps you recognize mood, anxiety, and stress patterns. Share whatever feels useful for your process."
+    },
+    "form": {
+      "title": "Record mood",
+      "subtitle": "Complete the form calmly. You can create an entry for each moment you want to remember.",
+      "moodLabel": "How do you feel?",
+      "moodHelper": "Choose the option that best represents your current state.",
+      "moodLevel": "Mood level",
+      "moodLevelHelp": "1 is very low and 5 is very high.",
+      "anxiety": "Anxiety",
+      "anxietyHelp": "1 is very calm and 5 is very intense.",
+      "stress": "Stress",
+      "stressHelp": "1 is very low and 5 is very intense.",
+      "notes": "Personal notes",
+      "notesPlaceholder": "Example: Today I felt calmer after walking and talking with someone I trust.",
+      "save": "Save record",
+      "saving": "Saving..."
+    },
+    "moods": {
+      "veryGood": "Very good",
+      "good": "Good",
+      "neutral": "Neutral",
+      "sad": "Sad",
+      "anxious": "Anxious",
+      "unknown": "No status"
+    },
+    "moodHelpers": {
+      "veryGood": "I feel stable and encouraged.",
+      "good": "I am doing well, with something to take care of.",
+      "neutral": "I do not notice a strong change.",
+      "sad": "I feel low or sensitive.",
+      "anxious": "I feel tension, alertness, or worry."
+    },
+    "summary": {
+      "title": "Visual summary",
+      "text": "Averages from your loaded records to spot quick trends.",
+      "mood": "Mood",
+      "anxiety": "Anxiety",
+      "stress": "Stress"
+    },
+    "history": {
+      "title": "Record history",
+      "subtitle": "Your most recent entries appear first.",
+      "mood": "Mood",
+      "anxiety": "Anxiety",
+      "stress": "Stress",
+      "noNotes": "No additional notes."
+    },
+    "empty": {
+      "title": "You do not have records yet",
+      "text": "When you save your first emotional state, it will appear here as part of your history."
+    },
+    "toast": {
+      "saved": "Emotional record saved successfully."
+    },
+    "errors": {
+      "noPatient": "Could not identify the current patient.",
+      "load": "Could not load emotional history.",
+      "save": "Could not save the emotional record.",
+      "formInvalid": "Select a mood before saving.",
+      "moodRequired": "Select how you feel to continue."
     }
   },
 
@@ -977,7 +1051,8 @@
       "editProfile": "Edit profile",
       "appointments": "Appointments",
       "resources": "Resources",
-      "carePlans": "Care plans"
+      "carePlans": "Care plans",
+      "alerts": "Preventive alerts"
     },
     "searchPlaceholder": "Search patients...",
     "newSession": "New session",
@@ -1006,6 +1081,65 @@
     "section": {
       "title": "Upcoming appointments",
       "text": "The specialist's sessions will be displayed here."
+    }
+  },
+
+  "specialistAlerts": {
+    "tag": "Preventive alerts",
+    "title": "Specialist alerts dashboard",
+    "subtitle": "Review important patient signals without creating unnecessary alarm.",
+    "loading": "Loading preventive alerts...",
+    "hero": {
+      "tag": "Clinical follow-up",
+      "title": "Detect critical patterns early",
+      "text": "This dashboard classifies alerts by priority and suggests preventive messages to guide each patient's follow-up."
+    },
+    "summary": {
+      "high": "High priority",
+      "medium": "Medium priority",
+      "low": "Low priority",
+      "pending": "Pending review"
+    },
+    "board": {
+      "title": "Patient alerts",
+      "subtitle": "Prioritize review by severity and mark each alert as reviewed when finished."
+    },
+    "filters": {
+      "status": "Status",
+      "priority": "Priority",
+      "pending": "Pending",
+      "reviewed": "Reviewed",
+      "allStatuses": "All statuses",
+      "allPriorities": "All priorities"
+    },
+    "priorities": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "status": {
+      "reviewed": "Reviewed"
+    },
+    "fields": {
+      "patient": "Patient",
+      "alertType": "Alert type"
+    },
+    "actions": {
+      "viewPatients": "View patients",
+      "markReviewed": "Mark as reviewed",
+      "alreadyReviewed": "Already reviewed"
+    },
+    "empty": {
+      "title": "No alerts to show",
+      "text": "When the system detects preventive patterns, they will appear here with their priority."
+    },
+    "toast": {
+      "reviewed": "Alert marked as reviewed."
+    },
+    "errors": {
+      "noSpecialist": "Could not identify the current specialist.",
+      "load": "Could not load preventive alerts.",
+      "review": "Could not mark the alert as reviewed."
     }
   },
 
@@ -1040,6 +1174,15 @@
     "followUpActivities": "Assigned activities",
     "followUpEmptyTitle": "You do not have assigned follow-up plans.",
     "followUpEmptyText": "When your specialist creates a care plan, it will appear in this section.",
+    "followUpNoActivitiesTitle": "This plan does not have activities yet",
+    "followUpNoActivitiesText": "When your specialist adds activities, you will be able to mark them as completed here.",
+    "followUpOverview": {
+      "activePlan": "Active plan",
+      "progress": "Plan progress",
+      "completed": "Completed activities",
+      "pending": "Pending",
+      "progressHelp": "Progress updates according to the completed activities in the plan."
+    },
     "followUpLocked": {
       "paused": "This plan is paused. You cannot complete activities right now.",
       "completed": "This plan has been completed. You can no longer modify activities.",
@@ -1223,7 +1366,7 @@
     },
     "dashboard": {
       "title": "Progress dashboard",
-      "rangeLabel": "Average over the last {{days}} days",
+      "rangeLabel": "Average over the last {{count}} days",
       "loadingEmotional": "Loading emotional state...",
       "mood": "Average mood",
       "anxiety": "Average anxiety",

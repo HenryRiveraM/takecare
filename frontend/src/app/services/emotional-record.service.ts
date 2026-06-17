@@ -1,42 +1,79 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-export interface EmotionalSummary {
-  averageMood: number;
-  averageAnxiety: number;
-  averageStress: number;
-  totalRecords: number;
-  rangeDays: number;
+export interface EmotionalRecordRequest {
+  moodLevel: number;
+  anxietyLevel: number;
+  stressLevel: number;
+  notes?: string;
 }
+
+export interface EmotionalRecord extends EmotionalRecordRequest {
+  id?: number;
+  patientId?: number;
+  createdDate?: string;
+  createdAt?: string;
+  recordDate?: string;
+  updatedAt?: string;
+}
+
+type EmotionalRecordApiResponse = EmotionalRecord[] | { data?: EmotionalRecord[] | EmotionalRecord | null };
+type EmotionalRecordSaveResponse = EmotionalRecord | { data?: EmotionalRecord | null };
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmotionalRecordService {
-
   private readonly baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  // TODO: reemplazar por la llamada real cuando el compañero termine el módulo de registro emocional.
-  // Endpoint esperado: GET /api/v1/patients/{patientId}/emotional-records/summary?rangeDays=30
-  getEmotionalSummary(patientId: number, rangeDays: number = 30): Observable<EmotionalSummary> {
-    const mockSummary: EmotionalSummary = {
-      averageMood: 6.4,
-      averageAnxiety: 4.8,
-      averageStress: 5.2,
-      totalRecords: 12,
-      rangeDays
-    };
+  getRecords(patientId: number): Observable<EmotionalRecord[]> {
+    return this.http
+      .get<EmotionalRecordApiResponse>(`${this.baseUrl}/api/v1/patients/${patientId}/emotional-records`)
+      .pipe(
+        map(response => {
+          if (Array.isArray(response)) {
+            return response;
+          }
+          if (Array.isArray(response?.data)) {
+            return response.data;
+          }
+          return [];
+        })
+      );
+  }
 
-    return of(mockSummary).pipe(delay(400));
+  createRecord(patientId: number, payload: EmotionalRecordRequest): Observable<EmotionalRecord> {
+    return this.http
+      .post<EmotionalRecordSaveResponse>(`${this.baseUrl}/api/v1/patients/${patientId}/emotional-records`, payload)
+      .pipe(
+        map(response => {
+          if ('data' in Object(response)) {
+            return (response as { data?: EmotionalRecord | null }).data || payload;
+          }
+          return response as EmotionalRecord;
+        })
+      );
+  }
 
-    // return this.http.get<EmotionalSummary>(
-    //   `${this.baseUrl}/api/v1/patients/${patientId}/emotional-records/summary`,
-    //   { params: { rangeDays } }
-    // );
+  getRecordsForSpecialist(specialistId: number, patientId: number): Observable<EmotionalRecord[]> {
+    return this.http
+      .get<EmotionalRecordApiResponse>(
+        `${this.baseUrl}/api/v1/specialists/${specialistId}/patients/${patientId}/emotional-records`
+      )
+      .pipe(
+        map(response => {
+          if (Array.isArray(response)) {
+            return response;
+          }
+          if (Array.isArray(response?.data)) {
+            return response.data;
+          }
+          return [];
+        })
+      );
   }
 }
