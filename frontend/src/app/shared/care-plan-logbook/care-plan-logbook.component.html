@@ -1,0 +1,76 @@
+<section class="logbook-section">
+  <button type="button" class="logbook-toggle" (click)="toggleExpand()">
+    <span class="logbook-toggle-label">
+      <i class="fas fa-comments"></i>
+      {{ 'carePlans.logbook.toggleLabel' | translate }}
+      <span class="logbook-count" *ngIf="loaded">{{ notes.length }}</span>
+    </span>
+    <i [class]="expanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+  </button>
+
+  <div class="logbook-panel" *ngIf="expanded">
+
+    <p class="logbook-subtitle">{{ 'carePlans.logbook.subtitle' | translate }}</p>
+
+    <div class="status-card-mini" *ngIf="loading">
+      <i class="fas fa-spinner fa-spin"></i>
+      {{ 'carePlans.logbook.loading' | translate }}
+    </div>
+
+    <div class="status-card-mini error" *ngIf="errorMsg && !loading">
+      <i class="fas fa-exclamation-circle"></i>
+      {{ errorMsg | translate }}
+    </div>
+
+    <div class="logbook-thread" *ngIf="loaded && !loading">
+      <p class="logbook-empty" *ngIf="!notes.length">
+        {{ 'carePlans.logbook.empty' | translate }}
+      </p>
+
+      <div
+        class="logbook-bubble-row"
+        *ngFor="let note of notes"
+        [class.role-specialist]="note.authorRole === 'SPECIALIST'"
+        [class.role-patient]="note.authorRole === 'PATIENT'">
+
+        <div class="logbook-avatar" [attr.data-role]="note.authorRole">
+          {{ note.authorName.charAt(0) }}
+        </div>
+
+        <div class="logbook-bubble" [attr.data-role]="note.authorRole">
+          <div class="logbook-bubble-header">
+            <strong>{{ note.authorName }}</strong>
+            <span class="logbook-role-tag">{{ getRoleLabel(note.authorRole) | translate }}</span>
+          </div>
+          <p>{{ note.content }}</p>
+          <small>{{ note.createdDate | date:'dd/MM/yyyy HH:mm' }}</small>
+        </div>
+      </div>
+    </div>
+
+    <form class="logbook-form" (ngSubmit)="addNote()">
+      <textarea
+        [(ngModel)]="newNoteContent"
+        name="logbookNote"
+        rows="3"
+        [maxlength]="maxLength"
+        [placeholder]="getPlaceholder()">
+      </textarea>
+
+      <div class="logbook-form-footer">
+        <small class="logbook-char-counter">{{ newNoteContent.length }}/{{ maxLength }}</small>
+
+        <button type="submit" class="logbook-send" [disabled]="saving">
+          <i class="fas" [class.fa-spinner]="saving" [class.fa-spin]="saving" [class.fa-paper-plane]="!saving"></i>
+          {{ (saving ? 'carePlans.logbook.sending' : 'carePlans.logbook.send') | translate }}
+        </button>
+      </div>
+
+      <p class="logbook-form-error" *ngIf="formError">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ formError | translate }}
+      </p>
+    </form>
+
+  </div>
+</section>

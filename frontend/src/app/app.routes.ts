@@ -92,7 +92,6 @@ export const routes: Routes = [
     data: { showNavbar: true }
   },
 
-  
 
   // ADMIN (PROTEGIDO)
   {

@@ -10,11 +10,12 @@ import { CarePlan, CarePlanItem, CarePlanService, CarePlanStatus } from '../../s
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { CarePlanProgressDashboardComponent } from '../../shared/care-plan-progress-dashboard/care-plan-progress-dashboard.component';
+import { CarePlanLogbookComponent } from '../../shared/care-plan-logbook/care-plan-logbook.component';
 
 @Component({
   selector: 'app-patient-care-plans',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent, CarePlanProgressDashboardComponent],
+  imports: [CommonModule, FormsModule, RouterModule, TranslatePipe, SidebarComponent, CarePlanProgressDashboardComponent, CarePlanLogbookComponent],
   templateUrl: './patient-care-plans.component.html',
   styleUrls: ['./patient-care-plans.component.css']
 })
@@ -244,5 +245,9 @@ export class PatientCarePlansComponent implements OnInit, OnDestroy {
         replaceUrl: true
       });
     }, 3000);
+  }
+
+  get currentPatientName(): string {
+    return this.authService.getUser()?.names || '';
   }
 }

@@ -1381,6 +1381,24 @@
       "overdue": "Vencidas",
       "pending": "Pendientes",
       "noTasks": "Este plan aún no tiene actividades"
+    },
+    "logbook": {
+      "toggleLabel": "Ver bitácora de seguimiento",
+      "title": "Bitácora privada de seguimiento",
+      "subtitle": "Notas y observaciones compartidas entre especialista y paciente.",
+      "loading": "Cargando notas...",
+      "loadError": "No se pudieron cargar las notas",
+      "empty": "Aún no hay notas en la bitácora",
+      "roleSpecialist": "Especialista",
+      "rolePatient": "Paciente",
+      "placeholderSpecialist": "Escribe una observación clínica...",
+      "placeholderPatient": "Escribe un comentario sobre tu seguimiento...",
+      "send": "Enviar",
+      "sending": "Enviando...",
+      "validation": {
+        "tooShort": "La nota debe tener al menos 5 caracteres",
+        "addError": "No se pudo guardar la nota"
+      }
     }
   },
 

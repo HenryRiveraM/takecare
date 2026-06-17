@@ -531,11 +531,8 @@
   margin: 0 24px 20px;
 }
 
-@media (max-width: 768px) {
-  .dashboard-wrapper {
-    margin-left: 16px;
-    margin-right: 16px;
-  }
+.logbook-wrapper {
+  margin: 0 24px 20px;
 }
 
 @media (max-width: 980px) {
@@ -576,6 +573,16 @@
 
   .dates-row,
   .activities-section {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .dashboard-wrapper {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .logbook-wrapper {
     margin-left: 16px;
     margin-right: 16px;
   }

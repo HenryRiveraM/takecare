@@ -1,0 +1,247 @@
+.logbook-section {
+  display: grid;
+  gap: 12px;
+}
+
+.logbook-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 13px 16px;
+  border: 1px solid #edf2f1;
+  border-radius: 14px;
+  background: white;
+  color: #3a5c53;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.logbook-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.logbook-toggle i:first-child,
+.logbook-toggle-label i {
+  color: #72a092;
+}
+
+.logbook-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #f0f4f3;
+  color: #3a5c53;
+  font-size: 0.74rem;
+}
+
+.logbook-panel {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #edf2f1;
+  border-radius: 14px;
+  background: #f8faf9;
+}
+
+.logbook-subtitle {
+  margin: 0;
+  color: #6d817c;
+  font-size: 0.84rem;
+}
+
+.status-card-mini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 12px;
+  background: white;
+  color: #597b72;
+  font-size: 0.86rem;
+}
+
+.status-card-mini.error {
+  color: #b94141;
+  background: #fef2f2;
+}
+
+.logbook-thread {
+  display: grid;
+  gap: 12px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.logbook-empty {
+  margin: 0;
+  padding: 18px;
+  text-align: center;
+  color: #97a7a3;
+  font-size: 0.86rem;
+}
+
+.logbook-bubble-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.logbook-bubble-row.role-patient {
+  flex-direction: row-reverse;
+}
+
+.logbook-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: white;
+  font-weight: 800;
+  font-size: 0.86rem;
+}
+
+.logbook-avatar[data-role="SPECIALIST"] {
+  background: linear-gradient(135deg, #9fc6b8, #72a092);
+}
+
+.logbook-avatar[data-role="PATIENT"] {
+  background: linear-gradient(135deg, #f8caca, #f5a3a3);
+}
+
+.logbook-bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 16px;
+}
+
+.logbook-bubble[data-role="SPECIALIST"] {
+  background: #e9f4ef;
+  border: 1px solid #d3e8e0;
+  border-top-left-radius: 4px;
+}
+
+.logbook-bubble[data-role="PATIENT"] {
+  background: #fff1f3;
+  border: 1px solid #f6c8d0;
+  border-top-right-radius: 4px;
+}
+
+.logbook-bubble-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.logbook-bubble-header strong {
+  color: #1f2937;
+  font-size: 0.86rem;
+}
+
+.logbook-role-tag {
+  color: #80938e;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.logbook-bubble p {
+  margin: 0;
+  color: #334155;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.logbook-bubble small {
+  display: block;
+  margin-top: 6px;
+  color: #80938e;
+  font-size: 0.72rem;
+}
+
+.logbook-form {
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #e2ece8;
+}
+
+.logbook-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1.5px solid #e2ece8;
+  border-radius: 12px;
+  padding: 11px 13px;
+  background: white;
+  color: #1f2937;
+  font: inherit;
+  outline: none;
+}
+
+.logbook-form textarea:focus {
+  border-color: #72a092;
+  box-shadow: 0 0 0 3px rgba(114, 160, 146, 0.14);
+}
+
+.logbook-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logbook-char-counter {
+  color: #80938e;
+  font-size: 0.74rem;
+}
+
+.logbook-send {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: #72a092;
+  color: white;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.logbook-send:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.logbook-form-error {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: #b94141;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .logbook-bubble {
+    max-width: 88%;
+  }
+}

@@ -1377,6 +1377,24 @@
       "overdue": "Overdue",
       "pending": "Pending",
       "noTasks": "This plan has no activities yet"
+    },
+    "logbook": {
+      "toggleLabel": "View follow-up logbook",
+      "title": "Private follow-up logbook",
+      "subtitle": "Notes and observations shared between specialist and patient.",
+      "loading": "Loading notes...",
+      "loadError": "Couldn't load the notes",
+      "empty": "No logbook notes yet",
+      "roleSpecialist": "Specialist",
+      "rolePatient": "Patient",
+      "placeholderSpecialist": "Write a clinical observation...",
+      "placeholderPatient": "Write a comment about your follow-up...",
+      "send": "Send",
+      "sending": "Sending...",
+      "validation": {
+        "tooShort": "The note must be at least 5 characters long",
+        "addError": "Couldn't save the note"
+      }
     }
   },
 
