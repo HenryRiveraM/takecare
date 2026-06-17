@@ -126,7 +126,7 @@ export class SpecialistAlertsComponent implements OnInit, OnDestroy {
   }
 
   getAlertDate(alert: SpecialistAlert): Date | null {
-    const value = alert.detectedAt || alert.createdAt || alert.reviewedAt;
+    const value = alert.detectedAt || alert.createdDate || alert.createdAt || alert.reviewedAt;
     return value ? new Date(value) : null;
   }
 

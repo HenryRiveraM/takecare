@@ -12,9 +12,10 @@ export interface SpecialistAlert {
   priority: AlertPriority;
   title: string;
   message: string;
-  recommendation?: string;
-  source?: string;
+  alertType?: string;
+  status?: 'OPEN' | 'REVIEWED' | string;
   detectedAt?: string;
+  createdDate?: string;
   createdAt?: string;
   reviewed?: boolean;
   reviewedAt?: string | null;
@@ -32,7 +33,7 @@ export class SpecialistAlertsService {
 
   getAlerts(specialistId: number): Observable<SpecialistAlert[]> {
     return this.http
-      .get<SpecialistAlertsApiResponse>(`${this.baseUrl}/api/v1/specialists/${specialistId}/patient-alerts`)
+      .get<SpecialistAlertsApiResponse>(`${this.baseUrl}/api/v1/specialists/${specialistId}/preventive-alerts`)
       .pipe(
         map(response => {
           const alerts = Array.isArray(response) ? response : response?.data || [];
@@ -41,20 +42,23 @@ export class SpecialistAlertsService {
       );
   }
 
-  markAsReviewed(specialistId: number, alertId: number): Observable<SpecialistAlert> {
+  markAsReviewed(_specialistId: number, alertId: number): Observable<SpecialistAlert> {
     return this.http
       .patch<SpecialistAlert>(
-        `${this.baseUrl}/api/v1/specialists/${specialistId}/patient-alerts/${alertId}/reviewed`,
+        `${this.baseUrl}/api/v1/preventive-alerts/${alertId}/reviewed`,
         {}
       )
       .pipe(map(alert => this.normalizeAlert(alert)));
   }
 
   private normalizeAlert(alert: SpecialistAlert): SpecialistAlert {
+    const status = String(alert.status || '').toUpperCase();
+
     return {
       ...alert,
       priority: this.normalizePriority(alert.priority),
-      reviewed: Boolean(alert.reviewed)
+      status,
+      reviewed: Boolean(alert.reviewed) || status === 'REVIEWED'
     };
   }
 

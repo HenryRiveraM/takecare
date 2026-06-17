@@ -382,19 +382,19 @@
     "hero": {
       "tag": "A moment for you",
       "title": "Your emotional state deserves follow-up too",
-      "text": "This space helps you recognize mood, energy, anxiety, and rest patterns. Share whatever feels useful for your process."
+      "text": "This space helps you recognize mood, anxiety, and stress patterns. Share whatever feels useful for your process."
     },
     "form": {
       "title": "Record mood",
       "subtitle": "Complete the form calmly. You can create an entry for each moment you want to remember.",
       "moodLabel": "How do you feel?",
       "moodHelper": "Choose the option that best represents your current state.",
-      "energy": "Energy",
-      "energyHelp": "1 is very low and 5 is very high.",
+      "moodLevel": "Mood level",
+      "moodLevelHelp": "1 is very low and 5 is very high.",
       "anxiety": "Anxiety",
       "anxietyHelp": "1 is very calm and 5 is very intense.",
-      "sleep": "Rest",
-      "sleepHelp": "1 is poor rest and 5 is restorative rest.",
+      "stress": "Stress",
+      "stressHelp": "1 is very low and 5 is very intense.",
       "notes": "Personal notes",
       "notesPlaceholder": "Example: Today I felt calmer after walking and talking with someone I trust.",
       "save": "Save record",
@@ -418,16 +418,16 @@
     "summary": {
       "title": "Visual summary",
       "text": "Averages from your loaded records to spot quick trends.",
-      "energy": "Energy",
+      "mood": "Mood",
       "anxiety": "Anxiety",
-      "sleep": "Rest"
+      "stress": "Stress"
     },
     "history": {
       "title": "Record history",
       "subtitle": "Your most recent entries appear first.",
-      "energy": "Energy",
+      "mood": "Mood",
       "anxiety": "Anxiety",
-      "sleep": "Rest",
+      "stress": "Stress",
       "noNotes": "No additional notes."
     },
     "empty": {
@@ -439,7 +439,7 @@
     },
     "errors": {
       "noPatient": "Could not identify the current patient.",
-      "load": "Could not load emotional history. If the backend does not have this endpoint yet, the screen is already ready to connect.",
+      "load": "Could not load emotional history.",
       "save": "Could not save the emotional record.",
       "formInvalid": "Select a mood before saving.",
       "moodRequired": "Select how you feel to continue."
@@ -1122,8 +1122,7 @@
     },
     "fields": {
       "patient": "Patient",
-      "recommendation": "Preventive recommendation",
-      "source": "Source"
+      "alertType": "Alert type"
     },
     "actions": {
       "viewPatients": "View patients",
@@ -1139,7 +1138,7 @@
     },
     "errors": {
       "noSpecialist": "Could not identify the current specialist.",
-      "load": "Could not load alerts. If the backend does not have this endpoint yet, the dashboard is already ready to connect.",
+      "load": "Could not load preventive alerts.",
       "review": "Could not mark the alert as reviewed."
     }
   },

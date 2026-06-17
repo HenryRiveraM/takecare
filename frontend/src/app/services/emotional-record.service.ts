@@ -3,21 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-export type EmotionalMood = 'VERY_GOOD' | 'GOOD' | 'NEUTRAL' | 'SAD' | 'ANXIOUS';
-
 export interface EmotionalRecordRequest {
-  mood: EmotionalMood;
-  energyLevel: number;
+  moodLevel: number;
   anxietyLevel: number;
-  sleepQuality: number;
+  stressLevel: number;
   notes?: string;
 }
 
 export interface EmotionalRecord extends EmotionalRecordRequest {
   id?: number;
   patientId?: number;
-  recordDate?: string;
+  createdDate?: string;
   createdAt?: string;
+  recordDate?: string;
   updatedAt?: string;
 }
 
@@ -60,6 +58,26 @@ export class EmotionalRecordService {
           }
 
           return response as EmotionalRecord;
+        })
+      );
+  }
+
+  getRecordsForSpecialist(specialistId: number, patientId: number): Observable<EmotionalRecord[]> {
+    return this.http
+      .get<EmotionalRecordApiResponse>(
+        `${this.baseUrl}/api/v1/specialists/${specialistId}/patients/${patientId}/emotional-records`
+      )
+      .pipe(
+        map(response => {
+          if (Array.isArray(response)) {
+            return response;
+          }
+
+          if (Array.isArray(response?.data)) {
+            return response.data;
+          }
+
+          return [];
         })
       );
   }

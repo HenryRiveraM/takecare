@@ -127,14 +127,9 @@
                 <strong>{{ alert.patientName }}</strong>
               </div>
 
-              <div class="recommendation" *ngIf="alert.recommendation">
-                <span>{{ 'specialistAlerts.fields.recommendation' | translate }}</span>
-                <p>{{ alert.recommendation }}</p>
-              </div>
-
               <div class="alert-footer">
-                <small *ngIf="alert.source">
-                  {{ 'specialistAlerts.fields.source' | translate }}: {{ alert.source }}
+                <small *ngIf="alert.alertType">
+                  {{ 'specialistAlerts.fields.alertType' | translate }}: {{ alert.alertType }}
                 </small>
 
                 <button

@@ -5,7 +5,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import { AuthService } from '../../services/auth.service';
 import {
-  EmotionalMood,
   EmotionalRecord,
   EmotionalRecordRequest,
   EmotionalRecordService
@@ -14,7 +13,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 
 interface MoodOption {
-  value: EmotionalMood;
+  value: number;
   icon: string;
   labelKey: string;
   helperKey: string;
@@ -43,31 +42,31 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
 
   readonly moodOptions: MoodOption[] = [
     {
-      value: 'VERY_GOOD',
+      value: 5,
       icon: 'sentiment_very_satisfied',
       labelKey: 'emotionalLog.moods.veryGood',
       helperKey: 'emotionalLog.moodHelpers.veryGood'
     },
     {
-      value: 'GOOD',
+      value: 4,
       icon: 'sentiment_satisfied',
       labelKey: 'emotionalLog.moods.good',
       helperKey: 'emotionalLog.moodHelpers.good'
     },
     {
-      value: 'NEUTRAL',
+      value: 3,
       icon: 'sentiment_neutral',
       labelKey: 'emotionalLog.moods.neutral',
       helperKey: 'emotionalLog.moodHelpers.neutral'
     },
     {
-      value: 'SAD',
+      value: 2,
       icon: 'sentiment_dissatisfied',
       labelKey: 'emotionalLog.moods.sad',
       helperKey: 'emotionalLog.moodHelpers.sad'
     },
     {
-      value: 'ANXIOUS',
+      value: 1,
       icon: 'psychology_alt',
       labelKey: 'emotionalLog.moods.anxious',
       helperKey: 'emotionalLog.moodHelpers.anxious'
@@ -75,10 +74,9 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
   ];
 
   emotionalForm = this.fb.nonNullable.group({
-    mood: ['', Validators.required],
-    energyLevel: [3, [Validators.required, Validators.min(1), Validators.max(5)]],
+    moodLevel: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
     anxietyLevel: [3, [Validators.required, Validators.min(1), Validators.max(5)]],
-    sleepQuality: [3, [Validators.required, Validators.min(1), Validators.max(5)]],
+    stressLevel: [3, [Validators.required, Validators.min(1), Validators.max(5)]],
     notes: ['', [Validators.maxLength(280)]]
   });
 
@@ -105,9 +103,9 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     if (this.toastTimer) clearTimeout(this.toastTimer);
   }
 
-  selectMood(mood: EmotionalMood): void {
-    this.emotionalForm.controls.mood.setValue(mood);
-    this.emotionalForm.controls.mood.markAsTouched();
+  selectMood(moodLevel: number): void {
+    this.emotionalForm.controls.moodLevel.setValue(moodLevel);
+    this.emotionalForm.controls.moodLevel.markAsTouched();
   }
 
   saveRecord(): void {
@@ -124,10 +122,9 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
 
     const value = this.emotionalForm.getRawValue();
     const payload: EmotionalRecordRequest = {
-      mood: value.mood as EmotionalMood,
-      energyLevel: Number(value.energyLevel),
+      moodLevel: Number(value.moodLevel),
       anxietyLevel: Number(value.anxietyLevel),
-      sleepQuality: Number(value.sleepQuality),
+      stressLevel: Number(value.stressLevel),
       notes: value.notes.trim() || undefined
     };
 
@@ -137,10 +134,9 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
       next: saved => {
         this.records = this.sortRecords([saved, ...this.records]);
         this.emotionalForm.reset({
-          mood: '',
-          energyLevel: 3,
+          moodLevel: 0,
           anxietyLevel: 3,
-          sleepQuality: 3,
+          stressLevel: 3,
           notes: ''
         });
         this.saving = false;
@@ -153,15 +149,15 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     });
   }
 
-  getMoodLabel(mood: string | undefined): string {
-    return this.moodOptions.find(option => option.value === mood)?.labelKey || 'emotionalLog.moods.unknown';
+  getMoodLabel(moodLevel: number | undefined): string {
+    return this.moodOptions.find(option => option.value === Number(moodLevel || 0))?.labelKey || 'emotionalLog.moods.unknown';
   }
 
-  getMoodIcon(mood: string | undefined): string {
-    return this.moodOptions.find(option => option.value === mood)?.icon || 'sentiment_neutral';
+  getMoodIcon(moodLevel: number | undefined): string {
+    return this.moodOptions.find(option => option.value === Number(moodLevel || 0))?.icon || 'sentiment_neutral';
   }
 
-  getAverage(field: 'energyLevel' | 'anxietyLevel' | 'sleepQuality'): number {
+  getAverage(field: 'moodLevel' | 'anxietyLevel' | 'stressLevel'): number {
     if (!this.records.length) {
       return 0;
     }
@@ -171,12 +167,12 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
   }
 
   getRecordDate(record: EmotionalRecord): Date | null {
-    const rawDate = record.createdAt || record.recordDate || record.updatedAt;
+    const rawDate = record.createdDate || record.createdAt || record.recordDate || record.updatedAt;
     return rawDate ? new Date(rawDate) : null;
   }
 
   trackByRecord(index: number, record: EmotionalRecord): number | string {
-    return record.id ?? `${record.mood}-${record.createdAt || record.recordDate || index}`;
+    return record.id ?? `${record.moodLevel}-${record.createdDate || record.createdAt || record.recordDate || index}`;
   }
 
   private loadRecords(): void {
