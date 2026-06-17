@@ -386,19 +386,19 @@
     "hero": {
       "tag": "Un momento para ti",
       "title": "Tu estado emocional también merece seguimiento",
-      "text": "Este espacio te ayuda a reconocer patrones de ánimo, energía, ansiedad y descanso. Comparte lo que consideres útil para tu proceso."
+      "text": "Este espacio te ayuda a reconocer patrones de ánimo, ansiedad y estrés. Comparte lo que consideres útil para tu proceso."
     },
     "form": {
       "title": "Registrar estado de ánimo",
       "subtitle": "Completa el formulario con calma. Puedes registrar una entrada por cada momento que quieras recordar.",
       "moodLabel": "¿Cómo te sientes?",
       "moodHelper": "Elige la opción que mejor representa tu estado actual.",
-      "energy": "Energía",
-      "energyHelp": "1 es muy baja y 5 es muy alta.",
+      "moodLevel": "Nivel de ánimo",
+      "moodLevelHelp": "1 es muy bajo y 5 es muy alto.",
       "anxiety": "Ansiedad",
       "anxietyHelp": "1 es muy tranquila y 5 es muy intensa.",
-      "sleep": "Descanso",
-      "sleepHelp": "1 es descanso deficiente y 5 es descanso reparador.",
+      "stress": "Estrés",
+      "stressHelp": "1 es muy bajo y 5 es muy intenso.",
       "notes": "Notas personales",
       "notesPlaceholder": "Ej. Hoy me sentí más tranquilo después de caminar y hablar con alguien de confianza.",
       "save": "Guardar registro",
@@ -422,16 +422,16 @@
     "summary": {
       "title": "Resumen visual",
       "text": "Promedios de tus registros cargados para mirar tendencias rápidas.",
-      "energy": "Energía",
+      "mood": "Ánimo",
       "anxiety": "Ansiedad",
-      "sleep": "Descanso"
+      "stress": "Estrés"
     },
     "history": {
       "title": "Historial de registros",
       "subtitle": "Tus entradas más recientes aparecen primero.",
-      "energy": "Energía",
+      "mood": "Ánimo",
       "anxiety": "Ansiedad",
-      "sleep": "Descanso",
+      "stress": "Estrés",
       "noNotes": "Sin notas adicionales."
     },
     "empty": {
@@ -443,7 +443,7 @@
     },
     "errors": {
       "noPatient": "No se pudo identificar al paciente actual.",
-      "load": "No se pudo cargar el historial emocional. Si el backend aún no tiene este endpoint, la pantalla ya queda lista para conectarse.",
+      "load": "No se pudo cargar el historial emocional.",
       "save": "No se pudo guardar el registro emocional.",
       "formInvalid": "Selecciona un estado de ánimo antes de guardar.",
       "moodRequired": "Selecciona cómo te sientes para continuar."
@@ -1126,8 +1126,7 @@
     },
     "fields": {
       "patient": "Paciente",
-      "recommendation": "Recomendacion preventiva",
-      "source": "Origen"
+      "alertType": "Tipo de alerta"
     },
     "actions": {
       "viewPatients": "Ver pacientes",
@@ -1143,7 +1142,7 @@
     },
     "errors": {
       "noSpecialist": "No se pudo identificar al especialista actual.",
-      "load": "No se pudieron cargar las alertas. Si el backend aun no tiene este endpoint, el tablero ya queda listo para conectarse.",
+      "load": "No se pudieron cargar las alertas preventivas.",
       "review": "No se pudo marcar la alerta como revisada."
     }
   },
