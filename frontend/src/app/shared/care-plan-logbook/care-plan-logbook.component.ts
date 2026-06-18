@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,8 @@ export class CarePlanLogbookComponent implements OnChanges {
   @Input() currentUserRole: LogbookAuthorRole = 'PATIENT';
   @Input() currentUserName = '';
 
-  expanded = false;
+  @ViewChild('threadContainer') private threadContainer!: ElementRef;
+
   loaded = false;
   loading = false;
   errorMsg = '';
@@ -37,17 +38,12 @@ export class CarePlanLogbookComponent implements OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['planId'] && !changes['planId'].firstChange) {
+    if (changes['planId']) {
       this.loaded = false;
       this.notes = [];
-      this.expanded = false;
-    }
-  }
-
-  toggleExpand(): void {
-    this.expanded = !this.expanded;
-    if (this.expanded && !this.loaded) {
-      this.loadNotes();
+      if (this.planId) {
+        this.loadNotes();
+      }
     }
   }
 
@@ -86,6 +82,7 @@ export class CarePlanLogbookComponent implements OnChanges {
         this.notes = [...this.notes, note];
         this.newNoteContent = '';
         this.saving = false;
+        this.scrollToBottom();
       },
       error: () => {
         this.formError = 'carePlans.logbook.validation.addError';
@@ -103,11 +100,22 @@ export class CarePlanLogbookComponent implements OnChanges {
         this.notes = notes;
         this.loaded = true;
         this.loading = false;
+        this.scrollToBottom();
       },
       error: () => {
         this.errorMsg = 'carePlans.logbook.loadError';
         this.loading = false;
       }
     });
+  }
+
+  private scrollToBottom(): void {
+    try {
+      setTimeout(() => {
+        if (this.threadContainer) {
+          this.threadContainer.nativeElement.scrollTop = this.threadContainer.nativeElement.scrollHeight;
+        }
+      }, 50);
+    } catch (err) {}
   }
 }

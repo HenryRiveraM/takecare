@@ -401,19 +401,19 @@
       "saving": "Saving..."
     },
     "moods": {
-      "veryGood": "Very good",
+      "excellent": "Excellent",
       "good": "Good",
       "neutral": "Neutral",
-      "sad": "Sad",
-      "anxious": "Anxious",
+      "low": "Low",
+      "veryLow": "Very low",
       "unknown": "No status"
     },
     "moodHelpers": {
-      "veryGood": "I feel stable and encouraged.",
-      "good": "I am doing well, with something to take care of.",
-      "neutral": "I do not notice a strong change.",
-      "sad": "I feel low or sensitive.",
-      "anxious": "I feel tension, alertness, or worry."
+      "excellent": "I feel full, with high energy, motivated and capable of enjoying the day.",
+      "good": "I feel encouraged, ready to face the day and in a pleasant mood.",
+      "neutral": "Neither good nor bad. A stable day where I can accomplish my tasks without complications.",
+      "low": "I feel sad, irritated, or with low motivation; I struggle to keep up with the pace of the day.",
+      "veryLow": "I feel overwhelmed, without energy and direction, I cannot carry out my activities normally."
     },
     "summary": {
       "title": "Visual summary",

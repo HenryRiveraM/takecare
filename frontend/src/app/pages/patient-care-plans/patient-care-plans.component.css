@@ -531,8 +531,29 @@
   margin: 0 24px 20px;
 }
 
-.logbook-wrapper {
-  margin: 0 24px 20px;
+.care-plan-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1.1fr;
+  gap: 24px;
+  align-items: start;
+  width: 100%;
+}
+
+.care-plan-logbook-column {
+  min-width: 0;
+  position: sticky;
+  top: 110px;
+}
+
+@media (max-width: 1024px) {
+  .care-plan-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .care-plan-logbook-column {
+    position: static;
+  }
 }
 
 @media (max-width: 980px) {
@@ -578,11 +599,6 @@
   }
 
   .dashboard-wrapper {
-    margin-left: 16px;
-    margin-right: 16px;
-  }
-
-  .logbook-wrapper {
     margin-left: 16px;
     margin-right: 16px;
   }

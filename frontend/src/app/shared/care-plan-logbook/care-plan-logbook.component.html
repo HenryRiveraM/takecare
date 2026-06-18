@@ -1,17 +1,20 @@
-<section class="logbook-section">
-  <button type="button" class="logbook-toggle" (click)="toggleExpand()">
-    <span class="logbook-toggle-label">
-      <i class="fas fa-comments"></i>
-      {{ 'carePlans.logbook.toggleLabel' | translate }}
-      <span class="logbook-count" *ngIf="loaded">{{ notes.length }}</span>
-    </span>
-    <i [class]="expanded ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
-  </button>
-
-  <div class="logbook-panel" *ngIf="expanded">
-
+<section class="logbook-card">
+  <header class="logbook-header">
+    <div class="logbook-header-title">
+      <div class="logbook-icon-wrapper">
+        <i class="fas fa-comments"></i>
+      </div>
+      <div>
+        <h2>{{ 'carePlans.logbook.title' | translate }}</h2>
+        <span class="logbook-count" *ngIf="loaded && notes.length > 0">
+          {{ notes.length }} {{ (notes.length === 1 ? 'mensaje' : 'mensajes') }}
+        </span>
+      </div>
+    </div>
     <p class="logbook-subtitle">{{ 'carePlans.logbook.subtitle' | translate }}</p>
+  </header>
 
+  <div class="logbook-body">
     <div class="status-card-mini" *ngIf="loading">
       <i class="fas fa-spinner fa-spin"></i>
       {{ 'carePlans.logbook.loading' | translate }}
@@ -22,7 +25,7 @@
       {{ errorMsg | translate }}
     </div>
 
-    <div class="logbook-thread" *ngIf="loaded && !loading">
+    <div class="logbook-thread" #threadContainer *ngIf="loaded && !loading">
       <p class="logbook-empty" *ngIf="!notes.length">
         {{ 'carePlans.logbook.empty' | translate }}
       </p>
@@ -30,6 +33,7 @@
       <div
         class="logbook-bubble-row"
         *ngFor="let note of notes"
+        [class.is-mine]="isMine(note)"
         [class.role-specialist]="note.authorRole === 'SPECIALIST'"
         [class.role-patient]="note.authorRole === 'PATIENT'">
 
@@ -48,7 +52,7 @@
       </div>
     </div>
 
-    <form class="logbook-form" (ngSubmit)="addNote()">
+    <form class="logbook-form" (ngSubmit)="addNote()" *ngIf="loaded && !loading">
       <textarea
         [(ngModel)]="newNoteContent"
         name="logbookNote"
@@ -60,7 +64,7 @@
       <div class="logbook-form-footer">
         <small class="logbook-char-counter">{{ newNoteContent.length }}/{{ maxLength }}</small>
 
-        <button type="submit" class="logbook-send" [disabled]="saving">
+        <button type="submit" class="logbook-send" [disabled]="saving || newNoteContent.trim().length < minLength">
           <i class="fas" [class.fa-spinner]="saving" [class.fa-spin]="saving" [class.fa-paper-plane]="!saving"></i>
           {{ (saving ? 'carePlans.logbook.sending' : 'carePlans.logbook.send') | translate }}
         </button>
@@ -71,6 +75,5 @@
         {{ formError | translate }}
       </p>
     </form>
-
   </div>
 </section>

@@ -1,60 +1,73 @@
-.logbook-section {
-  display: grid;
+.logbook-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid #edf2f1;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(58, 92, 83, 0.05);
+  overflow: hidden;
+  height: 100%;
+}
+
+.logbook-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #edf2f1;
+  background: linear-gradient(135deg, #ffffff, #f9fbfb);
+}
+
+.logbook-header-title {
+  display: flex;
+  align-items: center;
   gap: 12px;
 }
 
-.logbook-toggle {
+.logbook-icon-wrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 13px 16px;
-  border: 1px solid #edf2f1;
-  border-radius: 14px;
-  background: white;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: #e9f4ef;
   color: #3a5c53;
-  font: inherit;
+  border-radius: 10px;
+  font-size: 1.1rem;
+}
+
+.logbook-header-title h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.15rem;
   font-weight: 800;
-  cursor: pointer;
-}
-
-.logbook-toggle-label {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.logbook-toggle i:first-child,
-.logbook-toggle-label i {
-  color: #72a092;
+  letter-spacing: -0.3px;
 }
 
 .logbook-count {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 6px;
-  border-radius: 999px;
-  background: #f0f4f3;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #e2ece8;
   color: #3a5c53;
-  font-size: 0.74rem;
-}
-
-.logbook-panel {
-  display: grid;
-  gap: 14px;
-  padding: 16px;
-  border: 1px solid #edf2f1;
-  border-radius: 14px;
-  background: #f8faf9;
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-left: 8px;
+  text-transform: lowercase;
 }
 
 .logbook-subtitle {
-  margin: 0;
-  color: #6d817c;
-  font-size: 0.84rem;
+  margin: 6px 0 0;
+  color: #72a092;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.logbook-body {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
 }
 
 .status-card-mini {
@@ -62,9 +75,9 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px;
+  padding: 12px;
   border-radius: 12px;
-  background: white;
+  background: #f8faf9;
   color: #597b72;
   font-size: 0.86rem;
 }
@@ -75,28 +88,47 @@
 }
 
 .logbook-thread {
-  display: grid;
-  gap: 12px;
-  max-height: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 400px;
   overflow-y: auto;
-  padding-right: 4px;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: #d3e0db transparent;
+}
+
+/* Custom scrollbar for Webkit browsers */
+.logbook-thread::-webkit-scrollbar {
+  width: 5px;
+}
+
+.logbook-thread::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.logbook-thread::-webkit-scrollbar-thumb {
+  background-color: #d3e0db;
+  border-radius: 10px;
 }
 
 .logbook-empty {
   margin: 0;
-  padding: 18px;
+  padding: 30px 18px;
   text-align: center;
   color: #97a7a3;
   font-size: 0.86rem;
+  font-style: italic;
 }
 
 .logbook-bubble-row {
   display: flex;
   align-items: flex-start;
   gap: 10px;
+  width: 100%;
 }
 
-.logbook-bubble-row.role-patient {
+.logbook-bubble-row.is-mine {
   flex-direction: row-reverse;
 }
 
@@ -104,38 +136,53 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
   border-radius: 50%;
   color: white;
   font-weight: 800;
-  font-size: 0.86rem;
+  font-size: 0.84rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .logbook-avatar[data-role="SPECIALIST"] {
-  background: linear-gradient(135deg, #9fc6b8, #72a092);
+  background: linear-gradient(135deg, #8bc2b0, #5a8a7c);
 }
 
 .logbook-avatar[data-role="PATIENT"] {
-  background: linear-gradient(135deg, #f8caca, #f5a3a3);
+  background: linear-gradient(135deg, #fca5a5, #ec7878);
 }
 
 .logbook-bubble {
   max-width: 75%;
   padding: 10px 14px;
   border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
 }
 
+/* Specialist note style */
 .logbook-bubble[data-role="SPECIALIST"] {
-  background: #e9f4ef;
-  border: 1px solid #d3e8e0;
+  background: #eef7f4;
+  border: 1px solid #d8ede6;
   border-top-left-radius: 4px;
 }
 
+/* Patient note style */
 .logbook-bubble[data-role="PATIENT"] {
-  background: #fff1f3;
-  border: 1px solid #f6c8d0;
+  background: #fff5f6;
+  border: 1px solid #fcdde1;
+  border-top-left-radius: 4px;
+}
+
+/* Adjust radius on the sender's side */
+.logbook-bubble-row.is-mine .logbook-bubble[data-role="SPECIALIST"] {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 4px;
+}
+
+.logbook-bubble-row.is-mine .logbook-bubble[data-role="PATIENT"] {
+  border-top-left-radius: 16px;
   border-top-right-radius: 4px;
 }
 
@@ -143,59 +190,68 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 4px;
 }
 
 .logbook-bubble-header strong {
   color: #1f2937;
-  font-size: 0.86rem;
+  font-size: 0.84rem;
+  font-weight: 700;
 }
 
 .logbook-role-tag {
-  color: #80938e;
-  font-size: 0.7rem;
+  color: #728a83;
+  font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .logbook-bubble p {
   margin: 0;
   color: #334155;
   font-size: 0.88rem;
-  line-height: 1.5;
+  line-height: 1.45;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 
 .logbook-bubble small {
   display: block;
-  margin-top: 6px;
-  color: #80938e;
-  font-size: 0.72rem;
+  margin-top: 5px;
+  color: #8fa29d;
+  font-size: 0.7rem;
+  text-align: right;
 }
 
 .logbook-form {
-  display: grid;
-  gap: 8px;
-  padding-top: 10px;
-  border-top: 1px solid #e2ece8;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid #eef3f1;
 }
 
 .logbook-form textarea {
   width: 100%;
   box-sizing: border-box;
-  resize: vertical;
+  resize: none;
   border: 1.5px solid #e2ece8;
   border-radius: 12px;
-  padding: 11px 13px;
+  padding: 10px 12px;
   background: white;
   color: #1f2937;
   font: inherit;
+  font-size: 0.88rem;
+  line-height: 1.4;
   outline: none;
+  transition: all 0.2s ease;
 }
 
 .logbook-form textarea:focus {
   border-color: #72a092;
-  box-shadow: 0 0 0 3px rgba(114, 160, 146, 0.14);
+  box-shadow: 0 0 0 3px rgba(114, 160, 146, 0.12);
 }
 
 .logbook-form-footer {
@@ -206,7 +262,7 @@
 }
 
 .logbook-char-counter {
-  color: #80938e;
+  color: #8fa29d;
   font-size: 0.74rem;
 }
 
@@ -214,34 +270,41 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 40px;
+  min-height: 38px;
   padding: 0 16px;
   border: 0;
-  border-radius: 12px;
+  border-radius: 10px;
   background: #72a092;
   color: white;
   font: inherit;
-  font-weight: 800;
+  font-weight: 700;
+  font-size: 0.86rem;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logbook-send:hover:not(:disabled) {
+  background: #5c877a;
+  transform: translateY(-1px);
 }
 
 .logbook-send:disabled {
-  opacity: 0.65;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .logbook-form-error {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   margin: 0;
   color: #b94141;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
 @media (max-width: 600px) {
   .logbook-bubble {
-    max-width: 88%;
+    max-width: 85%;
   }
 }

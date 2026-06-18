@@ -50,6 +50,21 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
             join fetch s.schedule sc
             join fetch sc.specialist sp
             join fetch s.patient p
+            where sp.id = :specialistId
+              and p.id = :patientId
+            order by s.createdDate desc
+            """)
+    List<Session> findBySpecialistIdAndPatientIdOrderByCreatedDateDesc(
+            @Param("specialistId") Integer specialistId,
+            @Param("patientId") Integer patientId
+    );
+
+    @Query("""
+            select s
+            from Session s
+            join fetch s.schedule sc
+            join fetch sc.specialist sp
+            join fetch s.patient p
             where s.id = :sessionId
             and p.id = :patientId
             """)

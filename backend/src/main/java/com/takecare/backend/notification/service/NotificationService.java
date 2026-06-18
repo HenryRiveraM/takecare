@@ -14,6 +14,7 @@ import com.takecare.backend.notification.dto.NotificationSocketEventDto;
 import com.takecare.backend.notification.model.Notification;
 import com.takecare.backend.notification.repository.NotificationRepository;
 import com.takecare.backend.session.model.Session;
+import com.takecare.backend.session.repository.SessionRepository;
 
 @Service
 public class NotificationService {
@@ -33,11 +34,14 @@ public class NotificationService {
 
     private final NotificationRepository notificationRepository;
     private final SimpMessagingTemplate messagingTemplate;
+    private final SessionRepository sessionRepository;
 
     public NotificationService(NotificationRepository notificationRepository,
-                               SimpMessagingTemplate messagingTemplate) {
+                               SimpMessagingTemplate messagingTemplate,
+                               SessionRepository sessionRepository) {
         this.notificationRepository = notificationRepository;
         this.messagingTemplate = messagingTemplate;
+        this.sessionRepository = sessionRepository;
     }
 
     @Transactional(readOnly = true)
@@ -115,7 +119,7 @@ public class NotificationService {
     @Transactional
     public NotificationResponseDto createForCarePlan(Integer patientId, Long carePlanId, String description) {
         Notification notification = new Notification();
-        notification.setSession(null);
+        notification.setSession(resolveFallbackSessionForPatient(patientId));
         notification.setCarePlanId(carePlanId);
         notification.setDescription(normalizeDescription(description));
         notification.setType(TYPE_CARE_PLAN_CREATED);
@@ -160,9 +164,34 @@ public class NotificationService {
     }
 
     @Transactional
+    public NotificationResponseDto createForSpecialistCarePlan(Session session, Long carePlanId, String description) {
+        if (session == null) {
+            throw new RuntimeException("No se puede notificar al especialista sin una cita de seguimiento");
+        }
+
+        Notification notification = new Notification();
+        notification.setSession(session);
+        notification.setCarePlanId(carePlanId);
+        notification.setDescription(normalizeDescription(description));
+        notification.setType(TYPE_CARE_PLAN_CREATED);
+        notification.setStatus(STATUS_UNREAD);
+        notification.setCreatedDate(LocalDateTime.now());
+        notification.setReadDate(null);
+
+        Notification saved = notificationRepository.save(notification);
+        NotificationResponseDto response = toResponseDto(saved);
+
+        logger.info("Specialist care plan notification created. notificationId={}, specialistId={}, carePlanId={}, sessionId={}",
+                saved.getId(), response.getSpecialistId(), carePlanId, session.getId());
+
+        publishNotificationEvent(response.getSpecialistId(), EVENT_NOTIFICATION_CREATED, response);
+        return response;
+    }
+
+    @Transactional
     public NotificationResponseDto createItemReminder(Integer patientId, Long carePlanId, Long itemId, String description) {
         Notification notification = new Notification();
-        notification.setSession(null);
+        notification.setSession(resolveFallbackSessionForPatient(patientId));
         notification.setCarePlanId(carePlanId);
         notification.setCarePlanItemId(itemId);
         notification.setDescription(normalizeDescription(description));
@@ -288,5 +317,20 @@ public class NotificationService {
         }
         String normalized = description.trim().replaceAll("\\s+", " ");
         return normalized.length() > 100 ? normalized.substring(0, 100) : normalized;
+    }
+
+    private Session resolveFallbackSessionForPatient(Integer patientId) {
+        if (patientId == null) {
+            return null;
+        }
+        List<Session> sessions = sessionRepository.findByPatientIdOrderByCreatedDateDesc(patientId);
+        if (!sessions.isEmpty()) {
+            return sessions.get(0);
+        }
+        List<Session> allSessions = sessionRepository.findAll();
+        if (!allSessions.isEmpty()) {
+            return allSessions.get(0);
+        }
+        return null;
     }
 }
