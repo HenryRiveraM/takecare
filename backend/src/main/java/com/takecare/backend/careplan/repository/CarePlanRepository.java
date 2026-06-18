@@ -15,4 +15,5 @@ public interface CarePlanRepository extends JpaRepository<CarePlan, Long> {
     boolean existsBySpecialistIdAndPatientId(Integer specialistId, Integer patientId);
 
     Optional<CarePlan> findFirstByPatientIdAndStatusOrderByCreatedDateDesc(Integer patientId, CarePlanStatus status);
+    List<CarePlan> findByStatus(CarePlanStatus status);
 }

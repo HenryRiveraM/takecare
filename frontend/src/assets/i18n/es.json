@@ -370,6 +370,7 @@
     "subtitle": "Registra cómo te sientes hoy y revisa tu evolución de forma clara.",
     "recordsCount": "registros",
     "loading": "Cargando tu historial emocional...",
+    "today": "Hoy",
     "hero": {
       "tag": "Un momento para ti",
       "title": "Tu estado emocional también merece seguimiento",
@@ -433,7 +434,8 @@
       "load": "No se pudo cargar el historial emocional.",
       "save": "No se pudo guardar el registro emocional.",
       "formInvalid": "Selecciona un estado de ánimo antes de guardar.",
-      "moodRequired": "Selecciona cómo te sientes para continuar."
+      "moodRequired": "Selecciona cómo te sientes para continuar.",
+      "alreadyToday": "Ya registraste tu estado emocional hoy. Solo se permite un registro por día."
     }
   },
   "patientProfile": {
@@ -1039,7 +1041,7 @@
     "stats": {
       "patients": "Pacientes",
       "sessionsToday": "Sesiones hoy",
-      "requests": "Solicitudes"
+      "pendingAlerts": "Alertas pendientes"
     },
     "upcoming": {
       "loading": "Cargando resumen y próximas citas...",
@@ -1130,7 +1132,8 @@
     "nextSession": "Próxima sesión",
     "notAvailable": "Sin registro",
     "actions": {
-      "viewPlans": "Ver planes"
+      "viewPlans": "Ver planes",
+      "viewProfile": "Ver perfil"
     },
     "errors": {
       "noSpecialist": "No se pudo identificar al especialista actual.",

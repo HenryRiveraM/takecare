@@ -30,7 +30,15 @@
           </h1>
           <p>{{ 'specialistDashboard.subtitle' | translate }}</p>
         </div>
-        <img src="assets/images/especialista.png" [alt]="'specialistDashboard.tag' | translate">
+        <div class="hero-identity-card">
+          <div class="hero-icon-wrap">
+            <i class="fas fa-user-doctor hero-icon"></i>
+          </div>
+          <div class="hero-role-text">
+            <span class="hero-role-label">Especialista</span>
+            <p class="hero-role-desc">Guía y acompaña a tus pacientes en su camino hacia el bienestar.</p>
+          </div>
+        </div>
       </div>
 
       <div class="stats">
@@ -43,8 +51,8 @@
           <p>{{ 'specialistDashboard.stats.sessionsToday' | translate }}</p>
         </div>
         <div class="card">
-          <h3>{{ loadingSummary ? '...' : (summaryError ? '--' : pendingRequests) }}</h3>
-          <p>{{ 'specialistDashboard.stats.requests' | translate }}</p>
+          <h3>{{ loadingSummary ? '...' : (summaryError ? '--' : pendingAlerts) }}</h3>
+          <p>{{ 'specialistDashboard.stats.pendingAlerts' | translate }}</p>
         </div>
       </div>
 

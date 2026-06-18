@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { SidebarService } from '../../services/sidebar.service';           
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SessionResponse, SessionService } from '../../services/session.service';
+import { SpecialistAlertsService } from '../../services/specialist-alerts.service';
 
 @Component({
   selector: 'app-specialist-dashboard',
@@ -24,7 +25,7 @@ export class SpecialistDashboardComponent implements OnInit, OnDestroy {
   user: any;
   totalPatients = 0;
   todaySessions = 0;
-  pendingRequests = 0;
+  pendingAlerts = 0;
   upcomingSessions: SessionResponse[] = [];
   loadingSummary = false;
   summaryError = '';
@@ -32,6 +33,7 @@ export class SpecialistDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private sessionService: SessionService,
+    private alertsService: SpecialistAlertsService,
     public sidebarService: SidebarService 
   ) {}
 
@@ -120,15 +122,23 @@ export class SpecialistDashboardComponent implements OnInit, OnDestroy {
         this.todaySessions = validCareSessions.filter(session =>
           session.scheduleDate === today
         ).length;
-        this.pendingRequests = sessions.filter(session =>
-          session.status === 1
-        ).length;
         this.upcomingSessions = sessions
           .filter(session => session.status === 2 && this.isUpcoming(session))
           .sort((first, second) =>
             this.sessionStartTime(first) - this.sessionStartTime(second)
           );
-        this.loadingSummary = false;
+
+        this.alertsService.getAlerts(specialistId).subscribe({
+          next: (alerts) => {
+            this.pendingAlerts = alerts.filter(alert => alert.status === 'OPEN' || !alert.reviewed).length;
+            this.loadingSummary = false;
+          },
+          error: (err) => {
+            console.error('Error loading alerts for summary:', err);
+            this.pendingAlerts = 0;
+            this.loadingSummary = false;
+          }
+        });
       },
       error: () => {
         this.loadingSummary = false;

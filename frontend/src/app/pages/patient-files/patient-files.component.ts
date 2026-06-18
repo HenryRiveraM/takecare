@@ -5,6 +5,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PatientFilesService } from '../../services/patient-files.service';
+import { AuthService } from '../../services/auth.service';
 
 const ALLOWED_TYPES = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/jpg'];
 const ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg'];
@@ -37,15 +39,39 @@ export class PatientFilesComponent implements OnInit {
   documents: Document[] = [];
 
   previewDoc: Document | null = null;
+  patientId = 0;
 
   constructor(
     public sidebarService: SidebarService,
     private sanitizer: DomSanitizer,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private patientFilesService: PatientFilesService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    //this.loadMockDocuments(); // quitar cuando el backend esté listo
+    this.patientId = Number(this.authService.getUser()?.id || 0);
+    if (this.patientId) {
+      this.loadDocuments();
+    }
+  }
+
+  loadDocuments(): void {
+    this.patientFilesService.getDocuments(this.patientId).subscribe({
+      next: (docs) => {
+        this.documents = docs.map(doc => ({
+          id: String(doc.id),
+          name: doc.fileName,
+          size: this.formatFileSize(doc.fileSize),
+          type: doc.contentType,
+          uploadedAt: new Date(doc.uploadedAt),
+          url: ''
+        }));
+      },
+      error: (err) => {
+        console.error('Error loading documents', err);
+      }
+    });
   }
 
   openUploadPanel(): void {
@@ -113,32 +139,69 @@ export class PatientFilesComponent implements OnInit {
   }
 
   uploadDocument(): void {
-    if (!this.selectedFile) return;
+    if (!this.selectedFile || !this.patientId) return;
 
-    const url = URL.createObjectURL(this.selectedFile);
-    const safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    this.patientFilesService.uploadDocument(this.patientId, this.selectedFile).subscribe({
+      next: (savedDoc) => {
+        const url = URL.createObjectURL(this.selectedFile!);
+        const safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
-    const newDoc: Document = {
-      id: Date.now().toString(),
-      name: this.selectedFile.name,
-      size: this.formatFileSize(this.selectedFile.size),
-      type: this.selectedFile.type,
-      uploadedAt: new Date(),
-      url: safeUrl
-    };
+        const newDoc: Document = {
+          id: String(savedDoc.id),
+          name: savedDoc.fileName,
+          size: this.formatFileSize(savedDoc.fileSize),
+          type: savedDoc.contentType,
+          uploadedAt: new Date(savedDoc.uploadedAt),
+          url: safeUrl
+        };
 
-    this.documents.unshift(newDoc); 
-    this.closeUploadPanel();
-
+        this.documents.unshift(newDoc); 
+        this.closeUploadPanel();
+      },
+      error: (err) => {
+        console.error('Upload failed', err);
+        this.uploadError = this.translate.instant('patientFiles.errors.uploadFailed') || 'Error al subir el documento';
+      }
+    });
   }
 
 
   deleteDocument(doc: Document): void {
-    this.documents = this.documents.filter(d => d.id !== doc.id);
+    if (!this.patientId) return;
+
+    const confirmMsg = this.translate.instant('patientFiles.actions.confirmDelete') || '¿Estás seguro de que deseas eliminar este documento?';
+    if (confirm(confirmMsg)) {
+      this.patientFilesService.deleteDocument(this.patientId, Number(doc.id)).subscribe({
+        next: () => {
+          this.documents = this.documents.filter(d => d.id !== doc.id);
+        },
+        error: (err) => {
+          console.error('Delete failed', err);
+        }
+      });
+    }
   }
 
   previewDocument(doc: Document): void {
-    this.previewDoc = doc;
+    if (doc.url) {
+      this.previewDoc = doc;
+      return;
+    }
+
+    this.patientFilesService.downloadDocument(this.patientId, Number(doc.id)).subscribe({
+      next: (response) => {
+        const rawBlob = response.body!;
+        const mimeType = response.headers.get('Content-Type') || doc.type || 'application/octet-stream';
+        // Reconstruct blob with correct MIME type so browser renders it properly
+        const typedBlob = new Blob([rawBlob], { type: mimeType.split(';')[0].trim() });
+        const objectUrl = URL.createObjectURL(typedBlob);
+        doc.url = this.sanitizer.bypassSecurityTrustResourceUrl(objectUrl);
+        this.previewDoc = doc;
+      },
+      error: (err) => {
+        console.error('Download/preview failed', err);
+      }
+    });
   }
 
   closePreview(): void {

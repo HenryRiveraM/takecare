@@ -379,6 +379,7 @@
     "subtitle": "Record how you feel today and review your evolution clearly.",
     "recordsCount": "records",
     "loading": "Loading your emotional history...",
+    "today": "Today",
     "hero": {
       "tag": "A moment for you",
       "title": "Your emotional state deserves follow-up too",
@@ -442,7 +443,8 @@
       "load": "Could not load emotional history.",
       "save": "Could not save the emotional record.",
       "formInvalid": "Select a mood before saving.",
-      "moodRequired": "Select how you feel to continue."
+      "moodRequired": "Select how you feel to continue.",
+      "alreadyToday": "You already registered your emotional state today. Only one record per day is allowed."
     }
   },
 
@@ -1062,7 +1064,7 @@
     "stats": {
       "patients": "Patients",
       "sessionsToday": "Sessions today",
-      "requests": "Requests"
+      "pendingAlerts": "Pending alerts"
     },
     "upcoming": {
       "loading": "Loading summary and upcoming appointments...",
@@ -1155,7 +1157,8 @@
     "nextSession": "Next session",
     "notAvailable": "No record",
     "actions": {
-      "viewPlans": "View plans"
+      "viewPlans": "View plans",
+      "viewProfile": "View profile"
     },
     "errors": {
       "noSpecialist": "Could not identify the current specialist.",

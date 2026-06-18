@@ -42,11 +42,17 @@ export class SpecialistAlertsService {
       );
   }
 
-  markAsReviewed(_specialistId: number, alertId: number): Observable<SpecialistAlert> {
+  markAsReviewed(specialistId: number, alertId: number): Observable<SpecialistAlert> {
     return this.http
       .patch<SpecialistAlert>(
         `${this.baseUrl}/api/v1/preventive-alerts/${alertId}/reviewed`,
-        {}
+        {},
+        {
+          headers: {
+            'X-User-Id': String(specialistId),
+            'X-User-Role': 'SPECIALIST'
+          }
+        }
       )
       .pipe(map(alert => this.normalizeAlert(alert)));
   }

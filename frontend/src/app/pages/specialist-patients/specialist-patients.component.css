@@ -215,26 +215,528 @@
   color: #97a7a3;
 }
 
+.card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.profile-action,
 .plans-action {
+  flex: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: 100%;
   min-height: 42px;
-  margin-top: 16px;
   border-radius: 12px;
-  background: #72a092;
-  color: white;
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.plans-action {
+  background: #72a092;
+  color: white;
+  border: none;
 }
 
 .plans-action:hover {
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(114, 160, 146, 0.22);
+  background: #5f897d;
+}
+
+.profile-action {
+  background: #f0f4f3;
+  color: #3a5c53;
+  border: 1.5px solid #e2ece8;
+}
+
+.profile-action:hover {
+  transform: translateY(-1px);
+  background: #e2ece8;
+  color: #273e38;
+}
+
+/* Modal de Perfil de Paciente */
+.profile-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 38, 32, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1600;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.profile-modal-card {
+  background: white;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 24px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+  border: 1px solid #e2ece8;
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  border-bottom: 1.5px solid #edf2f1;
+  background: white;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  color: white;
+  background: linear-gradient(135deg, #f4c7c7, #f5a3a3);
+  font-weight: 800;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 10px rgba(245, 163, 163, 0.25);
+}
+
+.header-left h2 {
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.patient-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #3a5c53;
+  background: #e2ece8;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.btn-close-modal,
+.btn-close-preview {
+  background: #f8faf9;
+  border: 1.5px solid #e2ece8;
+  color: #6d817c;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-close-modal:hover,
+.btn-close-preview:hover {
+  background: #e2ece8;
+  color: #1f2937;
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 28px;
+  overflow-y: auto;
+  flex: 1;
+  background: #fafcfb;
+}
+
+.profile-info-section {
+  margin-bottom: 28px;
+}
+
+.profile-info-section h3 {
+  font-size: 1.1rem;
+  color: #2c3e3a;
+  margin: 0 0 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid #e2ece8;
+}
+
+.profile-info-section h3 i {
+  color: #72a092;
+}
+
+.info-row {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.info-row .info-group {
+  flex: 1;
+  min-width: 160px;
+}
+
+.info-group {
+  margin-bottom: 18px;
+}
+
+.info-group label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #80938e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.info-group p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #2c3e3a;
+  font-weight: 500;
+}
+
+.clinical-history-box {
+  background: white;
+  border: 1.5px solid #e2ece8;
+  border-radius: 16px;
+  padding: 18px;
+  min-height: 140px;
+  max-height: 180px;
+  overflow-y: auto;
+  color: #4b5563;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.01);
+}
+
+.clinical-history-box p {
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* Documentación Clínica */
+.documents-section {
+  background: white;
+  border: 1.5px solid #edf2f1;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+}
+
+.documents-section h3 {
+  font-size: 1.1rem;
+  color: #2c3e3a;
+  margin: 0 0 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid #e2ece8;
+}
+
+.documents-section h3 i {
+  color: #72a092;
+}
+
+.empty-docs {
+  padding: 36px 20px;
+  text-align: center;
+  color: #80938e;
+  background: #f8faf9;
+  border: 1.5px dashed #e2ece8;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.empty-docs i {
+  font-size: 1.8rem;
+  color: #bdcbc7;
+}
+
+.empty-docs p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.docs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.doc-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: #f8faf9;
+  border: 1.5px solid #e2ece8;
+  border-radius: 16px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.doc-item:hover {
+  border-color: #72a092;
+  background: white;
+  box-shadow: 0 6px 16px rgba(114, 160, 146, 0.08);
+  transform: translateY(-1px);
+}
+
+.doc-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.doc-info i {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.doc-pdf { color: #f25c54; }
+.doc-word { color: #2b579a; }
+.doc-image { color: #f4a261; }
+.doc-generic { color: #80938e; }
+
+.doc-name {
+  display: block;
+  font-weight: 600;
+  color: #2c3e3a;
+  font-size: 0.92rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+  white-space: nowrap;
+}
+
+.doc-meta {
+  display: block;
+  font-size: 0.78rem;
+  color: #80938e;
+  margin-top: 2px;
+}
+
+.btn-preview-doc {
+  background: #72a092;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-preview-doc:hover {
+  background: #5f897d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(114, 160, 146, 0.2);
+}
+
+.modal-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: #72a092;
+  gap: 12px;
+}
+
+.modal-loading i {
+  font-size: 2rem;
+}
+
+.modal-loading p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Modal de Previsualización */
+.preview-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 38, 32, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.preview-content {
+  background: white;
+  width: 90%;
+  height: 85vh;
+  max-width: 1000px;
+  border-radius: 24px;
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e2ece8;
+  animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1.5px solid #edf2f1;
+}
+
+.preview-title {
+  font-weight: 700;
+  color: #1f2937;
+  font-size: 1.05rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70%;
+}
+
+.preview-body {
+  flex: 1;
+  background: #f8faf9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  background: white;
+  border-radius: 12px;
+}
+
+.preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.preview-unsupported {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: #3a5c53;
+  padding: 40px;
+  text-align: center;
+}
+
+.preview-unsupported i {
+  font-size: 4rem;
+  color: #2b579a;
+}
+
+.preview-unsupported p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+.preview-unsupported .btn-primary {
+  background: #72a092;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 14px rgba(114, 160, 146, 0.2);
+}
+
+.preview-unsupported .btn-primary:hover {
+  background: #5f897d;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(114, 160, 146, 0.28);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Responsividad para Modal */
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .profile-modal-card {
+    width: 95%;
+    max-height: 95vh;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .doc-name {
+    max-width: 180px;
+  }
 }
 
 .sidebar-overlay {

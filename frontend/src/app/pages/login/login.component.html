@@ -19,15 +19,9 @@
         <label>{{ 'login.emailLabel' | translate }}</label>
         <div class="input-icon">
           <span class="material-symbols-outlined">mail</span>
-          <input
-            type="email"
-            formControlName="email"
-            [placeholder]="'login.emailPlaceholder' | translate" />
+          <input type="email" formControlName="email" [placeholder]="'login.emailPlaceholder' | translate" />
         </div>
-        <div
-          *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-          class="error"
-        >
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">
           {{ 'login.errors.invalidEmail' | translate }}
         </div>
       </div>
@@ -36,15 +30,9 @@
         <label>{{ 'login.passwordLabel' | translate }}</label>
         <div class="input-icon">
           <span class="material-symbols-outlined">lock</span>
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            formControlName="password"
-            [placeholder]="'login.passwordPlaceholder' | translate"
-          />
-          <button 
-            type="button" 
-            class="password-toggle"
-            (click)="showPassword = !showPassword"
+          <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+            [placeholder]="'login.passwordPlaceholder' | translate" />
+          <button type="button" class="password-toggle" (click)="showPassword = !showPassword"
             [attr.aria-label]="(showPassword ? 'login.accessibility.hidePassword' : 'login.accessibility.showPassword') | translate"
             [attr.title]="(showPassword ? 'login.accessibility.hidePassword' : 'login.accessibility.showPassword') | translate"
             [attr.aria-pressed]="showPassword">
@@ -53,10 +41,7 @@
             </span>
           </button>
         </div>
-        <div
-          *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-          class="error"
-        >
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
           {{ 'login.errors.passwordRequired' | translate }}
         </div>
       </div>
@@ -83,10 +68,5 @@
         ✔ {{ 'login.success' | translate }}
       </p>
     </form>
-
-    <div class="secure">
-      <span class="material-symbols-outlined">verified_user</span>
-      <p>{{ 'login.secure' | translate }}</p>
-    </div>
   </div>
 </div>

@@ -35,52 +35,8 @@
 
       <form (ngSubmit)="save()" class="form" *ngIf="!loading">
 
-        <section class="profile-section">
-          <div class="section-copy">
-            <span class="section-tag">{{ 'specialistProfile.sections.personal' | translate }}</span>
-            <h2>{{ 'specialistProfile.sections.personal' | translate }}</h2>
-            <p>{{ 'specialistProfile.sections.personalHelp' | translate }}</p>
-          </div>
 
-          <div class="grid">
 
-            <div class="field">
-              <label>{{ 'specialistProfile.fields.names' | translate }}</label>
-              <div class="input-group">
-                <span class="material-symbols-outlined">person</span>
-                <input [(ngModel)]="profile.names" name="names" [readonly]="!isEditing"/>
-              </div>
-            </div>
-
-            <div class="field">
-              <label>{{ 'specialistProfile.fields.firstLastname' | translate }}</label>
-              <div class="input-group">
-                <span class="material-symbols-outlined">person</span>
-                <input [(ngModel)]="profile.firstLastname" name="firstLastname" [readonly]="!isEditing"/>
-              </div>
-            </div>
-
-            <div class="field">
-              <label>{{ 'specialistProfile.fields.secondLastname' | translate }}</label>
-              <div class="input-group">
-                <span class="material-symbols-outlined">person</span>
-                <input
-                  [(ngModel)]="profile.secondLastname"
-                  name="secondLastname"
-                  [placeholder]="'specialistProfile.placeholders.secondLastname' | translate"
-                  [readonly]="!isEditing"/>
-              </div>
-            </div>
-
-            <div class="field">
-              <label>{{ 'specialistProfile.fields.email' | translate }}</label>
-              <div class="input-group">
-                <span class="material-symbols-outlined">mail</span>
-                <input [(ngModel)]="profile.email" name="email" type="email" readonly/>
-              </div>
-            </div>
-          </div>
-        </section>
 
         <section class="profile-section">
           <div class="section-copy">

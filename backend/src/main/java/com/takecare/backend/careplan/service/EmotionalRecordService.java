@@ -11,11 +11,13 @@ import com.takecare.backend.session.repository.SessionRepository;
 import com.takecare.backend.user.model.Patient;
 import com.takecare.backend.user.repository.PatientRepository;
 import com.takecare.backend.user.repository.SpecialistRepository;
+import com.takecare.backend.preventivealert.service.PreventiveAlertService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,19 +35,22 @@ public class EmotionalRecordService {
     private final CarePlanRepository carePlanRepository;
     private final SessionRepository sessionRepository;
     private final SpecialistRepository specialistRepository;
+    private final PreventiveAlertService preventiveAlertService;
 
     public EmotionalRecordService(
             EmotionalRecordRepository emotionalRecordRepository,
             PatientRepository patientRepository,
             CarePlanRepository carePlanRepository,
             SessionRepository sessionRepository,
-            SpecialistRepository specialistRepository
+            SpecialistRepository specialistRepository,
+            PreventiveAlertService preventiveAlertService
     ) {
         this.emotionalRecordRepository = emotionalRecordRepository;
         this.patientRepository = patientRepository;
         this.carePlanRepository = carePlanRepository;
         this.sessionRepository = sessionRepository;
         this.specialistRepository = specialistRepository;
+        this.preventiveAlertService = preventiveAlertService;
     }
 
     @Transactional
@@ -54,6 +59,16 @@ public class EmotionalRecordService {
 
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new NoSuchElementException("Paciente no encontrado"));
+
+        // Enforce one emotional record per day
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay   = LocalDate.now().atTime(23, 59, 59);
+        boolean alreadyRecordedToday = emotionalRecordRepository
+                .existsByPatientIdAndCreatedDateBetween(patientId, startOfDay, endOfDay);
+        if (alreadyRecordedToday) {
+            logger.warn("Patient {} already registered emotional record today", patientId);
+            throw new IllegalStateException("Ya registraste tu estado emocional hoy. Solo se permite un registro por día.");
+        }
 
         EmotionalRecord record = new EmotionalRecord();
         record.setPatient(patient);
@@ -70,6 +85,12 @@ public class EmotionalRecordService {
 
         EmotionalRecord saved = emotionalRecordRepository.save(record);
         logger.info("Emotional record created with id={} for patientId={}", saved.getId(), patientId);
+
+        try {
+            preventiveAlertService.evaluateCriticalStateRule(patientId);
+        } catch (Exception e) {
+            logger.error("Error evaluating critical state rule for patientId={}: {}", patientId, e.getMessage(), e);
+        }
 
         return toResponseDTO(saved);
     }

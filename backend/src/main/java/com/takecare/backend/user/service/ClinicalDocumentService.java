@@ -167,6 +167,14 @@ public class ClinicalDocumentService {
         return Optional.of(resource);
     }
 
+    /**
+     * Returns the ClinicalDocument entity for metadata lookup (e.g. contentType).
+     * Does NOT check user authorization — the controller must do that separately.
+     */
+    public Optional<ClinicalDocument> findActiveDoc(Integer patientId, Long documentId) {
+        return documentRepository.findActiveByIdAndPatientId(documentId, patientId);
+    }
+
   
     /**
      * @return 

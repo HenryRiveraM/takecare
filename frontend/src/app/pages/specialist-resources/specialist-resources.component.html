@@ -177,26 +177,27 @@
 
       <div class="preview-body">
 
-        <div *ngIf="isPdf(previewResource$.fileName || '')" class="preview-unsupported">
-          <i class="fas fa-file-pdf preview-file-icon"></i>
-          <h3>{{ previewResource$.title }}</h3>
-          <a [href]="getFullUrl(previewResource$.fileUrl || '')"
-            target="_blank" 
-            class="btn-primary">
-            <i class="fas fa-external-link-alt"></i> {{ 'resources.preview.openPdf' | translate }}
-          </a>
-        </div>
+        <!-- PDF: embed inline via iframe -->
+        <iframe
+          *ngIf="isPdf(previewResource$.fileName || '') && previewResource$.fileUrl"
+          [src]="getSafeUrl(previewResource$.fileUrl || '')"
+          class="preview-iframe">
+        </iframe>
 
+        <!-- Word: no inline preview, offer download -->
         <div *ngIf="isWord(previewResource$.fileName || '')" class="preview-unsupported">
-          <i class="fas fa-file-word"></i>
+          <i class="fas fa-file-word preview-file-icon"></i>
           <h3>{{ 'resources.preview.wordUnsupported' | translate }}</h3>
           <p>{{ 'resources.preview.wordDescription' | translate }}</p>
-          <a [href]="previewResource$.fileUrl" target="_blank" class="btn-primary">
-            <i class="fas fa-external-link-alt"></i>
+          <a [href]="getFullUrl(previewResource$.fileUrl || '')"
+            target="_blank"
+            class="btn-primary">
+            <i class="fas fa-download"></i>
             {{ 'resources.preview.openExternal' | translate }}
           </a>
         </div>
 
+        <!-- No URL available -->
         <div *ngIf="!previewResource$?.fileUrl" class="preview-unsupported">
           <i class="fas fa-clock"></i>
           <h3>{{ 'resources.preview.notAvailable' | translate }}</h3>
