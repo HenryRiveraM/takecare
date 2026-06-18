@@ -119,10 +119,11 @@ public class EmotionalRecordService {
     private String mapMoodLevelToState(Integer level) {
         if (level == null) return "NEUTRAL";
         return switch (level) {
-            case 5 -> "VERY_GOOD";
+            case 5 -> "EXCELLENT";
             case 4 -> "GOOD";
-            case 2 -> "SAD";
-            case 1 -> "ANXIOUS";
+            case 3 -> "NEUTRAL";
+            case 2 -> "LOW";
+            case 1 -> "VERY_LOW";
             default -> "NEUTRAL";
         };
     }

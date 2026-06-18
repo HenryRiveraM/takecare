@@ -392,19 +392,19 @@
       "saving": "Guardando..."
     },
     "moods": {
-      "veryGood": "Muy bien",
+      "excellent": "Excelente",
       "good": "Bien",
       "neutral": "Neutral",
-      "sad": "Triste",
-      "anxious": "Con ansiedad",
+      "low": "Bajo",
+      "veryLow": "Muy bajo",
       "unknown": "Sin estado"
     },
     "moodHelpers": {
-      "veryGood": "Me siento estable y con ánimo.",
-      "good": "Estoy bien, aunque con algo por atender.",
-      "neutral": "No identifico un cambio fuerte.",
-      "sad": "Me siento bajo o sensible.",
-      "anxious": "Siento tensión, alerta o preocupación."
+      "excellent": "Me siento pleno, con energía alta, motivado y capaz de disfrutar el día.",
+      "good": "Me siento animado, con disposición para enfrentar el día y un estado de ánimo agradable.",
+      "neutral": "Ni bien ni mal. Un día estable donde puedo cumplir mis tareas sin complicaciones.",
+      "low": "Me siento triste, irritado o con poca motivación; me cuesta mantener el ritmo del día.",
+      "veryLow": "Me siento desbordado, sin energía y rumbo, no puedo realizar mis actividades con normalidad."
     },
     "summary": {
       "title": "Resumen visual",

@@ -42,16 +42,16 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
 
   readonly moodOptions: MoodOption[] = [
     {
-      value: 5,
-      icon: 'sentiment_very_satisfied',
-      labelKey: 'emotionalLog.moods.veryGood',
-      helperKey: 'emotionalLog.moodHelpers.veryGood'
+      value: 1,
+      icon: 'sentiment_very_dissatisfied',
+      labelKey: 'emotionalLog.moods.veryLow',
+      helperKey: 'emotionalLog.moodHelpers.veryLow'
     },
     {
-      value: 4,
-      icon: 'sentiment_satisfied',
-      labelKey: 'emotionalLog.moods.good',
-      helperKey: 'emotionalLog.moodHelpers.good'
+      value: 2,
+      icon: 'sentiment_dissatisfied',
+      labelKey: 'emotionalLog.moods.low',
+      helperKey: 'emotionalLog.moodHelpers.low'
     },
     {
       value: 3,
@@ -60,16 +60,16 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
       helperKey: 'emotionalLog.moodHelpers.neutral'
     },
     {
-      value: 2,
-      icon: 'sentiment_dissatisfied',
-      labelKey: 'emotionalLog.moods.sad',
-      helperKey: 'emotionalLog.moodHelpers.sad'
+      value: 4,
+      icon: 'sentiment_satisfied',
+      labelKey: 'emotionalLog.moods.good',
+      helperKey: 'emotionalLog.moodHelpers.good'
     },
     {
-      value: 1,
-      icon: 'psychology_alt',
-      labelKey: 'emotionalLog.moods.anxious',
-      helperKey: 'emotionalLog.moodHelpers.anxious'
+      value: 5,
+      icon: 'sentiment_very_satisfied',
+      labelKey: 'emotionalLog.moods.excellent',
+      helperKey: 'emotionalLog.moodHelpers.excellent'
     }
   ];
 

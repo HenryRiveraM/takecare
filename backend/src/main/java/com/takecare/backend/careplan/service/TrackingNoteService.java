@@ -8,6 +8,7 @@ import com.takecare.backend.careplan.repository.CarePlanRepository;
 import com.takecare.backend.careplan.repository.TrackingNoteRepository;
 import com.takecare.backend.session.model.Session;
 import com.takecare.backend.session.repository.SessionRepository;
+import com.takecare.backend.notification.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,15 +26,18 @@ public class TrackingNoteService {
     private final TrackingNoteRepository trackingNoteRepository;
     private final CarePlanRepository carePlanRepository;
     private final SessionRepository sessionRepository;
+    private final NotificationService notificationService;
 
     public TrackingNoteService(
             TrackingNoteRepository trackingNoteRepository,
             CarePlanRepository carePlanRepository,
-            SessionRepository sessionRepository
+            SessionRepository sessionRepository,
+            NotificationService notificationService
     ) {
         this.trackingNoteRepository = trackingNoteRepository;
         this.carePlanRepository = carePlanRepository;
         this.sessionRepository = sessionRepository;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -68,6 +72,53 @@ public class TrackingNoteService {
 
         TrackingNote saved = trackingNoteRepository.save(note);
         logger.info("Tracking note created with id={}", saved.getId());
+
+        // Notify other user
+        try {
+            if ("SPECIALIST".equals(role)) {
+                if (plan.getPatient() != null) {
+                    notificationService.createForCarePlan(
+                            plan.getPatient().getId(),
+                            plan.getId(),
+                            "Nueva nota de tu especialista en la bitácora de: " + plan.getTitle()
+                    );
+                }
+            } else if ("PATIENT".equals(role)) {
+                Session notifySession = plan.getReviewSession();
+                if (notifySession == null && plan.getPatient() != null && plan.getSpecialist() != null) {
+                    List<Session> sessions = sessionRepository.findBySpecialistIdAndPatientIdOrderByCreatedDateDesc(
+                            plan.getSpecialist().getId(),
+                            plan.getPatient().getId()
+                    );
+                    if (!sessions.isEmpty()) {
+                        notifySession = sessions.get(0);
+                    }
+                }
+
+                if (notifySession == null && plan.getSpecialist() != null) {
+                    List<Session> specialistSessions = sessionRepository.findBySpecialistIdOrderByCreatedDateDesc(
+                            plan.getSpecialist().getId()
+                    );
+                    if (!specialistSessions.isEmpty()) {
+                        notifySession = specialistSessions.get(0);
+                    }
+                }
+
+                if (notifySession != null) {
+                    String patientName = plan.getPatient() != null ? plan.getPatient().getNames() : "El paciente";
+                    notificationService.createForSpecialistCarePlan(
+                            notifySession,
+                            plan.getId(),
+                            "Nuevo comentario de " + patientName + " en la bitácora de: " + plan.getTitle()
+                    );
+                } else {
+                    logger.warn("Could not send specialist notification because no session could be resolved for specialistId={}",
+                            plan.getSpecialist() != null ? plan.getSpecialist().getId() : null);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Error generating notification for tracking note", e);
+        }
 
         return toResponseDTO(saved);
     }
