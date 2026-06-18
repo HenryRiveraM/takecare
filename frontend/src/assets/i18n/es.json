@@ -367,20 +367,35 @@
   "emotionalLog": {
     "tag": "Registro emocional",
     "title": "Bitácora emocional",
-    "subtitle": "Registra cómo te sientes hoy y revisa tu evolución de forma clara.",
-    "recordsCount": "registros",
+    "subtitle": "Registra cómo te sientes y revisa tu evolución emocional.",
+    "recordSingular": "registro",
+    "recordPlural": "registros",
     "loading": "Cargando tu historial emocional...",
     "today": "Hoy",
+    "actions": {
+      "register": "Registrar emoción",
+      "registerNew": "Registrar nueva emoción"
+    },
+    "modal": {
+      "close": "Cerrar modal"
+    },
     "hero": {
       "tag": "Un momento para ti",
       "title": "Tu estado emocional también merece seguimiento",
-      "text": "Este espacio te ayuda a reconocer patrones de ánimo, ansiedad y estrés. Comparte lo que consideres útil para tu proceso."
+      "text": "Este espacio te ayuda a reconocer patrones de ánimo, ansiedad y estrés. Puedes registrar cómo te sientes en distintos momentos del día."
+    },
+    "info": {
+      "title": "¿Cómo funciona la Bitácora emocional?",
+      "text": "Registra tu estado emocional cuando lo necesites. Cada entrada queda ordenada por fecha y hora para que tú y tu especialista puedan revisar tu evolución.",
+      "step1": "Puedes registrar más de una emoción durante el día.",
+      "step2": "El historial muestra cada momento por hora.",
+      "step3": "Tu especialista puede usar esta información para acompañarte mejor."
     },
     "form": {
       "title": "Registrar estado de ánimo",
-      "subtitle": "Completa el formulario con calma. Puedes registrar una entrada por cada momento que quieras recordar.",
+      "subtitle": "Selecciona cómo te sientes en este momento.",
       "moodLabel": "¿Cómo te sientes?",
-      "moodHelper": "Elige la opción que mejor representa tu estado actual.",
+      "moodHelper": "Elige la carita que mejor representa tu estado actual.",
       "moodLevel": "Nivel de ánimo",
       "moodLevelHelp": "1 es muy bajo y 5 es muy alto.",
       "anxiety": "Ansiedad",
@@ -389,7 +404,8 @@
       "stressHelp": "1 es muy bajo y 5 es muy intenso.",
       "notes": "Notas personales",
       "notesPlaceholder": "Ej. Hoy me sentí más tranquilo después de caminar y hablar con alguien de confianza.",
-      "save": "Guardar registro",
+      "cancel": "Cancelar",
+      "save": "Guardar",
       "saving": "Guardando..."
     },
     "moods": {
@@ -405,7 +421,12 @@
       "good": "Me siento animado, con disposición para enfrentar el día y un estado de ánimo agradable.",
       "neutral": "Ni bien ni mal. Un día estable donde puedo cumplir mis tareas sin complicaciones.",
       "low": "Me siento triste, irritado o con poca motivación; me cuesta mantener el ritmo del día.",
-      "veryLow": "Me siento desbordado, sin energía y rumbo, no puedo realizar mis actividades con normalidad."
+      "veryLow": "Me siento desbordado, sin energía y rumbo; me cuesta realizar mis actividades con normalidad."
+    },
+    "dayparts": {
+      "morning": "Mañana",
+      "afternoon": "Tarde",
+      "night": "Noche"
     },
     "summary": {
       "title": "Resumen visual",
@@ -416,7 +437,7 @@
     },
     "history": {
       "title": "Historial de registros",
-      "subtitle": "Tus entradas más recientes aparecen primero.",
+      "subtitle": "Tus entradas más recientes aparecen primero, agrupadas por día y hora.",
       "mood": "Ánimo",
       "anxiety": "Ansiedad",
       "stress": "Estrés",
@@ -427,15 +448,15 @@
       "text": "Cuando guardes tu primer estado emocional, aparecerá aquí como parte de tu historial."
     },
     "toast": {
-      "saved": "Registro emocional guardado correctamente."
+      "saved": "Estado emocional registrado correctamente."
     },
     "errors": {
       "noPatient": "No se pudo identificar al paciente actual.",
       "load": "No se pudo cargar el historial emocional.",
-      "save": "No se pudo guardar el registro emocional.",
-      "formInvalid": "Selecciona un estado de ánimo antes de guardar.",
+      "save": "No se pudo registrar el estado emocional.",
+      "formInvalid": "Selecciona cómo te sientes para continuar.",
       "moodRequired": "Selecciona cómo te sientes para continuar.",
-      "alreadyToday": "Ya registraste tu estado emocional hoy. Solo se permite un registro por día."
+      "alreadyToday": "Ya existe un registro emocional reciente. Puedes registrar otro si lo necesitas."
     }
   },
   "patientProfile": {
@@ -1065,7 +1086,7 @@
   "specialistAlerts": {
     "tag": "Alertas preventivas",
     "title": "Tablero de alertas del especialista",
-    "subtitle": "Revisa señales importantes detectadas en tus pacientes sin generar alarma innecesaria.",
+    "subtitle": "Revisa señales importantes detectadas en tus pacientes.",
     "loading": "Cargando alertas preventivas...",
     "hero": {
       "tag": "Seguimiento clinico",
@@ -1141,12 +1162,12 @@
     }
   },
   "carePlans": {
-    "title": "Planes de atencion",
+    "title": "Planes de atención",
     "followUpTitle": "Mi seguimiento",
     "subtitle": "Gestiona los planes de seguimiento asignados al paciente.",
     "generalSubtitle": "Consulta y gestiona los planes de seguimiento asignados a tus pacientes.",
     "patientSubtitle": "Revisa tus planes, actividades y progreso de seguimiento.",
-    "followUpSubtitle": "Revisa tu plan, tus actividades asignadas y tu progreso terapeutico.",
+    "followUpSubtitle": "Revisa tu plan, tus actividades asignadas y tu progreso terapéutico.",
     "followUpSelectPlan": "Seleccionar plan",
     "followUpActivities": "Actividades asignadas",
     "followUpEmptyTitle": "No tienes planes de seguimiento asignados.",
@@ -1170,6 +1191,7 @@
     "generalLabel": "Todos tus pacientes",
     "totalLabel": "Listado general",
     "counter": "Planes",
+    "counterSingular": "Plan",
     "searchPlaceholder": "Buscar por paciente, titulo o estado...",
     "loading": "Cargando planes de atencion...",
     "empty": "No existen planes registrados para este paciente.",

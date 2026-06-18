@@ -12,11 +12,12 @@
   flex-direction: column;
   min-width: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 .top-bar {
-  min-height: 96px;
-  padding: 16px 40px;
+  min-height: 80px;
+  padding: 10px 40px;
   box-sizing: border-box;
   background: white;
   border-bottom: 1px solid #edf2f1;
@@ -24,30 +25,53 @@
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.top-bar-left {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
 }
 
 .eyebrow,
 .hero-pill {
   display: inline-flex;
   width: fit-content;
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 999px;
   background: #eef8f4;
   color: #3a5c53;
-  font-size: 0.76rem;
+  font-size: 0.7rem;
   font-weight: 900;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.top-bar h1 {
-  margin: 8px 0 4px;
+.page-title {
+  margin: 6px 0 3px;
   color: #1f2937;
-  font-size: clamp(1.45rem, 3vw, 2rem);
-  line-height: 1.15;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
-.top-bar p,
+.page-subtitle {
+  max-width: 720px;
+  color: #72a092;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
 .hero-panel p,
 .board-header p {
   margin: 0;
@@ -69,10 +93,18 @@
 }
 
 .secondary-action {
-  padding: 0 18px;
+  padding: 0 20px;
   border: 1px solid #f4dada;
-  color: #8c6464;
-  background: #fff7f7;
+  color: white;
+  background: #f5a3a3;
+  box-shadow: 0 8px 18px rgba(245, 163, 163, 0.22);
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.secondary-action:hover {
+  background: #ec8f8f;
+  transform: translateY(-1px);
 }
 
 .content {
@@ -445,7 +477,12 @@
   .top-bar {
     align-items: stretch;
     flex-direction: column;
-    padding: 18px 22px;
+    padding: 16px 22px;
+  }
+
+  .top-bar-actions,
+  .secondary-action {
+    width: 100%;
   }
 
   .content {

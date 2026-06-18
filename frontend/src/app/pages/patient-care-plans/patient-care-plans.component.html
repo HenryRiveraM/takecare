@@ -5,14 +5,16 @@
 
   <div class="main">
     <header class="top-bar">
-      <div>
+      <div class="top-bar-left">
         <h1 class="page-title">{{ 'carePlans.followUpTitle' | translate }}</h1>
         <p class="page-subtitle">{{ 'carePlans.followUpSubtitle' | translate }}</p>
       </div>
 
-      <div class="counter">
-        <strong>{{ loading ? '...' : totalCarePlans }}</strong>
-        <span>{{ 'carePlans.counter' | translate }}</span>
+      <div class="top-bar-actions">
+        <div class="counter-card">
+          <strong>{{ loading ? '...' : totalCarePlans }}</strong>
+          <span>{{ (totalCarePlans === 1 ? 'carePlans.counterSingular' : 'carePlans.counter') | translate }}</span>
+        </div>
       </div>
     </header>
 

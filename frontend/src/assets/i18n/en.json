@@ -376,20 +376,35 @@
   "emotionalLog": {
     "tag": "Emotional record",
     "title": "Emotional log",
-    "subtitle": "Record how you feel today and review your evolution clearly.",
-    "recordsCount": "records",
+    "subtitle": "Record how you feel and review your emotional progress.",
+    "recordSingular": "record",
+    "recordPlural": "records",
     "loading": "Loading your emotional history...",
     "today": "Today",
+    "actions": {
+      "register": "Record emotion",
+      "registerNew": "Record new emotion"
+    },
+    "modal": {
+      "close": "Close modal"
+    },
     "hero": {
       "tag": "A moment for you",
       "title": "Your emotional state deserves follow-up too",
-      "text": "This space helps you recognize mood, anxiety, and stress patterns. Share whatever feels useful for your process."
+      "text": "This space helps you recognize mood, anxiety, and stress patterns. You can record how you feel at different moments of the day."
+    },
+    "info": {
+      "title": "How does the emotional log work?",
+      "text": "Record your emotional state whenever you need to. Each entry is ordered by date and time so you and your specialist can review your progress.",
+      "step1": "You can record more than one emotion during the day.",
+      "step2": "The history shows each moment by time.",
+      "step3": "Your specialist can use this information to support you better."
     },
     "form": {
       "title": "Record mood",
-      "subtitle": "Complete the form calmly. You can create an entry for each moment you want to remember.",
+      "subtitle": "Select how you feel right now.",
       "moodLabel": "How do you feel?",
-      "moodHelper": "Choose the option that best represents your current state.",
+      "moodHelper": "Choose the face that best represents your current state.",
       "moodLevel": "Mood level",
       "moodLevelHelp": "1 is very low and 5 is very high.",
       "anxiety": "Anxiety",
@@ -398,7 +413,8 @@
       "stressHelp": "1 is very low and 5 is very intense.",
       "notes": "Personal notes",
       "notesPlaceholder": "Example: Today I felt calmer after walking and talking with someone I trust.",
-      "save": "Save record",
+      "cancel": "Cancel",
+      "save": "Save",
       "saving": "Saving..."
     },
     "moods": {
@@ -414,7 +430,12 @@
       "good": "I feel encouraged, ready to face the day and in a pleasant mood.",
       "neutral": "Neither good nor bad. A stable day where I can accomplish my tasks without complications.",
       "low": "I feel sad, irritated, or with low motivation; I struggle to keep up with the pace of the day.",
-      "veryLow": "I feel overwhelmed, without energy and direction, I cannot carry out my activities normally."
+      "veryLow": "I feel overwhelmed, without energy or direction; I struggle to carry out my activities normally."
+    },
+    "dayparts": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "night": "Night"
     },
     "summary": {
       "title": "Visual summary",
@@ -425,7 +446,7 @@
     },
     "history": {
       "title": "Record history",
-      "subtitle": "Your most recent entries appear first.",
+      "subtitle": "Your most recent entries appear first, grouped by day and time.",
       "mood": "Mood",
       "anxiety": "Anxiety",
       "stress": "Stress",
@@ -436,19 +457,17 @@
       "text": "When you save your first emotional state, it will appear here as part of your history."
     },
     "toast": {
-      "saved": "Emotional record saved successfully."
+      "saved": "Emotional state recorded successfully."
     },
     "errors": {
       "noPatient": "Could not identify the current patient.",
       "load": "Could not load emotional history.",
-      "save": "Could not save the emotional record.",
-      "formInvalid": "Select a mood before saving.",
+      "save": "Could not record the emotional state.",
+      "formInvalid": "Select how you feel to continue.",
       "moodRequired": "Select how you feel to continue.",
-      "alreadyToday": "You already registered your emotional state today. Only one record per day is allowed."
+      "alreadyToday": "There is already a recent emotional record. You can record another one if you need to."
     }
   },
-
-  
   "patientProfile": {
     "back": "Back",
     "tag": "Patient profile",
@@ -1089,7 +1108,7 @@
   "specialistAlerts": {
     "tag": "Preventive alerts",
     "title": "Specialist alerts dashboard",
-    "subtitle": "Review important patient signals without creating unnecessary alarm.",
+    "subtitle": "Review important signals detected in your patients.",
     "loading": "Loading preventive alerts...",
     "hero": {
       "tag": "Clinical follow-up",
@@ -1196,6 +1215,7 @@
     "generalLabel": "All your patients",
     "totalLabel": "General list",
     "counter": "Plans",
+    "counterSingular": "Plan",
     "searchPlaceholder": "Search by patient, title, or status...",
     "loading": "Loading care plans...",
     "empty": "There are no care plans registered for this patient.",

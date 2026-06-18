@@ -1,86 +1,36 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { AuthService } from '../../services/auth.service';
 import {
   EmotionalRecord,
-  EmotionalRecordRequest,
   EmotionalRecordService
 } from '../../services/emotional-record.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
-
-interface MoodOption {
-  value: number;
-  icon: string;
-  labelKey: string;
-  helperKey: string;
-}
+import { EmotionalRecordModalComponent } from '../../shared/emotional-record-modal/emotional-record-modal.component';
 
 @Component({
   selector: 'app-patient-emotional-records',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslatePipe, SidebarComponent],
+  imports: [CommonModule, TranslatePipe, SidebarComponent, EmotionalRecordModalComponent],
   templateUrl: './patient-emotional-records.component.html',
   styleUrls: ['./patient-emotional-records.component.css']
 })
 export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
-  private readonly fb = inject(FormBuilder);
-
   patientId = 0;
   records: EmotionalRecord[] = [];
   loading = false;
   saving = false;
   errorMsg = '';
-  hasRecordedToday = false;
   today = new Date();
+  showRecordModal = false;
 
   showToast = false;
   toastMessage = '';
   toastType: 'success' | 'error' = 'success';
   private toastTimer: any;
-
-  readonly moodOptions: MoodOption[] = [
-    {
-      value: 1,
-      icon: 'sentiment_very_dissatisfied',
-      labelKey: 'emotionalLog.moods.veryLow',
-      helperKey: 'emotionalLog.moodHelpers.veryLow'
-    },
-    {
-      value: 2,
-      icon: 'sentiment_dissatisfied',
-      labelKey: 'emotionalLog.moods.low',
-      helperKey: 'emotionalLog.moodHelpers.low'
-    },
-    {
-      value: 3,
-      icon: 'sentiment_neutral',
-      labelKey: 'emotionalLog.moods.neutral',
-      helperKey: 'emotionalLog.moodHelpers.neutral'
-    },
-    {
-      value: 4,
-      icon: 'sentiment_satisfied',
-      labelKey: 'emotionalLog.moods.good',
-      helperKey: 'emotionalLog.moodHelpers.good'
-    },
-    {
-      value: 5,
-      icon: 'sentiment_very_satisfied',
-      labelKey: 'emotionalLog.moods.excellent',
-      helperKey: 'emotionalLog.moodHelpers.excellent'
-    }
-  ];
-
-  emotionalForm = this.fb.nonNullable.group({
-    moodLevel: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
-    anxietyLevel: [3, [Validators.required, Validators.min(1), Validators.max(5)]],
-    stressLevel: [3, [Validators.required, Validators.min(1), Validators.max(5)]],
-    notes: ['', [Validators.maxLength(280)]]
-  });
 
   constructor(
     public sidebarService: SidebarService,
@@ -105,71 +55,91 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     if (this.toastTimer) clearTimeout(this.toastTimer);
   }
 
-  selectMood(moodLevel: number): void {
-    this.emotionalForm.controls.moodLevel.setValue(moodLevel);
-    this.emotionalForm.controls.moodLevel.markAsTouched();
+  openRecordModal(): void {
+    this.showRecordModal = true;
   }
 
-  saveRecord(): void {
-    if (!this.patientId) {
-      this.showToastMessage('emotionalLog.errors.noPatient', 'error');
-      return;
-    }
+  closeRecordModal(): void {
+    this.showRecordModal = false;
+  }
 
-    if (this.hasRecordedToday) {
-      this.showToastMessage('emotionalLog.errors.alreadyToday', 'error');
-      return;
-    }
+  handleRecordSaved(saved: EmotionalRecord): void {
+    this.records = this.sortRecords([saved, ...this.records]);
+    this.showRecordModal = false;
+    this.showToastMessage('emotionalLog.toast.saved', 'success');
+  }
 
-    if (this.emotionalForm.invalid) {
-      this.emotionalForm.markAllAsTouched();
-      this.showToastMessage('emotionalLog.errors.formInvalid', 'error');
-      return;
-    }
-
-    const value = this.emotionalForm.getRawValue();
-    const payload: EmotionalRecordRequest = {
-      moodLevel: Number(value.moodLevel),
-      anxietyLevel: Number(value.anxietyLevel),
-      stressLevel: Number(value.stressLevel),
-      notes: value.notes.trim() || undefined
-    };
-
-    this.saving = true;
-
-    this.emotionalRecordService.createRecord(this.patientId, payload).subscribe({
-      next: saved => {
-        this.records = this.sortRecords([saved, ...this.records]);
-        this.hasRecordedToday = true;
-        this.emotionalForm.reset({
-          moodLevel: 0,
-          anxietyLevel: 3,
-          stressLevel: 3,
-          notes: ''
-        });
-        this.saving = false;
-        this.showToastMessage('emotionalLog.toast.saved', 'success');
-      },
-      error: error => {
-        this.saving = false;
-        const msg = error?.error?.message || '';
-        // 409 = already recorded today (backend enforcement)
-        if (error?.status === 409) {
-          this.hasRecordedToday = true;
-          this.showToastMessage('emotionalLog.errors.alreadyToday', 'error');
-        } else {
-          this.showToastMessage(msg || 'emotionalLog.errors.save', 'error');
-        }
-      }
-    });
+  handleRecordSaveFailed(message: string): void {
+    this.showToastMessage(message || 'emotionalLog.errors.save', 'error');
   }
 
   getMoodLabel(moodLevel: number | undefined): string {
-    return this.moodOptions.find(option => option.value === Number(moodLevel || 0))?.labelKey || 'emotionalLog.moods.unknown';
+    const labels: Record<number, string> = {
+      1: 'emotionalLog.moods.veryLow',
+      2: 'emotionalLog.moods.low',
+      3: 'emotionalLog.moods.neutral',
+      4: 'emotionalLog.moods.good',
+      5: 'emotionalLog.moods.excellent'
+    };
+
+    return labels[Number(moodLevel || 0)] || 'emotionalLog.moods.unknown';
   }
 
   getMoodIcon(moodLevel: number | undefined): string {
-    return this.moodOptions.find(option => option.value === Number(moodLevel || 0))?.icon || 'sentiment_neutral';
+    const icons: Record<number, string> = {
+      1: 'sentiment_very_dissatisfied',
+      2: 'sentiment_dissatisfied',
+      3: 'sentiment_neutral',
+      4: 'sentiment_satisfied',
+      5: 'sentiment_very_satisfied'
+    };
+
+    return icons[Number(moodLevel || 0)] || 'sentiment_neutral';
+  }
+
+  getRecordsLabel(): string {
+    const count = this.records.length;
+    return count === 1 ? 'emotionalLog.recordSingular' : 'emotionalLog.recordPlural';
+  }
+
+  getDayLabel(record: EmotionalRecord, index: number): string {
+    const currentDate = this.getRecordDate(record);
+    if (!currentDate) {
+      return '';
+    }
+
+    const previousDate = index > 0 ? this.getRecordDate(this.records[index - 1]) : null;
+    const isSamePreviousDay = previousDate &&
+      previousDate.getFullYear() === currentDate.getFullYear() &&
+      previousDate.getMonth() === currentDate.getMonth() &&
+      previousDate.getDate() === currentDate.getDate();
+
+    if (isSamePreviousDay) {
+      return '';
+    }
+
+    const today = new Date();
+    const isToday = currentDate.getFullYear() === today.getFullYear() &&
+      currentDate.getMonth() === today.getMonth() &&
+      currentDate.getDate() === today.getDate();
+
+    return isToday ? 'emotionalLog.today' : currentDate.toLocaleDateString();
+  }
+
+  getDaypartKey(record: EmotionalRecord): string {
+    const date = this.getRecordDate(record);
+    if (!date) {
+      return 'emotionalLog.dayparts.morning';
+    }
+
+    const hour = date.getHours();
+    if (hour >= 5 && hour < 12) {
+      return 'emotionalLog.dayparts.morning';
+    }
+    if (hour >= 12 && hour < 19) {
+      return 'emotionalLog.dayparts.afternoon';
+    }
+    return 'emotionalLog.dayparts.night';
   }
 
   getAverage(field: 'moodLevel' | 'anxietyLevel' | 'stressLevel'): number {
@@ -197,7 +167,6 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     this.emotionalRecordService.getRecords(this.patientId).subscribe({
       next: records => {
         this.records = this.sortRecords(records);
-        this.hasRecordedToday = this.checkRecordedToday(this.records);
         this.loading = false;
       },
       error: error => {
@@ -205,17 +174,6 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.errorMsg = error?.error?.message || 'emotionalLog.errors.load';
       }
-    });
-  }
-
-  private checkRecordedToday(records: EmotionalRecord[]): boolean {
-    const today = new Date();
-    return records.some(r => {
-      const d = this.getRecordDate(r);
-      return d &&
-        d.getFullYear() === today.getFullYear() &&
-        d.getMonth()   === today.getMonth() &&
-        d.getDate()    === today.getDate();
     });
   }
 

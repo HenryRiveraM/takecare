@@ -1,0 +1,98 @@
+<div
+  class="emotion-modal-overlay"
+  [class.required]="required"
+  (click)="close()">
+  <form class="emotion-modal" [formGroup]="emotionalForm" (ngSubmit)="saveRecord()" (click)="stopClose($event)">
+    <button
+      type="button"
+      class="modal-close"
+      *ngIf="!required"
+      [attr.aria-label]="'emotionalLog.modal.close' | translate"
+      (click)="close()">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+
+    <div class="form-heading">
+      <span class="modal-icon material-symbols-outlined" aria-hidden="true">mood</span>
+      <div>
+        <h2>{{ 'emotionalLog.form.title' | translate }}</h2>
+        <p>{{ 'emotionalLog.form.subtitle' | translate }}</p>
+      </div>
+    </div>
+
+    <fieldset class="mood-fieldset">
+      <legend>{{ 'emotionalLog.form.moodLabel' | translate }}</legend>
+      <p class="helper">{{ 'emotionalLog.form.moodHelper' | translate }}</p>
+
+      <div class="mood-grid">
+        <button
+          type="button"
+          class="mood-option"
+          *ngFor="let mood of moodOptions"
+          [class.selected]="emotionalForm.controls.moodLevel.value === mood.value"
+          (click)="selectMood(mood.value)">
+          <span class="material-symbols-outlined" aria-hidden="true">{{ mood.icon }}</span>
+          <strong>{{ mood.labelKey | translate }}</strong>
+          <small>{{ mood.helperKey | translate }}</small>
+        </button>
+      </div>
+
+      <small class="field-error" *ngIf="emotionalForm.controls.moodLevel.touched && emotionalForm.controls.moodLevel.invalid">
+        {{ 'emotionalLog.errors.moodRequired' | translate }}
+      </small>
+    </fieldset>
+
+    <div class="sliders-card">
+      <label class="slider-row">
+        <span>
+          <strong>{{ 'emotionalLog.form.moodLevel' | translate }}</strong>
+          <small>{{ 'emotionalLog.form.moodLevelHelp' | translate }}</small>
+        </span>
+        <input type="range" min="1" max="5" formControlName="moodLevel">
+        <b>{{ emotionalForm.controls.moodLevel.value || '-' }}</b>
+      </label>
+
+      <label class="slider-row">
+        <span>
+          <strong>{{ 'emotionalLog.form.anxiety' | translate }}</strong>
+          <small>{{ 'emotionalLog.form.anxietyHelp' | translate }}</small>
+        </span>
+        <input type="range" min="1" max="5" formControlName="anxietyLevel">
+        <b>{{ emotionalForm.controls.anxietyLevel.value }}</b>
+      </label>
+
+      <label class="slider-row">
+        <span>
+          <strong>{{ 'emotionalLog.form.stress' | translate }}</strong>
+          <small>{{ 'emotionalLog.form.stressHelp' | translate }}</small>
+        </span>
+        <input type="range" min="1" max="5" formControlName="stressLevel">
+        <b>{{ emotionalForm.controls.stressLevel.value }}</b>
+      </label>
+    </div>
+
+    <label class="notes-field">
+      <span>{{ 'emotionalLog.form.notes' | translate }}</span>
+      <textarea
+        rows="4"
+        maxlength="280"
+        formControlName="notes"
+        [placeholder]="'emotionalLog.form.notesPlaceholder' | translate">
+      </textarea>
+      <small>{{ emotionalForm.controls.notes.value.length }}/280</small>
+    </label>
+
+    <p class="form-error" *ngIf="errorKey">{{ errorKey | translate }}</p>
+
+    <div class="modal-actions">
+      <button type="button" class="cancel-button" *ngIf="!required" [disabled]="saving" (click)="close()">
+        {{ 'emotionalLog.form.cancel' | translate }}
+      </button>
+      <button type="submit" class="save-button" [disabled]="saving">
+        <span class="material-symbols-outlined" *ngIf="!saving" aria-hidden="true">check</span>
+        <span class="material-symbols-outlined spinning" *ngIf="saving" aria-hidden="true">progress_activity</span>
+        {{ (saving ? 'emotionalLog.form.saving' : 'emotionalLog.form.save') | translate }}
+      </button>
+    </div>
+  </form>
+</div>
