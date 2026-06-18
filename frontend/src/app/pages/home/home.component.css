@@ -11,6 +11,10 @@ section {
     scroll-margin-top: 96px;
 }
 
+section#inicio, .hero#inicio {
+  scroll-margin-top: 96px;
+}
+
 .hero{
     display:flex;
     align-items:center;
@@ -252,6 +256,25 @@ section {
 .trust-list p {
     margin:0;
     font-size:14px;
+}
+
+@media (min-width: 1200px) {
+  .hero{
+    margin-bottom:50px;
+  }
+
+  .features {
+    text-align: left;
+  }
+
+  .features h2 {
+    text-align: left;
+  }
+
+  .section-intro {
+    margin: 0 0 40px;
+    text-align: left;
+  }
 }
 
 .cta{
