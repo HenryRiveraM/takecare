@@ -51,6 +51,9 @@ public class EmotionalRecordController {
         try {
             EmotionalRecordResponseDTO response = emotionalRecordService.createRecord(patientId, request);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (IllegalStateException e) {
+            logger.warn("POST emotional-records - duplicate day: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", e.getMessage()));
         } catch (NoSuchElementException e) {
             logger.warn("POST emotional-records - not found: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));

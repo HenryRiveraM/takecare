@@ -29,7 +29,6 @@ import { SpecialistAlertsComponent } from './pages/specialist-alerts/specialist-
 
 // PACIENTE
 import { PatientDashboardComponent } from './pages/patient-dashboard/patient-dashboard.component';
-import { PatientProfileComponent } from './pages/patient-profile/patient-profile.component';
 import { patientGuard } from './guards/patient.guard';
 import { PatientSearchSpecialistsComponent } from './pages/patient-search-specialists/patient-search-specialists.component';
 import { PatientDocumentsComponent } from './pages/patient-documents/patient-documents.component';
@@ -110,10 +109,6 @@ export const routes: Routes = [
       {
         path: '', 
         component: PatientDashboardComponent
-      },
-      {
-        path: 'profile',
-        component: PatientProfileComponent
       },
       {
         path: 'search-specialists',

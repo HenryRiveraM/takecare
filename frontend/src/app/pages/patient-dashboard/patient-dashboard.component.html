@@ -31,7 +31,15 @@
           <h1>{{ 'patientDashboard.welcome' | translate }} {{ user?.names }}</h1>
           <p>{{ 'patientDashboard.subtitle' | translate }}</p>
         </div>
-        <img src="assets/images/paciente.png" [alt]="'patientDashboard.defaultUser' | translate" class="hero-img">
+        <div class="hero-identity-card">
+          <div class="hero-icon-wrap">
+            <i class="fas fa-heart-pulse hero-icon"></i>
+          </div>
+          <div class="hero-role-text">
+            <span class="hero-role-label">Paciente</span>
+            <p class="hero-role-desc">Aquí para cuidar tu salud mental y bienestar emocional con apoyo profesional.</p>
+          </div>
+        </div>
       </section>
 
       <section class="appointments-section section" aria-live="polite">

@@ -34,6 +34,8 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
   loading = false;
   saving = false;
   errorMsg = '';
+  hasRecordedToday = false;
+  today = new Date();
 
   showToast = false;
   toastMessage = '';
@@ -114,6 +116,11 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.hasRecordedToday) {
+      this.showToastMessage('emotionalLog.errors.alreadyToday', 'error');
+      return;
+    }
+
     if (this.emotionalForm.invalid) {
       this.emotionalForm.markAllAsTouched();
       this.showToastMessage('emotionalLog.errors.formInvalid', 'error');
@@ -133,6 +140,7 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     this.emotionalRecordService.createRecord(this.patientId, payload).subscribe({
       next: saved => {
         this.records = this.sortRecords([saved, ...this.records]);
+        this.hasRecordedToday = true;
         this.emotionalForm.reset({
           moodLevel: 0,
           anxietyLevel: 3,
@@ -144,7 +152,14 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
       },
       error: error => {
         this.saving = false;
-        this.showToastMessage(error?.error?.message || 'emotionalLog.errors.save', 'error');
+        const msg = error?.error?.message || '';
+        // 409 = already recorded today (backend enforcement)
+        if (error?.status === 409) {
+          this.hasRecordedToday = true;
+          this.showToastMessage('emotionalLog.errors.alreadyToday', 'error');
+        } else {
+          this.showToastMessage(msg || 'emotionalLog.errors.save', 'error');
+        }
       }
     });
   }
@@ -182,6 +197,7 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     this.emotionalRecordService.getRecords(this.patientId).subscribe({
       next: records => {
         this.records = this.sortRecords(records);
+        this.hasRecordedToday = this.checkRecordedToday(this.records);
         this.loading = false;
       },
       error: error => {
@@ -189,6 +205,17 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.errorMsg = error?.error?.message || 'emotionalLog.errors.load';
       }
+    });
+  }
+
+  private checkRecordedToday(records: EmotionalRecord[]): boolean {
+    const today = new Date();
+    return records.some(r => {
+      const d = this.getRecordDate(r);
+      return d &&
+        d.getFullYear() === today.getFullYear() &&
+        d.getMonth()   === today.getMonth() &&
+        d.getDate()    === today.getDate();
     });
   }
 
@@ -208,3 +235,5 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     this.toastTimer = setTimeout(() => { this.showToast = false; }, 3200);
   }
 }
+// Trigger component reload for HTML inline styles.
+
