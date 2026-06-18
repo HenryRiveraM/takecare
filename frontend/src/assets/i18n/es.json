@@ -113,6 +113,8 @@
       "lastnames": "Apellidos",
       "email": "Correo",
       "birthDate": "Fecha de nacimiento",
+      "ciNumber": "CI",
+      "specialties": "Especialidades",
       "strikes": "Strikes",
       "status": "Estado",
       "action": "Acción"
@@ -186,7 +188,8 @@
       "selfie": "Selfie de verificación",
       "certification": "Certificación profesional",
       "viewCertification": "Ver PDF de certificación",
-      "unavailable": "No disponible"
+      "unavailable": "No disponible",
+      "specialties": "Especialidades"
     },
     "appointments": {
       "title": "Historial de citas",

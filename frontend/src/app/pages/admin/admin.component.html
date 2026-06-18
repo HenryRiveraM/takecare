@@ -47,6 +47,7 @@
               <th class="col-name">{{ 'admin.table.names' | translate }}</th>
               <th class="col-lastname">{{ 'admin.table.lastnames' | translate }}</th>
               <th class="col-email">{{ 'admin.table.email' | translate }}</th>
+              <th class="col-ci">{{ 'admin.table.ciNumber' | translate }}</th>
               <th class="col-date">{{ 'admin.table.birthDate' | translate }}</th>
               <th class="col-strikes">{{ 'admin.table.strikes' | translate }}</th>
               <th class="col-status">{{ 'admin.table.status' | translate }}</th>
@@ -58,6 +59,7 @@
               <td [attr.data-label]="'admin.table.names' | translate">{{ patient.names }}</td>
               <td [attr.data-label]="'admin.table.lastnames' | translate">{{ patient.firstLastname }} {{ patient.secondLastname || '' }}</td>
               <td [attr.data-label]="'admin.table.email' | translate">{{ patient.email }}</td>
+              <td [attr.data-label]="'admin.table.ciNumber' | translate">{{ patient.ciNumber }}</td>
               <td [attr.data-label]="'admin.table.birthDate' | translate">{{ patient.birthDate | localizedDate }}</td>
               <td [attr.data-label]="'admin.table.strikes' | translate">{{ patient.strikes }}</td>
               <td class="col-status" [attr.data-label]="'admin.table.status' | translate">
@@ -114,6 +116,8 @@
               <th class="col-name">{{ 'admin.table.names' | translate }}</th>
               <th class="col-lastname">{{ 'admin.table.lastnames' | translate }}</th>
               <th class="col-email">{{ 'admin.table.email' | translate }}</th>
+              <th class="col-ci">{{ 'admin.table.ciNumber' | translate }}</th>
+              <th class="col-specialties">{{ 'admin.table.specialties' | translate }}</th>
               <th class="col-date">{{ 'admin.table.birthDate' | translate }}</th>
               <th class="col-strikes">{{ 'admin.table.strikes' | translate }}</th>
               <th class="col-status">{{ 'admin.table.status' | translate }}</th>
@@ -125,6 +129,10 @@
               <td [attr.data-label]="'admin.table.names' | translate">{{ specialist.names || '-' }}</td>
               <td [attr.data-label]="'admin.table.lastnames' | translate">{{ (specialist.firstLastname || '') + (specialist.secondLastname ? ' ' + specialist.secondLastname : '') || '-' }}</td>
               <td [attr.data-label]="'admin.table.email' | translate">{{ specialist.email || '-' }}</td>
+              <td [attr.data-label]="'admin.table.ciNumber' | translate">{{ specialist.ciNumber }}</td>
+              <td [attr.data-label]="'admin.table.specialties' | translate">
+                {{ specialist.specialties && specialist.specialties.length > 0 ? specialist.specialties.join(', ') : '-' }}
+              </td>
               <td [attr.data-label]="'admin.table.birthDate' | translate">{{ specialist.birthDate | localizedDate }}</td>
               <td [attr.data-label]="'admin.table.strikes' | translate">{{ specialist.strikes }}</td>
               <td class="col-status" [attr.data-label]="'admin.table.status' | translate">
@@ -187,6 +195,11 @@
             <div class="info-pill">
               <span class="info-label">{{ 'admin.documents.age' | translate }}</span>
               <span class="info-value">{{ getAge(user.birthDate) }}</span>
+            </div>
+
+            <div class="info-pill full-width" *ngIf="user.role === 2 && user.specialties && user.specialties.length > 0">
+              <span class="info-label">{{ 'admin.documents.specialties' | translate }}</span>
+              <span class="info-value">{{ user.specialties.join(', ') }}</span>
             </div>
           </div>
 

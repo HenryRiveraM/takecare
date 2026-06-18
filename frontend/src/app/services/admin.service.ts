@@ -31,6 +31,7 @@ export interface Specialist extends User {
   officeUbi?: string;
   sessionCost?: number;
   reputationAverage?: number;
+  specialties?: string[];
   role: 2;
 }
 
@@ -38,6 +39,7 @@ export interface PendingValidationUser extends User {
   role: 1 | 2;
   certificationImg?: string;
   selfieVerification?: string;
+  specialties?: string[];
 }
 
 export interface AdminAppointmentHistory {
@@ -136,6 +138,7 @@ private normalizeSpecialist(raw: any): Specialist {
     officeUbi: raw.officeUbi ?? '',
     sessionCost: raw.sessionCost ?? 0,
     reputationAverage: raw.reputationAverage ?? 0,
+    specialties: raw.specialties ?? [],
     role: 2 as const
   };
 }

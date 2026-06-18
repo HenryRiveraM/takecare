@@ -1,6 +1,7 @@
 package com.takecare.backend.user.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +22,5 @@ public class AdminSpecialistDTO {
     private Byte status;
     private Byte strikes;
     private Byte accountVerified;
+    private List<String> specialties;
 }

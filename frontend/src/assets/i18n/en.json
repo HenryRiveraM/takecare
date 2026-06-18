@@ -118,6 +118,8 @@
       "lastnames": "Last names",
       "email": "Email",
       "birthDate": "Birth date",
+      "ciNumber": "ID (CI)",
+      "specialties": "Specialties",
       "strikes": "Strikes",
       "status": "Status",
       "action": "Action"
@@ -191,7 +193,8 @@
       "selfie": "Verification selfie",
       "certification": "Professional certification",
       "viewCertification": "View certification PDF",
-      "unavailable": "Unavailable"
+      "unavailable": "Unavailable",
+      "specialties": "Specialties"
     },
     "appointments": {
       "title": "Appointment history",

@@ -35,6 +35,7 @@ import com.takecare.backend.user.repository.UserRepository;
 import com.takecare.backend.user.service.PatientService;
 import com.takecare.backend.user.service.SpecialistService;
 import com.takecare.backend.user.service.UserVerificationService;
+import com.takecare.backend.specialities.model.Speciality;
 
 import jakarta.validation.Valid;
 
@@ -343,6 +344,9 @@ public class AdminController {
         dto.setStrikes(specialist.getStrikes().byteValue());
         dto.setAccountVerified(specialist.getAccountVerified().byteValue());
         dto.setRole(specialist.getRole().byteValue());
+        dto.setSpecialties(specialist.getSpecialties() != null
+                ? specialist.getSpecialties().stream().map(Speciality::getName).toList()
+                : List.of());
         return dto;
     }
 }
