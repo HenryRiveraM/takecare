@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -59,16 +58,6 @@ public class EmotionalRecordService {
 
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new NoSuchElementException("Paciente no encontrado"));
-
-        // Enforce one emotional record per day
-        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
-        LocalDateTime endOfDay   = LocalDate.now().atTime(23, 59, 59);
-        boolean alreadyRecordedToday = emotionalRecordRepository
-                .existsByPatientIdAndCreatedDateBetween(patientId, startOfDay, endOfDay);
-        if (alreadyRecordedToday) {
-            logger.warn("Patient {} already registered emotional record today", patientId);
-            throw new IllegalStateException("Ya registraste tu estado emocional hoy. Solo se permite un registro por día.");
-        }
 
         EmotionalRecord record = new EmotionalRecord();
         record.setPatient(patient);

@@ -5,16 +5,18 @@
 
   <div class="main">
     <header class="top-bar">
-      <div>
+      <div class="top-bar-left">
         <span class="eyebrow">{{ 'specialistAlerts.tag' | translate }}</span>
-        <h1>{{ 'specialistAlerts.title' | translate }}</h1>
-        <p>{{ 'specialistAlerts.subtitle' | translate }}</p>
+        <h1 class="page-title">{{ 'specialistAlerts.title' | translate }}</h1>
+        <p class="page-subtitle">{{ 'specialistAlerts.subtitle' | translate }}</p>
       </div>
 
-      <a class="secondary-action" routerLink="/specialist/patients">
-        <i class="fas fa-users"></i>
-        {{ 'specialistAlerts.actions.viewPatients' | translate }}
-      </a>
+      <div class="top-bar-actions">
+        <a class="secondary-action" routerLink="/specialist/patients">
+          <i class="fas fa-users"></i>
+          {{ 'specialistAlerts.actions.viewPatients' | translate }}
+        </a>
+      </div>
     </header>
 
     <main class="content">

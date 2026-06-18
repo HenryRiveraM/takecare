@@ -9,7 +9,7 @@
 
   <div class="main">
     <header class="top-bar">
-      <div>
+      <div class="top-bar-left">
         <a class="back-link" routerLink="/specialist/patients" *ngIf="isPatientScoped">
           <i class="fas fa-arrow-left"></i>
           {{ 'carePlans.actions.backToPatients' | translate }}
@@ -20,10 +20,12 @@
         </p>
       </div>
 
-      <button class="primary-action" type="button" (click)="openCreateForm()">
-        <i class="fas fa-plus"></i>
-        {{ 'carePlans.actions.new' | translate }}
-      </button>
+      <div class="top-bar-actions">
+        <button class="primary-action" type="button" (click)="openCreateForm()">
+          <i class="fas fa-plus"></i>
+          {{ 'carePlans.actions.new' | translate }}
+        </button>
+      </div>
     </header>
 
     <main class="content">

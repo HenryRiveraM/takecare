@@ -5,15 +5,21 @@
 
   <div class="main">
     <header class="top-bar">
-      <div>
-        <span class="eyebrow">{{ 'emotionalLog.tag' | translate }}</span>
+      <div class="top-bar-left">
         <h1 class="page-title">{{ 'emotionalLog.title' | translate }}</h1>
         <p class="page-subtitle">{{ 'emotionalLog.subtitle' | translate }}</p>
       </div>
 
-      <div class="counter-card">
-        <strong>{{ loading ? '...' : records.length }}</strong>
-        <span>{{ 'emotionalLog.recordsCount' | translate }}</span>
+      <div class="top-bar-actions">
+        <div class="counter-card">
+          <strong>{{ loading ? '...' : records.length }}</strong>
+          <span>{{ getRecordsLabel() | translate }}</span>
+        </div>
+
+        <button type="button" class="register-button" (click)="openRecordModal()">
+          <span class="material-symbols-outlined" aria-hidden="true">add_reaction</span>
+          {{ 'emotionalLog.actions.registerNew' | translate }}
+        </button>
       </div>
     </header>
 
@@ -27,163 +33,69 @@
         <span class="material-symbols-outlined hero-icon" aria-hidden="true">self_improvement</span>
       </section>
 
-      <!-- Banner informativo: cómo funciona la bitácora diaria -->
-      <section class="daily-info-banner" style="display: flex; align-items: flex-start; gap: 20px; max-width: 1180px; margin: 0 auto 24px; padding: 24px; background: #ffffff; border: 1px solid #edf2f1; border-radius: 24px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02); box-sizing: border-box;">
-        <div class="daily-info-icon" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 16px; background: #eef8f4; color: #72a092; font-size: 24px; flex-shrink: 0;">
-          <span class="material-symbols-outlined" style="font-size: 28px;">calendar_today</span>
+      <section class="daily-info-banner">
+        <div class="daily-info-icon">
+          <span class="material-symbols-outlined" aria-hidden="true">calendar_today</span>
         </div>
-        <div class="daily-info-content" style="flex: 1;">
-          <h3 style="margin: 0 0 8px; color: #1f2937; font-size: 1.15rem; font-weight: 700;">¿Cómo funciona la Bitácora Emocional?</h3>
-          <p style="margin: 0 0 16px; color: #64748b; font-size: 0.95rem; line-height: 1.6;">
-            Cada día puedes registrar <strong>una sola vez</strong> cómo te sientes emocionalmente.
-            Responde las preguntas sobre tu estado de ánimo, ansiedad y estrés para que tu especialista
-            pueda hacer un seguimiento de tu bienestar a lo largo del tiempo.
-          </p>
-          <ul class="daily-info-steps" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
-            <li style="display: flex; align-items: center; gap: 10px; color: #475569; font-size: 0.9rem; font-weight: 500;">
-              <span class="material-symbols-outlined step-icon" style="color: #72a092; font-size: 20px;">check_circle</span>
-              Registra tu estado emocional una vez al día
+        <div class="daily-info-content">
+          <h3>{{ 'emotionalLog.info.title' | translate }}</h3>
+          <p>{{ 'emotionalLog.info.text' | translate }}</p>
+          <ul class="daily-info-steps">
+            <li>
+              <span class="material-symbols-outlined step-icon" aria-hidden="true">add_circle</span>
+              {{ 'emotionalLog.info.step1' | translate }}
             </li>
-            <li style="display: flex; align-items: center; gap: 10px; color: #475569; font-size: 0.9rem; font-weight: 500;">
-              <span class="material-symbols-outlined step-icon" style="color: #72a092; font-size: 20px;">trending_up</span>
-              Tu especialista analiza tu progreso en el tiempo
+            <li>
+              <span class="material-symbols-outlined step-icon" aria-hidden="true">schedule</span>
+              {{ 'emotionalLog.info.step2' | translate }}
             </li>
-            <li style="display: flex; align-items: center; gap: 10px; color: #475569; font-size: 0.9rem; font-weight: 500;">
-              <span class="material-symbols-outlined step-icon" style="color: #72a092; font-size: 20px;">notifications</span>
-              Las alertas automáticas ayudan a prevenir crisis emocionales
+            <li>
+              <span class="material-symbols-outlined step-icon" aria-hidden="true">trending_up</span>
+              {{ 'emotionalLog.info.step3' | translate }}
             </li>
           </ul>
         </div>
       </section>
 
-      <section class="log-grid">
-        <!-- Form: only when no record today -->
-        <form class="record-form" [formGroup]="emotionalForm" (ngSubmit)="saveRecord()" *ngIf="!hasRecordedToday">
-          <div class="form-heading">
-            <div>
-              <h2>{{ 'emotionalLog.form.title' | translate }}</h2>
-              <p>{{ 'emotionalLog.form.subtitle' | translate }}</p>
-            </div>
+      <section class="summary-panel">
+        <div>
+          <h2>{{ 'emotionalLog.summary.title' | translate }}</h2>
+          <p>{{ 'emotionalLog.summary.text' | translate }}</p>
+        </div>
+
+        <div class="summary-metrics">
+          <div>
+            <span>{{ 'emotionalLog.summary.mood' | translate }}</span>
+            <strong>{{ getAverage('moodLevel') || '-' }}</strong>
           </div>
-
-          <fieldset class="mood-fieldset">
-            <legend>{{ 'emotionalLog.form.moodLabel' | translate }}</legend>
-            <p class="helper">{{ 'emotionalLog.form.moodHelper' | translate }}</p>
-
-            <div class="mood-grid">
-              <button
-                type="button"
-                class="mood-option"
-                *ngFor="let mood of moodOptions"
-                [class.selected]="emotionalForm.controls.moodLevel.value === mood.value"
-                (click)="selectMood(mood.value)">
-                <span class="material-symbols-outlined" aria-hidden="true">{{ mood.icon }}</span>
-                <strong>{{ mood.labelKey | translate }}</strong>
-                <small>{{ mood.helperKey | translate }}</small>
-              </button>
-            </div>
-
-            <small class="field-error" *ngIf="emotionalForm.controls.moodLevel.touched && emotionalForm.controls.moodLevel.invalid">
-              {{ 'emotionalLog.errors.moodRequired' | translate }}
-            </small>
-          </fieldset>
-
-          <div class="sliders-card">
-            <label class="slider-row">
-              <span>
-                <strong>{{ 'emotionalLog.form.moodLevel' | translate }}</strong>
-                <small>{{ 'emotionalLog.form.moodLevelHelp' | translate }}</small>
-              </span>
-              <input type="range" min="1" max="5" formControlName="moodLevel">
-              <b>{{ emotionalForm.controls.moodLevel.value || '-' }}</b>
-            </label>
-
-            <label class="slider-row">
-              <span>
-                <strong>{{ 'emotionalLog.form.anxiety' | translate }}</strong>
-                <small>{{ 'emotionalLog.form.anxietyHelp' | translate }}</small>
-              </span>
-              <input type="range" min="1" max="5" formControlName="anxietyLevel">
-              <b>{{ emotionalForm.controls.anxietyLevel.value }}</b>
-            </label>
-
-            <label class="slider-row">
-              <span>
-                <strong>{{ 'emotionalLog.form.stress' | translate }}</strong>
-                <small>{{ 'emotionalLog.form.stressHelp' | translate }}</small>
-              </span>
-              <input type="range" min="1" max="5" formControlName="stressLevel">
-              <b>{{ emotionalForm.controls.stressLevel.value }}</b>
-            </label>
+          <div>
+            <span>{{ 'emotionalLog.summary.anxiety' | translate }}</span>
+            <strong>{{ getAverage('anxietyLevel') || '-' }}</strong>
           </div>
-
-          <label class="notes-field">
-            <span>{{ 'emotionalLog.form.notes' | translate }}</span>
-            <textarea
-              rows="4"
-              maxlength="280"
-              formControlName="notes"
-              [placeholder]="'emotionalLog.form.notesPlaceholder' | translate">
-            </textarea>
-            <small>
-              {{ emotionalForm.controls.notes.value.length }}/280
-            </small>
-          </label>
-
-          <button type="submit" class="save-button" [disabled]="saving">
-            <span class="material-symbols-outlined" *ngIf="!saving" style="font-size: 18px; margin-right: 6px; vertical-align: middle;">check</span>
-            <span class="material-symbols-outlined" *ngIf="saving" style="font-size: 18px; margin-right: 6px; vertical-align: middle; animation: spin 1s linear infinite;">progress_activity</span>
-            {{ (saving ? 'emotionalLog.form.saving' : 'emotionalLog.form.save') | translate }}
-          </button>
-        </form>
-
-        <!-- Already recorded today: show confirmation card -->
-        <div class="recorded-today-card" *ngIf="hasRecordedToday" style="display: flex; align-items: center; gap: 24px; padding: 32px; background: linear-gradient(135deg, #f0fdf4 0%, #e8f7f0 100%); border: 1px solid #bbf7d0; border-radius: 24px; box-shadow: 0 14px 34px rgba(31, 41, 55, 0.06); box-sizing: border-box; margin-bottom: 24px;">
-          <div class="recorded-icon" style="display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: #ffffff; color: #72a092; font-size: 36px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); flex-shrink: 0;">
-            <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 36px; color: #72a092;">check_circle</span>
-          </div>
-          <div class="recorded-content" style="flex: 1;">
-            <h3 style="margin: 0 0 6px; color: #1b4332; font-size: 1.35rem; font-weight: 700;">¡Ya registraste tu estado emocional hoy!</h3>
-            <p style="margin: 0 0 12px; color: #2d6a4f; font-size: 1rem; line-height: 1.5;">Tu bitácora del día está completa. Vuelve mañana para registrar un nuevo estado emocional.</p>
-            <span class="recorded-date" style="display: inline-block; padding: 6px 14px; background: #ffffff; border: 1px solid #bbf7d0; border-radius: 999px; color: #2d6a4f; font-size: 0.85rem; font-weight: 700;">{{ 'emotionalLog.today' | translate }}: {{ today | date:'fullDate' }}</span>
+          <div>
+            <span>{{ 'emotionalLog.summary.stress' | translate }}</span>
+            <strong>{{ getAverage('stressLevel') || '-' }}</strong>
           </div>
         </div>
 
-        <aside class="summary-panel">
-          <h2>{{ 'emotionalLog.summary.title' | translate }}</h2>
-          <p>{{ 'emotionalLog.summary.text' | translate }}</p>
+        <section class="status-card" *ngIf="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          {{ 'emotionalLog.loading' | translate }}
+        </section>
 
-          <div class="summary-metrics">
-            <div>
-              <span>{{ 'emotionalLog.summary.mood' | translate }}</span>
-              <strong>{{ getAverage('moodLevel') || '-' }}</strong>
-            </div>
-            <div>
-              <span>{{ 'emotionalLog.summary.anxiety' | translate }}</span>
-              <strong>{{ getAverage('anxietyLevel') || '-' }}</strong>
-            </div>
-            <div>
-              <span>{{ 'emotionalLog.summary.stress' | translate }}</span>
-              <strong>{{ getAverage('stressLevel') || '-' }}</strong>
-            </div>
-          </div>
+        <section class="status-card error" *ngIf="!loading && errorMsg">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ errorMsg | translate }}
+        </section>
 
-          <section class="status-card" *ngIf="loading">
-            <i class="fas fa-spinner fa-spin"></i>
-            {{ 'emotionalLog.loading' | translate }}
-          </section>
-
-          <section class="status-card error" *ngIf="!loading && errorMsg">
-            <i class="fas fa-exclamation-circle"></i>
-            {{ errorMsg | translate }}
-          </section>
-
-          <section class="empty-state" *ngIf="!loading && !errorMsg && !records.length">
-            <span class="material-symbols-outlined" aria-hidden="true">history</span>
-            <h3>{{ 'emotionalLog.empty.title' | translate }}</h3>
-            <p>{{ 'emotionalLog.empty.text' | translate }}</p>
-          </section>
-        </aside>
+        <section class="empty-state" *ngIf="!loading && !errorMsg && !records.length">
+          <span class="material-symbols-outlined" aria-hidden="true">history</span>
+          <h3>{{ 'emotionalLog.empty.title' | translate }}</h3>
+          <p>{{ 'emotionalLog.empty.text' | translate }}</p>
+          <button type="button" class="register-button secondary" (click)="openRecordModal()">
+            {{ 'emotionalLog.actions.register' | translate }}
+          </button>
+        </section>
       </section>
 
       <section class="history-section" *ngIf="!loading && !errorMsg && records.length">
@@ -193,35 +105,53 @@
         </div>
 
         <div class="history-list">
-          <article class="history-card" *ngFor="let record of records; trackBy: trackByRecord">
-            <div class="history-icon">
-              <span class="material-symbols-outlined" aria-hidden="true">{{ getMoodIcon(record.moodLevel) }}</span>
-            </div>
+          <ng-container *ngFor="let record of records; let i = index; trackBy: trackByRecord">
+            <h3 class="day-heading" *ngIf="getDayLabel(record, i) as dayKey">
+              {{ dayKey | translate }}
+            </h3>
 
-            <div class="history-content">
-              <div class="history-header">
-                <h3>{{ getMoodLabel(record.moodLevel) | translate }}</h3>
-                <time *ngIf="getRecordDate(record)">
-                  {{ getRecordDate(record) | date:'medium' }}
-                </time>
+            <article class="history-card">
+              <div class="history-icon">
+                <span class="material-symbols-outlined" aria-hidden="true">{{ getMoodIcon(record.moodLevel) }}</span>
               </div>
 
-              <p *ngIf="record.notes; else noNotes">{{ record.notes }}</p>
-              <ng-template #noNotes>
-                <p class="muted">{{ 'emotionalLog.history.noNotes' | translate }}</p>
-              </ng-template>
+              <div class="history-content">
+                <div class="history-header">
+                  <div>
+                    <h3>{{ getMoodLabel(record.moodLevel) | translate }}</h3>
+                    <span class="daypart">{{ getDaypartKey(record) | translate }}</span>
+                  </div>
+                  <time *ngIf="getRecordDate(record)">
+                    {{ getRecordDate(record) | date:'HH:mm' }}
+                  </time>
+                </div>
 
-              <div class="history-metrics">
-                <span>{{ 'emotionalLog.history.mood' | translate }}: <strong>{{ record.moodLevel }}/5</strong></span>
-                <span>{{ 'emotionalLog.history.anxiety' | translate }}: <strong>{{ record.anxietyLevel }}/5</strong></span>
-                <span>{{ 'emotionalLog.history.stress' | translate }}: <strong>{{ record.stressLevel }}/5</strong></span>
+                <p *ngIf="record.notes; else noNotes">{{ record.notes }}</p>
+                <ng-template #noNotes>
+                  <p class="muted">{{ 'emotionalLog.history.noNotes' | translate }}</p>
+                </ng-template>
+
+                <div class="history-metrics">
+                  <span>{{ 'emotionalLog.history.mood' | translate }}: <strong>{{ record.moodLevel }}/5</strong></span>
+                  <span>{{ 'emotionalLog.history.anxiety' | translate }}: <strong>{{ record.anxietyLevel }}/5</strong></span>
+                  <span>{{ 'emotionalLog.history.stress' | translate }}: <strong>{{ record.stressLevel }}/5</strong></span>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </ng-container>
         </div>
       </section>
     </main>
   </div>
+
+  <app-emotional-record-modal
+    *ngIf="showRecordModal"
+    [patientId]="patientId"
+    [required]="false"
+    (saved)="handleRecordSaved($event)"
+    (failed)="handleRecordSaveFailed($event)"
+    (cancelled)="closeRecordModal()">
+  </app-emotional-record-modal>
 
   <div
     class="toast"

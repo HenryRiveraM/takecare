@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms'; 
@@ -7,22 +7,29 @@ import { AuthService } from '../../services/auth.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { SessionResponse, SessionService } from '../../services/session.service';
+import { EmotionalRecord } from '../../services/emotional-record.service';
+import { EmotionalRecordModalComponent } from '../../shared/emotional-record-modal/emotional-record-modal.component';
 
 
 @Component({
   selector: 'app-patient-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, TranslateModule,SidebarComponent],
+  imports: [CommonModule, RouterModule, FormsModule, TranslateModule, SidebarComponent, EmotionalRecordModalComponent],
   templateUrl: './patient-dashboard.component.html',
   styleUrls: ['./patient-dashboard.component.css']
 })
 
-export class PatientDashboardComponent implements OnInit {
+export class PatientDashboardComponent implements OnInit, OnDestroy {
   user: any;
   searchTerm: string = '';
   todayAppointments: SessionResponse[] = [];
   loadingAppointments = false;
   appointmentsError = '';
+  showRequiredEmotionModal = false;
+  showToast = false;
+  toastMessage = '';
+  toastType: 'success' | 'error' = 'success';
+  private toastTimer: any;
 
   constructor(
     private authService: AuthService,
@@ -34,6 +41,11 @@ export class PatientDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUser();
     this.loadTodayAppointments();
+    this.openRequiredEmotionModalIfNeeded();
+  }
+
+  ngOnDestroy(): void {
+    if (this.toastTimer) clearTimeout(this.toastTimer);
   }
 
   goToSpecialistSearch(): void {
@@ -95,6 +107,20 @@ export class PatientDashboardComponent implements OnInit {
       .toUpperCase();
   }
 
+  handleRequiredEmotionSaved(_: EmotionalRecord): void {
+    localStorage.setItem(this.getEmotionSessionKey(), 'true');
+    this.showRequiredEmotionModal = false;
+    this.showToastMessage('emotionalLog.toast.saved', 'success');
+  }
+
+  handleRequiredEmotionFailed(message: string): void {
+    this.showToastMessage(message || 'emotionalLog.errors.save', 'error');
+  }
+
+  get patientId(): number {
+    return Number(this.user?.id || 0);
+  }
+
   private loadTodayAppointments(): void {
     const patientId = this.user?.id;
 
@@ -123,6 +149,26 @@ export class PatientDashboardComponent implements OnInit {
         this.appointmentsError = 'patientDashboard.todayAppointments.loadError';
       }
     });
+  }
+
+  private openRequiredEmotionModalIfNeeded(): void {
+    if (!this.patientId) {
+      return;
+    }
+
+    this.showRequiredEmotionModal = localStorage.getItem(this.getEmotionSessionKey()) !== 'true';
+  }
+
+  private getEmotionSessionKey(): string {
+    return `takecare-emotional-first-checkin-${this.patientId}`;
+  }
+
+  private showToastMessage(message: string, type: 'success' | 'error'): void {
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+    this.toastTimer = setTimeout(() => { this.showToast = false; }, 3200);
   }
 
   private formatLocalDate(date: Date): string {
