@@ -62,121 +62,123 @@
           </article>
         </section>
 
-        <article
-          class="detail-panel"
-          [attr.id]="'patient-care-plan-' + selectedPlan.id"
-          [class.highlighted-plan]="highlightedPlanId === selectedPlan.id">
-          <header class="plan-hero">
-            <div>
-              <div class="detail-heading">
-                <span class="status-pill" [attr.data-status]="selectedPlan.status">
-                  {{ getStatusLabel(selectedPlan.status) | translate }}
-                </span>
+        <div class="care-plan-layout">
+          <article
+            class="detail-panel"
+            [attr.id]="'patient-care-plan-' + selectedPlan.id"
+            [class.highlighted-plan]="highlightedPlanId === selectedPlan.id">
+            <header class="plan-hero">
+              <div>
+                <div class="detail-heading">
+                  <span class="status-pill" [attr.data-status]="selectedPlan.status">
+                    {{ getStatusLabel(selectedPlan.status) | translate }}
+                  </span>
+                </div>
+                <h2>{{ selectedPlan.title }}</h2>
+                <p class="specialist-line">
+                  <i class="fas fa-user-md"></i>
+                  {{ 'carePlans.fields.specialist' | translate }}:
+                  <strong>{{ getSpecialistName(selectedPlan) | translate }}</strong>
+                </p>
               </div>
-              <h2>{{ selectedPlan.title }}</h2>
-              <p class="specialist-line">
-                <i class="fas fa-user-md"></i>
-                {{ 'carePlans.fields.specialist' | translate }}:
-                <strong>{{ getSpecialistName(selectedPlan) | translate }}</strong>
+            </header>
+
+            <div class="progress-summary">
+              <div>
+                <span>{{ 'carePlans.fields.progress' | translate }}</span>
+                <strong>{{ getProgressPercentage(selectedPlan) }}%</strong>
+              </div>
+              <div class="progress-bar large">
+                <span [style.width.%]="getProgressPercentage(selectedPlan)"></span>
+              </div>
+              <p>{{ 'carePlans.followUpOverview.progressHelp' | translate }}</p>
+            </div>
+
+            <section class="dashboard-wrapper">
+              <app-care-plan-progress-dashboard
+                [plan]="selectedPlan"
+                [patientId]="patientId">
+              </app-care-plan-progress-dashboard>
+            </section>
+            
+            <section class="dates-row">
+              <div>
+                <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>
+                <strong *ngIf="selectedPlan.reviewDate; else noDate">
+                  {{ asLocalDate(selectedPlan.reviewDate) | date:'mediumDate' }}
+                </strong>
+              </div>
+              <div>
+                <span>{{ 'carePlans.fields.followUpSession' | translate }}</span>
+                <strong>{{ selectedPlan.reviewStartTime ? (selectedPlan.reviewStartTime | slice:0:5) : ('carePlans.notAvailable' | translate) }}</strong>
+              </div>
+            </section>
+
+            <section class="detail-grid">
+              <div class="detail-block">
+                <span>{{ 'carePlans.fields.therapeuticObjectives' | translate }}</span>
+                <p>{{ selectedPlan.therapeuticObjectives || ('carePlans.notAvailable' | translate) }}</p>
+              </div>
+
+              <div class="detail-block">
+                <span>{{ 'carePlans.fields.generalRecommendations' | translate }}</span>
+                <p>{{ selectedPlan.generalRecommendations || ('carePlans.notAvailable' | translate) }}</p>
+              </div>
+
+              <div class="detail-block wide">
+                <span>{{ 'carePlans.fields.professionalObservations' | translate }}</span>
+                <p>{{ selectedPlan.professionalObservations || ('carePlans.notAvailable' | translate) }}</p>
+              </div>
+            </section>
+
+            <section class="detail-block activities-section">
+              <span class="status-pill" [attr.data-status]="selectedPlan.status">
+                {{ 'carePlans.followUpActivities' | translate }}
+              </span>
+              <p class="plan-lock-message" *ngIf="getPlanLockMessage()">
+                <i class="fas fa-lock"></i>
+                {{ getPlanLockMessage() | translate }}
               </p>
-            </div>
-          </header>
+              <div class="activities-empty" *ngIf="!activeActivities(selectedPlan).length">
+                <i class="fas fa-list-check"></i>
+                <h3>{{ 'carePlans.followUpNoActivitiesTitle' | translate }}</h3>
+                <p>{{ 'carePlans.followUpNoActivitiesText' | translate }}</p>
+              </div>
+              <ul class="checklist" *ngIf="activeActivities(selectedPlan).length">
+                <li
+                  *ngFor="let item of activeActivities(selectedPlan)"
+                  [class.completed]="item.status === 'COMPLETED'"
+                  [class.locked]="!canModifySelectedPlan()">
+                  <label>
+                    <input
+                      type="checkbox"
+                      [checked]="item.status === 'COMPLETED'"
+                      [disabled]="updatingItemId === item.id || !canModifySelectedPlan()"
+                      (change)="toggleItem(item)">
+                    <span></span>
+                    <div>
+                      <strong>{{ item.title }}</strong>
+                      <p>{{ item.description || ('carePlans.notAvailable' | translate) }}</p>
+                      <small *ngIf="item.dueDate">
+                        {{ 'carePlans.fields.dueDate' | translate }}:
+                        {{ asLocalDate(item.dueDate) | date:'mediumDate' }}
+                      </small>
+                    </div>
+                  </label>
+                </li>
+              </ul>
+            </section>
+          </article>
 
-          <div class="progress-summary">
-            <div>
-              <span>{{ 'carePlans.fields.progress' | translate }}</span>
-              <strong>{{ getProgressPercentage(selectedPlan) }}%</strong>
-            </div>
-            <div class="progress-bar large">
-              <span [style.width.%]="getProgressPercentage(selectedPlan)"></span>
-            </div>
-            <p>{{ 'carePlans.followUpOverview.progressHelp' | translate }}</p>
-          </div>
-
-          <section class="dashboard-wrapper">
-            <app-care-plan-progress-dashboard
-              [plan]="selectedPlan"
-              [patientId]="patientId">
-            </app-care-plan-progress-dashboard>
-          </section>
-
-          <section class="logbook-wrapper">
+          <div class="care-plan-logbook-column">
             <app-care-plan-logbook
               [planId]="selectedPlan.id"
               [currentUserId]="patientId"
               currentUserRole="PATIENT"
               [currentUserName]="currentPatientName">
             </app-care-plan-logbook>
-          </section>
-          
-          <section class="dates-row">
-            <div>
-              <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>
-              <strong *ngIf="selectedPlan.reviewDate; else noDate">
-                {{ asLocalDate(selectedPlan.reviewDate) | date:'mediumDate' }}
-              </strong>
-            </div>
-            <div>
-              <span>{{ 'carePlans.fields.followUpSession' | translate }}</span>
-              <strong>{{ selectedPlan.reviewStartTime ? (selectedPlan.reviewStartTime | slice:0:5) : ('carePlans.notAvailable' | translate) }}</strong>
-            </div>
-          </section>
-
-          <section class="detail-grid">
-            <div class="detail-block">
-              <span>{{ 'carePlans.fields.therapeuticObjectives' | translate }}</span>
-              <p>{{ selectedPlan.therapeuticObjectives || ('carePlans.notAvailable' | translate) }}</p>
-            </div>
-
-            <div class="detail-block">
-              <span>{{ 'carePlans.fields.generalRecommendations' | translate }}</span>
-              <p>{{ selectedPlan.generalRecommendations || ('carePlans.notAvailable' | translate) }}</p>
-            </div>
-
-            <div class="detail-block wide">
-              <span>{{ 'carePlans.fields.professionalObservations' | translate }}</span>
-              <p>{{ selectedPlan.professionalObservations || ('carePlans.notAvailable' | translate) }}</p>
-            </div>
-          </section>
-
-          <section class="detail-block activities-section">
-            <span class="status-pill" [attr.data-status]="selectedPlan.status">
-              {{ 'carePlans.followUpActivities' | translate }}
-            </span>
-            <p class="plan-lock-message" *ngIf="getPlanLockMessage()">
-              <i class="fas fa-lock"></i>
-              {{ getPlanLockMessage() | translate }}
-            </p>
-            <div class="activities-empty" *ngIf="!activeActivities(selectedPlan).length">
-              <i class="fas fa-list-check"></i>
-              <h3>{{ 'carePlans.followUpNoActivitiesTitle' | translate }}</h3>
-              <p>{{ 'carePlans.followUpNoActivitiesText' | translate }}</p>
-            </div>
-            <ul class="checklist" *ngIf="activeActivities(selectedPlan).length">
-              <li
-                *ngFor="let item of activeActivities(selectedPlan)"
-                [class.completed]="item.status === 'COMPLETED'"
-                [class.locked]="!canModifySelectedPlan()">
-                <label>
-                  <input
-                    type="checkbox"
-                    [checked]="item.status === 'COMPLETED'"
-                    [disabled]="updatingItemId === item.id || !canModifySelectedPlan()"
-                    (change)="toggleItem(item)">
-                  <span></span>
-                  <div>
-                    <strong>{{ item.title }}</strong>
-                    <p>{{ item.description || ('carePlans.notAvailable' | translate) }}</p>
-                    <small *ngIf="item.dueDate">
-                      {{ 'carePlans.fields.dueDate' | translate }}:
-                      {{ asLocalDate(item.dueDate) | date:'mediumDate' }}
-                    </small>
-                  </div>
-                </label>
-              </li>
-            </ul>
-          </section>
-        </article>
+          </div>
+        </div>
       </section>
     </main>
   </div>

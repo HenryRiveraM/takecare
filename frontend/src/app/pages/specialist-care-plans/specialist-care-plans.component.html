@@ -97,152 +97,158 @@
             </div>
           </header>
 
-          <section class="full-progress">
-            <div class="detail-progress">
-              <span>{{ 'carePlans.fields.progress' | translate }}</span>
-              <strong>{{ plan.progressPercentage }}%</strong>
-            </div>
-            <div class="progress-bar large">
-              <span [style.width.%]="plan.progressPercentage"></span>
-            </div>
-          </section>
+          <div class="full-plan-grid-layout">
+            <div class="full-plan-details-col">
+              <section class="full-progress">
+                <div class="detail-progress">
+                  <span>{{ 'carePlans.fields.progress' | translate }}</span>
+                  <strong>{{ plan.progressPercentage }}%</strong>
+                </div>
+                <div class="progress-bar large">
+                  <span [style.width.%]="plan.progressPercentage"></span>
+                </div>
+              </section>
 
-          <app-care-plan-progress-dashboard
-            [plan]="plan"
-            [patientId]="plan.patientId"
-            [specialistId]="specialistId">
-          </app-care-plan-progress-dashboard>
+              <app-care-plan-progress-dashboard
+                [plan]="plan"
+                [patientId]="plan.patientId"
+                [specialistId]="specialistId">
+              </app-care-plan-progress-dashboard>
 
-          <app-care-plan-logbook
-            [planId]="plan.id"
-            [currentUserId]="specialistId"
-            currentUserRole="SPECIALIST"
-            [currentUserName]="currentSpecialistName">
-          </app-care-plan-logbook>
+              <section class="full-content-grid">
+                <div class="detail-block">
+                  <span>{{ 'carePlans.fields.therapeuticObjectives' | translate }}</span>
+                  <p>{{ plan.therapeuticObjectives || ('carePlans.notAvailable' | translate) }}</p>
+                </div>
 
-          <section class="full-content-grid">
-            <div class="detail-block">
-              <span>{{ 'carePlans.fields.therapeuticObjectives' | translate }}</span>
-              <p>{{ plan.therapeuticObjectives || ('carePlans.notAvailable' | translate) }}</p>
-            </div>
+                <div class="detail-block">
+                  <span>{{ 'carePlans.fields.generalRecommendations' | translate }}</span>
+                  <p>{{ plan.generalRecommendations || ('carePlans.notAvailable' | translate) }}</p>
+                </div>
 
-            <div class="detail-block">
-              <span>{{ 'carePlans.fields.generalRecommendations' | translate }}</span>
-              <p>{{ plan.generalRecommendations || ('carePlans.notAvailable' | translate) }}</p>
-            </div>
+                <div class="detail-block wide">
+                  <span>{{ 'carePlans.fields.professionalObservations' | translate }}</span>
+                  <p>{{ plan.professionalObservations || ('carePlans.notAvailable' | translate) }}</p>
+                </div>
+              </section>
 
-            <div class="detail-block wide">
-              <span>{{ 'carePlans.fields.professionalObservations' | translate }}</span>
-              <p>{{ plan.professionalObservations || ('carePlans.notAvailable' | translate) }}</p>
-            </div>
-          </section>
-
-          <section class="dates-row full-dates">
-            <div>
-              <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>
-              <strong *ngIf="plan.reviewDate; else noDate">
-                {{ asLocalDate(plan.reviewDate) | date:'mediumDate' }}
-              </strong>
-            </div>
-            <div>
-              <span>{{ 'carePlans.fields.followUpSession' | translate }}</span>
-              <strong>
-                {{ plan.reviewStartTime ? (plan.reviewStartTime | slice:0:5) : ('carePlans.notAvailable' | translate) }}
-                <ng-container *ngIf="plan.reviewEndTime"> - {{ plan.reviewEndTime | slice:0:5 }}</ng-container>
-              </strong>
-            </div>
-            <div>
-              <span>{{ 'carePlans.fields.createdDate' | translate }}</span>
-              <strong>{{ plan.createdDate | date:'mediumDate' }}</strong>
-            </div>
-          </section>
-
-          <section class="detail-block activities-block">
-            <div class="activities-heading">
-              <span>{{ 'carePlans.fields.activities' | translate }}</span>
-              <button
-                *ngIf="canManagePlan(plan)"
-                type="button"
-                class="ghost-action compact"
-                (click)="openCreateActivityForm(plan)">
-                <i class="fas fa-plus"></i>
-                {{ 'carePlans.activities.new' | translate }}
-              </button>
-            </div>
-            <p class="plan-lock-message" *ngIf="isPlanCompleted(plan)">
-              <i class="fas fa-lock"></i>
-              {{ 'carePlans.messages.completedLocked' | translate }}
-            </p>
-            <ul class="items-list" *ngIf="activeActivities(plan).length; else noActivities">
-              <li
-                *ngFor="let item of activeActivities(plan)"
-                [class.completed]="item.status === 'COMPLETED'">
-                <i [class]="item.status === 'COMPLETED' ? 'fas fa-check-circle' : 'far fa-circle'"></i>
+              <section class="dates-row full-dates">
                 <div>
-                  <strong>{{ item.title }}</strong>
-                  <p>{{ item.description || ('carePlans.notAvailable' | translate) }}</p>
-                  <small *ngIf="item.dueDate">
-                    {{ 'carePlans.fields.dueDate' | translate }}:
-                    {{ asLocalDate(item.dueDate) | date:'mediumDate' }}
-                  </small>
-                  <span class="activity-status-badge completed-badge" *ngIf="isActivityCompleted(item)">
-                    <i class="fas fa-check"></i>
-                    {{ 'carePlans.activities.completedByPatient' | translate }}
-                  </span>
-                  <small *ngIf="isActivityCompleted(item) && item.completedDate">
-                    {{ 'carePlans.fields.completedDate' | translate }}:
-                    {{ item.completedDate | date:'mediumDate' }}
-                  </small>
+                  <span>{{ 'carePlans.fields.reviewDate' | translate }}</span>
+                  <strong *ngIf="plan.reviewDate; else noDate">
+                    {{ asLocalDate(plan.reviewDate) | date:'mediumDate' }}
+                  </strong>
                 </div>
-                <div class="activity-actions" *ngIf="canManagePlan(plan) && canManageActivity(item)">
+                <div>
+                  <span>{{ 'carePlans.fields.followUpSession' | translate }}</span>
+                  <strong>
+                    {{ plan.reviewStartTime ? (plan.reviewStartTime | slice:0:5) : ('carePlans.notAvailable' | translate) }}
+                    <ng-container *ngIf="plan.reviewEndTime"> - {{ plan.reviewEndTime | slice:0:5 }}</ng-container>
+                  </strong>
+                </div>
+                <div>
+                  <span>{{ 'carePlans.fields.createdDate' | translate }}</span>
+                  <strong>{{ plan.createdDate | date:'mediumDate' }}</strong>
+                </div>
+              </section>
+
+              <section class="detail-block activities-block">
+                <div class="activities-heading">
+                  <span>{{ 'carePlans.fields.activities' | translate }}</span>
                   <button
+                    *ngIf="canManagePlan(plan)"
                     type="button"
-                    class="icon-button"
-                    (click)="openEditActivityForm(plan, item)"
-                    [title]="'carePlans.activities.edit' | translate">
-                    <i class="fas fa-pen"></i>
-                  </button>
-                  <button
-                    type="button"
-                    class="icon-button danger"
-                    (click)="cancelActivity(plan, item, $event)"
-                    [disabled]="item.status === 'CANCELLED'"
-                    [title]="'carePlans.activities.cancel' | translate">
-                    <i class="fas fa-ban"></i>
+                    class="ghost-action compact"
+                    (click)="openCreateActivityForm(plan)">
+                    <i class="fas fa-plus"></i>
+                    {{ 'carePlans.activities.new' | translate }}
                   </button>
                 </div>
-              </li>
-            </ul>
-
-            <div class="cancelled-activities" *ngIf="cancelledActivities(plan).length">
-              <button type="button" class="ghost-action compact" (click)="showCancelledActivities = !showCancelledActivities">
-                <i [class]="showCancelledActivities ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
-                {{ 'carePlans.activities.viewCancelled' | translate }}
-              </button>
-
-              <section class="cancelled-panel" *ngIf="showCancelledActivities">
-                <h3>{{ 'carePlans.activities.cancelledTitle' | translate }}</h3>
-                <ul class="items-list cancelled-list">
-                  <li *ngFor="let item of cancelledActivities(plan)" class="cancelled">
-                    <i class="fas fa-ban"></i>
+                <p class="plan-lock-message" *ngIf="isPlanCompleted(plan)">
+                  <i class="fas fa-lock"></i>
+                  {{ 'carePlans.messages.completedLocked' | translate }}
+                </p>
+                <ul class="items-list" *ngIf="activeActivities(plan).length; else noActivities">
+                  <li
+                    *ngFor="let item of activeActivities(plan)"
+                    [class.completed]="item.status === 'COMPLETED'">
+                    <i [class]="item.status === 'COMPLETED' ? 'fas fa-check-circle' : 'far fa-circle'"></i>
                     <div>
                       <strong>{{ item.title }}</strong>
                       <p>{{ item.description || ('carePlans.notAvailable' | translate) }}</p>
+                      <small *ngIf="item.dueDate">
+                        {{ 'carePlans.fields.dueDate' | translate }}:
+                        {{ asLocalDate(item.dueDate) | date:'mediumDate' }}
+                      </small>
+                      <span class="activity-status-badge completed-badge" *ngIf="isActivityCompleted(item)">
+                        <i class="fas fa-check"></i>
+                        {{ 'carePlans.activities.completedByPatient' | translate }}
+                      </span>
+                      <small *ngIf="isActivityCompleted(item) && item.completedDate">
+                        {{ 'carePlans.fields.completedDate' | translate }}:
+                        {{ item.completedDate | date:'mediumDate' }}
+                      </small>
                     </div>
-                    <div class="activity-actions" *ngIf="canManagePlan(plan)">
+                    <div class="activity-actions" *ngIf="canManagePlan(plan) && canManageActivity(item)">
                       <button
                         type="button"
-                        class="ghost-action compact"
-                        (click)="restoreActivity(plan, item, $event)">
-                        <i class="fas fa-rotate-left"></i>
-                        {{ 'carePlans.activities.restore' | translate }}
+                        class="icon-button"
+                        (click)="openEditActivityForm(plan, item)"
+                        [title]="'carePlans.activities.edit' | translate">
+                        <i class="fas fa-pen"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="icon-button danger"
+                        (click)="cancelActivity(plan, item, $event)"
+                        [disabled]="item.status === 'CANCELLED'"
+                        [title]="'carePlans.activities.cancel' | translate">
+                        <i class="fas fa-ban"></i>
                       </button>
                     </div>
                   </li>
                 </ul>
+
+                <div class="cancelled-activities" *ngIf="cancelledActivities(plan).length">
+                  <button type="button" class="ghost-action compact" (click)="showCancelledActivities = !showCancelledActivities">
+                    <i [class]="showCancelledActivities ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+                    {{ 'carePlans.activities.viewCancelled' | translate }}
+                  </button>
+
+                  <section class="cancelled-panel" *ngIf="showCancelledActivities">
+                    <h3>{{ 'carePlans.activities.cancelledTitle' | translate }}</h3>
+                    <ul class="items-list cancelled-list">
+                      <li *ngFor="let item of cancelledActivities(plan)" class="cancelled">
+                        <i class="fas fa-ban"></i>
+                        <div>
+                          <strong>{{ item.title }}</strong>
+                          <p>{{ item.description || ('carePlans.notAvailable' | translate) }}</p>
+                        </div>
+                        <div class="activity-actions" *ngIf="canManagePlan(plan)">
+                          <button
+                            type="button"
+                            class="ghost-action compact"
+                            (click)="restoreActivity(plan, item, $event)">
+                            <i class="fas fa-rotate-left"></i>
+                            {{ 'carePlans.activities.restore' | translate }}
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </section>
+                </div>
               </section>
             </div>
-          </section>
+
+            <div class="full-plan-logbook-col">
+              <app-care-plan-logbook
+                [planId]="plan.id"
+                [currentUserId]="specialistId"
+                currentUserRole="SPECIALIST"
+                [currentUserName]="currentSpecialistName">
+              </app-care-plan-logbook>
+            </div>
+          </div>
         </article>
 
         <section class="empty-state inline" *ngIf="carePlans.length && !filteredCarePlans.length">
