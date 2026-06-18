@@ -374,7 +374,8 @@
     "today": "Hoy",
     "actions": {
       "register": "Registrar emoción",
-      "registerNew": "Registrar nueva emoción"
+      "registerNew": "Registrar nueva emoción",
+      "loadMore": "Cargar más registros"
     },
     "modal": {
       "close": "Cerrar modal"
@@ -449,6 +450,11 @@
     },
     "toast": {
       "saved": "Estado emocional registrado correctamente."
+    },
+    "registered": {
+      "title": "Registro diario completado",
+      "subtitle": "Ya has registrado tu estado emocional de hoy.",
+      "at": "Registrado a las"
     },
     "errors": {
       "noPatient": "No se pudo identificar al paciente actual.",

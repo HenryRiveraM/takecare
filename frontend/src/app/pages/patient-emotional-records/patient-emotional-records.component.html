@@ -33,6 +33,21 @@
         <span class="material-symbols-outlined hero-icon" aria-hidden="true">self_improvement</span>
       </section>
 
+      <section class="daily-registered-card" *ngIf="hasRegisteredToday && !loading">
+        <div class="registered-content">
+          <div class="registered-icon-wrapper">
+            <span class="material-symbols-outlined registered-icon" aria-hidden="true">task_alt</span>
+          </div>
+          <div class="registered-info">
+            <h3>{{ 'emotionalLog.registered.title' | translate }}</h3>
+            <p>{{ 'emotionalLog.registered.subtitle' | translate }}</p>
+            <span class="registered-time" *ngIf="todayRegistrationTime">
+              {{ 'emotionalLog.registered.at' | translate }} {{ todayRegistrationTime | date:'HH:mm' }}
+            </span>
+          </div>
+        </div>
+      </section>
+
       <section class="daily-info-banner">
         <div class="daily-info-icon">
           <span class="material-symbols-outlined" aria-hidden="true">calendar_today</span>
@@ -105,7 +120,7 @@
         </div>
 
         <div class="history-list">
-          <ng-container *ngFor="let record of records; let i = index; trackBy: trackByRecord">
+          <ng-container *ngFor="let record of displayedRecords; let i = index; trackBy: trackByRecord">
             <h3 class="day-heading" *ngIf="getDayLabel(record, i) as dayKey">
               {{ dayKey | translate }}
             </h3>
@@ -139,6 +154,13 @@
               </div>
             </article>
           </ng-container>
+        </div>
+        
+        <div class="load-more-container" *ngIf="hasMoreRecords()">
+          <button type="button" class="load-more-button" (click)="loadMoreRecords()">
+            <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+            {{ 'emotionalLog.actions.loadMore' | translate }}
+          </button>
         </div>
       </section>
     </main>

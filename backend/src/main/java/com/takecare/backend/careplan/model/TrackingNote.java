@@ -2,6 +2,7 @@ package com.takecare.backend.careplan.model;
 
 import com.takecare.backend.session.model.Session;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import com.takecare.backend.careplan.converter.EncryptionConverter;
 
 import java.time.LocalDateTime;
 
@@ -46,6 +48,7 @@ public class TrackingNote {
     private String noteType;
 
     @Column(nullable = false, columnDefinition = "TEXT")
+    @Convert(converter = EncryptionConverter.class)
     private String note;
 
     @Column(name = "created_date", nullable = false)

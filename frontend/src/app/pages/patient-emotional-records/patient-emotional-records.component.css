@@ -127,6 +127,7 @@
 }
 
 .hero-card,
+.daily-registered-card,
 .daily-info-banner,
 .summary-panel,
 .history-section {
@@ -185,6 +186,7 @@
   font-size: 44px;
 }
 
+.daily-registered-card,
 .daily-info-banner,
 .summary-panel,
 .history-section {
@@ -192,6 +194,65 @@
   border-radius: 22px;
   background: white;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+}
+
+.daily-registered-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 20px 24px;
+  border: 1px solid #d1e8e3;
+  background: linear-gradient(135deg, #f0fef9 0%, #e8faf5 100%);
+  box-shadow: 0 4px 12px rgba(114, 160, 146, 0.08);
+}
+
+.registered-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.registered-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #c8e6db;
+  flex-shrink: 0;
+}
+
+.registered-icon {
+  font-size: 28px;
+  color: #2d7a6f;
+  font-weight: 700;
+}
+
+.registered-info {
+  flex: 1;
+}
+
+.registered-info h3 {
+  margin: 0 0 4px;
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.registered-info p {
+  margin: 0 0 6px;
+  color: #2d7a6f;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.registered-time {
+  display: block;
+  color: #72a092;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .daily-info-banner {
@@ -444,6 +505,43 @@
 
 .history-metrics strong {
   color: #3a5c53;
+}
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.load-more-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 24px;
+  border: 1px solid #72a092;
+  border-radius: 12px;
+  background: white;
+  color: #72a092;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.load-more-button:hover {
+  background: #f0fef9;
+  border-color: #2d7a6f;
+  color: #2d7a6f;
+}
+
+.load-more-button:active {
+  transform: scale(0.98);
+}
+
+.load-more-button .material-symbols-outlined {
+  font-size: 22px;
 }
 
 .toast {

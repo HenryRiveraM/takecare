@@ -383,7 +383,8 @@
     "today": "Today",
     "actions": {
       "register": "Record emotion",
-      "registerNew": "Record new emotion"
+      "registerNew": "Record new emotion",
+      "loadMore": "Load more records"
     },
     "modal": {
       "close": "Close modal"
@@ -458,6 +459,11 @@
     },
     "toast": {
       "saved": "Emotional state recorded successfully."
+    },
+    "registered": {
+      "title": "Daily registration completed",
+      "subtitle": "You have already recorded your emotional state today.",
+      "at": "Recorded at"
     },
     "errors": {
       "noPatient": "Could not identify the current patient.",

@@ -21,11 +21,17 @@ import { EmotionalRecordModalComponent } from '../../shared/emotional-record-mod
 export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
   patientId = 0;
   records: EmotionalRecord[] = [];
+  displayedRecords: EmotionalRecord[] = [];
   loading = false;
   saving = false;
   errorMsg = '';
   today = new Date();
   showRecordModal = false;
+  hasRegisteredToday = false;
+  todayRegistrationTime: Date | null = null;
+  
+  readonly recordsPerPage = 5;
+  recordsDisplayed = 0;
 
   showToast = false;
   toastMessage = '';
@@ -48,6 +54,7 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     }
 
     this.loadRecords();
+    this.checkIfRegisteredToday();
   }
 
   ngOnDestroy(): void {
@@ -65,8 +72,13 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
 
   handleRecordSaved(saved: EmotionalRecord): void {
     this.records = this.sortRecords([saved, ...this.records]);
+    this.recordsDisplayed = 0;
+    this.updateDisplayedRecords();
     this.showRecordModal = false;
     this.showToastMessage('emotionalLog.toast.saved', 'success');
+    localStorage.setItem(this.getEmotionSessionKey(), 'true');
+    this.hasRegisteredToday = true;
+    this.todayRegistrationTime = new Date();
   }
 
   handleRecordSaveFailed(message: string): void {
@@ -167,14 +179,28 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     this.emotionalRecordService.getRecords(this.patientId).subscribe({
       next: records => {
         this.records = this.sortRecords(records);
+        this.recordsDisplayed = 0;
+        this.updateDisplayedRecords();
         this.loading = false;
       },
       error: error => {
         this.records = [];
+        this.displayedRecords = [];
+        this.recordsDisplayed = 0;
         this.loading = false;
         this.errorMsg = error?.error?.message || 'emotionalLog.errors.load';
       }
     });
+  }
+
+  loadMoreRecords(): void {
+    this.recordsDisplayed += this.recordsPerPage;
+    this.updateDisplayedRecords();
+  }
+
+  private updateDisplayedRecords(): void {
+    const endIndex = Math.min(this.recordsDisplayed + this.recordsPerPage, this.records.length);
+    this.displayedRecords = this.records.slice(0, endIndex);
   }
 
   private sortRecords(records: EmotionalRecord[]): EmotionalRecord[] {
@@ -191,6 +217,37 @@ export class PatientEmotionalRecordsComponent implements OnInit, OnDestroy {
     this.toastType = type;
     this.showToast = true;
     this.toastTimer = setTimeout(() => { this.showToast = false; }, 3200);
+  }
+
+  private getEmotionSessionKey(): string {
+    return `takecare-emotional-first-checkin-${this.patientId}`;
+  }
+
+  private checkIfRegisteredToday(): void {
+    const sessionKey = this.getEmotionSessionKey();
+    this.hasRegisteredToday = localStorage.getItem(sessionKey) === 'true';
+    
+    if (this.hasRegisteredToday && this.records.length > 0) {
+      this.todayRegistrationTime = this.getTodayRegistrationTime();
+    }
+  }
+
+  private getTodayRegistrationTime(): Date | null {
+    const today = new Date();
+    const todayRecords = this.records.filter(record => {
+      const recordDate = this.getRecordDate(record);
+      if (!recordDate) return false;
+      return recordDate.getFullYear() === today.getFullYear() &&
+             recordDate.getMonth() === today.getMonth() &&
+             recordDate.getDate() === today.getDate();
+    });
+    
+    if (todayRecords.length === 0) return null;
+    return this.getRecordDate(todayRecords[0]);
+  }
+
+  hasMoreRecords(): boolean {
+    return this.displayedRecords.length < this.records.length;
   }
 }
 // Trigger component reload for HTML inline styles.
